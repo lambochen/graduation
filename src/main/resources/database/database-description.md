@@ -71,11 +71,11 @@
     
 **2、用户标签表（user_tag）**
     
-**3、商品一级目录(goods_catalog_one)**
+**3、商品一级目录表(goods_catalog_one)**
 
 | 列 | 数据类型 | 对应Java类型 | 列描述 | 约束/默认值 | 备注 |
 | ------- | ------- | ------- | ------- | ------- | ------- |
-|   id          |   bigint      |   Long        |   ID      | PK，auto_increment   |   |
+|   id          |   int      |   Long        |   ID      | PK，auto_increment   |   |
 |   gmt_create  |   timestamp   |   Date        |   记录创建时间  |    default:current_timestamp, not null |  |
 |   gmt_modified    |   timestamp   |   Date    |   最近修改时间  |   default:current_timestamp, not null |   |
 |   deleted     |   varchar(1)  |   Integer     |   是否删除（0：未删除  1：已删除）     |  default:"0", not null   | 逻辑删除   |
@@ -91,6 +91,30 @@
     auto_increment: 1
     charset: utf8mb4
     comment: 商品一级目录表
+
+**4、商品二级目录表(goods_catalog_two)**
+
+| 列 | 数据类型 | 对应Java类型 | 列描述 | 约束/默认值 | 备注 |
+| ------- | ------- | ------- | ------- | ------- | ------- |
+|   id          |   int      |   Long        |   ID      | PK，auto_increment   |   |
+|   gmt_create  |   timestamp   |   Date        |   记录创建时间  |    default:current_timestamp, not null |  |
+|   gmt_modified    |   timestamp   |   Date    |   最近修改时间  |   default:current_timestamp, not null |   |
+|   deleted     |   varchar(1)  |   Integer     |   是否删除（0：未删除  1：已删除）     |  default:"0", not null   | 逻辑删除   |
+|   name    |   varchar(16) |   String  |   目录名称    |   not null    |   |
+|   description |   varchar(256)    |   String  |   描述  |   null    |   |
+|   catalog_one_id  |   int  |   Long   |   外键依赖一级目录    |   FK(goods_catalog_one), not null |   |
+
+其它说明：
+
+    PK: id
+    UK: uk_name(name)
+    index:  idx_name(name)
+    engine: InnoDB
+    auto_increment: 1
+    charset: utf8mb4
+    comment: 商品二级目录表
+
+
 
 
 
