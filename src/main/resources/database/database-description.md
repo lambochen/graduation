@@ -120,7 +120,7 @@
 
 | 列 | 数据类型 | 对应Java类型 | 列描述 | 约束/默认值 | 备注 |
 | ------- | ------- | ------- | ------- | ------- | ------- |
-|   id          |   int      |   Long        |   ID      | PK，auto_increment   |   |
+|   id          |   bigint      |   Long        |   ID      | PK，auto_increment   |   |
 |   gmt_create  |   timestamp   |   Date        |   记录创建时间  |    default:current_timestamp, not null |  |
 |   gmt_modified    |   timestamp   |   Date    |   最近修改时间  |   default:current_timestamp, not null |   |
 |   deleted     |   varchar(1)  |   Integer     |   是否删除（0：未删除  1：已删除）     |  default:"0", not null   | 逻辑删除   |
@@ -145,6 +145,35 @@
     charset: utf8mb4
     comment: 商品基本信息表
     
+**6、商品订单表(goods_order)**
+
+| 列 | 数据类型 | 对应Java类型 | 列描述 | 约束/默认值 | 备注 |
+| ------- | ------- | ------- | ------- | ------- | ------- |
+|   id          |   bigint      |   Long        |   ID      | PK，auto_increment   |   |
+|   gmt_create  |   timestamp   |   Date        |   记录创建时间  |    default:current_timestamp, not null |  |
+|   gmt_modified    |   timestamp   |   Date    |   最近修改时间  |   default:current_timestamp, not null |   |
+|   deleted     |   varchar(1)  |   Integer     |   是否删除（0：未删除  1：已删除）     |  default:"0", not null   | 逻辑删除   |
+|   name    |   varchar(16) |   String  |   订单名称    |   null    |   |
+|   description |   varchar(256)    |   String  |   描述  |   null    |   |
+|   goods_id  |   bigint  |   Long   |   外键依赖商品基本信息表    |   FK(goods), not null |   |
+|   user_id  |   bigint  |   Long   |   外键依赖用户基本信息表    |   FK(user), not null |   |
+|   price   |   deci mal     |   Double  |   价格      |   null    |   |
+|   remarks     |   varchar(512)    |   String      |   备注      |   null    |   |
+|   post_country     |   varchar(24) |   String  |   国家  |   null    |       |
+|   post_province    |   varchar(24) |   String  |   省份  |   null    |   |
+|   post_city    |   varchar(24) |   String  |   城市  |   null    |   |
+|   post_position    |   varchar(128) |   String  |   详细地址  |   null    |   |
+
+其它说明：
+
+    PK: id
+    UK: uk_name(name)
+    FK: fk_goods(goods_id)
+    FK: fk_user(user_id)
+    engine: InnoDB
+    auto_increment: 1
+    charset: utf8mb4
+    comment: 商品订单表
 
     
 
