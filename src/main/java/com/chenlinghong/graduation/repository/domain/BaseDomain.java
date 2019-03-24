@@ -23,7 +23,7 @@ public class BaseDomain implements Serializable {
     /**
      * ID
      */
-    private Integer id;
+    private Long id;
 
     /**
      * 创建时间戳
