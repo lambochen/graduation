@@ -136,7 +136,6 @@
 其它说明：
 
     PK: id
-    UK: uk_name(name)
     FK: fk_catalog_one(catalog_one_id)
     FK: fk_catalog_two(catalog_two_id)
     index:  idx_name(name)
@@ -167,7 +166,6 @@
 其它说明：
 
     PK: id
-    UK: uk_name(name)
     FK: fk_goods(goods_id)
     FK: fk_user(user_id)
     engine: InnoDB
@@ -175,7 +173,7 @@
     charset: utf8mb4
     comment: 商品订单表
 
-    
+**7、商品评论表(goods_comment)**
 
 
 
