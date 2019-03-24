@@ -108,12 +108,45 @@
 
     PK: id
     UK: uk_name(name)
+    FK: fk_catalog_one(catalog_one_id)
     index:  idx_name(name)
     engine: InnoDB
     auto_increment: 1
     charset: utf8mb4
     comment: 商品二级目录表
 
+
+**5、商品基本信息表(goods)**
+
+| 列 | 数据类型 | 对应Java类型 | 列描述 | 约束/默认值 | 备注 |
+| ------- | ------- | ------- | ------- | ------- | ------- |
+|   id          |   int      |   Long        |   ID      | PK，auto_increment   |   |
+|   gmt_create  |   timestamp   |   Date        |   记录创建时间  |    default:current_timestamp, not null |  |
+|   gmt_modified    |   timestamp   |   Date    |   最近修改时间  |   default:current_timestamp, not null |   |
+|   deleted     |   varchar(1)  |   Integer     |   是否删除（0：未删除  1：已删除）     |  default:"0", not null   | 逻辑删除   |
+|   name    |   varchar(16) |   String  |   商品名称    |   not null    |   |
+|   description |   varchar(256)    |   String  |   描述  |   null    |   |
+|   catalog_one_id  |   int  |   Long   |   外键依赖一级目录    |   FK(goods_catalog_one), not null |   |
+|   catalog_two_id  |   int  |   Long   |   外键依赖二级目录    |   FK(goods_catalog_two), not null |   |
+|   goods_info  |   text    |   String  |   商品信息(富文本)    |   not null    |   |
+|   price   |   decimal     |   Double  |   价格      |   null    |   |
+|   remarks     |   varchar(512)    |   String      |   备注      |   null    |   |
+
+
+其它说明：
+
+    PK: id
+    UK: uk_name(name)
+    FK: fk_catalog_one(catalog_one_id)
+    FK: fk_catalog_two(catalog_two_id)
+    index:  idx_name(name)
+    engine: InnoDB
+    auto_increment: 1
+    charset: utf8mb4
+    comment: 商品基本信息表
+    
+
+    
 
 
 
