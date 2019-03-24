@@ -11,6 +11,12 @@
         <result column="deleted" property="deleted" jdbcType="VARCHAR" javaType="Integer"/>
         <result column="name" property="name" jdbcType="VARCHAR" javaType="String"/>
         <result column="description" property="description" jdbcType="VARCHAR" javaType="String"/>
+        <collection property="catalogTwoList"
+                    column="{'id':id}"
+                    javaType="List"
+                    ofType="com.chenlinghong.graduation.repository.domain.GoodsCatalogTwo"
+                    select="com.chenlinghong.graduation.repository.dao.GoodsCatalogTwoDao.listByCatalogOne">
+        </collection>
     </resultMap>
 
     <sql id="Base_Column_List">
