@@ -39,8 +39,38 @@
 
 | 列 | 数据类型 | 对应Java类型 | 列描述 | 约束/默认值 | 备注 |
 | ------- | ------- | ------- | ------- | ------- | ------- |
-|   id          |   BIGINT      |   Long        |   用户ID      | PK，auto_increment   |   |
-|   gmt_create  |   TIMESTAMP   |   Date        |   记录创建时间  |    default:current_timestamp, not null |  |
+|   id          |   bigint      |   Long        |   ID      | PK，auto_increment   |   |
+|   gmt_create  |   timestamp   |   Date        |   记录创建时间  |    default:current_timestamp, not null |  |
+|   gmt_modified    |   timestamp   |   Date    |   最近修改时间  |   default:current_timestamp, not null |   |
+|   deleted     |   varchar(1)  |   int     |   是否删除（0：未删除  1：已删除）     |  default:"0", not null   | 所有数据采用逻辑删除   |
+|   nick_name    |   varchar(16) |   String  |   用户昵称    |   null    |   |
+|   real_name   |   varchar(16) |   String  |   真实姓名    |   null    |   |
+|   telephone   |   varchar(11) |   String  |   电话号码    |   UK， not null    | 采用电话号码进行登录  |
+|   password    |   varchar(64) |   String  |   密码      |   null    |   MD5值    |
+|   gender      |   varchar(1)  |   Integer |   性别（0：保密 1：男 2：女）    |   default:"0", not null   |   后台采用枚举类替换   |
+|   birthday    |   date    |   Date    |   出生日期    |   null    |   |
+|   country     |   varchar(24) |   String  |   国家  |   null    |       |
+|   province    |   varchar(24) |   String  |   省份  |   null    |   |
+|   city    |   varchar(24) |   String  |   城市  |   null    |   |
+|   position    |   varchar(128) |   String  |   详细地址  |   null    |   |
+|   latitude    |   varchar(32) |   String  |   经度  |   null    |   |
+|   longitude    |   varchar(32) |   String  |   纬度  |   null    |   |
+|   avatar_url  |   varchar(256)    |   String  |   用户头像URL |   null    |   |
+|   type    |   varchar(1)  |   int |   用户类型（0：普通用户 1：商家 2：管理员 3：超级管理员） | default:"0", not null  |  |
+|   description |   varchar(256)    |   String  |   描述  |   null    |   |
+
+其它说明：
+
+    PK: id
+    UK: telephone
+    index:  idx_position(country,province,city)
+    engine: InnoDB
+    auto_increment: 1
+    charset: utf8mb4
+    comment: 用户基本信息表
+    
+
+    
 
 
 
