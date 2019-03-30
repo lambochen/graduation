@@ -42,6 +42,8 @@ create table if not exists `user` (
     index `idx_position`(`country`,`province`,`city`)
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 DEFAULT CHARSET = utf8mb4 COMMENT = '用户基本信息表';
 
+
+
 -- 创建商品一级目录表
 create table if not exists `goods_catalog_one` (
     `id` int not null auto_increment comment 'ID',
@@ -82,6 +84,7 @@ create table if not exists `goods` (
     `goods_info`    text  not null comment '商品信息（富文本格式）',
     `price` decimal  null comment '价格',
     `remarks` varchar(512) null comment '备注',
+    `business_id` bigint not null comment '商户ID【FK(user)】',
     primary key (`id`),
     index `idx_name`(`name`)
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 DEFAULT CHARSET = utf8mb4 COMMENT = '商品基本信息表';
@@ -102,11 +105,34 @@ create table if not exists `goods_order` (
     `post_province`  varchar(24)  null comment '省份',
     `post_city`  varchar(24)  null comment '城市',
     `post_position` varchar(128) null comment '详细地址',
+    `business_id` bigint not null comment '商户ID【FK:business_info】',
     primary key (`id`),
     index `idx_name`(`name`)
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 DEFAULT CHARSET = utf8mb4 COMMENT = '商品订单表';
 
 
+-- 创建商户基本信息表
+create table if not exists `business_info` (
+    `id` bigint not null auto_increment comment 'ID',
+    `gmt_create`   timestamp NULL     DEFAULT CURRENT_TIMESTAMP  COMMENT '创建时间戳',
+    `gmt_modified` timestamp NULL     DEFAULT CURRENT_TIMESTAMP  COMMENT '最近修改时间戳',
+    `deleted`      varchar(1)         default '0'  COMMENT '是否删除：0未删除，1已删除',
+    `name` varchar(16) null comment '商户名称',
+    `opening_time` timestamp not null DEFAULT CURRENT_TIMESTAMP comment '开店时间',
+    `telephone` varchar(11) not null    comment '电话号码',
+    `country`  varchar(24)  null comment '国家',
+    `province`  varchar(24)  null comment '省份',
+    `city`  varchar(24)  null comment '城市',
+    `position` varchar(128) null comment '详细地址',
+    `latitude` varchar(32) null comment '经度',
+    `longitude` varchar(32) null comment '纬度',
+    `avatar_url` varchar(256) null comment '用户头像URL',
+    `description` varchar(256) null comment '描述',
+    `user_id` bigint not null comment '用户ID【FK(user)】',
+    primary key (`id`),
+    unique key `uk_telephone`(`telephone`),
+    index `idx_position`(`country`,`province`,`city`)
+) ENGINE = InnoDB AUTO_INCREMENT = 1 DEFAULT CHARSET = utf8mb4 COMMENT = '商户基本信息表';
 
 
 

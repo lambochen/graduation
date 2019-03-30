@@ -18,12 +18,12 @@ import java.util.Date;
 @NoArgsConstructor
 public class BaseDomain implements Serializable {
 
-    private static final long serialVersionUID = 5281380965531076875L;
+    private static final long serialVersionUID = -1932487294661201349L;
 
     /**
      * ID
      */
-    private Integer id;
+    private Long id;
 
     /**
      * 创建时间戳
