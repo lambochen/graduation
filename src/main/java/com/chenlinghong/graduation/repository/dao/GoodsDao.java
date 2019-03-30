@@ -43,7 +43,7 @@ public interface GoodsDao {
      * @param rows   每页条数
      * @return
      */
-    List<Goods> listAll(@Param("offset") int offset, @Param("rows") int rows);
+    List<Goods> listAll(@Param("offset") long offset, @Param("rows") long rows);
 
     /**
      * 获取总记录数
@@ -61,7 +61,7 @@ public interface GoodsDao {
      * @return
      */
     List<Goods> listByCatalogOne(@Param("catalogOneId") int catalogOneId,
-                                 @Param("offset") int offset, @Param("rows") int rows);
+                                 @Param("offset") long offset, @Param("rows") long rows);
 
     /**
      * 根据一级目录获取总条数
@@ -80,7 +80,7 @@ public interface GoodsDao {
      * @return
      */
     List<Goods> listByCatalogTwo(@Param("catalogTwoId") int catalogTwoId,
-                                 @Param("offset") int offset, @Param("rows") int rows);
+                                 @Param("offset") long offset, @Param("rows") long rows);
 
     /**
      * 根据二级目录获取记录数
@@ -99,7 +99,7 @@ public interface GoodsDao {
      * @return
      */
     List<Goods> listByBusiness(@Param("businessId") long businessId,
-                               @Param("offset") int offset, @Param("rows") int rows);
+                               @Param("offset") long offset, @Param("rows") long rows);
 
     /**
      * 根据商户ID获取记录数
