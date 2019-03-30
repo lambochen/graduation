@@ -42,6 +42,8 @@ create table if not exists `user` (
     index `idx_position`(`country`,`province`,`city`)
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 DEFAULT CHARSET = utf8mb4 COMMENT = '用户基本信息表';
 
+
+
 -- 创建商品一级目录表
 create table if not exists `goods_catalog_one` (
     `id` int not null auto_increment comment 'ID',

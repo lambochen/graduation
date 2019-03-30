@@ -175,6 +175,8 @@
 
 **7、商品评论表(goods_comment)**
 
+**8、商家基本信息表(business_info)**
+
 
 
 
