@@ -17,6 +17,7 @@ import java.util.Date;
 @NoArgsConstructor
 public class User extends BaseDomain {
 
+    private static final long serialVersionUID = 4044277484420982044L;
     /**
      * 用户昵称
      */

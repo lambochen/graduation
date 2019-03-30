@@ -16,6 +16,7 @@ import java.util.List;
 @NoArgsConstructor
 public class GoodsCatalogTwo extends BaseDomain {
 
+    private static final long serialVersionUID = 4911148946640057211L;
     /**
      * 目录名称
      */

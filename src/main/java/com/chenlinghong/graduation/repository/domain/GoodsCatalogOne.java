@@ -14,6 +14,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class GoodsCatalogOne extends BaseDomain {
 
+    private static final long serialVersionUID = -5053347798176292607L;
     /**
      * 目录名称
      */
