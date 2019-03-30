@@ -131,6 +131,7 @@
 |   goods_info  |   text    |   String  |   商品信息(富文本)    |   not null    |   |
 |   price   |   decimal     |   Double  |   价格      |   null    |   |
 |   remarks     |   varchar(512)    |   String      |   备注      |   null    |   |
+|   business_id    |   bigint |   Long  |   商户ID  |   FK(business_info), not null    |   |
 
 
 其它说明：
@@ -138,6 +139,7 @@
     PK: id
     FK: fk_catalog_one(catalog_one_id)
     FK: fk_catalog_two(catalog_two_id)
+    FK: fk_business(business_id)
     index:  idx_name(name)
     engine: InnoDB
     auto_increment: 1
@@ -175,7 +177,36 @@
 
 **7、商品评论表(goods_comment)**
 
-**8、商家基本信息表(business_info)**
+**8、店铺信息表(business_info)**
+
+| 列 | 数据类型 | 对应Java类型 | 列描述 | 约束/默认值 | 备注 |
+| ------- | ------- | ------- | ------- | ------- | ------- |
+|   id          |   bigint      |   Long        |   ID      | PK，auto_increment   |   |
+|   gmt_create  |   timestamp   |   Date        |   记录创建时间  |    default:current_timestamp, not null |  |
+|   gmt_modified    |   timestamp   |   Date    |   最近修改时间  |   default:current_timestamp, not null |   |
+|   deleted     |   varchar(1)  |   Integer     |   是否删除（0：未删除  1：已删除）     |  default:"0", not null   | 逻辑删除   |
+|   name    |   varchar(16) |   String  |   名称    |   null    |   |
+|   description |   varchar(256)    |   String  |   描述  |   null    |   |
+|   opening_time  |   timestamp  |   Date   |   开店时间    |   default:current_timestamp, not null |   |
+|   country     |   varchar(24) |   String  |   国家  |   null    |       |
+|   province    |   varchar(24) |   String  |   省份  |   null    |   |
+|   city    |   varchar(24) |   String  |   城市  |   null    |   |
+|   position    |   varchar(128) |   String  |   详细地址  |   null    |   |
+|   latitude    |   varchar(32) |   String  |   经度  |   null    |   |
+|   longitude    |   varchar(32) |   String  |   纬度  |   null    |   |
+|   avatar_url  |   varchar(256)    |   String  |   店铺头像URL |   null    |   |
+|   telephone    |   varchar(11) |   String  |   电话号码  |   null    |   |
+|   user_id    |   bigint |   Long  |   用户ID  |   FK(user), not null    |   |
+
+
+其它说明：
+
+    PK: id
+    FK: fk_user(user_id)
+    engine: InnoDB
+    auto_increment: 1
+    charset: utf8mb4
+    comment: 商家基本信息表
 
 
 

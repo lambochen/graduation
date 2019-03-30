@@ -51,4 +51,9 @@ public class Goods extends BaseDomain {
      */
     private String remarks;
 
+    /**
+     * 商家ID
+     */
+    private Long businessInfoId;
+
 }
