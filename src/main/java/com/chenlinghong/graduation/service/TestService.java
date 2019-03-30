@@ -12,8 +12,9 @@ public interface TestService {
 
     /**
      * 分页获取所有列表
-     * @param pageNo    第几页
-     * @param pageSize  每页条数
+     *
+     * @param pageNo   第几页
+     * @param pageSize 每页条数
      * @return
      */
     PageDto<TestBean> listAll(int pageNo, int pageSize);
