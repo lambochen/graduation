@@ -17,7 +17,6 @@ public interface UserService extends IBaseService<User> {
      */
     void register(User user);
 
-
     /**
      * 根据密码登录
      *
