@@ -72,6 +72,28 @@
         id=#{id}
     </select>
 
+    <select id="getByTelephone" parameterType="String" resultMap="BaseResultMap">
+        SELECT
+        <include refid="column_list"/>
+        FROM
+        user
+        WHERE
+        telephone=#{telephone}
+    </select>
+
+    <select id="countByTelephone" parameterType="String" resultType="long">
+        SELECT count(distinct id)
+        FROM user
+        WHERE telephone = #{telephone}
+    </select>
+
+    <select id="countByTelephoneAndPassword" resultType="long">
+        SELECT count(distinct id)
+        FROM user
+        WHERE telephone = #{telephone}
+          and password = #{password}
+    </select>
+
     <update id="update" parameterType="User">
         update user
         set `nick_name`   = #{nickName},
