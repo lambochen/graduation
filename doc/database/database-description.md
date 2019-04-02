@@ -184,9 +184,9 @@
 |   gmt_create  |   timestamp   |   Date        |   记录创建时间  |    default:current_timestamp, not null |  |
 |   gmt_modified    |   timestamp   |   Date    |   最近修改时间  |   default:current_timestamp, not null |   |
 |   deleted     |   varchar(1)  |   Integer     |   是否删除（0：未删除  1：已删除）     |  default:"0", not null   | 逻辑删除   |
-|   goods_id    |   bigint |   Long  |   商品ID    |   FK(goods)    |   |
-|   user_id    |   bigint |   Long  |   用户ID    |   FK(user)    |   |
-|   content |   varchar(256)    |   String  |   评论内容  |   null    |   |
+|   goods_id    |   bigint |   Long  |   商品ID    |   FK(goods) ,not null   |   |
+|   user_id    |   bigint |   Long  |   用户ID    |   FK(user) , not null   |   |
+|   content |   varchar(256)    |   String  |   评论内容  |   not null    |   |
 |   img_one  |   varchar(256)    |   String  |   图片1 |   null    |   |
 |   img_two |   varchar(256)    |   String  |   图片2 |   null    |   |
 |   img_three  |   varchar(256)    |   String  |   图片3 |   null    |   |
@@ -246,8 +246,8 @@
 |   gmt_create  |   timestamp   |   Date        |   记录创建时间  |    default:current_timestamp, not null |  |
 |   gmt_modified    |   timestamp   |   Date    |   最近修改时间  |   default:current_timestamp, not null |   |
 |   deleted     |   varchar(1)  |   Integer     |   是否删除（0：未删除  1：已删除）     |  default:"0", not null   | 逻辑删除   |
-|   goods_id    |   bigint |   Long  |   商品ID    |   FK(goods)    |   |
-|   user_id    |   bigint |   Long  |   用户ID    |   FK(user)    |   |
+|   goods_id    |   bigint |   Long  |   商品ID    |   FK(goods) , not null   |   |
+|   user_id    |   bigint |   Long  |   用户ID    |   FK(user), not null    |   |
 |   description |   varchar(256)    |   String  |   评论内容  |   null    |   |
 
 
