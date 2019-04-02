@@ -52,19 +52,36 @@ public class UserServiceImpl implements UserService {
             // 密码错误
             log.error("UserService.loginByPassword: password is error. telephone={}, password={}", telephone, password);
             throw new BusinessException(ErrorEnum.PASSWORD_IS_ERROR);
-        } else if (resultCount == 1){
+        } else if (resultCount == 1) {
             // 登录成功
-            return null;
+            return getByTelephone(telephone);
         } else {
             // TODO 数据有误
-            log.error("UserService.loginByPassword: password is error. telephone={}, password={}", telephone, password);
+            log.error("UserService.loginByPassword: database has some errors. telephone={}, password={}", telephone, password);
             throw new BusinessException(ErrorEnum.PASSWORD_IS_ERROR);
         }
     }
 
     @Override
     public UserVo loginBySms(String telephone) {
-        return null;
+        if (StringUtils.isBlank(telephone)) {
+            // 参数为空
+            log.error("UserService.loginBySms: param is null. telephone={}", telephone);
+            throw new BusinessException(ErrorEnum.PARAM_IS_NULL);
+        }
+        int dataCount = userDao.countByTelephone(telephone);
+        if (dataCount <= 0) {
+            // 密码错误
+            log.error("UserService.loginBySms: password is error. telephone={}", telephone);
+            throw new BusinessException(ErrorEnum.PASSWORD_IS_ERROR);
+        } else if (dataCount == 1) {
+            // 登录成功
+            return getByTelephone(telephone);
+        } else {
+            // TODO 数据有误
+            log.error("UserService.loginBySms: database has some errors. telephone={}", telephone);
+            throw new BusinessException(ErrorEnum.PASSWORD_IS_ERROR);
+        }
     }
 
     @Override
@@ -90,5 +107,14 @@ public class UserServiceImpl implements UserService {
     @Override
     public int update(User user) {
         return 0;
+    }
+
+    private UserVo getByTelephone(String telephone) {
+        UserVo userVo = new UserVo();
+        // 用户基本信息
+        User userInfo = userDao.getByTelephone(telephone);
+        userVo.setUserInfo(userInfo);
+        // TODO 其它信息
+        return userVo;
     }
 }
