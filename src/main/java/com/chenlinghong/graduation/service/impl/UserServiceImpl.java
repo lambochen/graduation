@@ -47,7 +47,7 @@ public class UserServiceImpl implements UserService {
         // 获取密码密文
         String passwordMD5 = EncryptionUtil.ccMD5(password);
         // 校验登录
-        int resultCount = userDao.countByTelephoneAndPassword(telephone, password);
+        int resultCount = userDao.countByTelephoneAndPassword(telephone, passwordMD5);
         if (resultCount <= 0) {
             // 密码错误
             log.error("UserService.loginByPassword: password is error. telephone={}, password={}", telephone, password);
