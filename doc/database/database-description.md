@@ -33,9 +33,9 @@
     | character_set_server     | utf8mb4                                      |
     | character_set_system     | utf8                                         |
     
-### 表字段说明
+## 表字段说明
 
-**1、用户基本信息表（user）**
+**用户基本信息表（user）**
 
 | 列 | 数据类型 | 对应Java类型 | 列描述 | 约束/默认值 | 备注 |
 | ------- | ------- | ------- | ------- | ------- | ------- |
@@ -69,9 +69,9 @@
     charset: utf8mb4
     comment: 用户基本信息表
     
-**2、用户标签表（user_tag）**
+**用户标签表（user_tag）**
     
-**3、商品一级目录表(goods_catalog_one)**
+**商品一级目录表(goods_catalog_one)**
 
 | 列 | 数据类型 | 对应Java类型 | 列描述 | 约束/默认值 | 备注 |
 | ------- | ------- | ------- | ------- | ------- | ------- |
@@ -92,7 +92,7 @@
     charset: utf8mb4
     comment: 商品一级目录表
 
-**4、商品二级目录表(goods_catalog_two)**
+**商品二级目录表(goods_catalog_two)**
 
 | 列 | 数据类型 | 对应Java类型 | 列描述 | 约束/默认值 | 备注 |
 | ------- | ------- | ------- | ------- | ------- | ------- |
@@ -116,7 +116,7 @@
     comment: 商品二级目录表
 
 
-**5、商品基本信息表(goods)**
+**商品基本信息表(goods)**
 
 | 列 | 数据类型 | 对应Java类型 | 列描述 | 约束/默认值 | 备注 |
 | ------- | ------- | ------- | ------- | ------- | ------- |
@@ -146,7 +146,7 @@
     charset: utf8mb4
     comment: 商品基本信息表
     
-**6、商品订单表(goods_order)**
+**商品订单表(goods_order)**
 
 | 列 | 数据类型 | 对应Java类型 | 列描述 | 约束/默认值 | 备注 |
 | ------- | ------- | ------- | ------- | ------- | ------- |
@@ -175,9 +175,9 @@
     charset: utf8mb4
     comment: 商品订单表
 
-**7、商品评论表(goods_comment)**
+**商品评论表(goods_comment)**
 
-**8、店铺信息表(business_info)**
+**店铺信息表(business_info)**
 
 | 列 | 数据类型 | 对应Java类型 | 列描述 | 约束/默认值 | 备注 |
 | ------- | ------- | ------- | ------- | ------- | ------- |
@@ -209,8 +209,143 @@
     comment: 商家基本信息表
 
 
+**商品评论表(goods_comment)**
+
+| 列 | 数据类型 | 对应Java类型 | 列描述 | 约束/默认值 | 备注 |
+| ------- | ------- | ------- | ------- | ------- | ------- |
+|   id          |   bigint      |   Long        |   ID      | PK，auto_increment   |   |
+|   gmt_create  |   timestamp   |   Date        |   记录创建时间  |    default:current_timestamp, not null |  |
+|   gmt_modified    |   timestamp   |   Date    |   最近修改时间  |   default:current_timestamp, not null |   |
+|   deleted     |   varchar(1)  |   Integer     |   是否删除（0：未删除  1：已删除）     |  default:"0", not null   | 逻辑删除   |
+|   goods_id    |   bigint |   Long  |   商品ID    |   FK(goods)    |   |
+|   user_id    |   bigint |   Long  |   用户ID    |   FK(user)    |   |
+|   content |   varchar(256)    |   String  |   评论内容  |   null    |   |
+|   img_one  |   varchar(256)    |   String  |   图片1 |   null    |   |
+|   img_two |   varchar(256)    |   String  |   图片2 |   null    |   |
+|   img_three  |   varchar(256)    |   String  |   图片3 |   null    |   |
 
 
+其它说明：
 
+    PK: id
+    FK: fk_user(user_id)
+    FK: fk_goods(goods_id)
+    uk_user_goods(goods_id, user_id)
+    engine: InnoDB
+    auto_increment: 1
+    charset: utf8mb4
+    comment: 商家评论表
+
+
+**支付记录表(pay)**【待完善】
+
+| 列 | 数据类型 | 对应Java类型 | 列描述 | 约束/默认值 | 备注 |
+| ------- | ------- | ------- | ------- | ------- | ------- |
+|   id          |   bigint      |   Long        |   ID      | PK，auto_increment   |   |
+|   gmt_create  |   timestamp   |   Date        |   记录创建时间  |    default:current_timestamp, not null |  |
+|   gmt_modified    |   timestamp   |   Date    |   最近修改时间  |   default:current_timestamp, not null |   |
+|   deleted     |   varchar(1)  |   Integer     |   是否删除（0：未删除  1：已删除）     |  default:"0", not null   | 逻辑删除   |
+|   goods_id    |   bigint |   Long  |   商品ID    |   FK(goods)    |   |
+|   user_id    |   bigint |   Long  |   用户ID    |   FK(user)    |   |
+|   description |   varchar(256)    |   String  |   评论内容  |   null    |   |
+
+
+其它说明：
+
+    PK: id
+    FK: fk_user(user_id)
+    FK: fk_goods(goods_id)
+    engine: InnoDB
+    auto_increment: 1
+    charset: utf8mb4
+    comment: 支付记录表
+
+
+**消息、客服表(chat)**
+
+| 列 | 数据类型 | 对应Java类型 | 列描述 | 约束/默认值 | 备注 |
+| ------- | ------- | ------- | ------- | ------- | ------- |
+|   id          |   bigint      |   Long        |   ID      | PK，auto_increment   |   |
+|   gmt_create  |   timestamp   |   Date        |   记录创建时间  |    default:current_timestamp, not null |  |
+|   gmt_modified    |   timestamp   |   Date    |   最近修改时间  |   default:current_timestamp, not null |   |
+|   deleted     |   varchar(1)  |   Integer     |   是否删除（0：未删除  1：已删除）     |  default:"0", not null   | 逻辑删除   |
+|   sender    |   bigint |   Long  |   发送者ID    |   FK(user),not null    |   |
+|   receiver    |   bigint |   Long  |   接收者ID    |   FK(user),not null    |   |
+|   content |   varchar(2048)    |   String  |   消息内容(富文本)  |   not null    |   |
+|   chat_id |   varchar(256)    |   String  |   会话ID  |   not null    |   |
+
+其它说明：
+
+    PK: id
+    FK: fk_sender(sender)
+    FK: fk_receiver(receiver)
+    engine: InnoDB
+    auto_increment: 1
+    charset: utf8mb4
+    comment: 客服消息表
+
+
+**购物车表(chopping_cart)**
+
+| 列 | 数据类型 | 对应Java类型 | 列描述 | 约束/默认值 | 备注 |
+| ------- | ------- | ------- | ------- | ------- | ------- |
+|   id          |   bigint      |   Long        |   ID      | PK，auto_increment   |   |
+|   gmt_create  |   timestamp   |   Date        |   记录创建时间  |    default:current_timestamp, not null |  |
+|   gmt_modified    |   timestamp   |   Date    |   最近修改时间  |   default:current_timestamp, not null |   |
+|   deleted     |   varchar(1)  |   Integer     |   是否删除（0：未删除  1：已删除）     |  default:"0", not null   | 逻辑删除   |
+|   user_id    |   bigint |   Long  |   用户ID    |   FK(user),not null    |   |
+|   goods_id    |   bigint |   Long  |   商品ID    |   FK(goods),not null    |   |
+
+其它说明：
+
+    PK: id
+    FK: fk_user(user_id)
+    FK: fk_goods(goods_id)
+    engine: InnoDB
+    auto_increment: 1
+    charset: utf8mb4
+    comment: 购物车表
+ 
+ 
+**用户信用记录表(credit_user)**【待完善】
+
+| 列 | 数据类型 | 对应Java类型 | 列描述 | 约束/默认值 | 备注 |
+| ------- | ------- | ------- | ------- | ------- | ------- |
+|   id          |   bigint      |   Long        |   ID      | PK，auto_increment   |   |
+|   gmt_create  |   timestamp   |   Date        |   记录创建时间  |    default:current_timestamp, not null |  |
+|   gmt_modified    |   timestamp   |   Date    |   最近修改时间  |   default:current_timestamp, not null |   |
+|   deleted     |   varchar(1)  |   Integer     |   是否删除（0：未删除  1：已删除）     |  default:"0", not null   | 逻辑删除   |
+|   user_id    |   bigint |   Long  |   用户ID    |   FK(user),not null    |   |
+
+其它说明：
+
+    PK: id
+    FK: fk_user(user_id)
+    engine: InnoDB
+    auto_increment: 1
+    charset: utf8mb4
+    comment: 用户信用记录表
+
+
+**商户信用记录表(credit_business)**【待完善】
+
+| 列 | 数据类型 | 对应Java类型 | 列描述 | 约束/默认值 | 备注 |
+| ------- | ------- | ------- | ------- | ------- | ------- |
+|   id          |   bigint      |   Long        |   ID      | PK，auto_increment   |   |
+|   gmt_create  |   timestamp   |   Date        |   记录创建时间  |    default:current_timestamp, not null |  |
+|   gmt_modified    |   timestamp   |   Date    |   最近修改时间  |   default:current_timestamp, not null |   |
+|   deleted     |   varchar(1)  |   Integer     |   是否删除（0：未删除  1：已删除）     |  default:"0", not null   | 逻辑删除   |
+|   business_id    |   bigint |   Long  |   商户ID    |   FK(business_info),not null    |   |
+
+其它说明：
+
+    PK: id
+    FK: fk_business(business_id)
+    engine: InnoDB
+    auto_increment: 1
+    charset: utf8mb4
+    comment: 商户信用记录表
+
+**用户历史行为()**【待完善】
 
 
