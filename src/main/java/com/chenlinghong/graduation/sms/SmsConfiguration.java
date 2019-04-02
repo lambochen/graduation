@@ -15,12 +15,12 @@ public class SmsConfiguration {
     /**
      * 开发者注册后系统自动生成的账号，可在官网登录后查看
      */
-    public static final String ACCOUNT_SID = "d2c4b909d5444bde884d3781be4a7919";
+    public static final String ACCOUNT_SID = "67ccadf3871f43e6a408ca7e5c68f9f0";
 
     /**
      * 开发者注册后系统自动生成的TOKEN，可在官网登录后查看
      */
-    public static final String AUTH_TOKEN = "6c6f6c41fc224f6480b2ead1fc62d54e";
+    public static final String AUTH_TOKEN = "cc2f6172984f4151a1e23389fd90f3c4";
 
     /**
      * 响应数据类型, JSON或XML
