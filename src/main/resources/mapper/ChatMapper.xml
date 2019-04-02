@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chenlinghong.graduation.repository.dao.ChatDao">
+
+    <resultMap id="BaseResultMap" type="com.chenlinghong.graduation.repository.domain.Chat">
+        <id column="id" property="id" jdbcType="BIGINT" javaType="Long"/>
+        <result column="gmt_create" property="gmtCreate" jdbcType="TIMESTAMP" javaType="Date"/>
+        <result column="gmt_modified" property="gmtModified" jdbcType="TIMESTAMP" javaType="Date"/>
+        <result column="deleted" property="deleted" jdbcType="VARCHAR" javaType="Integer"/>
+        <result column="chat_id" property="chatId" jdbcType="VARCHAR" javaType="java.lang.String"/>
+        <result column="content" property="content" jdbcType="VARCHAR" javaType="java.lang.String"/>
+        <result column="sender" property="sender" jdbcType="BIGINT" javaType="Long"/>
+        <result column="receiver" property="receiver" jdbcType="BIGINT" javaType="Long"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        gmt_create, gmt_modified, deleted, `chat_id`, content, sender, receiver
+    </sql>
+
+    <sql id="column_list">
+        `id`,
+        <include refid="Base_Column_List"/>
+    </sql>
+
+    <insert id="insert" parameterType="Chat">
+        <selectKey keyProperty="id" order="AFTER" resultType="Long">
+            SELECT last_insert_id()
+        </selectKey>
+        INSERT into
+        chat(
+        <include refid="Base_Column_List"/>
+        )
+        values(current_timestamp, current_timestamp, "0", #{chatId}, #{content}, #{sender}, #{receiver})
+    </insert>
+
+    <update id="deleteById">
+        update chat
+        set deleted = '1'
+        where id = #{id}
+    </update>
+
+    <update id="deleteBySender">
+        update chat
+        set deleted = '1'
+        where sender = #{sender}
+    </update>
+
+    <select id="getById" resultMap="BaseResultMap">
+        SELECT
+        <include refid="column_list"/>
+        FROM
+        chat
+        WHERE
+        id=#{id}
+    </select>
+
+    <select id="listByChat" resultMap="BaseResultMap">
+        SELECT
+        <include refid="column_list"/>
+        FROM
+        chat
+        where chat_id = #{chatId}
+        order by id desc
+        <if test="offset != null and rows != null">
+            limit #{offset},#{rows}
+        </if>
+        <if test="offset == null or rows == null">
+            limit 0,10
+        </if>
+    </select>
+
+    <select id="countByChat" resultType="long">
+        SELECT count(*)
+        FROM chat
+        where chat_id = #{chatId}
+    </select>
+</mapper>

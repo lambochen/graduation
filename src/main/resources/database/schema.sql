@@ -134,6 +134,47 @@ create table if not exists `business_info` (
     index `idx_position`(`country`,`province`,`city`)
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 DEFAULT CHARSET = utf8mb4 COMMENT = '商户基本信息表';
 
+-- 创建商品评论表
+create table if not exists `goods_comment` (
+    `id` bigint not null auto_increment comment 'ID',
+    `gmt_create`   timestamp NULL     DEFAULT CURRENT_TIMESTAMP  COMMENT '创建时间戳',
+    `gmt_modified` timestamp NULL     DEFAULT CURRENT_TIMESTAMP  COMMENT '最近修改时间戳',
+    `deleted`      varchar(1)         default '0'  COMMENT '是否删除：0未删除，1已删除',
+    `img_one` varchar(256) null comment '图片1',
+    `img_two` varchar(256) null comment '图片2',
+    `img_three` varchar(256) null comment '图片3',
+    `content` varchar(256) not null comment '评论内容',
+    `user_id` bigint not null comment '用户ID【FK(user)】',
+    `goods_id` bigint not null comment '商品ID【FK(goods)】',
+    primary key (`id`)
+) ENGINE = InnoDB AUTO_INCREMENT = 1 DEFAULT CHARSET = utf8mb4 COMMENT = '商品评论表';
+
+
+-- 创建客服消息表
+create table if not exists `chat` (
+    `id` bigint not null auto_increment comment 'ID',
+    `gmt_create`   timestamp NULL     DEFAULT CURRENT_TIMESTAMP  COMMENT '创建时间戳',
+    `gmt_modified` timestamp NULL     DEFAULT CURRENT_TIMESTAMP  COMMENT '最近修改时间戳',
+    `deleted`      varchar(1)         default '0'  COMMENT '是否删除：0未删除，1已删除',
+    `chat_id` varchar(256) not null comment '会话ID【自定义】',
+    `content` varchar(2048) not null comment '聊天内容',
+    `sender` bigint not null comment '发送者ID【FK(user)】',
+    `receiver` bigint not null comment '接收者ID【FK(user)】',
+    primary key (`id`)
+) ENGINE = InnoDB AUTO_INCREMENT = 1 DEFAULT CHARSET = utf8mb4 COMMENT = '客服消息表';
+
+
+-- 创建购物车表
+create table if not exists `shopping_cart` (
+    `id` bigint not null auto_increment comment 'ID',
+    `gmt_create`   timestamp NULL     DEFAULT CURRENT_TIMESTAMP  COMMENT '创建时间戳',
+    `gmt_modified` timestamp NULL     DEFAULT CURRENT_TIMESTAMP  COMMENT '最近修改时间戳',
+    `deleted`      varchar(1)         default '0'  COMMENT '是否删除：0未删除，1已删除',
+    `user_id` bigint not null comment '用户ID【FK(user)】',
+    `goods_id` bigint not null comment '商品ID【FK(goods)】',
+    primary key (`id`)
+) ENGINE = InnoDB AUTO_INCREMENT = 1 DEFAULT CHARSET = utf8mb4 COMMENT = '购物车表';
+
 
 
 
