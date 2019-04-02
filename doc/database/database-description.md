@@ -175,7 +175,34 @@
     charset: utf8mb4
     comment: 商品订单表
 
+
 **商品评论表(goods_comment)**
+
+| 列 | 数据类型 | 对应Java类型 | 列描述 | 约束/默认值 | 备注 |
+| ------- | ------- | ------- | ------- | ------- | ------- |
+|   id          |   bigint      |   Long        |   ID      | PK，auto_increment   |   |
+|   gmt_create  |   timestamp   |   Date        |   记录创建时间  |    default:current_timestamp, not null |  |
+|   gmt_modified    |   timestamp   |   Date    |   最近修改时间  |   default:current_timestamp, not null |   |
+|   deleted     |   varchar(1)  |   Integer     |   是否删除（0：未删除  1：已删除）     |  default:"0", not null   | 逻辑删除   |
+|   goods_id    |   bigint |   Long  |   商品ID    |   FK(goods)    |   |
+|   user_id    |   bigint |   Long  |   用户ID    |   FK(user)    |   |
+|   content |   varchar(256)    |   String  |   评论内容  |   null    |   |
+|   img_one  |   varchar(256)    |   String  |   图片1 |   null    |   |
+|   img_two |   varchar(256)    |   String  |   图片2 |   null    |   |
+|   img_three  |   varchar(256)    |   String  |   图片3 |   null    |   |
+
+
+其它说明：
+
+    PK: id
+    FK: fk_user(user_id)
+    FK: fk_goods(goods_id)
+    uk_user_goods(goods_id, user_id)
+    engine: InnoDB
+    auto_increment: 1
+    charset: utf8mb4
+    comment: 商家评论表
+    
 
 **店铺信息表(business_info)**
 
@@ -209,32 +236,6 @@
     comment: 商家基本信息表
 
 
-**商品评论表(goods_comment)**
-
-| 列 | 数据类型 | 对应Java类型 | 列描述 | 约束/默认值 | 备注 |
-| ------- | ------- | ------- | ------- | ------- | ------- |
-|   id          |   bigint      |   Long        |   ID      | PK，auto_increment   |   |
-|   gmt_create  |   timestamp   |   Date        |   记录创建时间  |    default:current_timestamp, not null |  |
-|   gmt_modified    |   timestamp   |   Date    |   最近修改时间  |   default:current_timestamp, not null |   |
-|   deleted     |   varchar(1)  |   Integer     |   是否删除（0：未删除  1：已删除）     |  default:"0", not null   | 逻辑删除   |
-|   goods_id    |   bigint |   Long  |   商品ID    |   FK(goods)    |   |
-|   user_id    |   bigint |   Long  |   用户ID    |   FK(user)    |   |
-|   content |   varchar(256)    |   String  |   评论内容  |   null    |   |
-|   img_one  |   varchar(256)    |   String  |   图片1 |   null    |   |
-|   img_two |   varchar(256)    |   String  |   图片2 |   null    |   |
-|   img_three  |   varchar(256)    |   String  |   图片3 |   null    |   |
-
-
-其它说明：
-
-    PK: id
-    FK: fk_user(user_id)
-    FK: fk_goods(goods_id)
-    uk_user_goods(goods_id, user_id)
-    engine: InnoDB
-    auto_increment: 1
-    charset: utf8mb4
-    comment: 商家评论表
 
 
 **支付记录表(pay)**【待完善】
