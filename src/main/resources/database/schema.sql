@@ -165,7 +165,7 @@ create table if not exists `chat` (
 
 
 -- 创建购物车表
-create table if not exists `chopping_cart` (
+create table if not exists `shopping_cart` (
     `id` bigint not null auto_increment comment 'ID',
     `gmt_create`   timestamp NULL     DEFAULT CURRENT_TIMESTAMP  COMMENT '创建时间戳',
     `gmt_modified` timestamp NULL     DEFAULT CURRENT_TIMESTAMP  COMMENT '最近修改时间戳',
