@@ -24,6 +24,16 @@ public final class TelephoneUtil {
     }
 
     /**
+     * 非法电话号码
+     *
+     * @param telephone
+     * @return
+     */
+    public static boolean isNotPhoneLegal(String telephone) {
+        return !isPhoneLegal(telephone);
+    }
+
+    /**
      * 大陆手机号码11位数，匹配格式：前三位固定格式+后8位任意数
      * 此方法中前三位格式有：
      * 13+任意数
@@ -39,6 +49,10 @@ public final class TelephoneUtil {
         return m.matches();
     }
 
+    public static boolean isNotChinaPhoneLegal(String str) {
+        return !isChinaPhoneLegal(str);
+    }
+
     /**
      * 香港手机号码8位数，5|6|8|9开头+7位任意数
      */
@@ -47,6 +61,10 @@ public final class TelephoneUtil {
         Pattern p = Pattern.compile(regExp);
         Matcher m = p.matcher(str);
         return m.matches();
+    }
+
+    public static boolean isNotHKPhoneLegal(String str) {
+        return !isHKPhoneLegal(str);
     }
 
     /**
@@ -60,7 +78,7 @@ public final class TelephoneUtil {
             throw new BusinessException(ErrorEnum.PARAM_IS_NULL);
         }
         telephone = telephone.trim();
-        if (!isPhoneLegal(telephone)) {
+        if (isNotPhoneLegal(telephone)) {
             throw new BusinessException(ErrorEnum.TELEPHONE_ILLEGAL);
         }
         String smsCode = generateSmsCode();
@@ -77,7 +95,7 @@ public final class TelephoneUtil {
      * @return
      */
     private static String generateSmsCode() {
-        StringBuilder result = new StringBuilder("");
+        StringBuilder result = new StringBuilder();
         for (int i = 0; i < 6; i++) {
             result.append("" + (int) (Math.random() * 10));
         }
