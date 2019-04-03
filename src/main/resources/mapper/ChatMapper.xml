@@ -24,7 +24,7 @@
         <include refid="Base_Column_List"/>
     </sql>
 
-    <insert id="insert" parameterType="Chat">
+    <insert id="insert" parameterType="com.chenlinghong.graduation.repository.domain.Chat">
         <selectKey keyProperty="id" order="AFTER" resultType="Long">
             SELECT last_insert_id()
         </selectKey>

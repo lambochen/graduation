@@ -31,7 +31,7 @@
         <include refid="Base_Column_List"/>
     </sql>
 
-    <insert id="insert" parameterType="GoodsOrder">
+    <insert id="insert" parameterType="com.chenlinghong.graduation.repository.domain.GoodsOrder">
         <selectKey keyProperty="id" order="AFTER" resultType="Long">
             SELECT last_insert_id()
         </selectKey>
@@ -119,7 +119,7 @@
         where user_id = #{userId}
     </select>
 
-    <update id="update" parameterType="GoodsOrder">
+    <update id="update" parameterType="com.chenlinghong.graduation.repository.domain.GoodsOrder">
         update goods_order
         set `name`       = #{name},
             `remarks`    = #{remarks},

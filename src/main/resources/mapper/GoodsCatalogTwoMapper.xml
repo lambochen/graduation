@@ -27,7 +27,7 @@
         current_timestamp, current_timestamp, '0'
     </sql>
 
-    <insert id="insert" parameterType="GoodsCatalogTwo">
+    <insert id="insert" parameterType="com.chenlinghong.graduation.repository.domain.GoodsCatalogTwo">
         <selectKey keyProperty="id" order="AFTER" resultType="Long">
             SELECT last_insert_id()
         </selectKey>
