@@ -35,6 +35,11 @@ public enum ErrorEnum {
     NO_USER(3000, "用户不存在"),
     PASSWORD_IS_ERROR(3001, "密码不正确"),
 
+    /**
+     * 4XXX session相关
+     */
+    SESSION_DATA_IS_NULL(4000, "Session数据为空"),
+
 
     ;
 

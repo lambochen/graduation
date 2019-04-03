@@ -1,15 +1,14 @@
 package com.chenlinghong.graduation.api.controller;
 
+import com.chenlinghong.graduation.api.util.SessionUtil;
 import com.chenlinghong.graduation.common.ResultUtil;
 import com.chenlinghong.graduation.common.ResultVo;
-import com.chenlinghong.graduation.constant.SessionConstant;
 import com.chenlinghong.graduation.util.TelephoneUtil;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 /**
  * @Description 电话号码
@@ -25,21 +24,12 @@ public class TelephoneController {
         // 发送短信
         String smsCode = TelephoneUtil.sendSMSCode(telephone);
         // 写入session
-        inputTelephone(telephone, request);
+        SessionUtil.putTelephone(telephone, request);
         /**
          * TODO 将验证码写入redis
          */
         return ResultUtil.success();
     }
 
-    /**
-     * 将电话号码写入session
-     *
-     * @param telephone
-     * @param request
-     */
-    private void inputTelephone(String telephone, HttpServletRequest request) {
-        HttpSession session = request.getSession();
-        session.setAttribute(SessionConstant.TELEPHONE, telephone);
-    }
+
 }
