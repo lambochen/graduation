@@ -5,11 +5,13 @@ import com.chenlinghong.graduation.common.ResultUtil;
 import com.chenlinghong.graduation.common.ResultVo;
 import com.chenlinghong.graduation.enums.ErrorEnum;
 import com.chenlinghong.graduation.exception.BusinessException;
+import com.chenlinghong.graduation.repository.domain.User;
 import com.chenlinghong.graduation.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -71,6 +73,26 @@ public class UserController {
             return ResultUtil.success(userService.loginBySms(telephone));
         }
         return ResultUtil.error(ErrorEnum.SMS_TIMEOUT);
+    }
+
+    /**
+     * 注冊用戶
+     *
+     * @param user
+     * @return
+     */
+    @PostMapping(value = "/register")
+    public ResultVo register(@RequestBody User user) {
+        log.info("UserController#register: param info. user={}", user);
+        if (user == null) {
+            log.error("UserController#register: param is null. user={}", user);
+            throw new BusinessException(ErrorEnum.PARAM_IS_NULL);
+        }
+        userService.register(user);
+        /**
+         * 注册后直接返回空对象，强制要求用户登录一次
+         */
+        return ResultUtil.success();
     }
 
 

@@ -41,7 +41,7 @@
         current_timestamp, current_timestamp, '0'
     </sql>
 
-    <insert id="insert" parameterType="User">
+    <insert id="insert" parameterType="com.chenlinghong.graduation.repository.domain.User">
         <selectKey keyProperty="id" order="AFTER" resultType="Long">
             SELECT last_insert_id()
         </selectKey>
@@ -94,7 +94,7 @@
           and password = #{password}
     </select>
 
-    <update id="update" parameterType="User">
+    <update id="update" parameterType="com.chenlinghong.graduation.repository.domain.User">
         update user
         set `nick_name`   = #{nickName},
             `real_name`   = #{realName},

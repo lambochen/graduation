@@ -27,7 +27,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void register(User user) {
-
+        /**
+         * TODO 其他业务处理
+         */
+        insert(user);
     }
 
     @Override
