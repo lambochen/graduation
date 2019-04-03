@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 /**
  * @Description 商品一级目录
  * @Author chenlinghong
@@ -24,6 +26,11 @@ public class GoodsCatalogOne extends BaseDomain {
      * 描述
      */
     private String description;
+
+    /**
+     * 二级目录列表
+     */
+    private List<GoodsCatalogTwo> catalogTwoList;
 
     public GoodsCatalogOne(String name) {
         this.name = name;

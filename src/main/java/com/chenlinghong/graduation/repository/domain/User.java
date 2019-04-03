@@ -1,6 +1,6 @@
 package com.chenlinghong.graduation.repository.domain;
 
-import jdk.nashorn.internal.ir.annotations.Ignore;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -36,7 +36,7 @@ public class User extends BaseDomain {
     /**
      * 密码
      */
-    @Ignore
+    @JsonIgnore
     private String password;
 
     /**

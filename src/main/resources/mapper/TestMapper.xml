@@ -16,7 +16,7 @@
         `id`, gmt_create, gmt_modified, deleted, `name`
     </sql>
 
-    <insert id="insert" parameterType="TestBean">
+    <insert id="insert" parameterType="com.chenlinghong.graduation.repository.domain.TestBean">
         <selectKey keyProperty="id" order="AFTER" resultType="int">
             SELECT last_insert_id()
         </selectKey>

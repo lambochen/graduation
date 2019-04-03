@@ -26,7 +26,7 @@
         <include refid="Base_Column_List"/>
     </sql>
 
-    <insert id="insert" parameterType="GoodsComment">
+    <insert id="insert" parameterType="com.chenlinghong.graduation.repository.domain.GoodsComment">
         <selectKey keyColumn="id" keyProperty="id" order="AFTER" resultType="long">
             SELECT last_insert_id()
         </selectKey>
@@ -108,7 +108,7 @@
         where goods_id = #{goodsId}
     </select>
 
-    <update id="update" parameterType="GoodsComment">
+    <update id="update" parameterType="com.chenlinghong.graduation.repository.domain.GoodsComment">
         update goods_comment
         set `content`    = #{content},
             `img_one`    = #{imgOne},

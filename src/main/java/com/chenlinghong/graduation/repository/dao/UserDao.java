@@ -35,6 +35,31 @@ public interface UserDao {
     User getById(int id);
 
     /**
+     * 根据电话号码获取
+     *
+     * @param telephone
+     * @return
+     */
+    User getByTelephone(String telephone);
+
+    /**
+     * 根据电话号码获取记录数
+     *
+     * @param telephone
+     * @return
+     */
+    int countByTelephone(String telephone);
+
+    /**
+     * 根据密码获取记录数
+     *
+     * @param telephone
+     * @param password
+     * @return
+     */
+    int countByTelephoneAndPassword(@Param("telephone") String telephone, @Param("password") String password);
+
+    /**
      * 更新用户基本信息
      *
      * @param user

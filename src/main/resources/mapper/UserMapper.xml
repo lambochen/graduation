@@ -41,7 +41,7 @@
         current_timestamp, current_timestamp, '0'
     </sql>
 
-    <insert id="insert" parameterType="User">
+    <insert id="insert" parameterType="com.chenlinghong.graduation.repository.domain.User">
         <selectKey keyProperty="id" order="AFTER" resultType="Long">
             SELECT last_insert_id()
         </selectKey>
@@ -72,7 +72,29 @@
         id=#{id}
     </select>
 
-    <update id="update" parameterType="User">
+    <select id="getByTelephone" parameterType="String" resultMap="BaseResultMap">
+        SELECT
+        <include refid="column_list"/>
+        FROM
+        user
+        WHERE
+        telephone=#{telephone}
+    </select>
+
+    <select id="countByTelephone" parameterType="String" resultType="int">
+        SELECT count(distinct id)
+        FROM user
+        WHERE telephone = #{telephone}
+    </select>
+
+    <select id="countByTelephoneAndPassword" resultType="int">
+        SELECT count(distinct id)
+        FROM user
+        WHERE telephone = #{telephone}
+          and password = #{password}
+    </select>
+
+    <update id="update" parameterType="com.chenlinghong.graduation.repository.domain.User">
         update user
         set `nick_name`   = #{nickName},
             `real_name`   = #{realName},
