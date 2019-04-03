@@ -86,7 +86,17 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public int insert(User user) {
-        return 0;
+        if (user == null) {
+            log.error("UserService#insert: param is null. user={}", user);
+            throw new BusinessException(ErrorEnum.PARAM_ILLEGAL);
+        }
+        // 加密处理
+        user.setPassword(EncryptionUtil.ccMD5(user.getPassword()));
+        int result = userDao.insert(user);
+        /**
+         * TODO 后期做校验处理
+         */
+        return result;
     }
 
     @Override
