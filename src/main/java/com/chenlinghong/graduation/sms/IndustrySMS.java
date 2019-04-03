@@ -28,7 +28,7 @@ public class IndustrySMS {
     /**
      * 短信头部
      */
-    private static final String smsHead = "【基于NCNN图像识别的农商平台】您的验证码为";
+    private static final String smsHead = "【小农娱乐科技】您的验证码为";
 
     /**
      * 短信尾部  固定2分钟
