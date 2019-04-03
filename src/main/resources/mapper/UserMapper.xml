@@ -81,13 +81,13 @@
         telephone=#{telephone}
     </select>
 
-    <select id="countByTelephone" parameterType="String" resultType="long">
+    <select id="countByTelephone" parameterType="String" resultType="int">
         SELECT count(distinct id)
         FROM user
         WHERE telephone = #{telephone}
     </select>
 
-    <select id="countByTelephoneAndPassword" resultType="long">
+    <select id="countByTelephoneAndPassword" resultType="int">
         SELECT count(distinct id)
         FROM user
         WHERE telephone = #{telephone}

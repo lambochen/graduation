@@ -1,6 +1,7 @@
 package com.chenlinghong.graduation.service.impl;
 
 
+import com.chenlinghong.graduation.api.vo.UserVo;
 import com.chenlinghong.graduation.repository.domain.User;
 import com.chenlinghong.graduation.service.UserService;
 import org.junit.Assert;
@@ -41,6 +42,13 @@ public class UserServiceImplTest {
         Assert.assertEquals(1, result);
     }
 
+    @Test
+    public void loginByPwd() {
+        String telephone = "13008142306";
+        String password = "123456";
+        UserVo userVo = userService.loginByPwd(telephone, password);
+        System.out.println(userVo);
+    }
 
 
 }
