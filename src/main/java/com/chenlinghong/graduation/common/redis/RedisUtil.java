@@ -1,5 +1,7 @@
 package com.chenlinghong.graduation.common.redis;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.data.redis.connection.DataType;
 import org.springframework.data.redis.core.Cursor;
 import org.springframework.data.redis.core.ScanOptions;
@@ -17,20 +19,15 @@ import java.util.concurrent.TimeUnit;
  * @Description redis 工具类
  * @Author chenlinghong
  * @Date 2019/4/4 16:54
- * @Version V1.0    (GitHub文档: https://github.com/chenlinghong/RedisUtil )
+ * @Version V1.0
+ *
+ * GitHub文档: https://github.com/chenlinghong/RedisUtil
  */
 public class RedisUtil {
 
+    @Getter
+    @Setter
     private StringRedisTemplate redisTemplate;
-
-    public void setRedisTemplate(StringRedisTemplate redisTemplate) {
-        this.redisTemplate = redisTemplate;
-    }
-
-    public StringRedisTemplate getRedisTemplate() {
-        return this.redisTemplate;
-    }
-
 
     /** -------------------key相关操作--------------------- */
 
@@ -254,7 +251,7 @@ public class RedisUtil {
      * 设置ASCII码, 字符串'a'的ASCII码是97, 转为二进制是'01100001', 此方法是将二进制第offset位值变为value
      *
      * @param key
-     * @param postion
+     * @param offset
      *            位置
      * @param value
      *            值,true为1, false为0
@@ -335,7 +332,7 @@ public class RedisUtil {
      * 增加(自增长), 负数则为自减
      *
      * @param key
-     * @param value
+     * @param increment
      * @return
      */
     public Long incrBy(String key, long increment) {
@@ -345,7 +342,7 @@ public class RedisUtil {
     /**
      *
      * @param key
-     * @param value
+     * @param increment
      * @return
      */
     public Double incrByFloat(String key, double increment) {
@@ -976,8 +973,6 @@ public class RedisUtil {
      * 获取集合所有元素
      *
      * @param key
-     * @param otherKeys
-     * @param destKey
      * @return
      */
     public Set<String> setMembers(String key) {
