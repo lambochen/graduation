@@ -2,11 +2,13 @@ package com.chenlinghong.graduation.common.redis;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.connection.DataType;
 import org.springframework.data.redis.core.Cursor;
 import org.springframework.data.redis.core.ScanOptions;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ZSetOperations;
+import org.springframework.stereotype.Component;
 
 import java.util.Collection;
 import java.util.Date;
@@ -23,10 +25,12 @@ import java.util.concurrent.TimeUnit;
  *
  * GitHub文档: https://github.com/chenlinghong/RedisUtil
  */
+@Component
 public class RedisUtil {
 
     @Getter
     @Setter
+    @Autowired
     private StringRedisTemplate redisTemplate;
 
     /** -------------------key相关操作--------------------- */

@@ -22,10 +22,17 @@ public class RedisTest {
     @Autowired
     private StringRedisTemplate stringRedisTemplate;
 
+    @Autowired
+    private RedisUtil redisUtil;
+
     @Test
     public void connection() {
         stringRedisTemplate.opsForValue().set("test", "1000");
         String test = stringRedisTemplate.opsForValue().get("test");
         Assert.assertEquals(1000, Integer.parseInt(test));
     }
+
+
+
+
 }
