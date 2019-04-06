@@ -7,10 +7,5 @@ package com.chenlinghong.graduation.constant;
  **/
 public final class RedisConstant {
 
-    /**
-     * 用户信息
-     */
-    public static final String USER_INFO = "userInfo";
-
 
 }
