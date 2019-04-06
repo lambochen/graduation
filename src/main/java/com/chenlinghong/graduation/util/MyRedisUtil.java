@@ -107,8 +107,7 @@ public class MyRedisUtil {
      */
     public User getUser(String key) {
         String jsonUser = (String) redisUtil.hGet(key, RedisConstant.USER);
-        User user = (User) JSON.parse(jsonUser);
-        return user;
+        return JSON.parseObject(jsonUser, User.class);
     }
 
     /**
@@ -118,7 +117,7 @@ public class MyRedisUtil {
      * @return
      */
     public User getUserByTelephone(String telephone) {
-        String redisKey = redisKeyUtil.generateKeyForSms(telephone);
+        String redisKey = redisKeyUtil.generateKeyForUserVo(telephone);
         return getUser(redisKey);
     }
 
