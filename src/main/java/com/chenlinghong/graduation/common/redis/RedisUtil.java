@@ -18,7 +18,7 @@ import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 /**
- * @Description redis 工具类
+ * @Description redis 工具类, 与redis服务器进行交互
  * @Author chenlinghong
  * @Date 2019/4/4 16:54
  * @Version V1.0
@@ -32,6 +32,9 @@ public class RedisUtil {
     @Setter
     @Autowired
     private StringRedisTemplate redisTemplate;
+
+
+
 
     /** -------------------key相关操作--------------------- */
 

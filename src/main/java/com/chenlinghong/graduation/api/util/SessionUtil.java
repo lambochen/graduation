@@ -3,7 +3,10 @@ package com.chenlinghong.graduation.api.util;
 import com.chenlinghong.graduation.constant.SessionConstant;
 import com.chenlinghong.graduation.enums.ErrorEnum;
 import com.chenlinghong.graduation.exception.BusinessException;
+import com.chenlinghong.graduation.util.MyRedisUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -14,7 +17,11 @@ import javax.servlet.http.HttpSession;
  * @Date 2019/4/3 16:26
  **/
 @Slf4j
+@Service
 public class SessionUtil {
+
+    @Autowired
+    private MyRedisUtil redisUtil;
 
     /**
      * 将电话号码写入session
@@ -62,12 +69,9 @@ public class SessionUtil {
      * @param request
      * @return
      */
-    public static boolean checkSmsCode(String smsCode, HttpServletRequest request) {
+    public boolean checkSmsCode(String smsCode, HttpServletRequest request) {
         String telephone = getTelephone(request);
-        /**
-         * TODO 获取redis中的smsCode
-         */
-        String redisSmsCode = "";
+        String redisSmsCode = redisUtil.getSmsCode(telephone);
         if (smsCode.equalsIgnoreCase(redisSmsCode)) {
             // 验证成功
             return true;
