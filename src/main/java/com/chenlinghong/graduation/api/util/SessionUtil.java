@@ -1,6 +1,6 @@
 package com.chenlinghong.graduation.api.util;
 
-import com.chenlinghong.graduation.common.redis.RedisKeyUtil;
+import com.chenlinghong.graduation.util.RedisKeyUtil;
 import com.chenlinghong.graduation.common.redis.RedisUtil;
 import com.chenlinghong.graduation.constant.SessionConstant;
 import com.chenlinghong.graduation.enums.ErrorEnum;

@@ -127,7 +127,14 @@ public class UserServiceImpl implements UserService {
         // 用户基本信息
         User userInfo = userDao.getByTelephone(telephone);
         userVo.setUserInfo(userInfo);
-        // TODO 其它信息
+        /**
+         * TODO 其它信息
+         */
+
+        /**
+         * 写入redis
+         */
+
         return userVo;
     }
 }

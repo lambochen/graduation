@@ -1,6 +1,8 @@
-package com.chenlinghong.graduation.common.redis;
+package com.chenlinghong.graduation.util;
 
+import com.chenlinghong.graduation.api.vo.UserVo;
 import com.chenlinghong.graduation.repository.domain.BaseDomain;
+import com.chenlinghong.graduation.repository.domain.User;
 import org.springframework.stereotype.Service;
 
 
@@ -24,13 +26,26 @@ public class RedisKeyUtil<T> {
     public static final String TELEPHONE = "telephone";
 
     /**
+     * 用户基本信息视图对象
+     */
+    public static final String USER_INFO = "user_info";
+
+    /**
+     * 用户基本信息
+     */
+    public static final String USER = "user";
+
+    /**
      * 生成redis key，通过domain对象
-     * redisKey = className:id
+     * redisKey = {className}:{id}
      *
      * @param data
      * @return
      */
     public String generateKey(T data) {
+        if (data == null) {
+            return null;
+        }
         // data 是 domain领域对象
         if (data instanceof BaseDomain) {
             /**
@@ -52,8 +67,31 @@ public class RedisKeyUtil<T> {
     }
 
     /**
+     * 生成redis key
+     * 用户基本信息视图对象
+     * redisKey = user_info:user:{userId}
+     *
+     * @param userVo
+     * @return
+     */
+    public String generateKey(UserVo userVo) {
+        if (userVo == null) {
+            return null;
+        }
+        // 获取userId
+        User userInfo = userVo.getUserInfo();
+        if (userInfo == null) {
+            return null;
+        }
+        long userId = userInfo.getId();
+        StringBuffer redisKey = new StringBuffer();
+        redisKey.append(USER_INFO).append(SEPARATOR).append(USER).append(SEPARATOR).append(userId);
+        return redisKey.toString();
+    }
+
+    /**
      * 生成redis key。主要针对电话号码进行存储短信验证码
-     * redisKey = telephone:telephoneValue
+     * redisKey = telephone:{telephone}
      *
      * @param telephone
      * @return

@@ -3,7 +3,7 @@ package com.chenlinghong.graduation.api.controller;
 import com.chenlinghong.graduation.api.util.SessionUtil;
 import com.chenlinghong.graduation.common.ResultUtil;
 import com.chenlinghong.graduation.common.ResultVo;
-import com.chenlinghong.graduation.common.redis.RedisKeyUtil;
+import com.chenlinghong.graduation.util.RedisKeyUtil;
 import com.chenlinghong.graduation.common.redis.RedisUtil;
 import com.chenlinghong.graduation.util.TelephoneUtil;
 import org.springframework.beans.factory.annotation.Autowired;

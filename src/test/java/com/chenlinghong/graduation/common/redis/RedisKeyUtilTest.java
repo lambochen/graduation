@@ -1,6 +1,7 @@
 package com.chenlinghong.graduation.common.redis;
 
 import com.chenlinghong.graduation.repository.domain.User;
+import com.chenlinghong.graduation.util.RedisKeyUtil;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
