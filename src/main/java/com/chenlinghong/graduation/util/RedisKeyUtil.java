@@ -1,6 +1,7 @@
 package com.chenlinghong.graduation.util;
 
 import com.chenlinghong.graduation.api.vo.UserVo;
+import com.chenlinghong.graduation.constant.RedisConstant;
 import com.chenlinghong.graduation.repository.domain.BaseDomain;
 import com.chenlinghong.graduation.repository.domain.User;
 import org.springframework.stereotype.Service;
@@ -14,26 +15,6 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class RedisKeyUtil<T> {
-
-    /**
-     * 分隔符
-     */
-    public static final String SEPARATOR = ":";
-
-    /**
-     * 电话号码
-     */
-    public static final String TELEPHONE = "telephone";
-
-    /**
-     * 用户基本信息视图对象
-     */
-    public static final String USER_INFO = "user_info";
-
-    /**
-     * 用户基本信息
-     */
-    public static final String USER = "user";
 
     /**
      * 生成redis key，通过domain对象
@@ -54,7 +35,7 @@ public class RedisKeyUtil<T> {
             Class clazz = data.getClass();
             String className = clazz.getSimpleName();
             StringBuffer redisKey = new StringBuffer(className);
-            redisKey.append(SEPARATOR);
+            redisKey.append(RedisConstant.SEPARATOR);
             // 将data强转为BaseDomain
             BaseDomain dataDomain = (BaseDomain) data;
             redisKey.append(dataDomain.getId());
@@ -74,7 +55,7 @@ public class RedisKeyUtil<T> {
      * @param userVo
      * @return
      */
-    public String generateKey(UserVo userVo) {
+    public static String generateKey(UserVo userVo) {
         if (userVo == null) {
             return null;
         }
@@ -85,7 +66,8 @@ public class RedisKeyUtil<T> {
         }
         long userId = userInfo.getId();
         StringBuffer redisKey = new StringBuffer();
-        redisKey.append(USER_INFO).append(SEPARATOR).append(USER).append(SEPARATOR).append(userId);
+        redisKey.append(RedisConstant.USER_INFO).append(RedisConstant.SEPARATOR)
+                .append(RedisConstant.USER).append(RedisConstant.SEPARATOR).append(userId);
         return redisKey.toString();
     }
 
@@ -96,9 +78,9 @@ public class RedisKeyUtil<T> {
      * @param telephone
      * @return
      */
-    public String generateKeyForSms(String telephone) {
+    public static String generateKeyForSms(String telephone) {
         StringBuffer redisKey = new StringBuffer();
-        redisKey.append(TELEPHONE).append(SEPARATOR).append(telephone);
+        redisKey.append(RedisConstant.TELEPHONE).append(RedisConstant.SEPARATOR).append(telephone);
         return redisKey.toString();
     }
 }

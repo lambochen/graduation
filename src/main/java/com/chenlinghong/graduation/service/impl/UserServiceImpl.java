@@ -8,6 +8,7 @@ import com.chenlinghong.graduation.repository.dao.UserDao;
 import com.chenlinghong.graduation.repository.domain.User;
 import com.chenlinghong.graduation.service.UserService;
 import com.chenlinghong.graduation.util.EncryptionUtil;
+import com.chenlinghong.graduation.util.MyRedisUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,9 @@ import org.springframework.stereotype.Service;
 @Slf4j
 @Service
 public class UserServiceImpl implements UserService {
+
+    @Autowired
+    private MyRedisUtil redisUtil;
 
     @Autowired
     private UserDao userDao;
@@ -133,8 +137,12 @@ public class UserServiceImpl implements UserService {
 
         /**
          * 写入redis
+         * TODO 异步处理
+         * TODO redisKey后期可能会做处理
          */
-
+        String redisKey = redisUtil.put(userVo);
         return userVo;
     }
+
+
 }
