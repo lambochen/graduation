@@ -33,6 +33,9 @@ public class RedisUtil {
     @Autowired
     private StringRedisTemplate redisTemplate;
 
+
+
+
     /** -------------------key相关操作--------------------- */
 
     /**
