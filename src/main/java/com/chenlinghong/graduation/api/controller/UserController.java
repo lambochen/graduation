@@ -30,6 +30,9 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private SessionUtil sessionUtil;
+
     /**
      * 通过密码登录
      *
@@ -53,6 +56,7 @@ public class UserController {
 
     /**
      * 通过短信验证码登录
+     * TODO 后期将进行加强，实现登录即注册
      *
      * @param smsCode
      * @param request
@@ -66,7 +70,7 @@ public class UserController {
             log.error("UserController#loginBySms: parameter is null. smsCode={}", smsCode);
             throw new BusinessException(ErrorEnum.PARAM_IS_NULL);
         }
-        boolean checkResult = SessionUtil.checkSmsCode(smsCode, request);
+        boolean checkResult = sessionUtil.checkSmsCode(smsCode, request);
         if (checkResult == true) {
             // 验证成功
             String telephone = SessionUtil.getTelephone(request);

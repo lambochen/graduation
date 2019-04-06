@@ -1,9 +1,13 @@
 package com.chenlinghong.graduation.api.util;
 
+import com.chenlinghong.graduation.common.redis.RedisKeyUtil;
+import com.chenlinghong.graduation.common.redis.RedisUtil;
 import com.chenlinghong.graduation.constant.SessionConstant;
 import com.chenlinghong.graduation.enums.ErrorEnum;
 import com.chenlinghong.graduation.exception.BusinessException;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -14,7 +18,20 @@ import javax.servlet.http.HttpSession;
  * @Date 2019/4/3 16:26
  **/
 @Slf4j
+@Service
 public class SessionUtil {
+
+    /**
+     * 与redis服务器进行交互
+     */
+    @Autowired
+    private RedisUtil redisUtil;
+
+    /**
+     * redis key 工具类
+     */
+    @Autowired
+    private RedisKeyUtil redisKeyUtil;
 
     /**
      * 将电话号码写入session
@@ -62,12 +79,12 @@ public class SessionUtil {
      * @param request
      * @return
      */
-    public static boolean checkSmsCode(String smsCode, HttpServletRequest request) {
+    public boolean checkSmsCode(String smsCode, HttpServletRequest request) {
         String telephone = getTelephone(request);
-        /**
-         * TODO 获取redis中的smsCode
-         */
-        String redisSmsCode = "";
+        // 生成redis key
+        String redisKey = redisKeyUtil.generateKeyForSms(telephone);
+        // 获取短信验证码
+        String redisSmsCode = redisUtil.get(redisKey);
         if (smsCode.equalsIgnoreCase(redisSmsCode)) {
             // 验证成功
             return true;
