@@ -13,9 +13,9 @@ import org.springframework.stereotype.Service;
 @Service
 public class RedisKeyUtil<T> {
 
-    public String generateKey(T data){
+    public String generateKey(T data) {
         // data 是 domain领域对象
-        if (data instanceof BaseDomain){
+        if (data instanceof BaseDomain) {
             /**
              * 通过反射，获取到data的类名，实际key的设计为：className:id
              */
