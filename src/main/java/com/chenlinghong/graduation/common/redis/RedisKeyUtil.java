@@ -1,7 +1,7 @@
 package com.chenlinghong.graduation.common.redis;
 
-import com.chenlinghong.graduation.repository.domain.User;
-import org.junit.Test;
+import com.chenlinghong.graduation.repository.domain.BaseDomain;
+import org.springframework.stereotype.Service;
 
 
 /**
@@ -10,23 +10,27 @@ import org.junit.Test;
  * @Date 2019/4/5 13:35
  * @Version V1.0
  */
-public class RedisKeyUtil {
+@Service
+public class RedisKeyUtil<T> {
 
-
-
-    public String generateKey(User user){
-        Class clazz = user.getClass();
-        String typeName = clazz.getTypeName();      // 全限定名
-        String name = clazz.getName();
-        String simpleName = clazz.getSimpleName();      // user TODO 将采用
-        String canonicalName = clazz.getCanonicalName();
+    public String generateKey(T data){
+        // data 是 domain领域对象
+        if (data instanceof BaseDomain){
+            /**
+             * 通过反射，获取到data的类名，实际key的设计为：className:id
+             */
+            Class clazz = data.getClass();
+            String className = clazz.getSimpleName();
+            StringBuffer result = new StringBuffer(className);
+            result.append(":");
+            // 将data强转为BaseDomain
+            BaseDomain dataDomain = (BaseDomain) data;
+            result.append(dataDomain.getId());
+            return result.toString();
+        }
+        /**
+         * 暂不提供其它类的redis key设计
+         */
         return null;
     }
-
-    @Test
-    public void test(){
-        generateKey(new User());
-    }
-
-
 }
