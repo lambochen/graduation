@@ -1,10 +1,9 @@
 package com.chenlinghong.graduation.api.util;
 
-import com.chenlinghong.graduation.util.RedisKeyUtil;
-import com.chenlinghong.graduation.common.redis.RedisUtil;
 import com.chenlinghong.graduation.constant.SessionConstant;
 import com.chenlinghong.graduation.enums.ErrorEnum;
 import com.chenlinghong.graduation.exception.BusinessException;
+import com.chenlinghong.graduation.util.MyRedisUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,17 +20,8 @@ import javax.servlet.http.HttpSession;
 @Service
 public class SessionUtil {
 
-    /**
-     * 与redis服务器进行交互
-     */
     @Autowired
-    private RedisUtil redisUtil;
-
-    /**
-     * redis key 工具类
-     */
-    @Autowired
-    private RedisKeyUtil redisKeyUtil;
+    private MyRedisUtil redisUtil;
 
     /**
      * 将电话号码写入session
@@ -81,10 +71,7 @@ public class SessionUtil {
      */
     public boolean checkSmsCode(String smsCode, HttpServletRequest request) {
         String telephone = getTelephone(request);
-        // 生成redis key
-        String redisKey = redisKeyUtil.generateKeyForSms(telephone);
-        // 获取短信验证码
-        String redisSmsCode = redisUtil.get(redisKey);
+        String redisSmsCode = redisUtil.getSmsCode(telephone);
         if (smsCode.equalsIgnoreCase(redisSmsCode)) {
             // 验证成功
             return true;

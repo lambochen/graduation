@@ -122,4 +122,17 @@ public class MyRedisUtil {
         return getUser(redisKey);
     }
 
+    /**
+     * 获取短信验证码
+     *
+     * @param telephone
+     * @return
+     */
+    public String getSmsCode(String telephone) {
+        // 生成redis key
+        String redisKey = redisKeyUtil.generateKeyForSms(telephone);
+        // 获取短信验证码
+        return redisUtil.get(redisKey);
+    }
+
 }
