@@ -4,8 +4,10 @@ import com.alibaba.fastjson.JSON;
 import com.chenlinghong.graduation.api.vo.UserVo;
 import com.chenlinghong.graduation.common.redis.RedisUtil;
 import com.chenlinghong.graduation.constant.RedisConstant;
+import com.chenlinghong.graduation.repository.domain.User;
 import com.google.common.collect.Maps;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -59,6 +61,65 @@ public class MyRedisUtil {
         // 写入redis
         redisUtil.hPutAll(redisKey, hashData);
         return redisKey;
+    }
+
+
+    /**
+     * 短信验证码写入redis
+     *
+     * @param telephone
+     * @param smsCode
+     * @return
+     */
+    public String putSmsCode(String telephone, String smsCode) {
+        // 生成redis key
+        String redisKey = redisKeyUtil.generateKeyForSms(telephone);
+        // 写入redis
+        redisUtil.set(redisKey, smsCode);
+        return redisKey;
+    }
+
+    /**
+     * 获取userVo
+     *
+     * @param telephone
+     * @return
+     */
+    public UserVo getUserVo(String telephone) {
+        if (StringUtils.isBlank(telephone)) {
+            return null;
+        }
+        UserVo userVo = new UserVo();
+        // 用户基本信息
+        User user = getUserByTelephone(telephone);
+        userVo.setUserInfo(user);
+        /**
+         * TODO 其它属性
+         */
+        return userVo;
+    }
+
+    /**
+     * 获取User
+     *
+     * @param key
+     * @return
+     */
+    public User getUser(String key) {
+        String jsonUser = (String) redisUtil.hGet(key, RedisConstant.USER);
+        User user = (User) JSON.parse(jsonUser);
+        return user;
+    }
+
+    /**
+     * 根据电话号码获取User
+     *
+     * @param telephone
+     * @return
+     */
+    public User getUserByTelephone(String telephone) {
+        String redisKey = redisKeyUtil.generateKeyForSms(telephone);
+        return getUser(redisKey);
     }
 
 }

@@ -3,8 +3,7 @@ package com.chenlinghong.graduation.api.controller;
 import com.chenlinghong.graduation.api.util.SessionUtil;
 import com.chenlinghong.graduation.common.ResultUtil;
 import com.chenlinghong.graduation.common.ResultVo;
-import com.chenlinghong.graduation.util.RedisKeyUtil;
-import com.chenlinghong.graduation.common.redis.RedisUtil;
+import com.chenlinghong.graduation.util.MyRedisUtil;
 import com.chenlinghong.graduation.util.TelephoneUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,10 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 public class TelephoneController {
 
     @Autowired
-    private RedisKeyUtil redisKeyUtil;
-
-    @Autowired
-    private RedisUtil redisUtil;
+    private MyRedisUtil redisUtil;
 
     @GetMapping(value = "/sms")
     public ResultVo sendSms(String telephone, HttpServletRequest request) {
@@ -37,10 +33,7 @@ public class TelephoneController {
         /**
          * 将验证码写入redis
          */
-        // 生成redis key
-        String redisKey = redisKeyUtil.generateKeyForSms(telephone);
-        // 写入redis
-        redisUtil.set(redisKey, smsCode);
+        redisUtil.putSmsCode(telephone, smsCode);
         return ResultUtil.success();
     }
 
