@@ -71,15 +71,18 @@ public class MyRedisUtil {
     /**
      * 短信验证码写入redis
      *
-     * @param telephone
-     * @param smsCode
+     * @param telephone 电话号码
+     * @param smsCode   短信验证码
      * @return
      */
+    @Async("asyncServiceExecutor")
     public String putSmsCode(String telephone, String smsCode) {
+        log.info("MyRedisUtil#putSmsCode: beginning. telephone={}, smsCode={}", telephone, smsCode);
         // 生成redis key
         String redisKey = redisKeyUtil.generateKeyForSms(telephone);
         // 写入redis
         redisUtil.set(redisKey, smsCode);
+        log.info("MyRedisUtil#putSmsCode: ended. telephone={}, smsCode={}", telephone, smsCode);
         return redisKey;
     }
 
