@@ -1,7 +1,6 @@
 package com.chenlinghong.graduation.common.executor;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.util.concurrent.ListenableFuture;
 
@@ -15,37 +14,36 @@ import java.util.concurrent.ThreadPoolExecutor;
  * @Date 2019/4/7 9:43
  * @Version V1.0
  */
-@Configuration
 @Slf4j
 public class VisibleThreadPoolTaskExecutor extends ThreadPoolTaskExecutor {
 
     @Override
     public void execute(Runnable task) {
-        showThreadPoolInfo("VisibleThreadPoolTaskExecutor#execute(runnable)");
+        showThreadPoolInfo("VisibleThreadPoolTaskExecutor#execute(Runnable)");
         super.execute(task);
     }
 
     @Override
     public void execute(Runnable task, long startTimeout) {
-        showThreadPoolInfo("VisibleThreadPoolTaskExecutor#execute(runnable,long)");
+        showThreadPoolInfo("VisibleThreadPoolTaskExecutor#execute(Runnable,long)");
         super.execute(task, startTimeout);
     }
 
     @Override
     public Future<?> submit(Runnable task) {
-        showThreadPoolInfo("VisibleThreadPoolTaskExecutor#submit(runnable)");
+        showThreadPoolInfo("VisibleThreadPoolTaskExecutor#submit(Runnable)");
         return super.submit(task);
     }
 
     @Override
     public <T> Future<T> submit(Callable<T> task) {
-        showThreadPoolInfo("VisibleThreadPoolTaskExecutor#submit(callable)");
+        showThreadPoolInfo("VisibleThreadPoolTaskExecutor#submit(Callable)");
         return super.submit(task);
     }
 
     @Override
     public ListenableFuture<?> submitListenable(Runnable task) {
-        showThreadPoolInfo("VisibleThreadPoolTaskExecutor#submitListenable(runnable)");
+        showThreadPoolInfo("VisibleThreadPoolTaskExecutor#submitListenable(Runnable)");
         return super.submitListenable(task);
     }
 

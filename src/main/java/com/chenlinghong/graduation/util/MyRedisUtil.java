@@ -9,6 +9,7 @@ import com.google.common.collect.Maps;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
@@ -41,7 +42,9 @@ public class MyRedisUtil {
      * @param userVo 用户视图对象
      * @return 该对象在redis存储中的key，若为null则写入失败
      */
+    @Async("asyncServiceExecutor")
     public String put(UserVo userVo) {
+        log.info("MyRedisUtil#put(UserVo): beginning. userVo={}", userVo);
         if (userVo == null || userVo.getUserInfo() == null) {
             log.error("MyRedisUtil#put(userVo): param is null. userVo={}", userVo);
             return null;
@@ -60,6 +63,7 @@ public class MyRedisUtil {
          */
         // 写入redis
         redisUtil.hPutAll(redisKey, hashData);
+        log.info("MyRedisUtil#put(UserVo): ended. userVo={}", userVo);
         return redisKey;
     }
 

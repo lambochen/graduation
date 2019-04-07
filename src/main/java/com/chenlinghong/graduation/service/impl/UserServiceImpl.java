@@ -137,7 +137,6 @@ public class UserServiceImpl implements UserService {
 
         /**
          * 写入redis
-         * TODO 异步处理
          * TODO redisKey后期可能会做处理
          */
         String redisKey = redisUtil.put(userVo);
