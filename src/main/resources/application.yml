@@ -40,4 +40,10 @@ spring:
     # 连接超时时间（毫秒）
     timeout: 20000
 
-
+# 线程池配置
+executor:
+  core_pool_size: 5
+  max_pool_size: 10
+  queue_capacity: 1000
+  thread_name_prefix: async-service-
+  keep_alive_seconds: 5
