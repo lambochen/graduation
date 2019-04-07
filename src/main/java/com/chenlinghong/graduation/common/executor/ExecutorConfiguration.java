@@ -1,4 +1,4 @@
-package com.chenlinghong.graduation.common;
+package com.chenlinghong.graduation.common.executor;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -57,7 +57,7 @@ public class ExecutorConfiguration {
 
         log.info("ExecutorConfiguration#asyncServiceExecutor start...");
 
-        ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
+        ThreadPoolTaskExecutor executor = new VisibleThreadPoolTaskExecutor();
         executor.setCorePoolSize(corePoolSize);
         executor.setMaxPoolSize(maxPoolSize);
         executor.setQueueCapacity(queueCapacity);
