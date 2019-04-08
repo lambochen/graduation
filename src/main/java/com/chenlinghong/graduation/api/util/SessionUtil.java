@@ -1,8 +1,10 @@
 package com.chenlinghong.graduation.api.util;
 
+import com.chenlinghong.graduation.api.vo.UserVo;
 import com.chenlinghong.graduation.constant.SessionConstant;
 import com.chenlinghong.graduation.enums.ErrorEnum;
 import com.chenlinghong.graduation.exception.BusinessException;
+import com.chenlinghong.graduation.repository.domain.User;
 import com.chenlinghong.graduation.util.MyRedisUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -77,5 +79,53 @@ public class SessionUtil {
             return true;
         }
         return false;
+    }
+
+    /**
+     * 是否是有效登录用户
+     *
+     * @param request 请求对象
+     * @return true:有效登录用户
+     */
+    public boolean isAliveUser(HttpServletRequest request) {
+        // 获取电话号码
+        String telephone = getTelephone(request);
+        return redisUtil.isAliveUser(telephone);
+    }
+
+    /**
+     * 获取用户视图对象
+     *
+     * @param request
+     * @return
+     */
+    public UserVo getUserVo(HttpServletRequest request) {
+        String telephone = getTelephone(request);
+        return redisUtil.getUserVo(telephone);
+    }
+
+    /**
+     * 获取用户基本信息
+     *
+     * @param request
+     * @return
+     */
+    public User getUser(HttpServletRequest request) {
+        String telephone = getTelephone(request);
+        return redisUtil.getUserByTelephone(telephone);
+    }
+
+    /**
+     * 获取用户ID
+     *
+     * @param request
+     * @return
+     */
+    public long getUserId(HttpServletRequest request) {
+        User user = getUser(request);
+        if (user == null) {
+            throw new BusinessException(ErrorEnum.NO_USER);
+        }
+        return user.getId();
     }
 }
