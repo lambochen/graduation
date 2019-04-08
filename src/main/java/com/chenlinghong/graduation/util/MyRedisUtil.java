@@ -13,6 +13,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @Description 该项目专用redis 工具类
@@ -82,6 +83,8 @@ public class MyRedisUtil {
         String redisKey = redisKeyUtil.generateKeyForSms(telephone);
         // 写入redis
         redisUtil.set(redisKey, smsCode);
+        // 设置key 存活时间   10 * 60s
+        redisUtil.expire(redisKey, 10 * 60L, TimeUnit.SECONDS);
         log.info("MyRedisUtil#putSmsCode: ended. telephone={}, smsCode={}", telephone, smsCode);
         return redisKey;
     }
