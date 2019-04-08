@@ -2,8 +2,10 @@ package com.chenlinghong.graduation.api.util;
 
 import com.chenlinghong.graduation.enums.ErrorEnum;
 import com.chenlinghong.graduation.exception.BusinessException;
+import com.chenlinghong.graduation.util.MyRedisUtil;
 import com.chenlinghong.graduation.util.TelephoneUtil;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * @Description 校验工具类
@@ -12,6 +14,8 @@ import org.apache.commons.lang3.StringUtils;
  **/
 public final class VerificationUtil {
 
+    @Autowired
+    private MyRedisUtil redisUtil;
 
     /**
      * 校验短信验证码
@@ -38,9 +42,20 @@ public final class VerificationUtil {
         return isAliveCode(telephone, smsCode);
     }
 
+    /**
+     * 是否是有效的验证码
+     *
+     * @param telephone 手机号码
+     * @param smsCode   验证码
+     * @return
+     */
     private boolean isAliveCode(String telephone, String smsCode) {
-        // TODO redis中读取
-        return true;
+        // 获取redis中存储的验证码
+        String redisSmsCode = redisUtil.getSmsCode(telephone);
+        if (smsCode.equalsIgnoreCase(redisSmsCode)) {
+            return true;
+        }
+        return false;
     }
 
 }

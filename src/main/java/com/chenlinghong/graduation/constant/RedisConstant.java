@@ -27,5 +27,14 @@ public final class RedisConstant {
      */
     public static final String USER = "user";
 
+    /**
+     * 短信验证码ttl 单位：ms
+     */
+    public static final long SMS_TTL = 10 * 60 * 1000L;
+
+    /**
+     * 数据ttl
+     */
+    public static final long DATA_TTL = 2 * 60 * 60 * 1000L;
 
 }

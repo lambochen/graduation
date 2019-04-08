@@ -13,6 +13,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @Description 该项目专用redis 工具类
@@ -63,6 +64,8 @@ public class MyRedisUtil {
          */
         // 写入redis
         redisUtil.hPutAll(redisKey, hashData);
+        // 设置ttl
+        redisUtil.expire(redisKey, RedisConstant.DATA_TTL, TimeUnit.MILLISECONDS);
         log.info("MyRedisUtil#put(UserVo): ended. userVo={}", userVo);
         return redisKey;
     }
@@ -82,6 +85,8 @@ public class MyRedisUtil {
         String redisKey = redisKeyUtil.generateKeyForSms(telephone);
         // 写入redis
         redisUtil.set(redisKey, smsCode);
+        // 设置key 存活时间   10 * 60s
+        redisUtil.expire(redisKey, RedisConstant.SMS_TTL, TimeUnit.MILLISECONDS);
         log.info("MyRedisUtil#putSmsCode: ended. telephone={}, smsCode={}", telephone, smsCode);
         return redisKey;
     }
@@ -126,6 +131,17 @@ public class MyRedisUtil {
     public User getUserByTelephone(String telephone) {
         String redisKey = redisKeyUtil.generateKeyForUserVo(telephone);
         return getUser(redisKey);
+    }
+
+    /**
+     * 是否存活用户对象
+     *
+     * @param telephone
+     * @return
+     */
+    public boolean isAliveUser(String telephone) {
+        String redisKey = redisKeyUtil.generateKeyForUserVo(telephone);
+        return redisUtil.hasKey(redisKey);
     }
 
     /**
