@@ -2,6 +2,7 @@ package com.chenlinghong.graduation.repository.dao;
 
 import com.chenlinghong.graduation.repository.domain.GoodsCatalogOne;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 
@@ -53,5 +54,11 @@ public interface GoodsCatalogOneDao {
      */
     int count();
 
-
+    /**
+     * 获取一级目录所有列表
+     *
+     * @return
+     */
+    @Select("select * from goods_catalog_one")
+    List<GoodsCatalogOne> listAllGoodsCatalogOne();
 }

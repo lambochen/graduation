@@ -145,4 +145,13 @@ public interface GoodsDao {
      */
     @Select("select * from goods where catalog_two_id = #{goodsCatalogTwoId}")
     List<Goods> listByGoodsCatalogTwoId(@Param("goodsCatalogTwoId") Long goodsCatalogTwoId);
+
+    /**
+     * 通过商品id查找商品详情
+     *
+     * @param id
+     * @return
+     */
+    @Select("select * from goods where id = #{id}")
+    Goods getGoodsById(@Param("id") Long id);
 }

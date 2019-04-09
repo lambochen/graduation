@@ -35,4 +35,12 @@ public class GoodsServiceImpl implements GoodsService {
         }
         return null;
     }
+
+    @Override
+    public Goods getGoodsById(Long id) {
+        if(id != null){
+            return  goods.getGoodsById(id);
+        }
+        return null;
+    }
 }

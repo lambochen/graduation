@@ -2,7 +2,7 @@ package com.chenlinghong.graduation.service;
 
 /**
  * @Author:DxlinY
- * @Description：
+ * @Description：商品相关service
  * @Date: 2019/4/9
  * @Time: 14:41
  */
@@ -30,4 +30,12 @@ public interface GoodsService {
      * @return
      */
     List<Goods> listByGoodsCatalogTwoId(Long goodsCatalogTwoId);
+
+    /**
+     * 通过id查找商品详情
+     *
+     * @param id
+     * @return
+     */
+    Goods getGoodsById(Long id);
 }
