@@ -4,10 +4,10 @@ server:
     context-path: /graduation
 
 jdbc:
-  driver: com.mysql.cj.jdbc.Driver
+  driver: com.mysql.jdbc.Driver
   url: jdbc:mysql://127.0.0.1:3306/graduation?useUnicode=true&charactorEncoding=utf8&useSSL=false&zeroDateTimeBehavior=convertToNull&serverTimezone=GMT%2B8
   username: root
-  password: 19960412Clh
+  password: root
 
 
 #  mybatis

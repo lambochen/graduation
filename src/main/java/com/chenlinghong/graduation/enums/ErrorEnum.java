@@ -40,6 +40,9 @@ public enum ErrorEnum {
      */
     SESSION_DATA_IS_NULL(4000, "Session数据为空"),
 
+    /**
+     * 5XXX 商品相关
+     */
 
     ;
 

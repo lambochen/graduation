@@ -2,6 +2,7 @@ package com.chenlinghong.graduation.repository.dao;
 
 import com.chenlinghong.graduation.repository.domain.GoodsCatalogTwo;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 
@@ -71,4 +72,14 @@ public interface GoodsCatalogTwoDao {
      * @return
      */
     int countByCatalogOne(@Param("catalogOneId") int catalogOneId);
+
+    /**
+     * 根据商品一级目录ID获取二级目录列表
+     *
+     * @param goodsCatalogOneId
+     * @return
+     */
+    @Select("select * from goods_catalog_two where catalog_one_id = #{goodsCatalogOneId}")
+    List<GoodsCatalogTwo> listByGoodsCatalogOneId(@Param("goodsCatalogOneId") Long goodsCatalogOneId);
+
 }

@@ -2,6 +2,7 @@ package com.chenlinghong.graduation.repository.dao;
 
 import com.chenlinghong.graduation.repository.domain.Goods;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 
@@ -126,5 +127,22 @@ public interface GoodsDao {
      */
     long updatePrice(@Param("price") double price, @Param("id") long id);
 
+    /**
+     * 根据商品一级目录ID获取商品列表
+     *
+     * @param goodsCatalogOneId
+     * @return
+     */
+    @Select("select * from goods where catalog_one_id = #{goodsCatalogOneId}")
+    List<Goods> listByGoodsCatalogOneId(@Param("goodsCatalogOneId") Long goodsCatalogOneId);
 
+
+    /**
+     * 根据商品二级目录ID获取商品列表
+     *
+     * @param goodsCatalogTwoId
+     * @return
+     */
+    @Select("select * from goods where catalog_two_id = #{goodsCatalogTwoId}")
+    List<Goods> listByGoodsCatalogTwoId(@Param("goodsCatalogTwoId") Long goodsCatalogTwoId);
 }
