@@ -4,7 +4,7 @@ server:
     context-path: /graduation
 
 jdbc:
-  driver: com.mysql.jdbc.Driver
+  driver: com.mysql.cj.jdbc.Driver
   url: jdbc:mysql://127.0.0.1:3306/graduation?useUnicode=true&charactorEncoding=utf8&useSSL=false&zeroDateTimeBehavior=convertToNull&serverTimezone=GMT%2B8
   username: root
   password: root

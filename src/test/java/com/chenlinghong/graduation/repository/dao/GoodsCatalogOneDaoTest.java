@@ -32,4 +32,9 @@ public class GoodsCatalogOneDaoTest {
         System.out.println(catalogOneList);
     }
 
+    @Test
+    public void listAllGoodsCatalogOne(){
+        List<GoodsCatalogOne> goodsCatalogOnes = catalogOneDao.listAllGoodsCatalogOne();
+        System.out.println(goodsCatalogOnes);
+    }
 }

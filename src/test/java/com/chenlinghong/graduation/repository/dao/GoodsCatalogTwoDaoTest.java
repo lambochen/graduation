@@ -32,4 +32,9 @@ public class GoodsCatalogTwoDaoTest {
         System.out.println(catalogTwoList);
     }
 
+    @Test
+    public void listByGoodsCatalogOneId(){
+        List<GoodsCatalogTwo> goodsCatalogTwos = catalogTwoDao.listByGoodsCatalogOneId(1L);
+        System.out.println(goodsCatalogTwos);
+    }
 }

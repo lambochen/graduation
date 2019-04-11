@@ -39,4 +39,21 @@ public class GoodsDaoTest {
         System.out.println(goodsList);
     }
 
+    @Test
+    public void listByGoodsCatalogOneId() {
+        List<Goods> goodsList = goodsDao.listByGoodsCatalogOneId(1l);
+        System.out.println(goodsList);
+    }
+
+    @Test
+    public void listByGoodsCatalogTwoId() {
+        List<Goods> goodsList = goodsDao.listByGoodsCatalogTwoId(1l);
+        System.out.println(goodsList);
+    }
+
+    @Test
+    public void getGoodsById() {
+        Goods goods= goodsDao.getGoodsById(1l);
+        System.out.println(goods);
+    }
 }
