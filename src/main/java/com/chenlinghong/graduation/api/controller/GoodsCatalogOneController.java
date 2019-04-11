@@ -13,13 +13,13 @@ import java.util.List;
 
 /**
  * @Author:DxlinY
- * @Description：
+ * @Description：一级目录相关Controller
  * @Date: 2019/4/9
  * @Time: 21:52
  */
 
 @RestController
-@RequestMapping(value = "/goodsCatalogOne")
+@RequestMapping(value = "/goodscatalogone")
 public class GoodsCatalogOneController {
 
     @Autowired
@@ -30,7 +30,7 @@ public class GoodsCatalogOneController {
      *
      * @return
      */
-    @GetMapping(value = "/listAllGoodsCatalogOne")
+    @GetMapping(value = "/listallgoodscatalogone")
     public ResultVo<List<GoodsCatalogOne>> listAllGoodsCatalogOne() {
         return ResultUtil.success(goodsCatalogOneService.listAllGoodsCatalogOne());
     }

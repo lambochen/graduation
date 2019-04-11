@@ -14,7 +14,7 @@ import java.util.List;
 
 /**
  * @Author:DxlinY
- * @Description：
+ * @Description：商品相关Controller
  * @Date: 2019/4/9
  * @Time: 17:38
  */
@@ -31,7 +31,7 @@ public class GoodsController {
      * @param goodsCatalogOneId
      * @return
      */
-    @GetMapping(value = "/listByGoodsCatalogOneId")
+    @GetMapping(value = "/listbygoodscatalogoneid")
     public ResultVo<List<Goods>> listByGoodsCatalogOneId(Long goodsCatalogOneId) {
         List<Goods> goods = goodsService.listByGoodsCatalogOneId(goodsCatalogOneId);
         return goods == null ? ResultUtil.error(ErrorEnum.PARAM_IS_NULL) : ResultUtil.success(goods);
@@ -43,7 +43,7 @@ public class GoodsController {
      * @param goodsCatalogTwoId
      * @return
      */
-    @GetMapping(value = "/listByGoodsCatalogTwoId")
+    @GetMapping(value = "/listbygoodscatalogtwoid")
     public ResultVo<List<Goods>> listByGoodsCatalogTwoId(Long goodsCatalogTwoId) {
         List<Goods> goods = goodsService.listByGoodsCatalogTwoId(goodsCatalogTwoId);
         return goods == null ? ResultUtil.error(ErrorEnum.PARAM_IS_NULL) : ResultUtil.success(goods);
@@ -55,7 +55,7 @@ public class GoodsController {
      * @param id
      * @return
      */
-    @GetMapping(value = "/getGoodsById")
+    @GetMapping(value = "/getgoodsbyid")
     public ResultVo<Goods> getGoodsById(Long id) {
         Goods goods = goodsService.getGoodsById(id);
         return goods == null?ResultUtil.error(ErrorEnum.PARAM_IS_NULL):ResultUtil.success(goods);

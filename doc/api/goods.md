@@ -2,7 +2,7 @@
 
 一.根据一级目录查找二级二级目录列表
 
-    GET /graduation/goodsCatalogTwo/listByGoodsCatalogOneId?
+    GET /graduation/goodscatalogtwo/listbygoodscatalogoneid?
         
 参数
     
@@ -31,7 +31,7 @@
 
 二.根据商品一级目录ID获取商品列表
 
-    GET /graduation/goods/listByGoodsCatalogOneId
+    GET /graduation/goods/listbygoodscatalogoneid
         
 参数
     
@@ -64,7 +64,7 @@
 
 三.根据商品二级目录ID获取商品列表
 
-    GET /graduation/goods/listByGoodsCatalogTwoId
+    GET /graduation/goods/listbygoodscatalogtwoId
     
 参数
 
@@ -98,7 +98,7 @@
 
 四.根据id获取商品详细信息
 
-    GET /graduation/goods/getGoodsById
+    GET /graduation/goods/getgoodsbyid
     
 参数
 
@@ -129,7 +129,7 @@
 
 五.获取一级目录所有列表
 
-    GET /graduation/goodsCatalogOne/listAllGoodsCatalogOne
+    GET /graduation/goodscatalogone/listallgoodscatalogone
         
 参数 
     

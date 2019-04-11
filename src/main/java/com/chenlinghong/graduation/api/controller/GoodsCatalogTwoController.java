@@ -19,7 +19,7 @@ import java.util.List;
  * @Time: 15:31
  */
 @RestController
-@RequestMapping(value = "/goodsCatalogTwo")
+@RequestMapping(value = "/goodscatalogtwo")
 public class GoodsCatalogTwoController {
 
     @Autowired
@@ -31,7 +31,7 @@ public class GoodsCatalogTwoController {
      * @param goodsCatalogOneId
      * @return
      */
-    @GetMapping(value = "/listByGoodsCatalogOneId")
+    @GetMapping(value = "/listbygoodscatalogoneId")
     public ResultVo<List<GoodsCatalogTwo>> listByGoodsCatalogOneId(Long goodsCatalogOneId) {
         List<GoodsCatalogTwo> goodsCatalogTwos = goodsCatalogTwoService.listByGoodsCatalogOneId(goodsCatalogOneId);
         return goodsCatalogTwos == null ? ResultUtil.error(ErrorEnum.PARAM_IS_NULL) : ResultUtil.success(goodsCatalogTwos);
