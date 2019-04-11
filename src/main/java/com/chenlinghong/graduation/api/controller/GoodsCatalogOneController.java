@@ -1,5 +1,6 @@
 package com.chenlinghong.graduation.api.controller;
 
+import com.chenlinghong.graduation.common.PageDto;
 import com.chenlinghong.graduation.common.ResultUtil;
 import com.chenlinghong.graduation.common.ResultVo;
 import com.chenlinghong.graduation.repository.domain.GoodsCatalogOne;
@@ -31,7 +32,7 @@ public class GoodsCatalogOneController {
      * @return
      */
     @GetMapping(value = "/listallgoodscatalogone")
-    public ResultVo<List<GoodsCatalogOne>> listAllGoodsCatalogOne() {
+    public ResultVo<PageDto> listAllGoodsCatalogOne() {
         return ResultUtil.success(goodsCatalogOneService.listAllGoodsCatalogOne());
     }
 }

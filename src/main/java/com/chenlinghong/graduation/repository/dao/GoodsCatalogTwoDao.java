@@ -79,7 +79,7 @@ public interface GoodsCatalogTwoDao {
      * @param goodsCatalogOneId
      * @return
      */
-    @Select("select * from goods_catalog_two where catalog_one_id = #{goodsCatalogOneId}")
-    List<GoodsCatalogTwo> listByGoodsCatalogOneId(@Param("goodsCatalogOneId") Long goodsCatalogOneId);
+
+    List<GoodsCatalogTwo> listByGoodsCatalogOneId(@Param("goodsCatalogOneId") long goodsCatalogOneId);
 
 }

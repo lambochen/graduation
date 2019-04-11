@@ -7,7 +7,9 @@ package com.chenlinghong.graduation.service;
  * @Time: 14:41
  */
 
+import com.chenlinghong.graduation.common.PageDto;
 import com.chenlinghong.graduation.repository.domain.Goods;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 
@@ -21,7 +23,7 @@ public interface GoodsService {
      * @param goodsCatalogOneId
      * @return
      */
-    List<Goods> listByGoodsCatalogOneId(Long goodsCatalogOneId);
+    PageDto listByGoodsCatalogOneId(long goodsCatalogOneId);
 
     /**
      * 根据商品二级目录ID获取商品列表
@@ -29,7 +31,7 @@ public interface GoodsService {
      * @param goodsCatalogTwoId
      * @return
      */
-    List<Goods> listByGoodsCatalogTwoId(Long goodsCatalogTwoId);
+    PageDto listByGoodsCatalogTwoId(long goodsCatalogTwoId);
 
     /**
      * 通过id查找商品详情
@@ -37,5 +39,5 @@ public interface GoodsService {
      * @param id
      * @return
      */
-    Goods getGoodsById(Long id);
+    Goods getGoodsById(long id);
 }

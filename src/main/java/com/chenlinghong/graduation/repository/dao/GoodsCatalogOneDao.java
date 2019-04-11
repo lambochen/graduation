@@ -59,6 +59,5 @@ public interface GoodsCatalogOneDao {
      *
      * @return
      */
-    @Select("select * from goods_catalog_one")
     List<GoodsCatalogOne> listAllGoodsCatalogOne();
 }

@@ -133,8 +133,7 @@ public interface GoodsDao {
      * @param goodsCatalogOneId
      * @return
      */
-    @Select("select * from goods where catalog_one_id = #{goodsCatalogOneId}")
-    List<Goods> listByGoodsCatalogOneId(@Param("goodsCatalogOneId") Long goodsCatalogOneId);
+    List<Goods> listByGoodsCatalogOneId(@Param("goodsCatalogOneId") long goodsCatalogOneId);
 
 
     /**
@@ -143,8 +142,7 @@ public interface GoodsDao {
      * @param goodsCatalogTwoId
      * @return
      */
-    @Select("select * from goods where catalog_two_id = #{goodsCatalogTwoId}")
-    List<Goods> listByGoodsCatalogTwoId(@Param("goodsCatalogTwoId") Long goodsCatalogTwoId);
+    List<Goods> listByGoodsCatalogTwoId(@Param("goodsCatalogTwoId") long goodsCatalogTwoId);
 
     /**
      * 通过商品id查找商品详情
@@ -152,6 +150,5 @@ public interface GoodsDao {
      * @param id
      * @return
      */
-    @Select("select * from goods where id = #{id}")
-    Goods getGoodsById(@Param("id") Long id);
+    Goods getGoodsById(@Param("id") long id);
 }

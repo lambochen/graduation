@@ -1,16 +1,14 @@
 package com.chenlinghong.graduation.api.controller;
 
+import com.chenlinghong.graduation.common.PageDto;
 import com.chenlinghong.graduation.common.ResultUtil;
 import com.chenlinghong.graduation.common.ResultVo;
-import com.chenlinghong.graduation.enums.ErrorEnum;
 import com.chenlinghong.graduation.repository.domain.Goods;
 import com.chenlinghong.graduation.service.GoodsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
 
 /**
  * @Author:DxlinY
@@ -32,9 +30,9 @@ public class GoodsController {
      * @return
      */
     @GetMapping(value = "/listbygoodscatalogoneid")
-    public ResultVo<List<Goods>> listByGoodsCatalogOneId(Long goodsCatalogOneId) {
-        List<Goods> goods = goodsService.listByGoodsCatalogOneId(goodsCatalogOneId);
-        return goods == null ? ResultUtil.error(ErrorEnum.PARAM_IS_NULL) : ResultUtil.success(goods);
+    public ResultVo<PageDto> listByGoodsCatalogOneId(long goodsCatalogOneId) {
+        PageDto pageDto = goodsService.listByGoodsCatalogOneId(goodsCatalogOneId);
+        return ResultUtil.success(pageDto);
     }
 
     /**
@@ -44,9 +42,9 @@ public class GoodsController {
      * @return
      */
     @GetMapping(value = "/listbygoodscatalogtwoid")
-    public ResultVo<List<Goods>> listByGoodsCatalogTwoId(Long goodsCatalogTwoId) {
-        List<Goods> goods = goodsService.listByGoodsCatalogTwoId(goodsCatalogTwoId);
-        return goods == null ? ResultUtil.error(ErrorEnum.PARAM_IS_NULL) : ResultUtil.success(goods);
+    public ResultVo<PageDto> listByGoodsCatalogTwoId(long goodsCatalogTwoId) {
+        PageDto pageDto = goodsService.listByGoodsCatalogTwoId(goodsCatalogTwoId);
+        return ResultUtil.success(pageDto);
     }
 
     /**
@@ -56,9 +54,9 @@ public class GoodsController {
      * @return
      */
     @GetMapping(value = "/getgoodsbyid")
-    public ResultVo<Goods> getGoodsById(Long id) {
+    public ResultVo<Goods> getGoodsById(long id) {
         Goods goods = goodsService.getGoodsById(id);
-        return goods == null?ResultUtil.error(ErrorEnum.PARAM_IS_NULL):ResultUtil.success(goods);
+        return ResultUtil.success(goods);
     }
 
 }

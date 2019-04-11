@@ -14,17 +14,20 @@
         "code": 0,
         "msg": "请求成功",
         "data": 
-        [
-            {
-                "id":3,
-                "gmtCreate":1554362394000,
-                "gmtModified":1554362394000,
-                "name":"1","description":"1",
-                "catalogOneId":1,
-                "catalogTwoList":null
-            },   
-            ... 
-        ]
+            [
+                {
+                    "id":3,
+                    "gmtCreate":1554362394000,
+                    "gmtModified":1554362394000,
+                    "name":"1","description":"1",
+                    "catalogOneId":1,
+                    "catalogTwoList":null
+                },   
+                ... 
+            ]
+        "pageNo":1,
+        "pageSize":11,
+        "totalCount":11
             
     }
    
@@ -59,6 +62,9 @@
                 }
                 ...
             ]
+        "pageNo":1,
+        "pageSize":11,
+        "totalCount":11
     }
 
 
@@ -92,6 +98,9 @@
                 }
                     ...
             ]
+        "pageNo":1,
+        "pageSize":11,
+        "totalCount":11
     }
     
 
@@ -110,19 +119,19 @@
         "code":0,
         "msg":"请求成功",
         "data":
-        {
-            "id":2,
-            "gmtCreate":1554260061000,
-            "gmtModified":1554698778000,
-            "name":"蛋糕",
-            "description":"描述",
-            "catalogOneId":1,
-            "catalogTwoId":1,
-            "goodsInfo":"test",
-            "price":1.0,
-            "remarks":"备注",
-            "businessInfoId":null
-        }
+            {
+                "id":2,
+                "gmtCreate":1554260061000,
+                "gmtModified":1554698778000,
+                "name":"蛋糕",
+                "description":"描述",
+                "catalogOneId":1,
+                "catalogTwoId":1,
+                "goodsInfo":"test",
+                "price":1.0,
+                "remarks":"备注",
+                "businessInfoId":null
+            }
     }
     例子
         /graduation/goods/getGoodsById?id=2
@@ -140,7 +149,8 @@
      {
         "code":0,
         "msg":"请求成功",
-        "data":[
+        "data":
+            [
                 {
                     "id":1,
                     "gmtCreate":1554345067000,
@@ -150,5 +160,8 @@
                     "catalogTwoList":1
                 },
                 ...
-               ]
+            ]
+        "pageNo":1,
+        "pageSize":11,
+        "totalCount":11
      }           

@@ -1,5 +1,6 @@
 package com.chenlinghong.graduation.api.controller;
 
+import com.chenlinghong.graduation.common.PageDto;
 import com.chenlinghong.graduation.common.ResultUtil;
 import com.chenlinghong.graduation.common.ResultVo;
 import com.chenlinghong.graduation.enums.ErrorEnum;
@@ -32,8 +33,8 @@ public class GoodsCatalogTwoController {
      * @return
      */
     @GetMapping(value = "/listbygoodscatalogoneId")
-    public ResultVo<List<GoodsCatalogTwo>> listByGoodsCatalogOneId(Long goodsCatalogOneId) {
-        List<GoodsCatalogTwo> goodsCatalogTwos = goodsCatalogTwoService.listByGoodsCatalogOneId(goodsCatalogOneId);
-        return goodsCatalogTwos == null ? ResultUtil.error(ErrorEnum.PARAM_IS_NULL) : ResultUtil.success(goodsCatalogTwos);
+    public ResultVo<PageDto<GoodsCatalogTwo>> listByGoodsCatalogOneId(long goodsCatalogOneId) {
+        PageDto pageDto = goodsCatalogTwoService.listByGoodsCatalogOneId(goodsCatalogOneId);
+        return ResultUtil.success(pageDto);
     }
 }

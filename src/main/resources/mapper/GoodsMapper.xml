@@ -147,4 +147,32 @@
         where id = #{id}
     </update>
 
+    <select id="listByGoodsCatalogOneId" resultMap="BaseResultMap" parameterType="long">
+        select
+        <include refid="column_list" />
+        FROM
+        goods
+        where
+        catalog_one_id = #{goodsCatalogOneId}
+        ORDER BY id DESC
+    </select>
+
+    <select id="listByGoodsCatalogTwoId" resultMap="BaseResultMap" parameterType="long">
+        select
+        <include refid="column_list" />
+        FROM
+        goods
+        where
+        catalog_two_id = #{goodsCatalogTwoId}
+        ORDER BY id DESC
+    </select>
+
+    <select id="getGoodsById" resultType="com.chenlinghong.graduation.repository.domain.Goods" parameterType="long">
+        select
+        <include refid="column_list" />
+        from
+        goods
+        where
+        id = #{id}
+    </select>
 </mapper>

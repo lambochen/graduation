@@ -1,9 +1,11 @@
 package com.chenlinghong.graduation.service.impl;
 
+import com.chenlinghong.graduation.common.PageDto;
 import com.chenlinghong.graduation.repository.dao.GoodsCatalogTwoDao;
 import com.chenlinghong.graduation.repository.domain.GoodsCatalogTwo;
 import com.chenlinghong.graduation.service.GoodsCatalogTwoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,10 +23,10 @@ public class GoodsCatalogTwoServiceImpl implements GoodsCatalogTwoService {
     private GoodsCatalogTwoDao goodsCatalogTwo;
 
     @Override
-    public List<GoodsCatalogTwo> listByGoodsCatalogOneId(Long goodsCatalogOneId) {
+    public PageDto<GoodsCatalogTwo> listByGoodsCatalogOneId(Long goodsCatalogOneId) {
         if(goodsCatalogOneId != null){
             List<GoodsCatalogTwo> goodsCatalogTwos = goodsCatalogTwo.listByGoodsCatalogOneId(goodsCatalogOneId);
-            return goodsCatalogTwos;
+            return new PageDto<>(goodsCatalogTwos);
         }
         return null;
     }

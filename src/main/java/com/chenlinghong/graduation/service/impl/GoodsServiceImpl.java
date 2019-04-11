@@ -1,12 +1,11 @@
 package com.chenlinghong.graduation.service.impl;
 
+import com.chenlinghong.graduation.common.PageDto;
 import com.chenlinghong.graduation.repository.dao.GoodsDao;
 import com.chenlinghong.graduation.repository.domain.Goods;
 import com.chenlinghong.graduation.service.GoodsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 /**
  * @Author:DxlinY
@@ -21,26 +20,17 @@ public class GoodsServiceImpl implements GoodsService {
     private GoodsDao goods;
 
     @Override
-    public List<Goods> listByGoodsCatalogOneId(Long goodsCatalogOneId) {
-        if (goodsCatalogOneId != null) {
-            return goods.listByGoodsCatalogOneId(goodsCatalogOneId);
-        }
-        return null;
+    public PageDto<Goods> listByGoodsCatalogOneId(long goodsCatalogOneId) {
+        return new PageDto<>(goods.listByGoodsCatalogOneId(goodsCatalogOneId));
     }
 
     @Override
-    public List<Goods> listByGoodsCatalogTwoId(Long goodsCatalogTwoId) {
-        if (goodsCatalogTwoId != null) {
-            return goods.listByGoodsCatalogTwoId(goodsCatalogTwoId);
-        }
-        return null;
+    public PageDto listByGoodsCatalogTwoId(long goodsCatalogTwoId) {
+        return new PageDto<>(goods.listByGoodsCatalogTwoId(goodsCatalogTwoId));
     }
 
     @Override
-    public Goods getGoodsById(Long id) {
-        if(id != null){
-            return  goods.getGoodsById(id);
-        }
-        return null;
+    public Goods getGoodsById(long id) {
+        return goods.getGoodsById(id);
     }
 }

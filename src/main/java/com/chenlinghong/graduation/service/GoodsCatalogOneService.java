@@ -1,5 +1,6 @@
 package com.chenlinghong.graduation.service;
 
+import com.chenlinghong.graduation.common.PageDto;
 import com.chenlinghong.graduation.repository.domain.GoodsCatalogOne;
 
 import java.util.List;
@@ -16,5 +17,5 @@ public interface GoodsCatalogOneService {
      *
      * @return
      */
-    List<GoodsCatalogOne> listAllGoodsCatalogOne();
+    PageDto listAllGoodsCatalogOne();
 }
