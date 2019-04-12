@@ -20,7 +20,7 @@ public class GoodsCatalogTwoDaoTest {
 
     @Test
     public void insert() {
-        GoodsCatalogTwo catalogTwo = new GoodsCatalogTwo("test", 2);
+        GoodsCatalogTwo catalogTwo = new GoodsCatalogTwo("test1", 2);
         int result = catalogTwoDao.insert(catalogTwo);
         Assert.assertEquals(1, result);
         System.out.println(result);
@@ -34,7 +34,8 @@ public class GoodsCatalogTwoDaoTest {
 
     @Test
     public void listByGoodsCatalogOneId(){
-        List<GoodsCatalogTwo> goodsCatalogTwos = catalogTwoDao.listByGoodsCatalogOneId(1L);
+        int count = catalogTwoDao.countByCatalogOne(1);
+        List<GoodsCatalogTwo> goodsCatalogTwos = catalogTwoDao.listByCatalogOne(1, 0, count);
         System.out.println(goodsCatalogTwos);
     }
 }

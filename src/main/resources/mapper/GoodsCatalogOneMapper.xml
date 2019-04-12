@@ -84,11 +84,4 @@
         WHERE deleted = "0"
     </select>
 
-    <select id="listAllGoodsCatalogOne" resultMap="BaseResultMap">
-        SELECT
-        <include refid="column_list"/>
-        FROM
-        goods_catalog_one
-        ORDER BY id DESC
-    </select>
 </mapper>

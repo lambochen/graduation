@@ -53,11 +53,4 @@ public interface GoodsCatalogOneDao {
      * @return
      */
     int count();
-
-    /**
-     * 获取一级目录所有列表
-     *
-     * @return
-     */
-    List<GoodsCatalogOne> listAllGoodsCatalogOne();
 }

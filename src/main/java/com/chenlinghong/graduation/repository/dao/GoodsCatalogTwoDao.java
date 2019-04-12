@@ -73,13 +73,4 @@ public interface GoodsCatalogTwoDao {
      */
     int countByCatalogOne(@Param("catalogOneId") int catalogOneId);
 
-    /**
-     * 根据商品一级目录ID获取二级目录列表
-     *
-     * @param goodsCatalogOneId
-     * @return
-     */
-
-    List<GoodsCatalogTwo> listByGoodsCatalogOneId(@Param("goodsCatalogOneId") long goodsCatalogOneId);
-
 }

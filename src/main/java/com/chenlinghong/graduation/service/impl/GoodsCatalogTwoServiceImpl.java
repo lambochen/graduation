@@ -5,7 +5,6 @@ import com.chenlinghong.graduation.repository.dao.GoodsCatalogTwoDao;
 import com.chenlinghong.graduation.repository.domain.GoodsCatalogTwo;
 import com.chenlinghong.graduation.service.GoodsCatalogTwoService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,11 +22,10 @@ public class GoodsCatalogTwoServiceImpl implements GoodsCatalogTwoService {
     private GoodsCatalogTwoDao goodsCatalogTwo;
 
     @Override
-    public PageDto<GoodsCatalogTwo> listByGoodsCatalogOneId(Long goodsCatalogOneId) {
-        if(goodsCatalogOneId != null){
-            List<GoodsCatalogTwo> goodsCatalogTwos = goodsCatalogTwo.listByGoodsCatalogOneId(goodsCatalogOneId);
-            return new PageDto<>(goodsCatalogTwos);
-        }
-        return null;
+    public PageDto<GoodsCatalogTwo> listByGoodsCatalogOneId(long catalogOneId) {
+        int count = goodsCatalogTwo.countByCatalogOne((int) catalogOneId);
+        List<GoodsCatalogTwo> goodsCatalogTwos = goodsCatalogTwo.listByCatalogOne((int) catalogOneId, 0, count);
+        return new PageDto<>(goodsCatalogTwos);
+
     }
 }

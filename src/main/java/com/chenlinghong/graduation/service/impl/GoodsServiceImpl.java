@@ -21,16 +21,18 @@ public class GoodsServiceImpl implements GoodsService {
 
     @Override
     public PageDto<Goods> listByGoodsCatalogOneId(long goodsCatalogOneId) {
-        return new PageDto<>(goods.listByGoodsCatalogOneId(goodsCatalogOneId));
+        long count = goods.countByCatalogOne((int)goodsCatalogOneId);
+        return new PageDto<>(goods.listByCatalogOne((int)goodsCatalogOneId,0,count));
     }
 
     @Override
     public PageDto listByGoodsCatalogTwoId(long goodsCatalogTwoId) {
-        return new PageDto<>(goods.listByGoodsCatalogTwoId(goodsCatalogTwoId));
+        long count = goods.countByCatalogTwo((int)goodsCatalogTwoId);
+        return new PageDto<>(goods.listByCatalogTwo((int)goodsCatalogTwoId,0,count));
     }
 
     @Override
     public Goods getGoodsById(long id) {
-        return goods.getGoodsById(id);
+        return goods.getById(id);
     }
 }

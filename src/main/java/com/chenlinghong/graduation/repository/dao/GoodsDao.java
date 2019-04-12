@@ -127,28 +127,5 @@ public interface GoodsDao {
      */
     long updatePrice(@Param("price") double price, @Param("id") long id);
 
-    /**
-     * 根据商品一级目录ID获取商品列表
-     *
-     * @param goodsCatalogOneId
-     * @return
-     */
-    List<Goods> listByGoodsCatalogOneId(@Param("goodsCatalogOneId") long goodsCatalogOneId);
 
-
-    /**
-     * 根据商品二级目录ID获取商品列表
-     *
-     * @param goodsCatalogTwoId
-     * @return
-     */
-    List<Goods> listByGoodsCatalogTwoId(@Param("goodsCatalogTwoId") long goodsCatalogTwoId);
-
-    /**
-     * 通过商品id查找商品详情
-     *
-     * @param id
-     * @return
-     */
-    Goods getGoodsById(@Param("id") long id);
 }

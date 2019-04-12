@@ -34,7 +34,8 @@ public class GoodsCatalogOneDaoTest {
 
     @Test
     public void listAllGoodsCatalogOne(){
-        List<GoodsCatalogOne> goodsCatalogOnes = catalogOneDao.listAllGoodsCatalogOne();
+        int count = catalogOneDao.count();
+        List<GoodsCatalogOne> goodsCatalogOnes = catalogOneDao.listAll(0,count);
         System.out.println(goodsCatalogOnes);
     }
 }

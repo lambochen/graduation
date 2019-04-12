@@ -32,7 +32,7 @@ public class GoodsCatalogTwoController {
      * @param goodsCatalogOneId
      * @return
      */
-    @GetMapping(value = "/listbygoodscatalogoneId")
+    @GetMapping(value = "/listbygoodscatalogoneid")
     public ResultVo<PageDto<GoodsCatalogTwo>> listByGoodsCatalogOneId(long goodsCatalogOneId) {
         PageDto pageDto = goodsCatalogTwoService.listByGoodsCatalogOneId(goodsCatalogOneId);
         return ResultUtil.success(pageDto);

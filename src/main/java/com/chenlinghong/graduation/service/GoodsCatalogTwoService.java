@@ -18,5 +18,5 @@ public interface GoodsCatalogTwoService {
      * @param goodsCatalogOneId
      * @return
      */
-    PageDto listByGoodsCatalogOneId(Long goodsCatalogOneId);
+    PageDto listByGoodsCatalogOneId(long goodsCatalogOneId);
 }

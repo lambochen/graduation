@@ -41,19 +41,21 @@ public class GoodsDaoTest {
 
     @Test
     public void listByGoodsCatalogOneId() {
-        List<Goods> goodsList = goodsDao.listByGoodsCatalogOneId(1l);
+        long count = goodsDao.countByCatalogOne(1);
+        List<Goods> goodsList = goodsDao.listByCatalogOne(1,0,count);
         System.out.println(goodsList);
     }
 
     @Test
     public void listByGoodsCatalogTwoId() {
-        List<Goods> goodsList = goodsDao.listByGoodsCatalogTwoId(1l);
+        long count =  goodsDao.countByCatalogTwo(1);
+        List<Goods> goodsList = goodsDao.listByCatalogTwo(1,0,count);
         System.out.println(goodsList);
     }
 
     @Test
     public void getGoodsById() {
-        Goods goods= goodsDao.getGoodsById(1l);
+        Goods goods= goodsDao.getById(1L);
         System.out.println(goods);
     }
 }

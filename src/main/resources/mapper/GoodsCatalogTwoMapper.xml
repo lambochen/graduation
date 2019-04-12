@@ -97,19 +97,11 @@
 
     <select id="countByCatalogOne" resultType="Integer">
         SELECT
-        <include refid="column_list"/>
+        count(*)
         FROM
         goods_catalog_two
         WHERE
         deleted = "0" and catalog_one_id = #{catalogOneId}
     </select>
 
-    <select id="listByGoodsCatalogOneId" resultMap="BaseResultMap" parameterType="long">
-        SELECT
-        <include refid="column_list"/>
-        FROM
-        goods_catalog_two
-        where
-        catalog_one_id = #{goodsCatalogOneId}
-    </select>
 </mapper>
