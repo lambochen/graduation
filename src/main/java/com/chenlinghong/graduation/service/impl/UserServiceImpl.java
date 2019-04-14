@@ -73,20 +73,28 @@ public class UserServiceImpl implements UserService {
     public UserVo loginBySms(String telephone) {
         if (StringUtils.isBlank(telephone)) {
             // 参数为空
-            log.error("UserService.loginBySms: param is null. telephone={}", telephone);
+            log.error("UserService#loginBySms: param is null. telephone={}", telephone);
             throw new BusinessException(ErrorEnum.PARAM_IS_NULL);
         }
         int dataCount = userDao.countByTelephone(telephone);
         if (dataCount <= 0) {
-            // 密码错误
-            log.error("UserService.loginBySms: password is error. telephone={}", telephone);
-            throw new BusinessException(ErrorEnum.PASSWORD_IS_ERROR);
+            /**
+             * 用户不存在, 进行新增用户
+             */
+            int insertResult = insert(telephone);
+            if (insertResult == 1) {
+                return getByTelephone(telephone);
+            } else {
+                // 插入用户数据有误
+                log.error("UserService#loginBySms: failed to insert user. telephone={}", telephone);
+                throw new BusinessException(ErrorEnum.INSERT_USER_ERROR);
+            }
         } else if (dataCount == 1) {
             // 登录成功
             return getByTelephone(telephone);
         } else {
             // TODO 数据有误
-            log.error("UserService.loginBySms: database has some errors. telephone={}", telephone);
+            log.error("UserService#loginBySms: database has some errors. telephone={}", telephone);
             throw new BusinessException(ErrorEnum.PASSWORD_IS_ERROR);
         }
     }
@@ -104,6 +112,16 @@ public class UserServiceImpl implements UserService {
          * TODO 后期做校验处理
          */
         return result;
+    }
+
+    /**
+     * 内部接口，用于登录及注册
+     *
+     * @param telephone
+     * @return
+     */
+    private int insert(String telephone) {
+        return userDao.insertByTelephone(telephone);
     }
 
     @Override
