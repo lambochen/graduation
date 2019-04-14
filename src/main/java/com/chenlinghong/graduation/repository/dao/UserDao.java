@@ -32,7 +32,7 @@ public interface UserDao {
      * @param id
      * @return
      */
-    int deleteById(int id);
+    int deleteById(long id);
 
     /**
      * 根据用户ID获取
@@ -40,7 +40,7 @@ public interface UserDao {
      * @param id
      * @return
      */
-    User getById(int id);
+    User getById(long id);
 
     /**
      * 根据电话号码获取
@@ -82,7 +82,7 @@ public interface UserDao {
      * @param password
      * @return
      */
-    int updatePassword(@Param("id") int id, @Param("password") String password);
+    int updatePassword(@Param("id") long id, @Param("password") String password);
 
     /**
      * 更新用户头像URL
@@ -91,7 +91,7 @@ public interface UserDao {
      * @param avatarUrl
      * @return
      */
-    int updateAvatarUrl(@Param("id") int id, @Param("avatarUrl") String avatarUrl);
+    int updateAvatarUrl(@Param("id") long id, @Param("avatarUrl") String avatarUrl);
 
 
 }

@@ -34,5 +34,21 @@ public interface UserService extends IBaseService<User> {
      */
     UserVo loginBySms(String telephone);
 
+    /**
+     * 修改密码
+     *
+     * @param id
+     * @param password
+     * @return
+     */
+    int updatePassword(long id, String password);
 
+    /**
+     * 更改用户头像
+     *
+     * @param id
+     * @param avatarUrl
+     * @return
+     */
+    int updateAvatarUrl(long id, String avatarUrl);
 }

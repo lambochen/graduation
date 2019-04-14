@@ -60,14 +60,14 @@
         insert into user(telephone) values (#{telephone})
     </insert>
 
-    <update id="deleteById" parameterType="int">
+    <update id="deleteById" parameterType="long">
         update user
         set deleted      = '1',
             gmt_modified = current_timestamp
         where id = #{id}
     </update>
 
-    <select id="getById" parameterType="Integer" resultMap="BaseResultMap">
+    <select id="getById" parameterType="long" resultMap="BaseResultMap">
         SELECT
         <include refid="column_list"/>
         FROM
