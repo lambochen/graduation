@@ -27,17 +27,17 @@ public class PageDto<T> implements Serializable {
     /**
      * 页码
      */
-    private int pageNo;
+    private long pageNo;
 
     /**
      * 每页条数
      */
-    private int pageSize;
+    private long pageSize;
 
     /**
      * 总条数
      */
-    private int totalCount;
+    private long totalCount;
 
     /**
      * 构造函数

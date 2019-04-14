@@ -65,12 +65,14 @@
         WHERE
         deleted = "0"
         order by id desc
-        <if test="offset != null and rows != null">
-            limit #{offset},#{rows}
-        </if>
-        <if test="offset == null or rows == null">
-            limit 0,10
-        </if>
+        <choose>
+            <when test="offset != null and rows != null">
+                limit #{offset},#{rows}
+            </when>
+            <otherwise>
+                limit 0,10
+            </otherwise>
+        </choose>
     </select>
 
     <select id="count" resultType="Integer">
@@ -87,17 +89,19 @@
         WHERE
         deleted = "0" and catalog_one_id = #{catalogOneId}
         order by id desc
-        <if test="offset != null and rows != null">
-            limit #{offset},#{rows}
-        </if>
-        <if test="offset == null or rows == null">
-            limit 0,10
-        </if>
+        <choose>
+            <when test="offset != null and rows != null">
+                limit #{offset},#{rows}
+            </when>
+            <otherwise>
+                limit 0,10
+            </otherwise>
+        </choose>
     </select>
 
     <select id="countByCatalogOne" resultType="Integer">
         SELECT
-        <include refid="column_list"/>
+        count(distinct id)
         FROM
         goods_catalog_two
         WHERE

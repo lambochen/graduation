@@ -12,15 +12,15 @@
         <result column="name" property="name" jdbcType="VARCHAR" javaType="String"/>
         <result column="description" property="description" jdbcType="VARCHAR" javaType="String"/>
         <collection property="catalogTwoList"
-                    column="{'id':id}"
-                    javaType="List"
+                    column="{catalogOneId:id}"
+                    javaType="java.util.List"
                     ofType="com.chenlinghong.graduation.repository.domain.GoodsCatalogTwo"
                     select="com.chenlinghong.graduation.repository.dao.GoodsCatalogTwoDao.listByCatalogOne">
         </collection>
     </resultMap>
 
     <sql id="Base_Column_List">
-        gmt_create, gmt_modified, deleted, `name`, `description`
+        `gmt_create`, `gmt_modified`, `deleted`, `name`, `description`
     </sql>
 
     <sql id="column_list">
@@ -70,12 +70,14 @@
         WHERE
         deleted = "0"
         order by id desc
-        <if test="offset != null and rows != null">
-            limit #{offset},#{rows}
-        </if>
-        <if test="offset == null or rows == null">
-            limit 0,10
-        </if>
+        <choose>
+            <when test="offset != null and rows != null">
+                limit #{offset},#{rows}
+            </when>
+            <otherwise>
+                limit 0,10
+            </otherwise>
+        </choose>
     </select>
 
     <select id="count" resultType="Integer">
