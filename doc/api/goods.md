@@ -114,6 +114,10 @@
 
     GET /graduation/goods/goods/catalog/one/{catalogOneId}
     
+请求示例：
+
+    http://127.0.0.1:8080/graduation/goods/goods/catalog/one/1?pageNo=1&pageSize=10
+    
 参数
 
     catalogOneId [int] : 一级目录ID 【必填，请求路径中填写】
@@ -160,8 +164,59 @@
         }
     }
 
+#### 五、根据二级目录ID获取商品信息列表
 
+    GET /graduation/goods/goods/catalog/two/{catalogTwoId}
+    
+请求示例：
 
+    http://127.0.0.1:8080/graduation/goods/goods/catalog/two/1?pageNo=1&pageSize=10
+    
+参数
+
+    catalogTwoId [int] : 一级目录ID 【必填，请求路径中填写】
+    pageNo [long] : 当前页数，默认为1
+    pageSize [long] : 每页条数，默认为10
+    
+返回 
+
+    {
+        "code": 0,
+        "msg": "请求成功",
+        "data": {
+            "data": [
+                {
+                    "id": 2,
+                    "gmtCreate": 1555228757000,
+                    "gmtModified": 1555228757000,
+                    "name": "test",
+                    "description": "test",
+                    "catalogOneId": 1,
+                    "catalogTwoId": 1,
+                    "goodsInfo": "test  ",
+                    "price": 1,
+                    "remarks": "test",
+                    "businessInfoId": 1000
+                },
+                {
+                    "id": 1,
+                    "gmtCreate": 1553935461000,
+                    "gmtModified": 1553935461000,
+                    "name": "test",
+                    "description": "test",
+                    "catalogOneId": 1,
+                    "catalogTwoId": 1,
+                    "goodsInfo": "test  ",
+                    "price": 1,
+                    "remarks": "test",
+                    "businessInfoId": 1000
+                }
+            ],
+            "pageNo": 1,
+            "pageSize": 10,
+            "totalCount": 2
+        }
+    }
 
 
 

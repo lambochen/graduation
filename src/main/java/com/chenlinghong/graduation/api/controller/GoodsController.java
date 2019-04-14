@@ -109,4 +109,29 @@ public class GoodsController {
         return ResultUtil.success(
                 goodsService.listByCatalogOne(catalogOneId, pageNo, pageSize));
     }
+
+    /**
+     * 根据二级目录ID获取商品信息列表
+     *
+     * @param catalogTwoId
+     * @param pageNo
+     * @param pageSize
+     * @return
+     */
+    @GetMapping(value = "/goods/catalog/two/{catalogTwoId}")
+    public ResultVo listGoodsByCatalogTwo(
+            @PathVariable(value = "catalogTwoId") int catalogTwoId,
+            @RequestParam(value = "pageNo", required = false, defaultValue = "1") int pageNo,
+            @RequestParam(value = "pageSize", required = false, defaultValue = "10") int pageSize) {
+        if (catalogTwoId <= 0 || pageNo < 0 || pageSize < 0) {
+            // 参数错误
+            log.error("GoodsController#listGoodsByCatalogTwo: param is illegal. " +
+                    "catalogTwoId={}, pageNo={}, pageSize={}", catalogTwoId, pageNo, pageSize);
+            throw new BusinessException(ErrorEnum.PARAM_ILLEGAL);
+        }
+        return ResultUtil.success(
+                goodsService.listByCatalogTwo(catalogTwoId, pageNo, pageSize));
+    }
+
+
 }
