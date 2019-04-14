@@ -141,7 +141,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public int update(User user) {
-        return 0;
+        if (user == null) {
+            log.error("UserService#update(user): param is null.");
+            throw new BusinessException(ErrorEnum.PARAM_IS_NULL);
+        }
+        return userDao.update(user);
     }
 
     private UserVo getByTelephone(String telephone) {

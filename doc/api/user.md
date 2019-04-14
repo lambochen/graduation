@@ -105,3 +105,30 @@
             }
         }
     }
+    
+#### 四、更新用户基本信息
+
+    PUT /graduation/user/user
+    
+参数
+
+    nickName [string] : 用户昵称  【必填】
+    realName [string] : 真实姓名【必填】
+    country [string] : 国家【必填】
+    province [string] : 省份【必填】
+    city [string] : 城市【必填】
+    position [string] : 详细地址【必填】
+    latitude [string] : 经度【必填】
+    longitude [string] : 纬度【必填】
+    description [string] : 描述【必填】
+    gender [int] : 性别（0：保密 1：男 2：女）【必填】
+    birthday [date] : 出生日期【必填】
+    
+返回
+
+    {
+        "code": 0,
+        "msg": "请求成功",
+        "data": null
+    }
+    

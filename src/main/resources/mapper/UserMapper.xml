@@ -110,7 +110,6 @@
             `position`    = #{position},
             `latitude`    = #{latitude},
             `longitude`   = #{longitude},
-            `position`    = #{position},
             `description` = #{description},
             gmt_modified  = current_timestamp
         where id = #{id}
