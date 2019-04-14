@@ -1,14 +1,28 @@
-## 商品模块
+## 商品订单模块
 
-#### 一、获取目录、获取一级目录（内嵌二级目录列表）【内嵌二级目录暂不提供】
+#### 一、新增订单
 
-    GET /graduation/goods/catalog
-    GET /graduation/goods/catalog/one
+    POST /graduation/order/order
     
 参数
 
-    pageNo [int] : 当前页数，默认为1
-    pageSize [int] : 每页条数，默认为10
+    name [string] : 订单名称
+    description [string] : 描述
+    goodsId [long]: 商品ID    【必填】
+    price [double]: 价钱  【必填】
+    remarks [string]: 备注
+    postCountry [string]: 国家
+    postProvince [string]: 省份
+    postCity [string]: 城市
+    postPosition [string]: 具体地址
     
 返回
+
+    {
+        "code": 0,
+        "msg": "请求成功",
+        "data": null
+    }
+    
+    
 

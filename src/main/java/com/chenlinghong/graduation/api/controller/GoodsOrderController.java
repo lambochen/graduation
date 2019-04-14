@@ -27,7 +27,7 @@ import javax.validation.Valid;
  */
 @RestController
 @Slf4j
-@RequestMapping(value = "/goods/order")
+@RequestMapping(value = "/order")
 public class GoodsOrderController {
 
     @Autowired
