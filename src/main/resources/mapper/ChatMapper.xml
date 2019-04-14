@@ -107,12 +107,14 @@
         left join (select chat_id,sum(`read`) read_count from chat group by chat_id) t1 on t1.chat_id=t.chat_id
         where t.sender=#{userId} or t.receiver=#{userId}
         order by gmt_create desc
-        <if test="offset != null and rows != null">
-            limit #{offset},#{rows}
-        </if>
-        <if test="offset == null or rows == null">
-            limit 0,10
-        </if>
+        <choose>
+            <when test="offset != null and rows != null">
+                limit #{offset},#{rows}
+            </when>
+            <otherwise>
+                limit 0,10
+            </otherwise>
+        </choose>
     </select>
 
     <select id="countListChat" resultType="long">
