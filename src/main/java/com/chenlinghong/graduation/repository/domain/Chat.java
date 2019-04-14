@@ -35,4 +35,9 @@ public class Chat extends BaseDomain {
      * 会话ID
      */
     private String chatId;
+
+    /**
+     * 是否已读
+     */
+    private Integer read;
 }

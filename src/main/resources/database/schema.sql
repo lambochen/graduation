@@ -160,6 +160,7 @@ create table if not exists `chat` (
     `content` varchar(2048) not null comment '聊天内容',
     `sender` bigint not null comment '发送者ID【FK(user)】',
     `receiver` bigint not null comment '接收者ID【FK(user)】',
+    `read` int not null default '1' comment '是否已读，0已读 1未读',
     primary key (`id`)
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 DEFAULT CHARSET = utf8mb4 COMMENT = '客服消息表';
 
