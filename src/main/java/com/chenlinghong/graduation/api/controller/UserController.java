@@ -1,21 +1,26 @@
 package com.chenlinghong.graduation.api.controller;
 
 import com.chenlinghong.graduation.api.util.SessionUtil;
+import com.chenlinghong.graduation.api.vo.UserUpdateVo;
 import com.chenlinghong.graduation.common.ResultUtil;
 import com.chenlinghong.graduation.common.ResultVo;
 import com.chenlinghong.graduation.enums.ErrorEnum;
 import com.chenlinghong.graduation.exception.BusinessException;
 import com.chenlinghong.graduation.repository.domain.User;
 import com.chenlinghong.graduation.service.UserService;
+import com.chenlinghong.graduation.util.MyRedisUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 /**
  * @Description 用户基本信息
@@ -32,6 +37,10 @@ public class UserController {
 
     @Autowired
     private SessionUtil sessionUtil;
+
+    @Autowired
+    private MyRedisUtil redisUtil;
+
 
     /**
      * 通过密码登录
@@ -55,8 +64,7 @@ public class UserController {
     }
 
     /**
-     * 通过短信验证码登录
-     * TODO 后期将进行加强，实现登录即注册
+     * 通过短信验证码登录，实现登录即注册
      *
      * @param smsCode
      * @param request
@@ -81,6 +89,7 @@ public class UserController {
 
     /**
      * 注冊用戶
+     * TODO 已遗弃该接口
      *
      * @param user
      * @return
@@ -99,5 +108,54 @@ public class UserController {
         return ResultUtil.success();
     }
 
+
+    /**
+     * 更新用户基本信息
+     *
+     * @param userUpdateVo
+     * @return
+     */
+    @PutMapping(value = "/user")
+    public ResultVo update(@Valid UserUpdateVo userUpdateVo, BindingResult bindingResult, HttpServletRequest request) {
+        if (bindingResult.hasErrors()) {
+            return ResultUtil.error(ErrorEnum.PARAM_ERROR.getCode(), bindingResult.getFieldError().getDefaultMessage());
+        }
+        User sessionUser = sessionUtil.getUser(request);
+        if (sessionUser == null) {
+            // 用户未登录
+            log.error("UserController#update: user not logged in. userUpdateVo={}, request={}", userUpdateVo, request);
+            throw new BusinessException(ErrorEnum.NO_USER);
+        }
+        /**
+         * 填充数据
+         */
+        padding(sessionUser, userUpdateVo);
+        int result = userService.update(sessionUser);
+        if (result == 1) {
+            return ResultUtil.success();
+        } else {
+            log.error("UserController#update: failed update user. sessionUser={}", sessionUser);
+            throw new BusinessException(ErrorEnum.UPDATE_USER_ERROR);
+        }
+    }
+
+    /**
+     * 填充数据
+     *
+     * @param target
+     * @param updateVo
+     */
+    private void padding(User target, UserUpdateVo updateVo) {
+        target.setNickName(updateVo.getNickName());
+        target.setRealName(updateVo.getRealName());
+        target.setGender(updateVo.getGender());
+        target.setBirthday(updateVo.getBirthday());
+        target.setProvince(updateVo.getProvince());
+        target.setCity(updateVo.getCity());
+        target.setPosition(updateVo.getPosition());
+        target.setLatitude(updateVo.getLatitude());
+        target.setLongitude(updateVo.getLongitude());
+        target.setDescription(updateVo.getDescription());
+    }
 
 }

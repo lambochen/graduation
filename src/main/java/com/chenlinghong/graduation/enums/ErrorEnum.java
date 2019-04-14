@@ -28,12 +28,15 @@ public enum ErrorEnum {
     PARAM_ILLEGAL(2001, "参数非法"),
     TELEPHONE_ILLEGAL(2002, "电话号码非法"),
     SERVER_ERROR(2222, "服务器未知错误"),
+    PARAM_ERROR(2003, "参数错误"),
 
     /**
      * 3XXX 用户相关错误
      */
     NO_USER(3000, "用户不存在或未登录"),
     PASSWORD_IS_ERROR(3001, "密码不正确"),
+    INSERT_USER_ERROR(3002, "新增用户失败"),
+    UPDATE_USER_ERROR(3003, "更新用户信息失败"),
 
     /**
      * 4XXX session相关

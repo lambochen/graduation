@@ -19,6 +19,14 @@ public interface UserDao {
     int insert(User user);
 
     /**
+     * 新增用户，仅填充电话号码，其它采用默认值
+     *
+     * @param telephone
+     * @return
+     */
+    int insertByTelephone(String telephone);
+
+    /**
      * 根据ID删除用户
      *
      * @param id

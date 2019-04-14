@@ -38,13 +38,13 @@ public class ChatController {
      */
     @PostMapping("/message")
     public ResultVo sendMessageForUser(long receiver, String content, HttpServletRequest request){
-        log.info("chatController.sendToUser: receiver={}, content={}, request={}", receiver, content, request);
+        log.info("chatController#sendToUser: receiver={}, content={}, request={}", receiver, content, request);
         Integer sender = 1000;
         String payload = sender + " to " + receiver + ": " + content;
         /**
          * TODO 写入数据库
          */
-        log.info("SocketController.sendToUser: send success, receiver={}, content={}, request={}, payload={}",
+        log.info("SocketController#sendToUser: send success, receiver={}, content={}, request={}, payload={}",
                 receiver, content, request, payload);
         template.convertAndSendToUser("" + receiver, "/message", payload);
 

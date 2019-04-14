@@ -56,6 +56,10 @@
         )
     </insert>
 
+    <insert id="insertByTelephone" parameterType="string">
+        insert into user(telephone) values (#{telephone})
+    </insert>
+
     <update id="deleteById" parameterType="int">
         update user
         set deleted      = '1',
@@ -106,7 +110,6 @@
             `position`    = #{position},
             `latitude`    = #{latitude},
             `longitude`   = #{longitude},
-            `position`    = #{position},
             `description` = #{description},
             gmt_modified  = current_timestamp
         where id = #{id}
