@@ -27,11 +27,11 @@ public interface ShoppingCartDao {
     int deleteById(long id);
 
     /**
-     * 根据ID批量删除 TODO 后期完善
+     * 根据ID批量删除
      * @param idList
      * @return
      */
-    // int deleteById(List<Long> idList);
+    int deleteByIdList(List<Long> idList, long userId);
 
     /**
      * 根据ID获取
@@ -55,6 +55,16 @@ public interface ShoppingCartDao {
      * @param userId
      * @return
      */
-    int countByUser(long userId);
+    long countByUser(long userId);
+
+    ShoppingCart getByUserGoods(@Param("goodsId") long goodsId, @Param("userId") long userId);
+
+    /**
+     * 更新数量
+     * @param id
+     * @param count
+     * @return
+     */
+    int updateCount(@Param("id") long id, @Param("count") int count);
 
 }
