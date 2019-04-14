@@ -1,5 +1,6 @@
 package com.chenlinghong.graduation.repository.dao;
 
+import com.chenlinghong.graduation.api.vo.ChatListVo;
 import com.chenlinghong.graduation.repository.domain.Chat;
 import org.apache.ibatis.annotations.Param;
 
@@ -61,5 +62,25 @@ public interface ChatDao {
      * @param chatId
      * @return
      */
-    int countByChat(String chatId);
+    long countByChat(String chatId);
+
+
+    /**
+     * 分页获取聊天列表
+     *
+     * @param userId
+     * @param offset
+     * @param rows
+     * @return
+     */
+    List<ChatListVo> listChat(@Param("userId") long userId,
+                              @Param("offset") long offset, @Param("rows") long rows);
+    long countListChat(long userId);
+
+    /**
+     * 更新消息是否已读
+     * @param chatId
+     * @return
+     */
+    int updateRead(@Param("chatId") String chatId);
 }

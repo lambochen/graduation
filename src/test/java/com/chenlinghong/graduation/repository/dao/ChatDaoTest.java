@@ -1,6 +1,7 @@
 package com.chenlinghong.graduation.repository.dao;
 
 
+import com.chenlinghong.graduation.api.vo.ChatListVo;
 import com.chenlinghong.graduation.repository.domain.Chat;
 import org.junit.Assert;
 import org.junit.Test;
@@ -20,7 +21,7 @@ public class ChatDaoTest {
 
     @Test
     public void insert() {
-        Chat chat = new Chat(2L, 3L, "test", "2=3");
+        Chat chat = new Chat(2L, 3L, "test", "2=3", 1);
         int result = chatDao.insert(chat);
         Assert.assertEquals(1, result);
     }
@@ -29,6 +30,12 @@ public class ChatDaoTest {
     public void listByChat() {
         List<Chat> chatList = chatDao.listByChat("2=3", 0L, 10L);
         System.out.println(chatList);
+    }
+
+    @Test
+    public void listChat() {
+        List<ChatListVo> chatListVoList = chatDao.listChat(1, 0, 10);
+        System.out.println(chatListVoList);
     }
 
 }
