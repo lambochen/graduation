@@ -11,8 +11,11 @@ import com.chenlinghong.graduation.service.ChatService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
@@ -66,6 +69,41 @@ public class ChatController {
         template.convertAndSendToUser("" + receiver, "/message", payload);
 
         return ResultUtil.success();
+    }
+
+
+    /**
+     * 根据用户ID获取聊天记录
+     *
+     * @param receiver 对方ID
+     * @param pageNo
+     * @param pageSize
+     * @param request
+     * @return
+     */
+    @GetMapping(value = "/chat/{receiver}")
+    public ResultVo listBySenderReceiver(
+            @PathVariable(value = "receiver") long receiver,
+            @RequestParam(value = "pageNo", required = false, defaultValue = "1") int pageNo,
+            @RequestParam(value = "pageSize", required = false, defaultValue = "10") int pageSize,
+            HttpServletRequest request) {
+        long sender = sessionUtil.getUserId(request);
+        return ResultUtil.success(chatService.listBySenderReceiver(sender, receiver, pageNo, pageSize));
+    }
+
+    /**
+     * 获取聊天列表
+     * @param pageNo
+     * @param pageSize
+     * @param request
+     * @return
+     */
+    @GetMapping(value = "/chat/list")
+    public ResultVo listChat(@RequestParam(value = "pageNo", required = false, defaultValue = "1") int pageNo,
+                             @RequestParam(value = "pageSize", required = false, defaultValue = "10") int pageSize,
+                             HttpServletRequest request) {
+        long userId = sessionUtil.getUserId(request);
+        return ResultUtil.success(chatService.listChat(userId, pageNo, pageSize));
     }
 
 

@@ -67,18 +67,21 @@ public class ChatServiceImpl implements ChatService {
     @Override
     public PageDto<Chat> listBySenderReceiver(long sender, long receiver, long pageNo, long pageSize) {
         String chatId = generateChatId(sender, receiver);
+        // 更新为已读消息
+        chatDao.updateRead(chatId);
         return listByChatId(chatId, pageNo, pageSize);
     }
 
     @Override
     public PageDto<ChatListVo> listChat(long userId, long pageNo, long pageSize) {
         List<ChatListVo> chatListVoList = chatDao.listChat(userId, (pageNo - 1) * pageSize, pageSize);
-        int total = chatDao.countListChat(userId);
+        long total = chatDao.countListChat(userId);
         return new PageDto<>(chatListVoList, pageNo, pageSize, total);
     }
 
     /**
      * 生成会话ID
+     *
      * @param sender
      * @param receiver
      * @return
@@ -89,6 +92,6 @@ public class ChatServiceImpl implements ChatService {
             sender = receiver;
             receiver = tmp;
         }
-        return sender + ":" + receiver;
+        return sender + "=" + receiver;
     }
 }

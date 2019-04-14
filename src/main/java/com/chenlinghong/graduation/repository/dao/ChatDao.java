@@ -62,7 +62,7 @@ public interface ChatDao {
      * @param chatId
      * @return
      */
-    int countByChat(String chatId);
+    long countByChat(String chatId);
 
 
     /**
@@ -75,7 +75,7 @@ public interface ChatDao {
      */
     List<ChatListVo> listChat(@Param("userId") long userId,
                               @Param("offset") long offset, @Param("rows") long rows);
-    int countListChat(long userId);
+    long countListChat(long userId);
 
     /**
      * 更新消息是否已读
