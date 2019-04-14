@@ -2,7 +2,7 @@
 
 ## 商品模块
 
-#### 一、获取目录、获取一级目录（内嵌二级目录列表）
+#### 一、获取目录、获取一级目录（内嵌二级目录列表）【内嵌二级目录暂不提供】
 
     GET /graduation/goods/catalog
     GET /graduation/goods/catalog/one
