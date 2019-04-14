@@ -22,8 +22,8 @@ public class GoodsDaoTest {
     public void insert() {
         Goods goods = new Goods();
         goods.setBusinessInfoId(1000L);
-        goods.setCatalogOneId(1000);
-        goods.setCatalogTwoId(1000);
+        goods.setCatalogOneId(1);
+        goods.setCatalogTwoId(1);
         goods.setName("test");
         goods.setDescription("test");
         goods.setPrice(1.0);

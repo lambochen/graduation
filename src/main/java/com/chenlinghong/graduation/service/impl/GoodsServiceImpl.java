@@ -9,6 +9,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * @Description 商品基本信息
  * @Author chenlinghong
@@ -48,5 +50,19 @@ public class GoodsServiceImpl implements GoodsService {
     @Override
     public int update(Goods goods) {
         return 0;
+    }
+
+    @Override
+    public PageDto<Goods> listByCatalogOne(int catalogOneId, long pageNo, long pageSize) {
+        List<Goods> goodsList = goodsDao.listByCatalogOne(catalogOneId, (pageNo - 1) * pageSize, pageSize);
+        long total = goodsDao.countByCatalogOne(catalogOneId);
+        return new PageDto<>(goodsList, pageNo, pageSize, total);
+    }
+
+    @Override
+    public PageDto<Goods> listByCatalogTwo(int catalogTwoId, long pageNo, long pageSize) {
+        List<Goods> goodsList = goodsDao.listByCatalogTwo(catalogTwoId, (pageNo - 1) * pageSize, pageSize);
+        long total = goodsDao.countByCatalogTwo(catalogTwoId);
+        return new PageDto<>(goodsList, pageNo, pageSize, total);
     }
 }

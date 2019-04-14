@@ -86,4 +86,27 @@ public class GoodsController {
         }
         return ResultUtil.success(goodsService.getById(id));
     }
+
+    /**
+     * 根据一级目录ID获取商品信息列表
+     *
+     * @param catalogOneId
+     * @param pageNo
+     * @param pageSize
+     * @return
+     */
+    @GetMapping(value = "/goods/catalog/one/{catalogOneId}")
+    public ResultVo listGoodsByCatalogOne(
+            @PathVariable(value = "catalogOneId") int catalogOneId,
+            @RequestParam(value = "pageNo", required = false, defaultValue = "1") int pageNo,
+            @RequestParam(value = "pageSize", required = false, defaultValue = "10") int pageSize) {
+        if (catalogOneId <= 0 || pageNo < 0 || pageSize < 0) {
+            // 参数错误
+            log.error("GoodsController#listGoodsByCatalogOne: param is illegal. " +
+                    "catalogOneId={}, pageNo={}, pageSize={}", catalogOneId, pageNo, pageSize);
+            throw new BusinessException(ErrorEnum.PARAM_ILLEGAL);
+        }
+        return ResultUtil.success(
+                goodsService.listByCatalogOne(catalogOneId, pageNo, pageSize));
+    }
 }
