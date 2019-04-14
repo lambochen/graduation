@@ -1,5 +1,6 @@
 package com.chenlinghong.graduation.api.controller;
 
+import com.chenlinghong.graduation.api.util.SessionUtil;
 import com.chenlinghong.graduation.common.ResultUtil;
 import com.chenlinghong.graduation.common.ResultVo;
 import com.chenlinghong.graduation.constant.FilePathConstant;
@@ -9,6 +10,7 @@ import com.chenlinghong.graduation.exception.BusinessException;
 import com.chenlinghong.graduation.util.UploadUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,6 +32,9 @@ import java.util.List;
 @RestController
 @RequestMapping("/file")
 public class FileController {
+
+    @Autowired
+    private SessionUtil sessionUtil;
 
     /**
      * 上传文件测试，可批量上传
@@ -62,11 +67,12 @@ public class FileController {
      */
     @PostMapping("/upload")
     public ResultVo upload(@RequestParam(value = "files") MultipartFile[] files,
-                         @RequestParam(value = "modular") int modular,
-                         HttpServletRequest request) {
-        /**
-         * TODO 身份校验
-         */
+                           @RequestParam(value = "modular") int modular,
+                           HttpServletRequest request) {
+        if (sessionUtil.isAliveUser(request) == false) {
+            log.error("FileController#upload: user not logged in.");
+            throw new BusinessException(ErrorEnum.NO_USER);
+        }
         if (files == null || files.length <= 0) {
             log.error("FileController.upload(file,modular): param is null. files={}, modular={}", files, modular);
             throw new BusinessException(ErrorEnum.PARAM_IS_NULL);

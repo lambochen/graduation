@@ -132,3 +132,36 @@
         "data": null
     }
     
+#### 五、修改密码
+
+    PUT /graduation/user/password
+    
+参数
+
+    smsCode [string] : 短信验证码  【必填】
+    password [string] : 新密码【必填】
+    
+返回
+
+    {
+        "code": 0,
+        "msg": "请求成功",
+        "data": null
+    }
+    
+#### 五、修改头像
+
+    PUT /graduation/user/avatar
+    
+参数
+
+    avatarUrl [string] : 用户头像URL  【必填】
+    
+返回
+
+    {
+        "code": 0,
+        "msg": "请求成功",
+        "data": null
+    }
+    
