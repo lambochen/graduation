@@ -20,3 +20,21 @@
 
     订阅自己的消息：/user/{userId}/message   说明：订阅别人发给自己的单独聊天消息
 
+
+#### 一、发送消息给指定用户
+
+    POST /graduation/chat/user
+    
+参数
+
+    receiver [long] : 接收方用户ID 【必填】
+    content [long] : 消息内容 【必填】
+    
+返回
+
+    {
+        "code": 0,
+        "msg": "请求成功",
+        "data": null
+    }
+    

@@ -56,22 +56,6 @@ public class ChatServiceImpl implements ChatService {
         return 0;
     }
 
-    /**
-     * 生成会话ID
-     *
-     * @param sender
-     * @param receiver
-     * @return
-     */
-    private static String generateChatId(long sender, long receiver) {
-        // 保证 小=大
-        if (sender > receiver) {
-            long tmp = sender;
-            sender = receiver;
-            receiver = tmp;
-        }
-        return sender + "=" + receiver;
-    }
 
     @Override
     public PageDto<Chat> listByChatId(String chatId, long pageNo, long pageSize) {
@@ -88,6 +72,23 @@ public class ChatServiceImpl implements ChatService {
 
     @Override
     public PageDto<ChatListVo> listChat(long userId, long pageNo, long pageSize) {
-        return null;
+        List<ChatListVo> chatListVoList = chatDao.listChat(userId, (pageNo - 1) * pageSize, pageSize);
+        int total = chatDao.countListChat(userId);
+        return new PageDto<>(chatListVoList, pageNo, pageSize, total);
+    }
+
+    /**
+     * 生成会话ID
+     * @param sender
+     * @param receiver
+     * @return
+     */
+    public static String generateChatId(long sender, long receiver) {
+        if (sender > receiver) {
+            long tmp = sender;
+            sender = receiver;
+            receiver = tmp;
+        }
+        return sender + ":" + receiver;
     }
 }

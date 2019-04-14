@@ -34,7 +34,7 @@ public interface ChatService extends IBaseService<Chat> {
     PageDto<Chat> listBySenderReceiver(long sender, long receiver, long pageNo, long pageSize);
 
     /**
-     * 获取聊天列表
+     * 获取聊天
      *
      * @param userId
      * @param pageNo

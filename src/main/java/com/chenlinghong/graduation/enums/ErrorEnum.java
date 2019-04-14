@@ -47,6 +47,10 @@ public enum ErrorEnum {
     SESSION_DATA_IS_NULL(4000, "Session数据为空"),
 
 
+    /**
+     * 5XXX 消息相关
+     */
+    CHAT_INSERT_ERROR(5000, "消息写入数据库失败"),
     ;
 
     /**
