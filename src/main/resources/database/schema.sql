@@ -173,6 +173,7 @@ create table if not exists `shopping_cart` (
     `deleted`      varchar(1)         default '0'  COMMENT '是否删除：0未删除，1已删除',
     `user_id` bigint not null comment '用户ID【FK(user)】',
     `goods_id` bigint not null comment '商品ID【FK(goods)】',
+    `count` int not null default '1' comment '数量',
     primary key (`id`)
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 DEFAULT CHARSET = utf8mb4 COMMENT = '购物车表';
 
