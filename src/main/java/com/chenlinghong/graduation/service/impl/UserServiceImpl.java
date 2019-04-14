@@ -41,14 +41,14 @@ public class UserServiceImpl implements UserService {
     public UserVo loginByPwd(String telephone, String password) {
         if (StringUtils.isBlank(telephone) || StringUtils.isBlank(password)) {
             // 参数为空
-            log.error("UserService.loginByPassword: param is null. telephone={}, password={}", telephone, password);
+            log.error("UserService#loginByPassword: param is null. telephone={}, password={}", telephone, password);
             throw new BusinessException(ErrorEnum.PARAM_IS_NULL);
         }
         // 校验用户是否存在
         int userCount = userDao.countByTelephone(telephone);
         if (userCount <= 0) {
             // 用户不存在
-            log.error("UserService.loginByPassword: no user. telephone={}, password={}", telephone, password);
+            log.error("UserService#loginByPassword: no user. telephone={}, password={}", telephone, password);
             throw new BusinessException(ErrorEnum.NO_USER);
         }
         // 获取密码密文
@@ -57,14 +57,14 @@ public class UserServiceImpl implements UserService {
         int resultCount = userDao.countByTelephoneAndPassword(telephone, passwordMD5);
         if (resultCount <= 0) {
             // 密码错误
-            log.error("UserService.loginByPassword: password is error. telephone={}, password={}", telephone, password);
+            log.error("UserService#loginByPassword: password is error. telephone={}, password={}", telephone, password);
             throw new BusinessException(ErrorEnum.PASSWORD_IS_ERROR);
         } else if (resultCount == 1) {
             // 登录成功
             return getByTelephone(telephone);
         } else {
             // TODO 数据有误
-            log.error("UserService.loginByPassword: database has some errors. telephone={}, password={}", telephone, password);
+            log.error("UserService#loginByPassword: database has some errors. telephone={}, password={}", telephone, password);
             throw new BusinessException(ErrorEnum.PASSWORD_IS_ERROR);
         }
     }
