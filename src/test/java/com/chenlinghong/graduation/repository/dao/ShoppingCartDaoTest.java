@@ -21,7 +21,7 @@ public class ShoppingCartDaoTest {
 
     @Test
     public void insert() {
-        ShoppingCart shoppingCart = new ShoppingCart(2L, 2L, 1);
+        ShoppingCart shoppingCart = new ShoppingCart(2L, null, 2L, 1);
         int result = shoppingCartDao.insert(shoppingCart);
         Assert.assertEquals(1, result);
     }

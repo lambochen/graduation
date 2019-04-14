@@ -21,6 +21,8 @@ public class ShoppingCart extends BaseDomain {
      */
     private Long goodsId;
 
+    private Goods goods;
+
     /**
      * 用户ID
      */

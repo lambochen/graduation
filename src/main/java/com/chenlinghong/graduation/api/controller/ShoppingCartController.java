@@ -52,7 +52,7 @@ public class ShoppingCartController {
             throw new BusinessException(ErrorEnum.PARAM_IS_NULL);
         }
         long userId = sessionUtil.getUserId(request);
-        ShoppingCart shoppingCart = new ShoppingCart(goodsId, userId, 1);
+        ShoppingCart shoppingCart = new ShoppingCart(goodsId, null,  userId, 1);
         shoppingCartService.insert(shoppingCart);
         return ResultUtil.success();
     }
