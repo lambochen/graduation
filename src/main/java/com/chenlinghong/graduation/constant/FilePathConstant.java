@@ -8,9 +8,26 @@ package com.chenlinghong.graduation.constant;
 public final class FilePathConstant {
 
     /**
+     * 文件请求前缀
+     */
+    public static final String URL_PRE = "http://api.xhunccd.top/graduation/file/download?file=";
+
+
+    /**
      * 临时文件夹
      */
     public static final String TEMP_DIR = "/data/app/graduation/file/tmp";
+
+    /**
+     * 项目文件存储路径
+     */
+    public static final String FILE_PATH = "D:/data/app/graduation/file/";
+
+    /**
+     * 测试目录
+     */
+    public static final String TEST = "test";
+
 
 
 }
