@@ -23,7 +23,7 @@
                     "id": 2,
                     "gmtCreate": 1555225976000,
                     "gmtModified": 1555225976000,
-                    "name": "test-1",
+                    "name": "test-1",       //目录名称
                     "description": null,
                     "catalogTwoList": null
                 },
@@ -42,4 +42,42 @@
         }
     }
     
+#### 二、根据一级目录ID获取二级目录
 
+    GET /graduation/goods/catalog/two
+    
+参数
+
+    catalogOneId [int] : 一级目录ID
+    pageNo [int] : 当前页数
+    pageSize [int] : 每页条数
+    
+返回
+
+    {
+        "code": 0,
+        "msg": "请求成功",
+        "data": {
+            "data": [
+                {
+                    "id": 2,
+                    "gmtCreate": 1555225869000,
+                    "gmtModified": 1555225869000,
+                    "name": "test-1",       //二级目录名称
+                    "description": null,
+                    "catalogOneId": 1
+                },
+                {
+                    "id": 1,
+                    "gmtCreate": 1553426662000,
+                    "gmtModified": 1553426662000,
+                    "name": "test",
+                    "description": null,
+                    "catalogOneId": 1
+                }
+            ],
+            "pageNo": 1,
+            "pageSize": 10,
+            "totalCount": 2
+        }
+    }

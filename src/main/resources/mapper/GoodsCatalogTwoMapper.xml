@@ -101,7 +101,7 @@
 
     <select id="countByCatalogOne" resultType="Integer">
         SELECT
-        <include refid="column_list"/>
+        count(distinct id)
         FROM
         goods_catalog_two
         WHERE

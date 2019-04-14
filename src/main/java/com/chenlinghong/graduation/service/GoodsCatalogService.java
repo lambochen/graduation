@@ -2,6 +2,7 @@ package com.chenlinghong.graduation.service;
 
 import com.chenlinghong.graduation.common.PageDto;
 import com.chenlinghong.graduation.repository.domain.GoodsCatalogOne;
+import com.chenlinghong.graduation.repository.domain.GoodsCatalogTwo;
 
 /**
  * @Description 商品目录
@@ -19,5 +20,15 @@ public interface GoodsCatalogService {
      * @return
      */
     PageDto<GoodsCatalogOne> listAll(int pageNo, int pageSize);
+
+    /**
+     * 根据一级目录ID获取二级目录
+     *
+     * @param catalogOneId  一级目录ID
+     * @param pageNo
+     * @param pageSize
+     * @return
+     */
+    PageDto<GoodsCatalogTwo> listByCatalogOne(int catalogOneId, int pageNo, int pageSize);
 
 }
