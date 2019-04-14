@@ -5,9 +5,11 @@ import com.chenlinghong.graduation.common.ResultVo;
 import com.chenlinghong.graduation.enums.ErrorEnum;
 import com.chenlinghong.graduation.exception.BusinessException;
 import com.chenlinghong.graduation.service.GoodsCatalogService;
+import com.chenlinghong.graduation.service.GoodsService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,6 +27,9 @@ public class GoodsController {
 
     @Autowired
     private GoodsCatalogService catalogService;
+
+    @Autowired
+    private GoodsService goodsService;
 
     /**
      * 获取目录（获取一级目录）
@@ -64,5 +69,21 @@ public class GoodsController {
             throw new BusinessException(ErrorEnum.PARAM_ILLEGAL);
         }
         return ResultUtil.success(catalogService.listByCatalogOne(catalogOneId, pageNo, pageSize));
+    }
+
+    /**
+     * 根据ID获取商品信息
+     *
+     * @param id
+     * @return
+     */
+    @GetMapping(value = "/goods/{id}")
+    public ResultVo getGoodsById(@PathVariable(value = "id") long id) {
+        if (id <= 0) {
+            // 参数错误
+            log.error("GoodsController#getGoodsById: param is illegal. id={}", id);
+            throw new BusinessException(ErrorEnum.PARAM_ILLEGAL);
+        }
+        return ResultUtil.success(goodsService.getById(id));
     }
 }

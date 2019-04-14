@@ -9,8 +9,8 @@
     
 参数
 
-    pageNo [int] : 当前页数
-    pageSize [int] : 每页条数
+    pageNo [int] : 当前页数，默认为1
+    pageSize [int] : 每页条数，默认为10
     
 返回
 
@@ -48,9 +48,9 @@
     
 参数
 
-    catalogOneId [int] : 一级目录ID
-    pageNo [int] : 当前页数
-    pageSize [int] : 每页条数
+    catalogOneId [int] : 一级目录ID 【必填】
+    pageNo [int] : 当前页数，默认为1
+    pageSize [int] : 每页条数，默认为10
     
 返回
 
@@ -79,5 +79,33 @@
             "pageNo": 1,
             "pageSize": 10,
             "totalCount": 2
+        }
+    }
+    
+#### 三、根据ID获取商品信息
+
+    GET /graduation/goods/goods/{id}
+    
+参数
+
+    id [long] : 商品ID 【必填，请求路径中填写】
+    
+返回
+
+    {
+        "code": 0,
+        "msg": "请求成功",
+        "data": {
+            "id": 1,
+            "gmtCreate": 1553935461000,
+            "gmtModified": 1553935461000,
+            "name": "test",
+            "description": "test",
+            "catalogOneId": 1,
+            "catalogTwoId": 1,
+            "goodsInfo": "test  ",
+            "price": 1,
+            "remarks": "test",
+            "businessInfoId": 1000
         }
     }

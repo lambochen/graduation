@@ -27,3 +27,5 @@ data对象为分页对象时：
 - data: code为0时表示返回结果数据，非0时为null
 
 2、时间格式约定，所有时间格式为时间戳形式返回
+
+3、具体数据字段含义，参考：[数据库设计说明](https://github.com/chenlinghong/graduation/blob/develop/doc/database/database-description.md)
