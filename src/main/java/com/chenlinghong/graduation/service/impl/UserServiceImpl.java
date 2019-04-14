@@ -100,6 +100,24 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public int updatePassword(long id, String password) {
+        if (StringUtils.isBlank(password)) {
+            log.error("UserService#updatePassword: param is null. id={}, password={}", id, password);
+            throw new BusinessException(ErrorEnum.PARAM_IS_NULL);
+        }
+        return userDao.updatePassword(id, EncryptionUtil.ccMD5(password));
+    }
+
+    @Override
+    public int updateAvatarUrl(long id, String avatarUrl) {
+        if (StringUtils.isBlank(avatarUrl)) {
+            log.error("UserService#updateAvatarUrl: param is null. id={}, avatarUrl={}", id, avatarUrl);
+            throw new BusinessException(ErrorEnum.PARAM_IS_NULL);
+        }
+        return userDao.updateAvatarUrl(id, avatarUrl);
+    }
+
+    @Override
     public int insert(User user) {
         if (user == null) {
             log.error("UserService#insert: param is null. user={}", user);

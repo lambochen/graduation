@@ -41,7 +41,6 @@ public class UserController {
     @Autowired
     private MyRedisUtil redisUtil;
 
-
     /**
      * 通过密码登录
      *
@@ -138,6 +137,52 @@ public class UserController {
             throw new BusinessException(ErrorEnum.UPDATE_USER_ERROR);
         }
     }
+
+
+    /**
+     * 修改密码
+     *
+     * @param smsCode  短信验证码
+     * @param password 新密码
+     * @param request
+     * @return
+     */
+    @PutMapping(value = "/password")
+    public ResultVo updatePassword(String smsCode, String password, HttpServletRequest request) {
+        if (StringUtils.isBlank(smsCode) || StringUtils.isBlank(password)) {
+            log.error("UserController#updatePassword: param is null. smsCode={}, password={}, request={}"
+                    , smsCode, password, request);
+            throw new BusinessException(ErrorEnum.PARAM_IS_NULL);
+        }
+        if (sessionUtil.checkSmsCode(smsCode, request) == false) {
+            // 短信验证码不正确
+            log.error("UserController#updatePassword: smsCode is error. smsCode={}, password={}, request={}"
+                    , smsCode, password, request);
+            throw new BusinessException(ErrorEnum.SMS_ERROR);
+        }
+        long userId = sessionUtil.getUserId(request);
+        userService.updatePassword(userId, password);
+        return ResultUtil.success();
+    }
+
+    /**
+     * 更新用户头像
+     *
+     * @param avatarUrl
+     * @param request
+     * @return
+     */
+    @PutMapping(value = "/avatar")
+    public ResultVo updateAvatarUrl(String avatarUrl, HttpServletRequest request) {
+        if (StringUtils.isBlank(avatarUrl)) {
+            log.error("UserController#updateAvatarUrl: param is null. avatarUrl={}, request={}", avatarUrl, request);
+            throw new BusinessException(ErrorEnum.PARAM_IS_NULL);
+        }
+        long userId = sessionUtil.getUserId(request);
+        userService.updateAvatarUrl(userId, avatarUrl);
+        return ResultUtil.success();
+    }
+
 
     /**
      * 填充数据

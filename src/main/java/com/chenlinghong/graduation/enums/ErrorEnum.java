@@ -29,6 +29,9 @@ public enum ErrorEnum {
     TELEPHONE_ILLEGAL(2002, "电话号码非法"),
     SERVER_ERROR(2222, "服务器未知错误"),
     PARAM_ERROR(2003, "参数错误"),
+    FILE_HANDLE_ERROR(2004, "文件处理异常"),
+    FILE_IS_NULL(2005, "文件不存在"),
+    FILE_STREAM_CREATE_ERROR(2006, "文件流创建错误"),
 
     /**
      * 3XXX 用户相关错误
