@@ -69,7 +69,7 @@ public interface GoodsCommentDao {
      * @param userId
      * @return
      */
-    int countByUser(long userId);
+    long countByUser(long userId);
 
     /**
      * 根据商品分页获取
@@ -88,7 +88,7 @@ public interface GoodsCommentDao {
      * @param goodsId
      * @return
      */
-    int countByGoods(long goodsId);
+    long countByGoods(long goodsId);
 
     /**
      * 更新
