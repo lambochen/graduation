@@ -10,9 +10,9 @@
         <result column="gmt_modified" property="gmtModified" jdbcType="TIMESTAMP" javaType="Date"/>
         <result column="deleted" property="deleted" jdbcType="VARCHAR" javaType="Integer"/>
         <result column="content" property="content" jdbcType="VARCHAR" javaType="String"/>
-        <result column="img_one" property="imgOne" jdbcType="VARCHAR" javaType="Integer"/>
-        <result column="imgTwo" property="imgTwo" jdbcType="VARCHAR" javaType="Integer"/>
-        <result column="imgThree" property="imgThree" jdbcType="VARCHAR" javaType="Integer"/>
+        <result column="img_one" property="imgOne" jdbcType="VARCHAR" javaType="String"/>
+        <result column="img_two" property="imgTwo" jdbcType="VARCHAR" javaType="String"/>
+        <result column="img_three" property="imgThree" jdbcType="VARCHAR" javaType="String"/>
         <result column="goods_id" property="goodsId" jdbcType="BIGINT" javaType="Long"/>
         <result column="user_id" property="userId" jdbcType="BIGINT" javaType="Long"/>
     </resultMap>

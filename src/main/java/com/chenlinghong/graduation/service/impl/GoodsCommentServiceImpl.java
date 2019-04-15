@@ -73,14 +73,14 @@ public class GoodsCommentServiceImpl implements GoodsCommentService {
     @Override
     public PageDto<GoodsComment> listByUser(long userId, long pageNo, long pageSize) {
         List<GoodsComment> commentList = commentDao.listByUser(userId, (pageNo - 1) * pageSize, pageSize);
-        int total = commentDao.countByUser(userId);
+        long total = commentDao.countByUser(userId);
         return new PageDto<>(commentList, pageNo, pageSize, total);
     }
 
     @Override
     public PageDto<GoodsComment> listByGoods(long goodsId, long pageNo, long pageSize) {
         List<GoodsComment> commentList = commentDao.listByGoods(goodsId, (pageNo - 1) * pageSize, pageSize);
-        int total = commentDao.countByGoods(goodsId);
+        long total = commentDao.countByGoods(goodsId);
         return new PageDto<>(commentList, pageNo, pageSize, total);
     }
 }
