@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotNull;
+
 /**
  * @Description 商品订单表
  * @Author chenlinghong
@@ -29,6 +31,7 @@ public class GoodsOrder extends BaseDomain {
     /**
      * 商品ID
      */
+    @NotNull(message = "商品ID不能为空")
     private Long goodsId;
 
     /**
@@ -39,6 +42,7 @@ public class GoodsOrder extends BaseDomain {
     /**
      * 价格
      */
+    @NotNull(message = "价格不能为空")
     private Double price;
 
     /**
