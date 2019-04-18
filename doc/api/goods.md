@@ -23,9 +23,9 @@
                     "id": 2,
                     "gmtCreate": 1555225976000,
                     "gmtModified": 1555225976000,
-                    "name": "test-1",       //目录名称
+                    "name": "test-1",
                     "description": null,
-                    "catalogTwoList": null
+                    "catalogTwoList": []
                 },
                 {
                     "id": 1,
@@ -33,7 +33,24 @@
                     "gmtModified": 1553425721000,
                     "name": "test",
                     "description": null,
-                    "catalogTwoList": null
+                    "catalogTwoList": [
+                        {
+                            "id": 2,
+                            "gmtCreate": 1555225869000,
+                            "gmtModified": 1555225869000,
+                            "name": "test-1",
+                            "description": null,
+                            "catalogOneId": 1
+                        },
+                        {
+                            "id": 1,
+                            "gmtCreate": 1553426662000,
+                            "gmtModified": 1553426662000,
+                            "name": "test",
+                            "description": null,
+                            "catalogOneId": 1
+                        }
+                    ]
                 }
             ],
             "pageNo": 1,
