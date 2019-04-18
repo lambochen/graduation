@@ -12,7 +12,8 @@
         <result column="goods_id" property="goodsId" jdbcType="BIGINT" javaType="Long"/>
         <result column="user_id" property="userId" jdbcType="BIGINT" javaType="Long"/>
         <result column="count" property="count" jdbcType="INTEGER" javaType="Integer"/>
-        <association property="goods" column="{id:goods_id}"
+        <association property="goods"
+                     column="goods_id"
                      javaType="com.chenlinghong.graduation.repository.domain.Goods"
                      select="com.chenlinghong.graduation.repository.dao.GoodsDao.getById">
         </association>
