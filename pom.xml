@@ -11,6 +11,8 @@
     <groupId>com.chenlinghong</groupId>
     <artifactId>graduation</artifactId>
     <version>0.0.1-SNAPSHOT</version>
+    <packaging>war</packaging>
+
     <name>graduation</name>
     <description>graduation project</description>
 
@@ -256,7 +258,7 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
                 <configuration>
-                    <warName>eto</warName>
+                    <warName>graduation</warName>
                 </configuration>
             </plugin>
             <plugin>

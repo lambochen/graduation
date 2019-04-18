@@ -21,7 +21,7 @@ public final class FilePathConstant {
     /**
      * 项目文件存储路径
      */
-    public static final String FILE_PATH = "D:/data/app/graduation/file/";
+    public static final String FILE_PATH = "/data/app/graduation/file/";
 
     /**
      * 测试目录
