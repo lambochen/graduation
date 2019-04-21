@@ -246,6 +246,63 @@
             <version>4.12</version>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/org.apache.mahout/mahout-core -->
+        <dependency>
+            <groupId>org.apache.mahout</groupId>
+            <artifactId>mahout-core</artifactId>
+            <version>0.9</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.apache.mahout/mahout-math -->
+        <dependency>
+            <groupId>org.apache.mahout</groupId>
+            <artifactId>mahout-math</artifactId>
+            <version>0.13.0</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.apache.mahout/mahout-collections -->
+        <dependency>
+            <groupId>org.apache.mahout</groupId>
+            <artifactId>mahout-collections</artifactId>
+            <version>1.0</version>
+        </dependency>
+
+        <!--        &lt;!&ndash; https://mvnrepository.com/artifact/org.apache.mahout/mahout-hdfs &ndash;&gt;-->
+        <!--        <dependency>-->
+        <!--            <groupId>org.apache.mahout</groupId>-->
+        <!--            <artifactId>mahout-hdfs</artifactId>-->
+        <!--            <version>0.13.0</version>-->
+        <!--        </dependency>-->
+
+        <!--        &lt;!&ndash; https://mvnrepository.com/artifact/org.apache.mahout/mahout-math-scala &ndash;&gt;-->
+        <!--        <dependency>-->
+        <!--            <groupId>org.apache.mahout</groupId>-->
+        <!--            <artifactId>mahout-math-scala_2.10</artifactId>-->
+        <!--            <version>0.13.0</version>-->
+        <!--        </dependency>-->
+
+        <!-- https://mvnrepository.com/artifact/org.apache.mahout/mahout-utils -->
+        <dependency>
+            <groupId>org.apache.mahout</groupId>
+            <artifactId>mahout-utils</artifactId>
+            <version>0.5</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.apache.mahout/mahout-integration -->
+        <dependency>
+            <groupId>org.apache.mahout</groupId>
+            <artifactId>mahout-integration</artifactId>
+            <version>0.13.0</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.apache.mahout/mahout-examples -->
+        <dependency>
+            <groupId>org.apache.mahout</groupId>
+            <artifactId>mahout-examples</artifactId>
+            <version>0.13.0</version>
+        </dependency>
+
+
     </dependencies>
 
     <build>
