@@ -53,7 +53,7 @@
         FROM
         chat
         WHERE
-        id=#{id}
+        id=#{id} and `deleted` = '0'
     </select>
 
     <select id="listByChat" resultMap="BaseResultMap">
@@ -61,7 +61,7 @@
         <include refid="column_list"/>
         FROM
         chat
-        where chat_id = #{chatId}
+        where chat_id = #{chatId} and `deleted` = '0'
         order by id desc
         <choose>
             <when test="offset != null and rows != null">
@@ -76,6 +76,6 @@
     <select id="countByChat" resultType="long">
         SELECT count(*)
         FROM chat
-        where chat_id = #{chatId}
+        where chat_id = #{chatId} and `deleted` = '0'
     </select>
 </mapper>
