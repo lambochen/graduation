@@ -11,23 +11,7 @@ import java.util.List;
  * @Author chenlinghong
  * @Date 2019/4/2 17:48
  **/
-public interface ChatDao {
-
-    /**
-     * 新增聊天消息
-     *
-     * @param chat
-     * @return
-     */
-    int insert(Chat chat);
-
-    /**
-     * 根据ID删除
-     *
-     * @param id
-     * @return
-     */
-    int deleteById(long id);
+public interface ChatDao extends IBaseDao<Chat> {
 
     /**
      * 批量删除自己发送消息
@@ -37,13 +21,6 @@ public interface ChatDao {
      */
     int deleteBySender(long sender);
 
-    /**
-     * 根据ID获取
-     *
-     * @param id
-     * @return
-     */
-    Chat getById(long id);
 
     /**
      * 根据会话ID分页获取
