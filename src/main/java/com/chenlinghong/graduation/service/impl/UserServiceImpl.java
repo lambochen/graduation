@@ -2,6 +2,7 @@ package com.chenlinghong.graduation.service.impl;
 
 import com.chenlinghong.graduation.api.vo.UserVo;
 import com.chenlinghong.graduation.common.PageDto;
+import com.chenlinghong.graduation.constant.FilePathConstant;
 import com.chenlinghong.graduation.enums.ErrorEnum;
 import com.chenlinghong.graduation.exception.BusinessException;
 import com.chenlinghong.graduation.repository.dao.UserDao;
@@ -9,6 +10,7 @@ import com.chenlinghong.graduation.repository.domain.User;
 import com.chenlinghong.graduation.service.UserService;
 import com.chenlinghong.graduation.util.EncryptionUtil;
 import com.chenlinghong.graduation.util.MyRedisUtil;
+import com.chenlinghong.graduation.util.UsernameUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -139,7 +141,8 @@ public class UserServiceImpl implements UserService {
      * @return
      */
     private int insert(String telephone) {
-        return userDao.insertByTelephone(telephone);
+        String username = UsernameUtil.getRandomUsername(8);
+        return userDao.insertByTelephoneAndUsername(telephone, username, FilePathConstant.DEFAULT_AVATAR);
     }
 
     @Override
