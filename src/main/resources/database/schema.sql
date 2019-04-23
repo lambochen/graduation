@@ -43,6 +43,19 @@ create table if not exists `user` (
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 DEFAULT CHARSET = utf8mb4 COMMENT = '用户基本信息表';
 
 
+-- 用户-标签表
+create table if not exists `user_tag` (
+    `id` bigint not null auto_increment comment 'ID',
+    `gmt_create`   timestamp NULL     DEFAULT CURRENT_TIMESTAMP  COMMENT '创建时间戳',
+    `gmt_modified` timestamp NULL     DEFAULT CURRENT_TIMESTAMP  COMMENT '最近修改时间戳',
+    `deleted`      varchar(1)         default '0'  COMMENT '是否删除：0未删除，1已删除',
+    `user_id` bigint not null comment '用户ID【FK(user)】',
+    `catalog_one_id` int not null comment '一级目录ID，FK【goods_catalog_one】',
+    `catalog_two_id` int comment '二级目录ID，FK【goods_catalog_two】',
+    primary key (`id`),
+    key `idx_user` (`user_id`)
+) ENGINE = InnoDB AUTO_INCREMENT = 1 DEFAULT CHARSET = utf8mb4 COMMENT = '购物车表';
+
 
 -- 创建商品一级目录表
 create table if not exists `goods_catalog_one` (
