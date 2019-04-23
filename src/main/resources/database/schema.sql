@@ -54,7 +54,7 @@ create table if not exists `user_tag` (
     `catalog_two_id` int comment '二级目录ID，FK【goods_catalog_two】',
     primary key (`id`),
     key `idx_user` (`user_id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 1 DEFAULT CHARSET = utf8mb4 COMMENT = '购物车表';
+) ENGINE = InnoDB AUTO_INCREMENT = 1 DEFAULT CHARSET = utf8mb4 COMMENT = '用户-标签';
 
 
 -- 创建商品一级目录表

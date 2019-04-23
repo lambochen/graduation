@@ -32,5 +32,10 @@ public class UserTag extends BaseDomain {
      */
     private Long goodsCatalogTwoId;
 
+    public UserTag(long userId, long goodsCatalogOneId, long goodsCatalogTwoId){
+        this.userId = userId;
+        this.goodsCatalogOneId = goodsCatalogOneId;
+        this.goodsCatalogTwoId = goodsCatalogTwoId;
+    }
 
 }
