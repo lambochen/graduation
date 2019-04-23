@@ -27,6 +27,17 @@ public interface UserDao {
     int insertByTelephone(String telephone);
 
     /**
+     * 新增用户
+     * @param telephone
+     * @param username
+     * @param avatarUrl
+     * @return
+     */
+    int insertByTelephoneAndUsername(@Param("telephone") String telephone,
+                                     @Param("username") String username,
+                                     @Param("avatarUrl") String avatarUrl);
+
+    /**
      * 根据ID删除用户
      *
      * @param id

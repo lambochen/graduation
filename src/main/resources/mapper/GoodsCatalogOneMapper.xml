@@ -83,7 +83,7 @@
     <select id="count" resultType="Integer">
         SELECT count(*)
         FROM goods_catalog_one
-        WHERE deleted = "0"
+        WHERE deleted = "0" and `deleted` = '0'
     </select>
 
 </mapper>

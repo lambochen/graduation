@@ -61,7 +61,7 @@
         FROM
         shopping_cart
         WHERE
-        id=#{id}
+        id=#{id} and `deleted` = '0'
     </select>
 
     <select id="listByUser" resultMap="BaseResultMap">
@@ -69,7 +69,7 @@
         <include refid="column_list"/>
         FROM
         shopping_cart
-        where user_id = #{userId}
+        where user_id = #{userId} and `deleted` = '0'
         order by id desc
         <choose>
             <when test="offset != null and rows != null">
@@ -84,7 +84,7 @@
     <select id="countByUser" resultType="long">
         SELECT count(*)
         FROM shopping_cart
-        where user_id = #{userId}
+        where user_id = #{userId} and `deleted` = '0'
     </select>
 
     <select id="getByUserGoods" resultMap="BaseResultMap">

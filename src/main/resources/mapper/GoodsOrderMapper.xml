@@ -55,7 +55,7 @@
         FROM
         goods_order
         WHERE
-        id=#{id}
+        id=#{id} and `deleted` = '0'
     </select>
 
     <select id="listAll" resultMap="BaseResultMap">
@@ -63,6 +63,7 @@
         <include refid="column_list"/>
         FROM
         goods_order
+        where `deleted` = '0'
         order by id desc
         <choose>
             <when test="offset != null and rows != null">
@@ -77,6 +78,7 @@
     <select id="count" resultType="long">
         SELECT count(*)
         FROM goods_order
+        where `deleted` = '0'
     </select>
 
     <select id="listByGoods" resultMap="BaseResultMap">
@@ -84,7 +86,7 @@
         <include refid="column_list"/>
         FROM
         goods_order
-        where goods_id = #{goodsId}
+        where goods_id = #{goodsId} and `deleted` = '0'
         order by id desc
         <choose>
             <when test="offset != null and rows != null">
@@ -99,7 +101,7 @@
     <select id="countByGoods" resultType="long">
         SELECT count(*)
         FROM goods_order
-        where goods_id = #{goodsId}
+        where goods_id = #{goodsId} and `deleted` = '0'
     </select>
 
     <select id="listByUser" resultMap="BaseResultMap">
@@ -107,7 +109,7 @@
         <include refid="column_list"/>
         FROM
         goods_order
-        where user_id = #{userId}
+        where user_id = #{userId} and `deleted` = '0'
         order by id desc
         <choose>
             <when test="offset != null and rows != null">
@@ -122,7 +124,7 @@
     <select id="countByUser" resultType="long">
         SELECT count(*)
         FROM goods_order
-        where user_id = #{userId}
+        where user_id = #{userId} and `deleted` = '0'
     </select>
 
     <update id="update" parameterType="com.chenlinghong.graduation.repository.domain.GoodsOrder">

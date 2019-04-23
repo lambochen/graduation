@@ -12,7 +12,6 @@ public final class FilePathConstant {
      */
     public static final String URL_PRE = "http://api.xhunccd.top/graduation/file/download?file=";
 
-
     /**
      * 临时文件夹
      */
@@ -28,6 +27,9 @@ public final class FilePathConstant {
      */
     public static final String TEST = "test";
 
-
+    /**
+     * 默认头像
+     */
+    public static final String DEFAULT_AVATAR = "http://api.xhunccd.top/graduation/file/download?file=/data/app/graduation/file/user/20190423/1556021929746_613.png";
 
 }

@@ -62,7 +62,7 @@
         FROM
         goods_comment
         WHERE
-        id=#{id}
+        id=#{id} and `deleted` = '0'
     </select>
 
     <select id="listByUser" resultMap="BaseResultMap">
@@ -70,7 +70,7 @@
         <include refid="column_list"/>
         FROM
         goods_comment
-        where user_id = #{userId}
+        where user_id = #{userId} and `deleted` = '0'
         order by id desc
         <choose>
             <when test="offset != null and rows != null">
@@ -85,7 +85,7 @@
     <select id="countByUser" resultType="long">
         SELECT count(*)
         FROM goods_comment
-        where user_id = #{userId}
+        where user_id = #{userId} and `deleted` = '0'
     </select>
 
 
@@ -94,7 +94,7 @@
         <include refid="column_list"/>
         FROM
         goods_comment
-        where goods_id = #{goodsId}
+        where goods_id = #{goodsId} and `deleted` = '0'
         order by id desc
         <choose>
             <when test="offset != null and rows != null">
@@ -109,7 +109,7 @@
     <select id="countByGoods" resultType="long">
         SELECT count(*)
         FROM goods_comment
-        where goods_id = #{goodsId}
+        where goods_id = #{goodsId} and `deleted` = '0'
     </select>
 
     <update id="update" parameterType="com.chenlinghong.graduation.repository.domain.GoodsComment">

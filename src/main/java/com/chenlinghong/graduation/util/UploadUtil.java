@@ -14,6 +14,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -123,6 +124,12 @@ public class UploadUtil {
             FileInputStream fileInputStream;
             BufferedInputStream bufferedInputStream;
             try {
+
+                // 1.设置文件ContentType类型，这样设置，会自动判断下载文件类型
+                response.setContentType("multipart/form-data");
+                // 2.设置文件头：最后一个参数是设置下载文件名
+                response.setHeader("content-disposition", "attachment;filename="
+                        + URLEncoder.encode(fileName, "UTF-8"));
 
                 fileInputStream = new FileInputStream(file);
                 bufferedInputStream = new BufferedInputStream(fileInputStream);

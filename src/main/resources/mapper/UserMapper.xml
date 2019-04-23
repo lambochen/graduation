@@ -60,6 +60,10 @@
         insert into user(telephone) values (#{telephone})
     </insert>
 
+    <insert id="insertByTelephoneAndUsername">
+        insert into user(telephone, nick_name, avatar_url) values (#{telephone} ,#{username} ,#{avatarUrl} )
+    </insert>
+
     <update id="deleteById" parameterType="long">
         update user
         set deleted      = '1',
@@ -73,7 +77,7 @@
         FROM
         user
         WHERE
-        id=#{id}
+        id=#{id} and `deleted` = '0'
     </select>
 
     <select id="getByTelephone" parameterType="String" resultMap="BaseResultMap">
@@ -82,20 +86,20 @@
         FROM
         user
         WHERE
-        telephone=#{telephone}
+        telephone=#{telephone} and `deleted` = '0'
     </select>
 
     <select id="countByTelephone" parameterType="String" resultType="int">
         SELECT count(distinct id)
         FROM user
-        WHERE telephone = #{telephone}
+        WHERE telephone = #{telephone} and `deleted` = '0'
     </select>
 
     <select id="countByTelephoneAndPassword" resultType="int">
         SELECT count(distinct id)
         FROM user
         WHERE telephone = #{telephone}
-          and password = #{password}
+          and password = #{password} and `deleted` = '0'
     </select>
 
     <update id="update" parameterType="com.chenlinghong.graduation.repository.domain.User">
@@ -128,4 +132,5 @@
             gmt_modified = current_timestamp
         where id = #{id}
     </update>
+
 </mapper>
