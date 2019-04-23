@@ -10,47 +10,8 @@ import java.util.List;
  * @Author chenlinghong
  * @Date 2019/3/30 11:32
  **/
-public interface GoodsDao {
+public interface GoodsDao extends IBaseDao<Goods> {
 
-    /**
-     * 新增商品信息
-     *
-     * @param goods
-     * @return
-     */
-    int insert(Goods goods);
-
-    /**
-     * 根据ID删除
-     *
-     * @param id
-     * @return
-     */
-    int deleteById(long id);
-
-    /**
-     * 根据ID获取
-     *
-     * @param id
-     * @return
-     */
-    Goods getById(long id);
-
-    /**
-     * 分页获取所有记录
-     *
-     * @param offset 偏移量
-     * @param rows   每页条数
-     * @return
-     */
-    List<Goods> listAll(@Param("offset") long offset, @Param("rows") long rows);
-
-    /**
-     * 获取总记录数
-     *
-     * @return
-     */
-    long count();
 
     /**
      * 根据一级目录ID分页获取
@@ -110,14 +71,6 @@ public interface GoodsDao {
     long countByBusiness(@Param("businessId") long businessId);
 
     /**
-     * 更改基本信息，具体字段见SQL
-     *
-     * @param goods
-     * @return
-     */
-    int update(Goods goods);
-
-    /**
      * 更新价格
      *
      * @param price
@@ -125,6 +78,5 @@ public interface GoodsDao {
      * @return
      */
     long updatePrice(@Param("price") double price, @Param("id") long id);
-
 
 }

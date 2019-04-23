@@ -8,15 +8,7 @@ import org.apache.ibatis.annotations.Param;
  * @Author chenlinghong
  * @Date 2019/3/24 17:58
  **/
-public interface UserDao {
-
-    /**
-     * 新增用户
-     *
-     * @param user 用户对象
-     * @return
-     */
-    int insert(User user);
+public interface UserDao extends IBaseDao<User> {
 
     /**
      * 新增用户，仅填充电话号码，其它采用默认值
@@ -36,22 +28,6 @@ public interface UserDao {
     int insertByTelephoneAndUsername(@Param("telephone") String telephone,
                                      @Param("username") String username,
                                      @Param("avatarUrl") String avatarUrl);
-
-    /**
-     * 根据ID删除用户
-     *
-     * @param id
-     * @return
-     */
-    int deleteById(long id);
-
-    /**
-     * 根据用户ID获取
-     *
-     * @param id
-     * @return
-     */
-    User getById(long id);
 
     /**
      * 根据电话号码获取
@@ -77,14 +53,6 @@ public interface UserDao {
      * @return
      */
     int countByTelephoneAndPassword(@Param("telephone") String telephone, @Param("password") String password);
-
-    /**
-     * 更新用户基本信息
-     *
-     * @param user
-     * @return
-     */
-    int update(User user);
 
     /**
      * 更新用户密码

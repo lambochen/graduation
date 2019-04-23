@@ -10,47 +10,8 @@ import java.util.List;
  * @Author chenlinghong
  * @Date 2019/3/30 16:52
  **/
-public interface GoodsOrderDao {
+public interface GoodsOrderDao extends IBaseDao<GoodsOrder> {
 
-    /**
-     * 新增订单
-     *
-     * @param goodsOrder
-     * @return
-     */
-    int insert(GoodsOrder goodsOrder);
-
-    /**
-     * 根据ID删除
-     *
-     * @param id
-     * @return
-     */
-    int deleteById(long id);
-
-    /**
-     * 根据ID获取
-     *
-     * @param id
-     * @return
-     */
-    GoodsOrder getById(long id);
-
-    /**
-     * 分页获取所有订单信息
-     *
-     * @param offset
-     * @param rows
-     * @return
-     */
-    List<GoodsOrder> listAll(@Param("offset") long offset, @Param("rows") long rows);
-
-    /**
-     * 获取所有记录数
-     *
-     * @return
-     */
-    int count();
 
     /**
      * 根据商品ID获取订单列表
@@ -90,12 +51,5 @@ public interface GoodsOrderDao {
      */
     long countByUser(@Param("userId") long userId);
 
-    /**
-     * 更新订单基本信息     TODO 后期考虑是否使用该接口,暂不实现
-     *
-     * @param goodsOrder
-     * @return
-     */
-    int update(GoodsOrder goodsOrder);
 
 }
