@@ -129,7 +129,7 @@ public class UploadUtil {
                 response.setContentType("multipart/form-data");
                 // 2.设置文件头：最后一个参数是设置下载文件名
                 response.setHeader("content-disposition", "attachment;filename="
-                        + URLEncoder.encode(fileName, "UTF-8"));
+                        + URLEncoder.encode(fileName.substring(fileName.lastIndexOf("/") + 1), "UTF-8"));
 
                 fileInputStream = new FileInputStream(file);
                 bufferedInputStream = new BufferedInputStream(fileInputStream);
