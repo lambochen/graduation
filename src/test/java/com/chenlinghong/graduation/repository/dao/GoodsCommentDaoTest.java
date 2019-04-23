@@ -19,7 +19,7 @@ public class GoodsCommentDaoTest {
 
     @Test
     public void insert() {
-        GoodsComment goodsComment = new GoodsComment(1, 2, "test");
+        GoodsComment goodsComment = new GoodsComment(1, 2, "test", 1);
         int result = goodsCommentDao.insert(goodsComment);
         Assert.assertEquals(1, result);
     }

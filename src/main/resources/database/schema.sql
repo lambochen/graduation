@@ -148,7 +148,6 @@ create table if not exists `business_info` (
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 DEFAULT CHARSET = utf8mb4 COMMENT = '商户基本信息表';
 
 -- 创建商品评论表
--- TODO 需要添加一个评分字段
 create table if not exists `goods_comment` (
     `id` bigint not null auto_increment comment 'ID',
     `gmt_create`   timestamp NULL     DEFAULT CURRENT_TIMESTAMP  COMMENT '创建时间戳',
@@ -160,6 +159,7 @@ create table if not exists `goods_comment` (
     `content` varchar(256) not null comment '评论内容',
     `user_id` bigint not null comment '用户ID【FK(user)】',
     `goods_id` bigint not null comment '商品ID【FK(goods)】',
+    `score` int not null default '0' comment '用户评分:1-5',
     primary key (`id`)
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 DEFAULT CHARSET = utf8mb4 COMMENT = '商品评论表';
 

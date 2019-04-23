@@ -46,9 +46,15 @@ public class GoodsComment extends BaseDomain {
      */
     private String imgThree;
 
-    public GoodsComment(long goodsId, long userId, String content) {
+    /**
+     * 评分，1-5对应好中差
+     */
+    private Integer score;
+
+    public GoodsComment(long goodsId, long userId, String content, int score) {
         this.goodsId = goodsId;
         this.userId = userId;
         this.content = content;
+        this.score = score;
     }
 }
