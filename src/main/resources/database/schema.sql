@@ -148,6 +148,7 @@ create table if not exists `business_info` (
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 DEFAULT CHARSET = utf8mb4 COMMENT = '商户基本信息表';
 
 -- 创建商品评论表
+-- TODO 需要添加一个评分字段
 create table if not exists `goods_comment` (
     `id` bigint not null auto_increment comment 'ID',
     `gmt_create`   timestamp NULL     DEFAULT CURRENT_TIMESTAMP  COMMENT '创建时间戳',
@@ -191,6 +192,40 @@ create table if not exists `shopping_cart` (
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 DEFAULT CHARSET = utf8mb4 COMMENT = '购物车表';
 
 
+
+------------------------------------
+-- 以下为推荐系统特需表格
+------------------------------------
+
+-- 用户行为表
+create table if not exists `user_behavior` (
+    `id` bigint not null auto_increment comment 'ID',
+    `gmt_create`   timestamp NULL     DEFAULT CURRENT_TIMESTAMP  COMMENT '创建时间戳',
+    `gmt_modified` timestamp NULL     DEFAULT CURRENT_TIMESTAMP  COMMENT '最近修改时间戳',
+    `deleted`      varchar(1)         default '0'  COMMENT '是否删除：0未删除，1已删除',
+    `user_id` bigint not null comment '用户ID【FK(user)】',
+    `goods_id` bigint not null comment '商品ID【FK(goods)】',
+    `behavior` int not null default '1' comment '用户行为：1点击 2加入购物车 3购买 4评价-好评 5评价-中评 6评价-差评',
+    primary key (`id`),
+    key `idx_user` (`user_id`),
+    key `idx_goods` (`goods_id`),
+    key `idx_user_goods` (`user_id`, `goods_id`)
+) ENGINE = InnoDB AUTO_INCREMENT = 1 DEFAULT CHARSET = utf8mb4 COMMENT = '用户行为表';
+
+-- 用户-物品偏好表
+create table if not exists `user_goods_preference` (
+    `id` bigint not null auto_increment comment 'ID',
+    `gmt_create`   timestamp NULL     DEFAULT CURRENT_TIMESTAMP  COMMENT '创建时间戳',
+    `gmt_modified` timestamp NULL     DEFAULT CURRENT_TIMESTAMP  COMMENT '最近修改时间戳',
+    `deleted`      varchar(1)         default '0'  COMMENT '是否删除：0未删除，1已删除',
+    `user_id` bigint not null comment '用户ID【FK(user)】',
+    `goods_id` bigint not null comment '商品ID【FK(goods)】',
+    `preference` int not null default '0' comment '偏好，越高越喜欢',
+    primary key (`id`),
+    key `idx_user` (`user_id`),
+    key `idx_goods` (`goods_id`),
+    key `idx_user_goods` (`user_id`, `goods_id`)
+) ENGINE = InnoDB AUTO_INCREMENT = 1 DEFAULT CHARSET = utf8mb4 COMMENT = '用户-物品偏好表';
 
 
 
