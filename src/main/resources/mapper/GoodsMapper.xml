@@ -148,6 +148,27 @@
         where business_id = #{businessId} and `deleted` = '0'
     </select>
 
+    <select id="listByName" resultMap="BaseResultMap">
+        select <include refid="column_list"></include>
+        from goods
+        where deleted = '0' and name like '%${name}%'
+        order by id desc
+        <choose>
+            <when test="offset != null and rows != null">
+                limit #{offset},#{rows}
+            </when>
+            <otherwise>
+                limit 0,10
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="countByName" parameterType="string" resultType="long">
+        select count(id)
+        from goods
+        where deleted = '0' and name like '%${name}%'
+    </select>
+
     <update id="update" parameterType="com.chenlinghong.graduation.repository.domain.Goods">
         update goods
         set `name`       = #{name},

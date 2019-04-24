@@ -65,4 +65,11 @@ public class GoodsServiceImpl implements GoodsService {
         long total = goodsDao.countByCatalogTwo(catalogTwoId);
         return new PageDto<>(goodsList, pageNo, pageSize, total);
     }
+
+    @Override
+    public PageDto<Goods> searchByName(String name, long pageNo, long pageSize) {
+        List<Goods> goodsList = goodsDao.listByName(name, (pageNo - 1) * pageSize, pageSize);
+        long count = goodsDao.countByName(name);
+        return new PageDto<>(goodsList, pageNo, pageSize, count);
+    }
 }

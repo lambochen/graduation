@@ -52,6 +52,15 @@ public enum ErrorEnum {
      * 5XXX 消息相关
      */
     CHAT_INSERT_ERROR(5000, "消息写入数据库失败"),
+
+
+    /**
+     * 6XXX 商品相关
+     */
+    COMMENT_INSERT_ERROR(6000, "添加评论失败"),
+
+
+
     ;
 
     /**

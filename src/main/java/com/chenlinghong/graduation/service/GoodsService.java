@@ -31,5 +31,14 @@ public interface GoodsService extends IBaseService<Goods> {
      */
     PageDto<Goods> listByCatalogTwo(int catalogTwoId, long pageNo, long pageSize);
 
+    /**
+     * 根据名称模糊搜索
+     *
+     * @param name     商品名称
+     * @param pageNo
+     * @param pageSize
+     * @return
+     */
+    PageDto<Goods> searchByName(String name, long pageNo, long pageSize);
 
 }

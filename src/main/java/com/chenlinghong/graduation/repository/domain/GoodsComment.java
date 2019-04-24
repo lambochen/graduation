@@ -3,6 +3,9 @@ package com.chenlinghong.graduation.repository.domain;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.Range;
+
+import javax.validation.constraints.NotNull;
 
 /**
  * @Description 商品评论表
@@ -19,6 +22,7 @@ public class GoodsComment extends BaseDomain {
     /**
      * 商品id
      */
+    @NotNull(message = "商品ID不能为空")
     private Long goodsId;
 
     /**
@@ -49,6 +53,8 @@ public class GoodsComment extends BaseDomain {
     /**
      * 评分，1-5对应好中差
      */
+    @NotNull(message = "分数不能为空")
+    @Range(min = 1, max = 5, message = "分数必须为1-5之间")
     private Integer score;
 
     public GoodsComment(long goodsId, long userId, String content, int score) {
