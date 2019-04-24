@@ -8,7 +8,6 @@ import com.chenlinghong.graduation.enums.ErrorEnum;
 import com.chenlinghong.graduation.exception.BusinessException;
 import com.chenlinghong.graduation.repository.domain.User;
 import com.chenlinghong.graduation.service.UserService;
-import com.chenlinghong.graduation.util.MyRedisUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,9 +36,6 @@ public class UserController {
 
     @Autowired
     private SessionUtil sessionUtil;
-
-    @Autowired
-    private MyRedisUtil redisUtil;
 
     /**
      * 通过密码登录

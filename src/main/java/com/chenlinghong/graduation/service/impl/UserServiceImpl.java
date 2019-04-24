@@ -10,6 +10,7 @@ import com.chenlinghong.graduation.repository.domain.User;
 import com.chenlinghong.graduation.service.UserService;
 import com.chenlinghong.graduation.util.EncryptionUtil;
 import com.chenlinghong.graduation.util.MyRedisUtil;
+import com.chenlinghong.graduation.util.TelephoneUtil;
 import com.chenlinghong.graduation.util.UsernameUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -63,7 +64,7 @@ public class UserServiceImpl implements UserService {
             throw new BusinessException(ErrorEnum.PASSWORD_IS_ERROR);
         } else if (resultCount == 1) {
             // 登录成功
-            return getByTelephone(telephone);
+            return getUserVoByTelephone(telephone);
         } else {
             // TODO 数据有误
             log.error("UserService#loginByPassword: database has some errors. telephone={}, password={}", telephone, password);
@@ -85,7 +86,7 @@ public class UserServiceImpl implements UserService {
              */
             int insertResult = insert(telephone);
             if (insertResult == 1) {
-                return getByTelephone(telephone);
+                return getUserVoByTelephone(telephone);
             } else {
                 // 插入用户数据有误
                 log.error("UserService#loginBySms: failed to insert user. telephone={}", telephone);
@@ -93,12 +94,25 @@ public class UserServiceImpl implements UserService {
             }
         } else if (dataCount == 1) {
             // 登录成功
-            return getByTelephone(telephone);
+            return getUserVoByTelephone(telephone);
         } else {
             // TODO 数据有误
             log.error("UserService#loginBySms: database has some errors. telephone={}", telephone);
             throw new BusinessException(ErrorEnum.PASSWORD_IS_ERROR);
         }
+    }
+
+    @Override
+    public User getUserByTelephone(String telephone) {
+        if (StringUtils.isBlank(telephone)){
+            log.error("UserService#getUserByTelephone: param is null. telephone={}", telephone);
+            throw new BusinessException(ErrorEnum.PARAM_IS_NULL);
+        }
+        if (TelephoneUtil.isNotPhoneLegal(telephone)){
+            log.error("UserService#getUserByTelephone: telephone is illegal. telephone={}", telephone);
+            throw new BusinessException(ErrorEnum.TELEPHONE_ILLEGAL);
+        }
+        return userDao.getByTelephone(telephone);
     }
 
     @Override
@@ -169,7 +183,7 @@ public class UserServiceImpl implements UserService {
         return userDao.update(user);
     }
 
-    private UserVo getByTelephone(String telephone) {
+    private UserVo getUserVoByTelephone(String telephone) {
         UserVo userVo = new UserVo();
         // 用户基本信息
         User userInfo = userDao.getByTelephone(telephone);

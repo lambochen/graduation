@@ -35,6 +35,14 @@ public interface UserService extends IBaseService<User> {
     UserVo loginBySms(String telephone);
 
     /**
+     * 通过电话号码获取用户基本信息
+     *
+     * @param telephone
+     * @return
+     */
+    User getUserByTelephone(String telephone);
+
+    /**
      * 修改密码
      *
      * @param id

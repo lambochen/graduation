@@ -5,6 +5,7 @@ import com.chenlinghong.graduation.constant.SessionConstant;
 import com.chenlinghong.graduation.enums.ErrorEnum;
 import com.chenlinghong.graduation.exception.BusinessException;
 import com.chenlinghong.graduation.repository.domain.User;
+import com.chenlinghong.graduation.service.UserService;
 import com.chenlinghong.graduation.util.MyRedisUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,9 @@ public class SessionUtil {
 
     @Autowired
     private MyRedisUtil redisUtil;
+
+    @Autowired
+    private UserService userService;
 
     /**
      * 将电话号码写入session
@@ -112,7 +116,12 @@ public class SessionUtil {
      */
     public User getUser(HttpServletRequest request) {
         String telephone = getTelephone(request);
-        return redisUtil.getUserByTelephone(telephone);
+        User result = redisUtil.getUserByTelephone(telephone);
+        if (result == null){
+            // redis中不存在数据，从DB中获取
+            result = userService.getUserByTelephone(telephone);
+        }
+        return result;
     }
 
     /**
