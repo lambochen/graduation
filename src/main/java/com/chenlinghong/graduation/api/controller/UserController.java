@@ -8,7 +8,6 @@ import com.chenlinghong.graduation.enums.ErrorEnum;
 import com.chenlinghong.graduation.exception.BusinessException;
 import com.chenlinghong.graduation.repository.domain.User;
 import com.chenlinghong.graduation.service.UserService;
-import com.chenlinghong.graduation.util.MyRedisUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,9 +37,6 @@ public class UserController {
     @Autowired
     private SessionUtil sessionUtil;
 
-    @Autowired
-    private MyRedisUtil redisUtil;
-
     /**
      * 通过密码登录
      *
@@ -58,7 +54,7 @@ public class UserController {
             throw new BusinessException(ErrorEnum.PARAM_IS_NULL);
         }
         // 写入手机号
-        SessionUtil.putTelephone(telephone, request);
+        sessionUtil.putTelephone(telephone, request);
         return ResultUtil.success(userService.loginByPwd(telephone, password));
     }
 
@@ -71,10 +67,10 @@ public class UserController {
      */
     @PostMapping(value = "/login/sms")
     public ResultVo loginBySms(String smsCode, HttpServletRequest request) {
-        log.info("UserController#loginBySms: parameter info. smsCode={}", smsCode);
+        log.info("UserController#loginBySms: parameter info. smsCode={}, request={}. ", smsCode, request);
         if (StringUtils.isBlank(smsCode)) {
             // 参数为空
-            log.error("UserController#loginBySms: parameter is null. smsCode={}", smsCode);
+            log.error("UserController#loginBySms: parameter is null. smsCode={}, request={}. ", smsCode, request);
             throw new BusinessException(ErrorEnum.PARAM_IS_NULL);
         }
         boolean checkResult = sessionUtil.checkSmsCode(smsCode, request);
@@ -83,6 +79,7 @@ public class UserController {
             String telephone = SessionUtil.getTelephone(request);
             return ResultUtil.success(userService.loginBySms(telephone));
         }
+        log.info("UserController#loginBySms: smsCode is timeout. smsCode={}, request={}. ", smsCode, request);
         return ResultUtil.error(ErrorEnum.SMS_TIMEOUT);
     }
 
@@ -117,6 +114,8 @@ public class UserController {
     @PutMapping(value = "/user")
     public ResultVo update(@Valid UserUpdateVo userUpdateVo, BindingResult bindingResult, HttpServletRequest request) {
         if (bindingResult.hasErrors()) {
+            log.error("UserController#update: param is illegal. userUpdateVo={}, bindingResult=(), request={}. ",
+                    userUpdateVo, bindingResult, request);
             return ResultUtil.error(ErrorEnum.PARAM_ERROR.getCode(), bindingResult.getFieldError().getDefaultMessage());
         }
         User sessionUser = sessionUtil.getUser(request);

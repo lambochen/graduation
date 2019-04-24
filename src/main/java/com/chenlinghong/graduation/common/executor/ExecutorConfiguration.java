@@ -52,11 +52,59 @@ public class ExecutorConfiguration {
     private int keepAliveSeconds;
 
 
+    /**
+     * 基础业务逻辑
+     * @return
+     */
     @Bean
     public Executor asyncServiceExecutor() {
 
         log.info("ExecutorConfiguration#asyncServiceExecutor start...");
 
+        return getDefaultExecutor();
+    }
+
+    /**
+     * Redis交互
+     * @return
+     */
+    @Bean
+    public Executor asyncRedisExecutor() {
+        log.info("ExecutorConfiguration#asyncRedisExecutor start...");
+
+        return getDefaultExecutor();
+    }
+
+    /**
+     * Session交互
+     * @return
+     */
+    @Bean
+    public Executor asyncSessionExecutor(){
+        log.info("ExecutorConfiguration#asyncSessionExecutor start...");
+
+        return getDefaultExecutor();
+    }
+
+    /**
+     * 显微镜
+     * @return
+     */
+    @Bean
+    public Executor asyncMicroscopeExecutor(){
+        log.info("ExecutorConfiguration#asyncMicroscopeExecutor start...");
+
+        return getDefaultExecutor();
+    }
+
+
+
+    /**
+     * 获取默认执行器
+     *
+     * @return
+     */
+    private synchronized Executor getDefaultExecutor() {
         ThreadPoolTaskExecutor executor = new VisibleThreadPoolTaskExecutor();
         executor.setCorePoolSize(corePoolSize);
         executor.setMaxPoolSize(maxPoolSize);

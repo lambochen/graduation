@@ -3,6 +3,7 @@ package com.chenlinghong.graduation.util;
 import com.alibaba.fastjson.JSON;
 import com.chenlinghong.graduation.api.vo.UserVo;
 import com.chenlinghong.graduation.common.redis.RedisUtil;
+import com.chenlinghong.graduation.constant.AsyncNameConstant;
 import com.chenlinghong.graduation.constant.RedisConstant;
 import com.chenlinghong.graduation.repository.domain.User;
 import com.google.common.collect.Maps;
@@ -43,7 +44,7 @@ public class MyRedisUtil {
      * @param userVo 用户视图对象
      * @return 该对象在redis存储中的key，若为null则写入失败
      */
-    @Async("asyncServiceExecutor")
+    @Async(value = AsyncNameConstant.REDIS)
     public String put(UserVo userVo) {
         log.info("MyRedisUtil#put(UserVo): beginning. userVo={}", userVo);
         if (userVo == null || userVo.getUserInfo() == null) {
@@ -78,7 +79,7 @@ public class MyRedisUtil {
      * @param smsCode   短信验证码
      * @return
      */
-    @Async("asyncServiceExecutor")
+    @Async(value = AsyncNameConstant.REDIS)
     public String putSmsCode(String telephone, String smsCode) {
         log.info("MyRedisUtil#putSmsCode: beginning. telephone={}, smsCode={}", telephone, smsCode);
         // 生成redis key

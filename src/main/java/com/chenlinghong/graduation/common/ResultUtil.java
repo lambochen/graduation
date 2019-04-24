@@ -1,6 +1,7 @@
 package com.chenlinghong.graduation.common;
 
 import com.chenlinghong.graduation.enums.ErrorEnum;
+import com.chenlinghong.graduation.exception.BusinessException;
 
 /**
  * @Description API返回数据工具类
@@ -33,6 +34,14 @@ public final class ResultUtil {
         ResultVo result = new ResultVo();
         result.setCode(errorEnum.getCode());
         result.setMsg(errorEnum.getMsg());
+        result.setData(null);
+        return result;
+    }
+
+    public static ResultVo error(BusinessException e){
+        ResultVo result = new ResultVo();
+        result.setCode(e.getCode());
+        result.setMsg(e.getMessage());
         result.setData(null);
         return result;
     }
