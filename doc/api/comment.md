@@ -12,6 +12,7 @@
     imgOne [string] : 图片1 
     imgTwo [string] : 图片2 
     imgThree [string] : 图片3
+    score [int] : 评价分数  【必填，要求是1-5】
     
 返回
 
@@ -55,19 +56,32 @@
             "data": [
                 {
                     "id": 2,
-                    "gmtCreate": 1555308938000,
-                    "gmtModified": 1555308938000,
+                    "gmtCreate": 1556116090000,
+                    "gmtModified": 1556116090000,
                     "goodsId": 1,
                     "userId": 3,
                     "content": "test",
                     "imgOne": "",
                     "imgTwo": "",
-                    "imgThree": ""
+                    "imgThree": "",
+                    "score": 3
+                },
+                {
+                    "id": 1,
+                    "gmtCreate": 1556033203000,
+                    "gmtModified": 1556033203000,
+                    "goodsId": 1,
+                    "userId": 3,
+                    "content": "test",
+                    "imgOne": null,
+                    "imgTwo": null,
+                    "imgThree": null,
+                    "score": 1
                 }
             ],
             "pageNo": 1,
             "pageSize": 10,
-            "totalCount": 1
+            "totalCount": 2
         }
     }
     
@@ -91,25 +105,27 @@
             "data": [
                 {
                     "id": 2,
-                    "gmtCreate": 1555308938000,
-                    "gmtModified": 1555308938000,
+                    "gmtCreate": 1556116090000,
+                    "gmtModified": 1556116090000,
                     "goodsId": 1,
                     "userId": 3,
                     "content": "test",
                     "imgOne": "",
                     "imgTwo": "",
-                    "imgThree": ""
+                    "imgThree": "",
+                    "score": 3
                 },
                 {
                     "id": 1,
-                    "gmtCreate": 1554197698000,
-                    "gmtModified": 1554197698000,
+                    "gmtCreate": 1556033203000,
+                    "gmtModified": 1556033203000,
                     "goodsId": 1,
-                    "userId": 2,
+                    "userId": 3,
                     "content": "test",
                     "imgOne": null,
                     "imgTwo": null,
-                    "imgThree": null
+                    "imgThree": null,
+                    "score": 1
                 }
             ],
             "pageNo": 1,

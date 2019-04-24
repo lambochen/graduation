@@ -71,6 +71,24 @@ public interface GoodsDao extends IBaseDao<Goods> {
     long countByBusiness(@Param("businessId") long businessId);
 
     /**
+     * 通过名称模糊搜索
+     *
+     * @param name
+     * @param offset
+     * @param rows
+     * @return
+     */
+    List<Goods> listByName(@Param("name") String name, @Param("offset") long offset, @Param("rows") long rows);
+
+    /**
+     * 通过名称获取记录数
+     *
+     * @param name
+     * @return
+     */
+    long countByName(@Param("name") String name);
+
+    /**
      * 更新价格
      *
      * @param price
@@ -78,5 +96,6 @@ public interface GoodsDao extends IBaseDao<Goods> {
      * @return
      */
     long updatePrice(@Param("price") double price, @Param("id") long id);
+
 
 }
