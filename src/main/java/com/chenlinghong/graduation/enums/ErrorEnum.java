@@ -32,6 +32,7 @@ public enum ErrorEnum {
     FILE_HANDLE_ERROR(2004, "文件处理异常"),
     FILE_IS_NULL(2005, "文件不存在"),
     FILE_STREAM_CREATE_ERROR(2006, "文件流创建错误"),
+    UNKNOWN_ERROR(2007, "未知错误"),
 
     /**
      * 3XXX 用户相关错误
