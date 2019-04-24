@@ -8,8 +8,8 @@ import com.chenlinghong.graduation.exception.BusinessException;
 import com.chenlinghong.graduation.repository.domain.GoodsComment;
 import com.chenlinghong.graduation.service.GoodsCommentService;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 /**
  * @Description 商品订单评论
@@ -39,37 +40,30 @@ public class GoodsCommentController {
 
     /**
      * 新增评论
-     *
-     * @param goodsId
-     * @param content
-     * @param imgOne
-     * @param imgTwo
-     * @param imgThree
+     * @param goodsComment  商品评论
+     * @param bindingResult
      * @param request
      * @return
      */
     @PostMapping(value = "/comment")
-    public ResultVo insert(@RequestParam(value = "goodsId") long goodsId,
-                           @RequestParam(value = "content") String content,
-                           @RequestParam(value = "imgOne", required = false) String imgOne,
-                           @RequestParam(value = "imgTwo", required = false) String imgTwo,
-                           @RequestParam(value = "imgThree", required = false) String imgThree,
+    public ResultVo insert(@Valid GoodsComment goodsComment, BindingResult bindingResult,
                            HttpServletRequest request) {
-        if (goodsId <= 0 || StringUtils.isBlank(content)) {
-            log.error("GoodsCommentController#insert: param is null. goodsId={}, content={}, " +
-                    "imgOne={}, imgTwo={}, imgThree={}.", goodsId, content, imgOne, imgTwo, imgThree);
-            throw new BusinessException(ErrorEnum.PARAM_IS_NULL);
+        if (bindingResult.hasErrors()) {
+            log.error("GoodsCommentController#insert: param is illegal. goodsComment={}, request={}.", goodsComment, request);
+            throw new BusinessException(ErrorEnum.PARAM_ILLEGAL.getCode(), bindingResult.getFieldError().getDefaultMessage());
         }
+
         long userId = sessionUtil.getUserId(request);
-        GoodsComment goodsComment = new GoodsComment();
         goodsComment.setUserId(userId);
-        goodsComment.setGoodsId(goodsId);
-        goodsComment.setContent(content);
-        goodsComment.setImgOne(imgOne);
-        goodsComment.setImgTwo(imgTwo);
-        goodsComment.setImgThree(imgThree);
-        commentService.insert(goodsComment);
-        return ResultUtil.success();
+        int result = commentService.insert(goodsComment);
+        if (result == 1){
+            return ResultUtil.success();
+        }
+        /**
+         * 插入数据错误
+         */
+        log.error("GoodsCommentController#insert: insert error. goodsComment={}, request={}. ", goodsComment, request);
+        throw new BusinessException(ErrorEnum.COMMENT_INSERT_ERROR);
     }
 
     /**
@@ -92,6 +86,7 @@ public class GoodsCommentController {
 
     /**
      * 根据用户获取
+     *
      * @param pageNo
      * @param pageSize
      * @param request
@@ -107,6 +102,7 @@ public class GoodsCommentController {
 
     /**
      * 根据商品获取
+     *
      * @param goodsId
      * @param pageNo
      * @param pageSize
@@ -115,7 +111,7 @@ public class GoodsCommentController {
     @GetMapping(value = "/comment/goods/{goodsId}")
     public ResultVo listByGoods(@PathVariable(value = "goodsId") long goodsId,
                                 @RequestParam(value = "pageNo", required = false, defaultValue = "1") int pageNo,
-                                @RequestParam(value = "pageSize", required = false, defaultValue = "10") int pageSize){
+                                @RequestParam(value = "pageSize", required = false, defaultValue = "10") int pageSize) {
         return ResultUtil.success(commentService.listByGoods(goodsId, pageNo, pageSize));
     }
 }
