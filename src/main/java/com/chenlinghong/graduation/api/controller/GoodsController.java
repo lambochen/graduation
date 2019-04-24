@@ -1,5 +1,6 @@
 package com.chenlinghong.graduation.api.controller;
 
+import com.chenlinghong.graduation.common.PageDto;
 import com.chenlinghong.graduation.common.ResultUtil;
 import com.chenlinghong.graduation.common.ResultVo;
 import com.chenlinghong.graduation.enums.ErrorEnum;
@@ -7,12 +8,15 @@ import com.chenlinghong.graduation.exception.BusinessException;
 import com.chenlinghong.graduation.service.GoodsCatalogService;
 import com.chenlinghong.graduation.service.GoodsService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @Description 商品模块
@@ -133,5 +137,26 @@ public class GoodsController {
                 goodsService.listByCatalogTwo(catalogTwoId, pageNo, pageSize));
     }
 
+
+    /**
+     * 通过商品名称获取
+     * @param goodsName
+     * @param pageNo
+     * @param pageSize
+     * @param request
+     * @return
+     */
+    @GetMapping(value = "/goods/name")
+    public ResultVo searchByName(@RequestParam(value = "goodsName") String goodsName,
+                                 @RequestParam(value = "pageNo", required = false, defaultValue = "1") int pageNo,
+                                 @RequestParam(value = "pageSize", required = false, defaultValue = "10") int pageSize,
+                                 HttpServletRequest request) {
+        if (StringUtils.isBlank(goodsName)){
+            log.error("GoodsController#searchByName: param is null. goodsName={}, pageNo={}, pageSize={}. ", goodsName, pageNo, pageSize);
+            throw new BusinessException(ErrorEnum.PARAM_IS_NULL);
+        }
+        PageDto result = goodsService.searchByName(goodsName, pageNo, pageSize);
+        return ResultUtil.success(result);
+    }
 
 }
