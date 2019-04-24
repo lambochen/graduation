@@ -7,8 +7,8 @@ jdbc:
   driver: com.mysql.cj.jdbc.Driver
   url: jdbc:mysql://127.0.0.1:3306/graduation?useUnicode=true&charactorEncoding=utf8&useSSL=false&zeroDateTimeBehavior=convertToNull&serverTimezone=GMT%2B8&autoReconnect=true
   username: root
-#  password: graduation-mysql
-  password: 123456
+  password: graduation-mysql
+#  password: 123456
 
 
 #  mybatis
@@ -24,7 +24,6 @@ spring:
     database: 0
     # Redis服务器地址
     host: 39.108.250.164
-    # host: redis.xhunccd.top   # 域名备案成功后host修改为此项,需配置nginx
     # Redis服务器连接端口
     port: 6379
     # Redis服务器连接密码（默认为空）
