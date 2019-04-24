@@ -24,12 +24,15 @@ public class TelephoneController {
     @Autowired
     private MyRedisUtil redisUtil;
 
+    @Autowired
+    private SessionUtil sessionUtil;
+
     @GetMapping(value = "/sms")
     public ResultVo sendSms(String telephone, HttpServletRequest request) {
         // 发送短信
         String smsCode = TelephoneUtil.sendSMSCode(telephone);
         // 写入session
-        SessionUtil.putTelephone(telephone, request);
+        sessionUtil.putTelephone(telephone, request);
         /**
          * 将验证码写入redis
          */

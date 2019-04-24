@@ -9,6 +9,7 @@ import com.chenlinghong.graduation.service.UserService;
 import com.chenlinghong.graduation.util.MyRedisUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
@@ -30,12 +31,13 @@ public class SessionUtil {
     private UserService userService;
 
     /**
-     * 将电话号码写入session
+     * 将电话号码写入session,异步写入
      *
      * @param telephone
      * @param request
      */
-    public static void putTelephone(String telephone, HttpServletRequest request) {
+    @Async(value = "asyncSessionExecutor")
+    public void putTelephone(String telephone, HttpServletRequest request) {
         HttpSession session = request.getSession();
         session.setAttribute(SessionConstant.TELEPHONE, telephone);
     }
@@ -48,8 +50,7 @@ public class SessionUtil {
      */
     public static String getTelephone(HttpServletRequest request) {
         HttpSession session = getNotNewSession(request);
-        String telephone = (String) session.getAttribute(SessionConstant.TELEPHONE);
-        return telephone;
+        return (String) session.getAttribute(SessionConstant.TELEPHONE);
     }
 
     /**
@@ -105,7 +106,11 @@ public class SessionUtil {
      */
     public UserVo getUserVo(HttpServletRequest request) {
         String telephone = getTelephone(request);
-        return redisUtil.getUserVo(telephone);
+        UserVo result = redisUtil.getUserVo(telephone);
+        if (result == null) {
+            result = userService.getUserVoByTelephone(telephone);
+        }
+        return result;
     }
 
     /**
@@ -117,7 +122,7 @@ public class SessionUtil {
     public User getUser(HttpServletRequest request) {
         String telephone = getTelephone(request);
         User result = redisUtil.getUserByTelephone(telephone);
-        if (result == null){
+        if (result == null) {
             // redis中不存在数据，从DB中获取
             result = userService.getUserByTelephone(telephone);
         }
@@ -133,6 +138,7 @@ public class SessionUtil {
     public long getUserId(HttpServletRequest request) {
         User user = getUser(request);
         if (user == null) {
+            log.error("SessionUtil#getUserId: user is not exists. request={}. ", request);
             throw new BusinessException(ErrorEnum.NO_USER);
         }
         return user.getId();
