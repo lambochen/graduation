@@ -43,7 +43,7 @@ public class MyRedisUtil {
      * @param userVo 用户视图对象
      * @return 该对象在redis存储中的key，若为null则写入失败
      */
-    @Async("asyncServiceExecutor")
+    @Async("asyncRedisExecutor")
     public String put(UserVo userVo) {
         log.info("MyRedisUtil#put(UserVo): beginning. userVo={}", userVo);
         if (userVo == null || userVo.getUserInfo() == null) {
@@ -78,7 +78,7 @@ public class MyRedisUtil {
      * @param smsCode   短信验证码
      * @return
      */
-    @Async("asyncServiceExecutor")
+    @Async("asyncRedisExecutor")
     public String putSmsCode(String telephone, String smsCode) {
         log.info("MyRedisUtil#putSmsCode: beginning. telephone={}, smsCode={}", telephone, smsCode);
         // 生成redis key

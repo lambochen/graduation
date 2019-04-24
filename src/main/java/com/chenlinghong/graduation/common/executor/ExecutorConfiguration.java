@@ -57,6 +57,29 @@ public class ExecutorConfiguration {
 
         log.info("ExecutorConfiguration#asyncServiceExecutor start...");
 
+        return getDefaultExecutor();
+    }
+
+    @Bean
+    public Executor asyncRedisExecutor() {
+        log.info("ExecutorConfiguration#asyncRedisExecutor start...");
+
+        return getDefaultExecutor();
+    }
+
+    @Bean
+    public Executor asyncSessionExecutor(){
+        log.info("ExecutorConfiguration#asyncSessionExecutor start...");
+
+        return getDefaultExecutor();
+    }
+
+    /**
+     * 获取默认执行器
+     *
+     * @return
+     */
+    private synchronized Executor getDefaultExecutor() {
         ThreadPoolTaskExecutor executor = new VisibleThreadPoolTaskExecutor();
         executor.setCorePoolSize(corePoolSize);
         executor.setMaxPoolSize(maxPoolSize);
