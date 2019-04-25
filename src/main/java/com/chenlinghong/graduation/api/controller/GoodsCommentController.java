@@ -60,7 +60,7 @@ public class GoodsCommentController {
         long userId = sessionUtil.getUserId(request);
         goodsComment.setUserId(userId);
         /**
-         * TODO 采集用户评论行为
+         * 采集用户评论行为
          */
         userGoodsSniffer.comment(goodsComment);
 

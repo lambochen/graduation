@@ -1,9 +1,11 @@
 package com.chenlinghong.graduation.microscope.sniffer.impl;
 
 import com.chenlinghong.graduation.enums.ErrorEnum;
+import com.chenlinghong.graduation.enums.GoodsCommentScoreEnum;
 import com.chenlinghong.graduation.enums.UserBehaviorEnum;
 import com.chenlinghong.graduation.exception.AsyncBusinessException;
 import com.chenlinghong.graduation.microscope.sniffer.UserGoodsSniffer;
+import com.chenlinghong.graduation.microscope.sniffer.util.UserBehaviorUtil;
 import com.chenlinghong.graduation.microscope.util.SessionUtil;
 import com.chenlinghong.graduation.repository.domain.GoodsComment;
 import com.chenlinghong.graduation.repository.domain.GoodsOrder;
@@ -15,7 +17,7 @@ import org.springframework.stereotype.Service;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * @Description TODO
+ * @Description 用户-商品-嗅探器 实现类
  * @Author chenlinghong
  * @Date 2019/4/25 22:50
  * @Version V1.0
@@ -123,10 +125,44 @@ public class UserGoodsSnifferImpl implements UserGoodsSniffer {
 
     /**
      * 评论
+     *
      * @param goodsComment
      */
     @Override
     public void comment(GoodsComment goodsComment) {
+        if (goodsComment == null) {
+            log.error("UserGoodsSniffer#comment: param is null.");
+            throw new AsyncBusinessException(ErrorEnum.PARAM_IS_NULL);
+        }
+        comment(goodsComment.getUserId(), goodsComment.getGoodsId(), goodsComment.getScore());
+    }
+
+    @Override
+    public void comment(long userId, long goodsId, int score) {
+        if (userId <= 0 || goodsId <= 0 || score <= 0) {
+            log.error("UserGoodsSniffer#comment: param is illegal. userId={}, goodsId={}, score={}. ",
+                    userId, goodsId, score);
+            throw new AsyncBusinessException(ErrorEnum.PARAM_ILLEGAL);
+        }
+        /**
+         * 校验评分合法性
+         */
+        UserBehaviorEnum behaviorEnum = UserBehaviorUtil.getByCommentScore(score);
+        if (behaviorEnum == null) {
+            // 评分不合法
+            log.error("UserGoodsSniffer#comment: param is illegal. userId={}, goodsId={}, score={}. ",
+                    userId, goodsId, score);
+            throw new AsyncBusinessException(ErrorEnum.PARAM_ILLEGAL);
+        }
+        int insertResult = userBehaviorService.insert(goodsId, userId, behaviorEnum.getCode());
+        /**
+         * TODO 后期对返回结果处理
+         */
+    }
+
+    @Override
+    public void comment(long userId, long goodsId, GoodsCommentScoreEnum scoreEnum) {
+        comment(userId, goodsId, scoreEnum.getScore());
     }
 
 }

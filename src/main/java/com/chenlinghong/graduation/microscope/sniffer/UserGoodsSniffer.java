@@ -1,5 +1,6 @@
 package com.chenlinghong.graduation.microscope.sniffer;
 
+import com.chenlinghong.graduation.enums.GoodsCommentScoreEnum;
 import com.chenlinghong.graduation.repository.domain.GoodsComment;
 import com.chenlinghong.graduation.repository.domain.GoodsOrder;
 
@@ -51,4 +52,22 @@ public interface UserGoodsSniffer extends Sniffer {
      * @param goodsComment 商品评论对象
      */
     void comment(GoodsComment goodsComment);
+
+    /**
+     * 评论
+     *
+     * @param userId
+     * @param goodsId
+     * @param score   评分
+     */
+    void comment(long userId, long goodsId, int score);
+
+    /**
+     * 评论
+     *
+     * @param userId
+     * @param goodsId
+     * @param scoreEnum 评分枚举
+     */
+    void comment(long userId, long goodsId, GoodsCommentScoreEnum scoreEnum);
 }
