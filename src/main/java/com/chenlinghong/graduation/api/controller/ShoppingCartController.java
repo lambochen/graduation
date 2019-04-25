@@ -3,6 +3,7 @@ package com.chenlinghong.graduation.api.controller;
 import com.chenlinghong.graduation.api.util.SessionUtil;
 import com.chenlinghong.graduation.common.ResultUtil;
 import com.chenlinghong.graduation.common.ResultVo;
+import com.chenlinghong.graduation.constant.NumericConstant;
 import com.chenlinghong.graduation.enums.ErrorEnum;
 import com.chenlinghong.graduation.exception.BusinessException;
 import com.chenlinghong.graduation.repository.domain.ShoppingCart;
@@ -52,9 +53,23 @@ public class ShoppingCartController {
             throw new BusinessException(ErrorEnum.PARAM_IS_NULL);
         }
         long userId = sessionUtil.getUserId(request);
+
+        /**
+         * TODO 采集用户添加购物车行为
+         */
+
+
         ShoppingCart shoppingCart = new ShoppingCart(goodsId, null,  userId, 1);
-        shoppingCartService.insert(shoppingCart);
-        return ResultUtil.success();
+        int result = shoppingCartService.insert(shoppingCart);
+        if (result == NumericConstant.ONE){
+            return ResultUtil.success();
+        }
+        /**
+         * 添加失败
+         */
+        log.error("ShoppingCartController#insert: failed to insert shopping cart. goodsId={}, request={}, " +
+                "result={}.", goodsId, request, result);
+        throw new BusinessException(ErrorEnum.FAILED_TO_INSERT_SHOPPING_CART);
     }
 
 

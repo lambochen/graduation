@@ -21,7 +21,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 @Slf4j(topic = "me")
 @Service
-public class BrowseSniffer {
+public class UserGoodsSniffer {
 
     @Autowired
     private SessionUtil sessionUtil;
@@ -36,7 +36,7 @@ public class BrowseSniffer {
      * @param request
      */
     @Async(value = AsyncNameConstant.MICROSCOPE)
-    public void goodsClick(long goodsId, HttpServletRequest request) {
+    public void click(long goodsId, HttpServletRequest request) {
         if (goodsId <= 0) {
             log.error("BrowseSniffer#goods: goodsId is illegal. goodsId={}, requst={}. ", goodsId, request);
             throw new AsyncBusinessException(ErrorEnum.PARAM_ILLEGAL);
@@ -56,6 +56,7 @@ public class BrowseSniffer {
          * TODO 后期对返回结果处理
          */
     }
+
 
 
 }
