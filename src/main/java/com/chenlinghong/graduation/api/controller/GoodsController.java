@@ -5,6 +5,7 @@ import com.chenlinghong.graduation.common.ResultUtil;
 import com.chenlinghong.graduation.common.ResultVo;
 import com.chenlinghong.graduation.enums.ErrorEnum;
 import com.chenlinghong.graduation.exception.BusinessException;
+import com.chenlinghong.graduation.microscope.sniffer.BrowseSniffer;
 import com.chenlinghong.graduation.service.GoodsCatalogService;
 import com.chenlinghong.graduation.service.GoodsService;
 import lombok.extern.slf4j.Slf4j;
@@ -34,6 +35,9 @@ public class GoodsController {
 
     @Autowired
     private GoodsService goodsService;
+
+    @Autowired
+    private BrowseSniffer browseSniffer;
 
     /**
      * 获取目录（获取一级目录）
@@ -82,12 +86,17 @@ public class GoodsController {
      * @return
      */
     @GetMapping(value = "/goods/{id}")
-    public ResultVo getGoodsById(@PathVariable(value = "id") long id) {
+    public ResultVo getGoodsById(@PathVariable(value = "id") long id, HttpServletRequest request) {
         if (id <= 0) {
             // 参数错误
             log.error("GoodsController#getGoodsById: param is illegal. id={}", id);
             throw new BusinessException(ErrorEnum.PARAM_ILLEGAL);
         }
+        /**
+         * 采集用户点击记录，异步
+         */
+        browseSniffer.goodsClick(id, request);
+
         return ResultUtil.success(goodsService.getById(id));
     }
 

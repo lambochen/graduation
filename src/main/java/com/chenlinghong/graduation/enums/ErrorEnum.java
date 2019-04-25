@@ -42,6 +42,7 @@ public enum ErrorEnum {
     INSERT_USER_ERROR(3002, "新增用户失败"),
     UPDATE_USER_ERROR(3003, "更新用户信息失败"),
 
+
     /**
      * 4XXX session相关
      */
@@ -58,6 +59,12 @@ public enum ErrorEnum {
      * 6XXX 商品相关
      */
     COMMENT_INSERT_ERROR(6000, "添加评论失败"),
+
+
+    /**
+     * 7XXX 用户行为相关
+     */
+    ERROR_TO_INSERT_USER_BEHAVIOR(7000, "新增用户行为失败"),
 
 
 

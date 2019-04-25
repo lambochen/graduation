@@ -53,6 +53,14 @@ public interface UserService extends IBaseService<User> {
     UserVo getUserVoByTelephone(String telephone);
 
     /**
+     * 根据电话号码获取用户基本信息,不刷新缓存
+     *
+     * @param telephone
+     * @return
+     */
+    UserVo getUserVoByTelephoneNotPushCache(String telephone);
+
+    /**
      * 修改密码
      *
      * @param id

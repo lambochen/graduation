@@ -194,6 +194,17 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserVo getUserVoByTelephone(String telephone) {
+        UserVo userVo = getUserVoByTelephoneNotPushCache(telephone);
+        /**
+         * 写入redis
+         * TODO redisKey后期可能会做处理
+         */
+        String redisKey = redisUtil.put(userVo);
+        return userVo;
+    }
+
+    @Override
+    public UserVo getUserVoByTelephoneNotPushCache(String telephone) {
         UserVo userVo = new UserVo();
         // 用户基本信息
         User userInfo = userDao.getByTelephone(telephone);
@@ -201,12 +212,6 @@ public class UserServiceImpl implements UserService {
         /**
          * TODO 其它信息
          */
-
-        /**
-         * 写入redis
-         * TODO redisKey后期可能会做处理
-         */
-        String redisKey = redisUtil.put(userVo);
         return userVo;
     }
 
@@ -218,12 +223,7 @@ public class UserServiceImpl implements UserService {
     @Override
     @Async(value = AsyncNameConstant.SERVICE)
     public void pushUserVoToCache(String telephone) {
-        UserVo userVo = new UserVo();
-        User userInfo = userDao.getByTelephone(telephone);
-        userVo.setUserInfo(userInfo);
-        /**
-         * TODO 其它信息
-         */
+        UserVo userVo = getUserVoByTelephoneNotPushCache(telephone);
 
         /**
          * 写入redis
