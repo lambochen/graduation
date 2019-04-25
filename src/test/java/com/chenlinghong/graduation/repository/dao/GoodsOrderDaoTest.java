@@ -28,6 +28,7 @@ public class GoodsOrderDaoTest {
         goodsOrder.setRemarks("test");
         goodsOrder.setUserId(1000L);
         goodsOrder.setPostCountry("中国");
+        goodsOrder.setNumber(2);
         int result = orderDao.insert(goodsOrder);
         Assert.assertEquals(1, result);
     }
