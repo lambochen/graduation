@@ -8,9 +8,13 @@ import com.chenlinghong.graduation.exception.BusinessException;
 import com.chenlinghong.graduation.repository.dao.UserBehaviorDao;
 import com.chenlinghong.graduation.repository.domain.UserBehavior;
 import com.chenlinghong.graduation.service.UserBehaviorService;
+import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 /**
  * @Description 用户历史行为
@@ -18,7 +22,7 @@ import org.springframework.stereotype.Service;
  * @Date 2019/4/25 18:25
  * @Version V1.0
  */
-@Slf4j
+@Slf4j(topic = "me")
 @Service
 public class UserBehaviorServiceImpl implements UserBehaviorService {
 
@@ -27,17 +31,17 @@ public class UserBehaviorServiceImpl implements UserBehaviorService {
 
     @Override
     public int insert(UserBehavior userBehavior) {
-        if (userBehavior == null){
+        if (userBehavior == null) {
             log.error("UserBehaviorService#insert: param is null.");
             throw new BusinessException(ErrorEnum.PARAM_IS_NULL);
         }
         // 校验用户行为
         int behavior = userBehavior.getBehavior();
-        for (UserBehaviorEnum item : UserBehaviorEnum.values()){
-            if (item.getCode() == behavior){
+        for (UserBehaviorEnum item : UserBehaviorEnum.values()) {
+            if (item.getCode() == behavior) {
                 // 有效的用户行为
                 int result = behaviorDao.insert(userBehavior);
-                if (result == 1){
+                if (result == 1) {
                     // 插入成功
                     return result;
                 }
@@ -59,7 +63,7 @@ public class UserBehaviorServiceImpl implements UserBehaviorService {
 
     @Override
     public int insert(long goodsId, long userId, UserBehaviorEnum behaviorEnum) {
-        if (behaviorEnum == null){
+        if (behaviorEnum == null) {
             log.error("UserBehaviorService#insert: param is null. goodsId={}, userId={}, behaviorEnum={}. ",
                     goodsId, userId, behaviorEnum);
             throw new AsyncBusinessException(ErrorEnum.PARAM_IS_NULL);
@@ -69,8 +73,44 @@ public class UserBehaviorServiceImpl implements UserBehaviorService {
     }
 
     @Override
+    @Transactional
+    public int insert(long goodsId, long userId, int behavior, int frequency) {
+        if (goodsId <= 0 || userId <= 0 || frequency <= 0) {
+            log.error("UserBehaviorService#insert: param is illegal. goodsId={}, userId={}, behavior={}, " +
+                    "frequency={}. ", goodsId, userId, behavior, frequency);
+            throw new AsyncBusinessException(ErrorEnum.PARAM_ILLEGAL);
+        }
+        for (UserBehaviorEnum item : UserBehaviorEnum.values()) {
+            if (item.getCode() == behavior) {
+                // 行为正确，写入DB
+                List<Integer> frequencyList = Lists.newArrayList();
+                for (int i = 1; i <= frequency; i++) {
+                    frequencyList.add(i);
+                }
+                int result = behaviorDao.batchInsert(goodsId, userId, behavior, frequencyList);
+                if (result == frequency) {
+                    // 全部写入成功
+                    return result;
+                }
+                /**
+                 * TODO　写入错误, 抛出异常，触发事务机制，进行回滚
+                 */
+                log.error("UserBehaviorService#insert: failed to insert. goodsId={}, userId={}, behavior={}, " +
+                        "frequencyList={}. result={}", goodsId, userId, behavior, frequencyList, result);
+                throw new AsyncBusinessException(ErrorEnum.ERROR_TO_INSERT_USER_BEHAVIOR);
+            }
+        }
+        return 0;
+    }
+
+    @Override
+    public int insert(long goodsId, long userId, UserBehaviorEnum behaviorEnum, int frequency) {
+        return insert(goodsId, userId, behaviorEnum.getCode(), frequency);
+    }
+
+    @Override
     public int deleteById(long id) {
-        if (id <= 0){
+        if (id <= 0) {
             log.error("UserBehaviorService#deleteById: param is illegal. id={}. ", id);
             throw new AsyncBusinessException(ErrorEnum.PARAM_ILLEGAL);
         }
@@ -79,7 +119,7 @@ public class UserBehaviorServiceImpl implements UserBehaviorService {
 
     @Override
     public UserBehavior getById(long id) {
-        if (id <= 0){
+        if (id <= 0) {
             log.error("UserBehaviorService#getById: param is illegal. id={}. ", id);
             throw new AsyncBusinessException(ErrorEnum.PARAM_ILLEGAL);
         }

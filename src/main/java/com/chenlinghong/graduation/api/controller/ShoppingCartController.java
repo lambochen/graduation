@@ -59,13 +59,13 @@ public class ShoppingCartController {
         long userId = sessionUtil.getUserId(request);
 
         /**
-         * TODO 采集用户添加购物车行为
+         * 采集用户添加购物车行为
          */
         userGoodsSniffer.addToShoppingCart(goodsId, request);
 
-        ShoppingCart shoppingCart = new ShoppingCart(goodsId, null,  userId, 1);
+        ShoppingCart shoppingCart = new ShoppingCart(goodsId, null, userId, 1);
         int result = shoppingCartService.insert(shoppingCart);
-        if (result == NumericConstant.ONE){
+        if (result == NumericConstant.ONE) {
             return ResultUtil.success();
         }
         /**

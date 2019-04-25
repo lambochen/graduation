@@ -59,6 +59,7 @@ public enum ErrorEnum {
      * 6XXX 商品相关
      */
     COMMENT_INSERT_ERROR(6000, "添加评论失败"),
+    FAILED_TO_INSERT_SHOPPING_CART(6001, "添加购物车失败"),
 
 
     /**
@@ -66,10 +67,6 @@ public enum ErrorEnum {
      */
     ERROR_TO_INSERT_USER_BEHAVIOR(7000, "新增用户行为失败"),
 
-    /**
-     * 8XXX 购物车相关
-     */
-    FAILED_TO_INSERT_SHOPPING_CART(8000, "添加购物车失败"),
 
 
     ;

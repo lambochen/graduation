@@ -31,5 +31,27 @@ public interface UserBehaviorService extends IBaseService<UserBehavior> {
      */
     int insert(long goodsId, long userId, UserBehaviorEnum behaviorEnum);
 
+    /**
+     * 批量新增
+     *
+     * @param goodsId
+     * @param userId
+     * @param behavior
+     * @param frequency
+     * @return
+     */
+    int insert(long goodsId, long userId, int behavior, int frequency);
+
+    /**
+     * 批量新增
+     *
+     * @param goodsId
+     * @param userId
+     * @param behaviorEnum
+     * @param frequency
+     * @return
+     */
+    int insert(long goodsId, long userId, UserBehaviorEnum behaviorEnum, int frequency);
+
 
 }
