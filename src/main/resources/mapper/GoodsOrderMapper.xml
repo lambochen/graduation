@@ -19,11 +19,12 @@
         <result column="post_province" property="postProvince" jdbcType="VARCHAR" javaType="String"/>
         <result column="post_city" property="postCity" jdbcType="VARCHAR" javaType="String"/>
         <result column="post_position" property="postPosition" jdbcType="VARCHAR" javaType="String"/>
+        <result column="number" property="number" jdbcType="INTEGER" javaType="Integer"/>
     </resultMap>
 
     <sql id="Base_Column_List">
         gmt_create, gmt_modified, deleted, `name`, description, goods_id, user_id, price, remarks, post_country
-        , post_province, post_city, post_position
+        , post_province, post_city, post_position, `number`
     </sql>
 
     <sql id="column_list">
@@ -40,7 +41,7 @@
         <include refid="Base_Column_List"/>
         )
         values(current_timestamp, current_timestamp, "0", #{name}, #{description}, #{goodsId}, #{userId},
-        #{price}, #{remarks}, #{postCountry}, #{postProvince}, #{postCity}, #{postPosition} )
+        #{price}, #{remarks}, #{postCountry}, #{postProvince}, #{postCity}, #{postPosition}, #{number})
     </insert>
 
     <update id="deleteById">
