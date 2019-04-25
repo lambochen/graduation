@@ -118,7 +118,8 @@ create table if not exists `goods_order` (
     `post_province`  varchar(24)  null comment '省份',
     `post_city`  varchar(24)  null comment '城市',
     `post_position` varchar(128) null comment '详细地址',
-    `business_id` bigint not null comment '商户ID【FK:business_info】',
+--     `business_id` bigint not null comment '商户ID【FK:business_info】',
+    `number` int not null default '1' comment '购买数量',
     primary key (`id`),
     index `idx_name`(`name`)
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 DEFAULT CHARSET = utf8mb4 COMMENT = '商品订单表';
