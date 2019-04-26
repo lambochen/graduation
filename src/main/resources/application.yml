@@ -47,3 +47,4 @@ executor:
   queue_capacity: 1000
   thread_name_prefix: async-service-
   keep_alive_seconds: 5
+  thread_name_prefix_microscope: async-service-microscope-

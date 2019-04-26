@@ -46,6 +46,12 @@ public class ExecutorConfiguration {
     private String threadNamePrefix;
 
     /**
+     * 线程池中线程的名称前缀 显微镜
+     */
+    @Value("${thread_name_prefix_microscope}")
+    private String threadNamePrefixMicroscope;
+
+    /**
      * 保持线程空闲时间
      */
     @Value("${executor.keep_alive_seconds}")
@@ -54,50 +60,57 @@ public class ExecutorConfiguration {
 
     /**
      * 基础业务逻辑
+     *
      * @return
      */
     @Bean
     public Executor asyncServiceExecutor() {
-
         log.info("ExecutorConfiguration#asyncServiceExecutor start...");
-
         return getDefaultExecutor();
     }
 
     /**
      * Redis交互
+     *
      * @return
      */
     @Bean
     public Executor asyncRedisExecutor() {
         log.info("ExecutorConfiguration#asyncRedisExecutor start...");
-
         return getDefaultExecutor();
     }
 
     /**
      * Session交互
+     *
      * @return
      */
     @Bean
-    public Executor asyncSessionExecutor(){
+    public Executor asyncSessionExecutor() {
         log.info("ExecutorConfiguration#asyncSessionExecutor start...");
-
         return getDefaultExecutor();
     }
 
     /**
      * 显微镜
+     *
      * @return
      */
     @Bean
-    public Executor asyncMicroscopeExecutor(){
+    public Executor asyncMicroscopeExecutor() {
         log.info("ExecutorConfiguration#asyncMicroscopeExecutor start...");
-
-        return getDefaultExecutor();
+        return getMicroscopeExecutor();
     }
 
 
+    /**
+     * 线程池--拒绝策略RejectedExecutionHandler
+     *
+     * ThreadPoolExecutor.AbortPolicy:丢弃任务并抛出RejectedExecutionException异常。
+     * ThreadPoolExecutor.DiscardPolicy：也是丢弃任务，但是不抛出异常。
+     * ThreadPoolExecutor.DiscardOldestPolicy：丢弃队列最前面的任务，然后重新尝试执行任务（重复此过程）
+     * ThreadPoolExecutor.CallerRunsPolicy：由调用线程处理该任务
+     */
 
     /**
      * 获取默认执行器
@@ -111,15 +124,27 @@ public class ExecutorConfiguration {
         executor.setQueueCapacity(queueCapacity);
         executor.setThreadNamePrefix(threadNamePrefix);
         executor.setKeepAliveSeconds(keepAliveSeconds);
-
-        /**
-         * rejection-policy: 当pool已经达到max size时，如何处理新任务
-         * caller_runs： 不在新线程中执行任务，而是由调用者所在的线程来执行
-         */
         executor.setRejectedExecutionHandler(new ThreadPoolExecutor.CallerRunsPolicy());
         //执行初始化
         executor.initialize();
+        return executor;
+    }
 
+    /**
+     * 获取显微镜执行器
+     *
+     * @return
+     */
+    private synchronized Executor getMicroscopeExecutor() {
+        ThreadPoolTaskExecutor executor = new VisibleThreadPoolTaskExecutor();
+        executor.setCorePoolSize(corePoolSize);
+        executor.setMaxPoolSize(maxPoolSize);
+        executor.setQueueCapacity(queueCapacity);
+        executor.setThreadNamePrefix(threadNamePrefixMicroscope);
+        executor.setKeepAliveSeconds(keepAliveSeconds);
+        executor.setRejectedExecutionHandler(new ThreadPoolExecutor.DiscardPolicy());
+        //执行初始化
+        executor.initialize();
         return executor;
     }
 
