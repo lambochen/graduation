@@ -10,6 +10,13 @@ import com.chenlinghong.graduation.repository.domain.UserPreference;
  */
 public interface UserPreferenceService extends IBaseService<UserPreference> {
 
-
+    /**
+     * 通过用户ID、商品ID获取
+     *
+     * @param userId
+     * @param goodsId
+     * @return
+     */
+    UserPreference getByUserAndGoods(long userId, long goodsId);
 
 }

@@ -101,6 +101,16 @@
         where `deleted` = '0'
     </select>
 
+
+    <select id="listByUserAndGoodsAndStartTime" resultMap="BaseResultMap">
+        SELECT
+        <include refid="column_list"/>
+        FROM
+        user_behavior
+        where `deleted` = '0'
+        and `user_id` = #{userId} and `goods_id` = #{goodsId} and gmt_modified > #{startTime}
+    </select>
+
     <update id="update" parameterType="com.chenlinghong.graduation.repository.domain.UserBehavior">
         update user_behavior
         set `user_id`       = #{caseNumber},

@@ -2,6 +2,7 @@ package com.chenlinghong.graduation.microscope.actuator;
 
 import com.chenlinghong.graduation.enums.UserBehaviorEnum;
 import com.chenlinghong.graduation.repository.domain.UserBehavior;
+import com.chenlinghong.graduation.repository.domain.UserPreference;
 
 import java.util.Date;
 
@@ -12,6 +13,13 @@ import java.util.Date;
  * @Version V1.0
  */
 public interface UserGoodsPreferenceActuator extends PreferenceActuator {
+
+    /**
+     * 刷新用户偏好
+     *
+     * @param userPreference
+     */
+    void refresh(UserPreference userPreference);
 
     /**
      * 刷新用户偏好，所有商品均刷新，采用默认时间窗口

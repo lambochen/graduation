@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -155,6 +156,8 @@ public class UserBehaviorServiceImpl implements UserBehaviorService {
         return insert(goodsId, userId, behaviorEnum.getCode(), frequency);
     }
 
+
+
     @Override
     public int deleteById(long id) {
         if (id <= 0) {
@@ -182,6 +185,12 @@ public class UserBehaviorServiceImpl implements UserBehaviorService {
     @Override
     public PageDto<UserBehavior> listAll(long pageNo, long pageSize) {
         return null;
+    }
+
+    @Override
+    public PageDto<UserBehavior> listByUserAndGoodsAndStartTime(long userId, long goodsId, Date startTime) {
+        List<UserBehavior> behaviorList = behaviorDao.listByUserAndGoodsAndStartTime(userId, goodsId, startTime);
+        return new PageDto<>(behaviorList);
     }
 
     @Override

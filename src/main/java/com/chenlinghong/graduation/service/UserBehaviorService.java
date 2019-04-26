@@ -1,8 +1,10 @@
 package com.chenlinghong.graduation.service;
 
+import com.chenlinghong.graduation.common.PageDto;
 import com.chenlinghong.graduation.enums.UserBehaviorEnum;
 import com.chenlinghong.graduation.repository.domain.UserBehavior;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -63,5 +65,14 @@ public interface UserBehaviorService extends IBaseService<UserBehavior> {
      */
     int insert(long goodsId, long userId, UserBehaviorEnum behaviorEnum, int frequency);
 
+    /**
+     * 通过user、goodsId、startTime获取
+     *
+     * @param userId
+     * @param goodsId
+     * @param startTime
+     * @return
+     */
+    PageDto<UserBehavior> listByUserAndGoodsAndStartTime(long userId, long goodsId, Date startTime);
 
 }

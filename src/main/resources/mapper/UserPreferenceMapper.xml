@@ -85,6 +85,14 @@
         where `deleted` = '0' and user_id = #{userId} and goods_id = #{goodsId}
     </select>
 
+    <select id="getByUserAndGoods" resultMap="BaseResultMap">
+        SELECT
+        <include refid="column_list"></include>
+        FROM
+        user_goods_preference
+        where `deleted` = '0' and user_id = #{userId} and goods_id = #{goodsId}
+    </select>
+
     <update id="update" parameterType="com.chenlinghong.graduation.repository.domain.UserPreference">
         update user_goods_preference
         set `user_id`       = #{caseNumber},

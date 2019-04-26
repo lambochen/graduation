@@ -20,4 +20,13 @@ public interface UserPreferenceDao extends IBaseDao<UserPreference> {
      */
     int countByUserAndGoods(@Param("userId") long userId, @Param("goodsId") long goodsId);
 
+    /**
+     * 通过用户ID、商户ID获取
+     *
+     * @param userId
+     * @param goodsId
+     * @return
+     */
+    UserPreference getByUserAndGoods(@Param("userId") long userId, @Param("goodsId") long goodsId);
+
 }
