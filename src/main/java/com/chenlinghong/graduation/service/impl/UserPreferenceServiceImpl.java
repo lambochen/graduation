@@ -7,6 +7,7 @@ import com.chenlinghong.graduation.exception.BusinessException;
 import com.chenlinghong.graduation.repository.dao.UserPreferenceDao;
 import com.chenlinghong.graduation.repository.domain.UserPreference;
 import com.chenlinghong.graduation.service.UserPreferenceService;
+import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -37,6 +38,18 @@ public class UserPreferenceServiceImpl implements UserPreferenceService {
     }
 
     @Override
+    public int insert(@NonNull List<UserPreference> preferenceList) {
+        int result = preferenceDao.insertBatch(preferenceList);
+        if (result > 0) {
+            return result;
+        }
+        /**
+         * TODO 校验结果
+         */
+        return 0;
+    }
+
+    @Override
     public int deleteById(long id) {
         return preferenceDao.deleteById(id);
     }
@@ -60,6 +73,11 @@ public class UserPreferenceServiceImpl implements UserPreferenceService {
     public boolean isAliveUserPreference(long userId, long goodsId) {
         int preferenceCount = countByUserAndGoods(userId, goodsId);
         return preferenceCount == 1 ? true : false;
+    }
+
+    @Override
+    public boolean isAliveUserPreference(@NonNull UserPreference preference) {
+        return isAliveUserPreference(preference.getUserId(), preference.getGoodsId());
     }
 
     @Override
@@ -95,6 +113,22 @@ public class UserPreferenceServiceImpl implements UserPreferenceService {
              * 数据错误
              */
         }
+        return 0;
+    }
+
+    @Override
+    public int update(@NonNull List<UserPreference> preferenceList) {
+        if (preferenceList.size() <= 0) {
+            log.error("UserPreferenceService#update: param is null.");
+            throw new BusinessException(ErrorEnum.PARAM_IS_NULL);
+        }
+        int result = preferenceDao.updateBatch(preferenceList);
+        if (result > 0) {
+            return result;
+        }
+        /**
+         * TODO 校验结果
+         */
         return 0;
     }
 

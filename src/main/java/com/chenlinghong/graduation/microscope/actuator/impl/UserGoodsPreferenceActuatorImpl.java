@@ -12,6 +12,7 @@ import com.chenlinghong.graduation.repository.domain.UserBehavior;
 import com.chenlinghong.graduation.repository.domain.UserPreference;
 import com.chenlinghong.graduation.service.UserBehaviorService;
 import com.chenlinghong.graduation.service.UserPreferenceService;
+import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -60,9 +61,8 @@ public class UserGoodsPreferenceActuatorImpl implements UserGoodsPreferenceActua
 
     @Override
     public void refresh(long userId, Date startTime) {
-
         /**
-         * 获取所有用户行为
+         * 1、获取所有用户行为
          */
         PageDto behaviorDto = behaviorService.listByUserAndStartTime(userId, startTime);
         if (behaviorDto == null || behaviorDto.getTotalCount() <= 0) {
@@ -71,11 +71,39 @@ public class UserGoodsPreferenceActuatorImpl implements UserGoodsPreferenceActua
             throw new AsyncBusinessException(ErrorEnum.BEHAVIOR_DATA_NOT_EXISTS);
         }
         /**
-         * 计算用户对于每个商品的偏好
+         * 2、计算用户对于每个商品的偏好
          */
         List<UserPreference> preferenceList = preferenceCalculation.calculation(behaviorDto.getData());
-        
-
+        /**
+         * 3、将商品偏好分为两大类，已存在用户偏好记录和尚不存在
+         */
+        List<UserPreference> alivePreferenceList = Lists.newArrayList();
+        List<UserPreference> notAlivePreferenceList = Lists.newArrayList();
+        for (UserPreference item : preferenceList) {
+            if (preferenceService.isAliveUserPreference(item)) {
+                alivePreferenceList.add(item);
+            } else {
+                notAlivePreferenceList.add(item);
+            }
+        }
+        /**
+         * 4、对已存在的用户偏好记录，执行批量更新操作
+         */
+        if (alivePreferenceList.size() > 0) {
+            int updateResult = preferenceService.update(alivePreferenceList);
+            /**
+             * TODO 校验结果
+             */
+        }
+        /**
+         * 5、对不存在的用户偏好记录，执行批量插入操作
+         */
+        if (notAlivePreferenceList.size() > 0) {
+            int insertResult = preferenceService.insert(notAlivePreferenceList);
+            /**
+             * TODO 校验结果
+             */
+        }
     }
 
 
