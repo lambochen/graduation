@@ -24,7 +24,7 @@ import java.util.List;
  * @Date 2019/4/25 18:25
  * @Version V1.0
  */
-@Slf4j(topic = "me")
+@Slf4j
 @Service
 public class UserBehaviorServiceImpl implements UserBehaviorService {
 
@@ -58,10 +58,9 @@ public class UserBehaviorServiceImpl implements UserBehaviorService {
             throw new AsyncBusinessException(ErrorEnum.ERROR_TO_INSERT_USER_BEHAVIOR);
         }
         /**
-         * 插入成功
-         * TODO 刷新用户偏好
+         * 插入成功, 刷新用户偏好
          */
-
+        userGoodsPreferenceActuator.append(userBehavior);
         return result;
     }
 
@@ -94,8 +93,9 @@ public class UserBehaviorServiceImpl implements UserBehaviorService {
             throw new AsyncBusinessException(ErrorEnum.ERROR_TO_INSERT_USER_BEHAVIOR);
         }
         /**
-         * TODO 刷新用户偏好
+         * 写入数据成功，刷新用户偏好
          */
+        userGoodsPreferenceActuator.refresh(behaviorList.get(0).getUserId());
         return result;
     }
 
@@ -141,9 +141,9 @@ public class UserBehaviorServiceImpl implements UserBehaviorService {
                     throw new AsyncBusinessException(ErrorEnum.ERROR_TO_INSERT_USER_BEHAVIOR);
                 }
                 /**
-                 * 全部写入成功
-                 * TODO 刷新用户偏好
+                 * 全部写入成功, 刷新用户偏好
                  */
+                userGoodsPreferenceActuator.refresh(userId, goodsId);
                 return result;
             }
         }
@@ -162,7 +162,7 @@ public class UserBehaviorServiceImpl implements UserBehaviorService {
             throw new AsyncBusinessException(ErrorEnum.PARAM_ILLEGAL);
         }
         int result = behaviorDao.deleteById(id);
-        if (result == 1){
+        if (result == 1) {
             /**
              * TODO 刷新用户偏好
              */

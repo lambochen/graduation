@@ -27,9 +27,9 @@ import java.util.List;
  * @Date 2019/4/25 22:50
  * @Version V1.0
  */
-@Slf4j(topic = "me")
+@Slf4j
 @Service
-public class UserGoodsSnifferImpl implements UserGoodsBehaviorSniffer {
+public class UserGoodsBehaviorSnifferImpl implements UserGoodsBehaviorSniffer {
 
     @Autowired
     private SessionUtil sessionUtil;

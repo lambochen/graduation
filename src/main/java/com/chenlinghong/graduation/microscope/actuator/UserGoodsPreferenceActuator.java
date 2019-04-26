@@ -14,6 +14,13 @@ import java.util.Date;
 public interface UserGoodsPreferenceActuator extends PreferenceActuator {
 
     /**
+     * 刷新用户偏好，所有商品均刷新，采用默认时间窗口
+     *
+     * @param userId
+     */
+    void refresh(long userId);
+
+    /**
      * 刷新用户偏好，采用默认时间窗口
      *
      * @param userId  用户ID
