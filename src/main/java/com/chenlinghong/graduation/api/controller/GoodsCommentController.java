@@ -5,7 +5,7 @@ import com.chenlinghong.graduation.common.ResultUtil;
 import com.chenlinghong.graduation.common.ResultVo;
 import com.chenlinghong.graduation.enums.ErrorEnum;
 import com.chenlinghong.graduation.exception.BusinessException;
-import com.chenlinghong.graduation.microscope.sniffer.UserGoodsSniffer;
+import com.chenlinghong.graduation.microscope.sniffer.UserGoodsBehaviorSniffer;
 import com.chenlinghong.graduation.repository.domain.GoodsComment;
 import com.chenlinghong.graduation.service.GoodsCommentService;
 import lombok.extern.slf4j.Slf4j;
@@ -40,7 +40,7 @@ public class GoodsCommentController {
     private SessionUtil sessionUtil;
 
     @Autowired
-    private UserGoodsSniffer userGoodsSniffer;
+    private UserGoodsBehaviorSniffer userGoodsBehaviorSniffer;
 
     /**
      * 新增评论
@@ -62,7 +62,7 @@ public class GoodsCommentController {
         /**
          * 采集用户评论行为
          */
-        userGoodsSniffer.comment(goodsComment);
+        userGoodsBehaviorSniffer.comment(goodsComment);
 
 
         int result = commentService.insert(goodsComment);

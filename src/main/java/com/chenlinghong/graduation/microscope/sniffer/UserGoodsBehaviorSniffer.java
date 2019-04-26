@@ -16,7 +16,7 @@ import java.util.List;
  * @Date 2019/4/25 11:00
  * @Version V1.0
  */
-public interface UserGoodsSniffer extends Sniffer {
+public interface UserGoodsBehaviorSniffer extends BehaviorSniffer {
 
     /**
      * 添加单个用户行为记录

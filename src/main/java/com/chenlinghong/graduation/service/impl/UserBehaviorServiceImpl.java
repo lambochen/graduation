@@ -5,6 +5,7 @@ import com.chenlinghong.graduation.enums.ErrorEnum;
 import com.chenlinghong.graduation.enums.UserBehaviorEnum;
 import com.chenlinghong.graduation.exception.AsyncBusinessException;
 import com.chenlinghong.graduation.exception.BusinessException;
+import com.chenlinghong.graduation.microscope.actuator.UserGoodsPreferenceActuator;
 import com.chenlinghong.graduation.microscope.sniffer.util.UserBehaviorUtil;
 import com.chenlinghong.graduation.repository.dao.UserBehaviorDao;
 import com.chenlinghong.graduation.repository.domain.UserBehavior;
@@ -30,6 +31,9 @@ public class UserBehaviorServiceImpl implements UserBehaviorService {
     @Autowired
     private UserBehaviorDao behaviorDao;
 
+    @Autowired
+    private UserGoodsPreferenceActuator userGoodsPreferenceActuator;
+
     @Override
     @Transactional
     public int insert(UserBehavior userBehavior) {
@@ -53,7 +57,11 @@ public class UserBehaviorServiceImpl implements UserBehaviorService {
             log.error("UserBehaviorService#insert: insert error. userBehavior={}, result={}. ", userBehavior, result);
             throw new AsyncBusinessException(ErrorEnum.ERROR_TO_INSERT_USER_BEHAVIOR);
         }
-        // 插入成功
+        /**
+         * 插入成功
+         * TODO 刷新用户偏好
+         */
+
         return result;
     }
 
@@ -85,6 +93,9 @@ public class UserBehaviorServiceImpl implements UserBehaviorService {
                     behaviorList, result);
             throw new AsyncBusinessException(ErrorEnum.ERROR_TO_INSERT_USER_BEHAVIOR);
         }
+        /**
+         * TODO 刷新用户偏好
+         */
         return result;
     }
 
@@ -129,7 +140,10 @@ public class UserBehaviorServiceImpl implements UserBehaviorService {
                             "frequencyList={}. result={}", goodsId, userId, behavior, frequencyList, result);
                     throw new AsyncBusinessException(ErrorEnum.ERROR_TO_INSERT_USER_BEHAVIOR);
                 }
-                // 全部写入成功
+                /**
+                 * 全部写入成功
+                 * TODO 刷新用户偏好
+                 */
                 return result;
             }
         }
@@ -147,7 +161,13 @@ public class UserBehaviorServiceImpl implements UserBehaviorService {
             log.error("UserBehaviorService#deleteById: param is illegal. id={}. ", id);
             throw new AsyncBusinessException(ErrorEnum.PARAM_ILLEGAL);
         }
-        return behaviorDao.deleteById(id);
+        int result = behaviorDao.deleteById(id);
+        if (result == 1){
+            /**
+             * TODO 刷新用户偏好
+             */
+        }
+        return result;
     }
 
     @Override

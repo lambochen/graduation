@@ -5,7 +5,7 @@ import com.chenlinghong.graduation.enums.ErrorEnum;
 import com.chenlinghong.graduation.enums.GoodsCommentScoreEnum;
 import com.chenlinghong.graduation.enums.UserBehaviorEnum;
 import com.chenlinghong.graduation.exception.AsyncBusinessException;
-import com.chenlinghong.graduation.microscope.sniffer.UserGoodsSniffer;
+import com.chenlinghong.graduation.microscope.sniffer.UserGoodsBehaviorSniffer;
 import com.chenlinghong.graduation.microscope.sniffer.util.UserBehaviorUtil;
 import com.chenlinghong.graduation.microscope.util.SessionUtil;
 import com.chenlinghong.graduation.repository.domain.Goods;
@@ -29,7 +29,7 @@ import java.util.List;
  */
 @Slf4j(topic = "me")
 @Service
-public class UserGoodsSnifferImpl implements UserGoodsSniffer {
+public class UserGoodsSnifferImpl implements UserGoodsBehaviorSniffer {
 
     @Autowired
     private SessionUtil sessionUtil;

@@ -6,7 +6,7 @@ import com.chenlinghong.graduation.common.ResultVo;
 import com.chenlinghong.graduation.constant.NumericConstant;
 import com.chenlinghong.graduation.enums.ErrorEnum;
 import com.chenlinghong.graduation.exception.BusinessException;
-import com.chenlinghong.graduation.microscope.sniffer.UserGoodsSniffer;
+import com.chenlinghong.graduation.microscope.sniffer.UserGoodsBehaviorSniffer;
 import com.chenlinghong.graduation.repository.domain.ShoppingCart;
 import com.chenlinghong.graduation.service.ShoppingCartService;
 import lombok.extern.slf4j.Slf4j;
@@ -41,7 +41,7 @@ public class ShoppingCartController {
     private SessionUtil sessionUtil;
 
     @Autowired
-    private UserGoodsSniffer userGoodsSniffer;
+    private UserGoodsBehaviorSniffer userGoodsBehaviorSniffer;
 
     /**
      * 添加购物车
@@ -61,7 +61,7 @@ public class ShoppingCartController {
         /**
          * 采集用户添加购物车行为
          */
-        userGoodsSniffer.addToShoppingCart(goodsId, request);
+        userGoodsBehaviorSniffer.addToShoppingCart(goodsId, request);
 
         ShoppingCart shoppingCart = new ShoppingCart(goodsId, null, userId, 1);
         int result = shoppingCartService.insert(shoppingCart);
