@@ -32,7 +32,7 @@ public class UserBehavior extends BaseDomain {
      */
     private Integer behavior;
 
-    public UserBehavior(long userId, long goodsId, int behavior){
+    public UserBehavior(long userId, long goodsId, int behavior) {
         this.userId = userId;
         this.goodsId = goodsId;
         this.behavior = behavior;
