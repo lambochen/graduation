@@ -15,6 +15,7 @@
     postProvince [string]: 省份
     postCity [string]: 城市
     postPosition [string]: 具体地址
+    number [int] : 购买数量 【必填,正数】
     
 返回
 
@@ -39,8 +40,8 @@
         "msg": "请求成功",
         "data": {
             "id": 2,
-            "gmtCreate": 1555301029000,
-            "gmtModified": 1555301029000,
+            "gmtCreate": 1556203011000,
+            "gmtModified": 1556203011000,
             "name": "test",
             "description": "test",
             "goodsId": 1,
@@ -50,7 +51,8 @@
             "postCountry": "test",
             "postProvince": "test",
             "postCity": "teset",
-            "postPosition": "test"
+            "postPosition": "test",
+            "number": 1
         }
     }
   
@@ -72,8 +74,8 @@
             "data": [
                 {
                     "id": 2,
-                    "gmtCreate": 1555301029000,
-                    "gmtModified": 1555301029000,
+                    "gmtCreate": 1556203011000,
+                    "gmtModified": 1556203011000,
                     "name": "test",
                     "description": "test",
                     "goodsId": 1,
@@ -83,7 +85,8 @@
                     "postCountry": "test",
                     "postProvince": "test",
                     "postCity": "teset",
-                    "postPosition": "test"
+                    "postPosition": "test",
+                    "number": 1
                 }
             ],
             "pageNo": 1,
@@ -111,8 +114,8 @@
             "data": [
                 {
                     "id": 2,
-                    "gmtCreate": 1555301029000,
-                    "gmtModified": 1555301029000,
+                    "gmtCreate": 1556203011000,
+                    "gmtModified": 1556203011000,
                     "name": "test",
                     "description": "test",
                     "goodsId": 1,
@@ -122,7 +125,8 @@
                     "postCountry": "test",
                     "postProvince": "test",
                     "postCity": "teset",
-                    "postPosition": "test"
+                    "postPosition": "test",
+                    "number": 1
                 }
             ],
             "pageNo": 1,

@@ -3,6 +3,7 @@ package com.chenlinghong.graduation.repository.domain;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.Range;
 
 import javax.validation.constraints.NotNull;
 
@@ -40,6 +41,11 @@ public class GoodsOrder extends BaseDomain {
     private Long userId;
 
     /**
+     * 商户ID
+     */
+    // private Long businessId;
+
+    /**
      * 价格
      */
     @NotNull(message = "价格不能为空")
@@ -69,4 +75,11 @@ public class GoodsOrder extends BaseDomain {
      * 具体地址
      */
     private String postPosition;
+
+    /**
+     * 购买数量
+     */
+    @NotNull(message = "购买数量不能为空")
+    @Range(min = 1, message = "购买数量只能为正数")
+    private Integer number;
 }

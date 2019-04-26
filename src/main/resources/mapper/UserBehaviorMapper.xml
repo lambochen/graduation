@@ -37,6 +37,30 @@
         values(#{userId}, #{goodsId}, #{behavior})
     </insert>
 
+    <insert id="batchInsert">
+        <selectKey keyProperty="id" order="AFTER" resultType="Long">
+            SELECT last_insert_id()
+        </selectKey>
+        INSERT into
+        user_behavior(<include refid="Base_Column_List"></include>)
+        values
+        <foreach collection="frequency" item="item" separator=",">
+            (#{userId}, #{goodsId}, #{behavior})
+        </foreach>
+    </insert>
+
+    <insert id="batchInsertByUserBehavior">
+        <selectKey keyProperty="id" order="AFTER" resultType="Long">
+            SELECT last_insert_id()
+        </selectKey>
+        INSERT into
+        user_behavior(<include refid="Base_Column_List"></include>)
+        values
+        <foreach collection="behaviorList" item="item" separator=",">
+            (#{item.userId}, #{item.goodsId}, #{item.behavior})
+        </foreach>
+    </insert>
+
     <update id="deleteById" parameterType="long">
         update user_behavior
         set deleted = '1'

@@ -4,6 +4,7 @@ import com.chenlinghong.graduation.api.util.SessionUtil;
 import com.chenlinghong.graduation.common.ResultUtil;
 import com.chenlinghong.graduation.common.ResultVo;
 import com.chenlinghong.graduation.enums.ErrorEnum;
+import com.chenlinghong.graduation.microscope.sniffer.UserGoodsSniffer;
 import com.chenlinghong.graduation.repository.domain.GoodsOrder;
 import com.chenlinghong.graduation.service.GoodsOrderService;
 import lombok.extern.slf4j.Slf4j;
@@ -36,6 +37,9 @@ public class GoodsOrderController {
     @Autowired
     private SessionUtil sessionUtil;
 
+    @Autowired
+    private UserGoodsSniffer userGoodsSniffer;
+
     /**
      * 新增订单
      *
@@ -51,6 +55,10 @@ public class GoodsOrderController {
         }
         long userId = sessionUtil.getUserId(request);
         goodsOrder.setUserId(userId);
+        /**
+         * TODO 采集用户购买行为
+         */
+        userGoodsSniffer.purchase(goodsOrder);
         orderService.insert(goodsOrder);
         return ResultUtil.success();
     }
