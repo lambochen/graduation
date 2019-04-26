@@ -1,4 +1,4 @@
-package com.chenlinghong.graduation.microscope.calculation;
+package com.chenlinghong.graduation.calculation;
 
 /**
  * @Description 用户-商品偏好 计算类
