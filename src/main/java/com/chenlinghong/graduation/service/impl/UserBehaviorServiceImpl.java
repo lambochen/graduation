@@ -39,37 +39,53 @@ public class UserBehaviorServiceImpl implements UserBehaviorService {
         }
         // 校验用户行为
         UserBehaviorEnum behaviorEnum = UserBehaviorUtil.getByBehavior(userBehavior.getBehavior());
-        if (behaviorEnum == null){
+        if (behaviorEnum == null) {
             // 用户行为不存在
             log.error("UserBehaviorService#insert: param is illegal, userBehavior={}.", userBehavior);
             throw new AsyncBusinessException(ErrorEnum.PARAM_ILLEGAL);
         }
         // 有效的用户行为
         int result = behaviorDao.insert(userBehavior);
-        if (result == 1) {
-            // 插入成功
-            return result;
+        if (result != 1) {
+            /**
+             * TODO 插入失败
+             */
+            log.error("UserBehaviorService#insert: insert error. userBehavior={}, result={}. ", userBehavior, result);
+            throw new AsyncBusinessException(ErrorEnum.ERROR_TO_INSERT_USER_BEHAVIOR);
         }
-        /**
-         * TODO 插入失败
-         */
-        log.error("UserBehaviorService#insert: insert error. userBehavior={}, result={}. ", userBehavior, result);
-        throw new AsyncBusinessException(ErrorEnum.ERROR_TO_INSERT_USER_BEHAVIOR);
+        // 插入成功
+        return result;
     }
 
     @Override
+    @Transactional
     public int insert(List<UserBehavior> behaviorList) {
         if (behaviorList == null || behaviorList.size() <= 0) {
             log.error("UserBehaviorService#insert: param is null. behaviorList={}. ", behaviorList);
             throw new AsyncBusinessException(ErrorEnum.PARAM_IS_NULL);
         }
         /**
-         * TODO 校验评分
+         * 校验评分
          */
+        for (UserBehavior behavior : behaviorList) {
+            UserBehaviorEnum behaviorEnum = UserBehaviorUtil.getByBehavior(behavior.getBehavior());
+            if (behaviorEnum == null) {
+                // 评分有误
+                log.error("UserBehaviorService#insert: param is illegal, behaviorList={}.", behaviorList);
+                throw new AsyncBusinessException(ErrorEnum.PARAM_ILLEGAL);
+            }
+        }
         int result = behaviorDao.batchInsertByUserBehavior(behaviorList);
         /**
-         * TODO 校验结果
+         * 校验结果, 抛出异常，触发事务机制
          */
+        if (result != behaviorList.size()) {
+            // 存在写入失败
+            log.error("UserBehaviorService#insert: failed to insert, behaviorList={}, result={}.",
+                    behaviorList, result);
+            throw new AsyncBusinessException(ErrorEnum.ERROR_TO_INSERT_USER_BEHAVIOR);
+        }
+        return result;
     }
 
     @Override
@@ -105,16 +121,16 @@ public class UserBehaviorServiceImpl implements UserBehaviorService {
                     frequencyList.add(i);
                 }
                 int result = behaviorDao.batchInsert(goodsId, userId, behavior, frequencyList);
-                if (result == frequency) {
-                    // 全部写入成功
-                    return result;
+                if (result != frequency) {
+                    /**
+                     * TODO　写入错误, 抛出异常，触发事务机制，进行回滚
+                     */
+                    log.error("UserBehaviorService#insert: failed to insert. goodsId={}, userId={}, behavior={}, " +
+                            "frequencyList={}. result={}", goodsId, userId, behavior, frequencyList, result);
+                    throw new AsyncBusinessException(ErrorEnum.ERROR_TO_INSERT_USER_BEHAVIOR);
                 }
-                /**
-                 * TODO　写入错误, 抛出异常，触发事务机制，进行回滚
-                 */
-                log.error("UserBehaviorService#insert: failed to insert. goodsId={}, userId={}, behavior={}, " +
-                        "frequencyList={}. result={}", goodsId, userId, behavior, frequencyList, result);
-                throw new AsyncBusinessException(ErrorEnum.ERROR_TO_INSERT_USER_BEHAVIOR);
+                // 全部写入成功
+                return result;
             }
         }
         return 0;
