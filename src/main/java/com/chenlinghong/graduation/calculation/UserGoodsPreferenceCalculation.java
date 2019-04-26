@@ -13,7 +13,7 @@ import java.util.List;
  * @Date 2019/4/26 13:29
  * @Version V1.0
  */
-public interface UserGoodsPreferenceCalculation extends Calculation {
+public interface UserGoodsPreferenceCalculation extends PreferenceCalculation {
 
     /**
      * 计算用户偏好数值

@@ -20,6 +20,11 @@ public class UserGoodsPreferenceActuatorImpl implements UserGoodsPreferenceActua
 
 
     @Override
+    public void refresh(long userId) {
+
+    }
+
+    @Override
     public void refresh(long userId, long goodsId) {
 
     }
