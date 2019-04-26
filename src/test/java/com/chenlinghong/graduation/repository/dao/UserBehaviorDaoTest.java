@@ -1,6 +1,8 @@
 package com.chenlinghong.graduation.repository.dao;
 
 import com.chenlinghong.graduation.repository.domain.UserBehavior;
+import com.google.common.collect.Lists;
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +31,17 @@ public class UserBehaviorDaoTest {
     public void listAll() {
         List<UserBehavior> behaviorList = behaviorDao.listAll(0, 10);
         System.out.println(behaviorList);
+    }
+
+    @Test
+    public void batchInsertByUserBehavior() {
+        List<UserBehavior> behaviorList = Lists.newArrayList();
+        UserBehavior behavior = new UserBehavior(3, 2, 2);
+        UserBehavior behavior2 = new UserBehavior(3, 1, 2);
+        behaviorList.add(behavior);
+        behaviorList.add(behavior2);
+        int result = behaviorDao.batchInsertByUserBehavior(behaviorList);
+        Assert.assertEquals(2, result);
     }
 
 }

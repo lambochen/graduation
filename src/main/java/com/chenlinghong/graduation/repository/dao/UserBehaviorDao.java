@@ -24,4 +24,12 @@ public interface UserBehaviorDao extends IBaseDao<UserBehavior> {
      */
     int batchInsert(@Param("goodsId") long goodsId, @Param("userId") long userId,
                     @Param("behavior") int behavior, @Param("frequency") List<Integer> frequency);
+
+    /**
+     * 批量写入数据
+     *
+     * @param behaviorList
+     * @return
+     */
+    int batchInsertByUserBehavior(@Param("behaviorList") List<UserBehavior> behaviorList);
 }

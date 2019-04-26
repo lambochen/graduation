@@ -21,6 +21,8 @@ public enum  UserBehaviorEnum {
     COMMENT_SCORE_3(6,"评价-3分"),
     COMMENT_SCORE_4(7,"评价-4分"),
     COMMENT_SCORE_5(8,"评价-5分"),
+    SEARCH(9, "搜索"),
+    PATTERN_RECOGNITION(10, "模式识别"),
 
     ;
 

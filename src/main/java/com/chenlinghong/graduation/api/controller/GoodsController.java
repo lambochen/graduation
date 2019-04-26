@@ -165,6 +165,10 @@ public class GoodsController {
             throw new BusinessException(ErrorEnum.PARAM_IS_NULL);
         }
         PageDto result = goodsService.searchByName(goodsName, pageNo, pageSize);
+        /**
+         * 采集用户搜索记录
+         */
+        userGoodsSniffer.search(result, request);
         return ResultUtil.success(result);
     }
 

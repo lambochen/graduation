@@ -3,6 +3,8 @@ package com.chenlinghong.graduation.service;
 import com.chenlinghong.graduation.enums.UserBehaviorEnum;
 import com.chenlinghong.graduation.repository.domain.UserBehavior;
 
+import java.util.List;
+
 /**
  * @Description 用户行为Service
  * @Author chenlinghong
@@ -10,6 +12,14 @@ import com.chenlinghong.graduation.repository.domain.UserBehavior;
  * @Version V1.0
  */
 public interface UserBehaviorService extends IBaseService<UserBehavior> {
+
+    /**
+     * 新增用户行为
+     *
+     * @param behaviorList
+     * @return
+     */
+    int insert(List<UserBehavior> behaviorList);
 
     /**
      * 新增用户行为

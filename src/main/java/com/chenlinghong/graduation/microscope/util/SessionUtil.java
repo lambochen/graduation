@@ -19,7 +19,7 @@ import javax.servlet.http.HttpSession;
  * @Version V1.0
  */
 @Slf4j(topic = "me")
-@Service
+@Service(value = "snifferSessionUtil")
 public class SessionUtil {
 
     @Autowired
