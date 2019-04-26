@@ -53,6 +53,12 @@ public class UserGoodsPreferenceActuatorImpl implements UserGoodsPreferenceActua
 
     @Override
     public void refresh(long userId) {
+        Date startTime = getDefaultStartTime();
+        refresh(userId, startTime);
+    }
+
+    @Override
+    public void refresh(long userId, Date startTime) {
         /**
          * 1、获取用户指定时间窗口的所有行为
          * 2、分不同的商品进行计算每个商品的偏好
@@ -62,8 +68,19 @@ public class UserGoodsPreferenceActuatorImpl implements UserGoodsPreferenceActua
          *
          * 注：该方式所需资源较多，谨慎使用
          */
-        
+        // 获取所有用户行为
+        PageDto behaviorDto = behaviorService.listByUserAndStartTime(userId, startTime);
+        if (behaviorDto == null || behaviorDto.getTotalCount() <= 0) {
+            // 为获取到数据
+            log.error("UserGoodsPreferenceActuator#refresh: no data. userId={}, startTime={}.", userId, startTime);
+            throw new AsyncBusinessException(ErrorEnum.BEHAVIOR_DATA_NOT_EXISTS);
+        }
+        /**
+         * TODO 计算用户对于每个商品的偏好
+         */
+
     }
+
 
     @Override
     public void refresh(long userId, long goodsId) {

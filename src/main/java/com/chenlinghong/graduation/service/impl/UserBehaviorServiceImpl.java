@@ -157,7 +157,6 @@ public class UserBehaviorServiceImpl implements UserBehaviorService {
     }
 
 
-
     @Override
     public int deleteById(long id) {
         if (id <= 0) {
@@ -190,6 +189,12 @@ public class UserBehaviorServiceImpl implements UserBehaviorService {
     @Override
     public PageDto<UserBehavior> listByUserAndGoodsAndStartTime(long userId, long goodsId, Date startTime) {
         List<UserBehavior> behaviorList = behaviorDao.listByUserAndGoodsAndStartTime(userId, goodsId, startTime);
+        return new PageDto<>(behaviorList);
+    }
+
+    @Override
+    public PageDto<UserBehavior> listByUserAndStartTime(long userId, Date startTime) {
+        List<UserBehavior> behaviorList = behaviorDao.listByUserAndStartTime(userId, startTime);
         return new PageDto<>(behaviorList);
     }
 

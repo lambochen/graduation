@@ -29,6 +29,14 @@ public interface UserGoodsPreferenceActuator extends PreferenceActuator {
     void refresh(long userId);
 
     /**
+     * 刷新用户偏好，所有商品均刷新
+     *
+     * @param userId
+     * @param startTime
+     */
+    void refresh(long userId, Date startTime);
+
+    /**
      * 刷新用户偏好，采用默认时间窗口
      *
      * @param userId  用户ID
