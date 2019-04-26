@@ -1,4 +1,4 @@
-package com.chenlinghong.graduation.calculation;
+package com.chenlinghong.graduation.microscope.calculation;
 
 import com.chenlinghong.graduation.constant.AsyncNameConstant;
 import org.springframework.scheduling.annotation.Async;
