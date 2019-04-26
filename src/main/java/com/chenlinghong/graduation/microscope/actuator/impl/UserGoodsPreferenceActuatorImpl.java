@@ -57,18 +57,13 @@ public class UserGoodsPreferenceActuatorImpl implements UserGoodsPreferenceActua
         refresh(userId, startTime);
     }
 
+
     @Override
     public void refresh(long userId, Date startTime) {
+
         /**
-         * 1、获取用户指定时间窗口的所有行为
-         * 2、分不同的商品进行计算每个商品的偏好
-         * 3、将商品偏好分为两大类，已存在用户偏好记录和尚不存在
-         * 4、对已存在的用户偏好记录，执行批量更新操作
-         * 5、对不存在的用户偏好记录，执行批量插入操作
-         *
-         * 注：该方式所需资源较多，谨慎使用
+         * 获取所有用户行为
          */
-        // 获取所有用户行为
         PageDto behaviorDto = behaviorService.listByUserAndStartTime(userId, startTime);
         if (behaviorDto == null || behaviorDto.getTotalCount() <= 0) {
             // 为获取到数据
@@ -76,8 +71,10 @@ public class UserGoodsPreferenceActuatorImpl implements UserGoodsPreferenceActua
             throw new AsyncBusinessException(ErrorEnum.BEHAVIOR_DATA_NOT_EXISTS);
         }
         /**
-         * TODO 计算用户对于每个商品的偏好
+         * 计算用户对于每个商品的偏好
          */
+        List<UserPreference> preferenceList = preferenceCalculation.calculation(behaviorDto.getData());
+        
 
     }
 

@@ -41,7 +41,15 @@ public class UserGoodsPreferenceCalculationImpl implements UserGoodsPreferenceCa
     }
 
     @Override
-    public UserPreference calculation(List<UserBehavior> behaviorList) {
+    public List<UserPreference> calculation(List<UserBehavior> behaviorList) {
+        /**
+         * TODO 计算用户偏好。数据：同一用户不同商品的行为信息
+         */
+        return null;
+    }
+
+    @Override
+    public UserPreference calculationOne(List<UserBehavior> behaviorList) {
         if (behaviorList == null || behaviorList.size() <= 0) {
             return null;
         }

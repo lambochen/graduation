@@ -29,7 +29,7 @@ public class UserPreferenceServiceImpl implements UserPreferenceService {
 
     @Override
     public int insert(UserPreference userPreference) {
-        if (userPreference == null){
+        if (userPreference == null) {
             log.error("UserPreferenceService#insert: param is null.");
             throw new BusinessException(ErrorEnum.PARAM_IS_NULL);
         }
@@ -48,7 +48,18 @@ public class UserPreferenceServiceImpl implements UserPreferenceService {
 
     @Override
     public UserPreference getByUserAndGoods(long userId, long goodsId) {
-        return null;
+        return preferenceDao.getByUserAndGoods(userId, goodsId);
+    }
+
+    @Override
+    public int countByUserAndGoods(long userId, long goodsId) {
+        return preferenceDao.countByUserAndGoods(userId, goodsId);
+    }
+
+    @Override
+    public boolean isAliveUserPreference(long userId, long goodsId) {
+        int preferenceCount = countByUserAndGoods(userId, goodsId);
+        return preferenceCount == 1 ? true : false;
     }
 
     @Override
@@ -60,20 +71,20 @@ public class UserPreferenceServiceImpl implements UserPreferenceService {
 
     @Override
     public int update(UserPreference userPreference) {
-        if (userPreference == null){
+        if (userPreference == null) {
             log.error("UserPreferenceService#update: param is null.");
             throw new BusinessException(ErrorEnum.PARAM_IS_NULL);
         }
         int result = 0;
         // 校验数据库是否存在该记录
-        int count = preferenceDao.countByUserAndGoods(userPreference.getUserId(),userPreference.getGoodsId());
-        if (count == NumericConstant.ONE){
+        int count = preferenceDao.countByUserAndGoods(userPreference.getUserId(), userPreference.getGoodsId());
+        if (count == NumericConstant.ONE) {
             // 更新记录
             result = preferenceDao.update(userPreference);
             /**
              * TODO 校验结果
              */
-        } else if (count == NumericConstant.ZERO){
+        } else if (count == NumericConstant.ZERO) {
             // 插入数据
             result = insert(userPreference);
             /**

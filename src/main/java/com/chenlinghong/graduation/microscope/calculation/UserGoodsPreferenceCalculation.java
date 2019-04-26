@@ -42,12 +42,20 @@ public interface UserGoodsPreferenceCalculation extends PreferenceCalculation {
     UserPreference calculation(long userId, long goodsId, int behavior);
 
     /**
+     * 计算用户偏好列表
+     *
+     * @param behaviorList 行为列表，存在不同商品，要求是同一个用户的
+     * @return
+     */
+    List<UserPreference> calculation(List<UserBehavior> behaviorList);
+
+    /**
      * 计算用户偏好
      *
      * @param behaviorList 用户行为列表，要求为同一个用户对某一个商品的行为列表
      * @return
      */
-    UserPreference calculation(List<UserBehavior> behaviorList);
+    UserPreference calculationOne(List<UserBehavior> behaviorList);
 
     /**
      * 通过用户行为列表计算具体偏好值
@@ -56,7 +64,6 @@ public interface UserGoodsPreferenceCalculation extends PreferenceCalculation {
      * @return
      */
     int calculationByBehavior(List<Integer> behaviorList);
-
 
 
 }
