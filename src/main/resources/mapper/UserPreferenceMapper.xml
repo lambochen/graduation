@@ -77,6 +77,14 @@
         where `deleted` = '0'
     </select>
 
+    <select id="countByUserAndGoods" resultType="long">
+        SELECT
+        count(`id`)
+        FROM
+        user_goods_preference
+        where `deleted` = '0' and user_id = #{userId} and goods_id = #{goodsId}
+    </select>
+
     <update id="update" parameterType="com.chenlinghong.graduation.repository.domain.UserPreference">
         update user_goods_preference
         set `user_id`       = #{caseNumber},
