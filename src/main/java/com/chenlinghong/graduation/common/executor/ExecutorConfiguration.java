@@ -48,7 +48,7 @@ public class ExecutorConfiguration {
     /**
      * 线程池中线程的名称前缀 显微镜
      */
-    @Value("${thread_name_prefix_microscope}")
+    @Value("${executor.thread_name_prefix_microscope}")
     private String threadNamePrefixMicroscope;
 
     /**
