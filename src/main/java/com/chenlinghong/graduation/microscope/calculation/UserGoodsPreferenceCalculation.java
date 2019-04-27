@@ -42,12 +42,29 @@ public interface UserGoodsPreferenceCalculation extends PreferenceCalculation {
     UserPreference calculation(long userId, long goodsId, int behavior);
 
     /**
-     * 计算用户偏好列表
+     * 计算用户偏好列表, 数据：同一用户不同商品的行为信息
      *
      * @param behaviorList 行为列表，存在不同商品，要求是同一个用户的
      * @return
      */
+    /**
+     * 1、检查列表中是否存在非法数据：其它用户数据。若存在则直接返回空列表
+     * 2、按照商品ID对列表进行排序
+     * 3、抽离出每一个商品的用户行为信息，计算用户偏好
+     * 4、组装列表，返回结果
+     */
     List<UserPreference> calculation(List<UserBehavior> behaviorList);
+
+
+    /**
+     * 计算用户偏好,
+     * 数据要求：单个用户的行为数据、行为数据经过goodsId排序
+     *
+     * @param behaviorList
+     * @return
+     */
+    List<UserPreference> calculationByOneUserAndSortedBehavior(List<UserBehavior> behaviorList);
+
 
     /**
      * 计算用户偏好

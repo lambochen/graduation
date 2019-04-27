@@ -19,14 +19,14 @@ public interface UserGoodsPreferenceActuator extends PreferenceActuator {
      *
      * @param userPreference
      */
-    void refresh(UserPreference userPreference);
+    boolean refresh(UserPreference userPreference);
 
     /**
      * 刷新用户偏好，所有商品均刷新，采用默认时间窗口
      *
      * @param userId
      */
-    void refresh(long userId);
+    boolean refresh(long userId);
 
     /**
      * 刷新用户偏好，所有商品均刷新
@@ -42,7 +42,7 @@ public interface UserGoodsPreferenceActuator extends PreferenceActuator {
      * @param userId
      * @param startTime
      */
-    void refresh(long userId, Date startTime);
+    boolean refresh(long userId, Date startTime);
 
     /**
      * 刷新用户偏好，采用默认时间窗口
@@ -50,7 +50,7 @@ public interface UserGoodsPreferenceActuator extends PreferenceActuator {
      * @param userId  用户ID
      * @param goodsId 商品ID
      */
-    void refresh(long userId, long goodsId);
+    boolean refresh(long userId, long goodsId);
 
     /**
      * 刷新用户偏好，抓取数据startTime
@@ -59,7 +59,7 @@ public interface UserGoodsPreferenceActuator extends PreferenceActuator {
      * @param goodsId   商户ID
      * @param startTime 开始时间
      */
-    void refresh(long userId, long goodsId, Date startTime);
+    boolean refresh(long userId, long goodsId, Date startTime);
 
     /**
      * 刷新用户偏好
@@ -68,14 +68,14 @@ public interface UserGoodsPreferenceActuator extends PreferenceActuator {
      * @param goodsId
      * @param preference 用户偏好新值
      */
-    void refresh(long userId, long goodsId, int preference);
+    boolean refresh(long userId, long goodsId, int preference);
 
     /**
      * 刷新用户偏好，以追加方式
      *
      * @param userBehavior 用户行为
      */
-    void append(UserBehavior userBehavior);
+    boolean append(UserBehavior userBehavior);
 
     /**
      * 刷新用户偏好，以追加方式
@@ -84,7 +84,7 @@ public interface UserGoodsPreferenceActuator extends PreferenceActuator {
      * @param goodsId
      * @param behavior 用户行为
      */
-    void append(long userId, long goodsId, int behavior);
+    boolean append(long userId, long goodsId, int behavior);
 
     /**
      * 刷新用户偏好，以追加方式
@@ -93,7 +93,7 @@ public interface UserGoodsPreferenceActuator extends PreferenceActuator {
      * @param goodsId
      * @param behaviorEnum 用户行为枚举
      */
-    void append(long userId, long goodsId, UserBehaviorEnum behaviorEnum);
+    boolean append(long userId, long goodsId, UserBehaviorEnum behaviorEnum);
 
     /**
      * 刷新用户偏好，以追加方式
@@ -102,6 +102,6 @@ public interface UserGoodsPreferenceActuator extends PreferenceActuator {
      * @param goodsId
      * @param preference 追加的偏好值
      */
-    void appendByPreference(long usrId, long goodsId, int preference);
+    boolean appendByPreference(long usrId, long goodsId, int preference);
 
 }

@@ -41,26 +41,31 @@ public class UserGoodsPreferenceActuatorImpl implements UserGoodsPreferenceActua
     private UserGoodsPreferenceCalculation preferenceCalculation;
 
     @Override
-    public void refresh(UserPreference userPreference) {
+    public boolean refresh(UserPreference userPreference) {
         if (userPreference == null) {
             log.error("UserGoodsPreferenceActuator#refresh: param is null.");
             throw new AsyncBusinessException(ErrorEnum.PARAM_IS_NULL);
         }
         int result = preferenceService.update(userPreference);
+
+        if (result == NumericConstant.ONE){
+            return true;
+        }
         /**
-         * TODO 校验结果
+         * TODO 处理异常
          */
+        return false;
     }
 
     @Override
-    public void refresh(long userId) {
+    public boolean refresh(long userId) {
         Date startTime = getDefaultStartTime();
-        refresh(userId, startTime);
+        return refresh(userId, startTime);
     }
 
 
     @Override
-    public void refresh(long userId, Date startTime) {
+    public boolean refresh(long userId, Date startTime) {
         /**
          * 1、获取所有用户行为
          */
@@ -104,17 +109,21 @@ public class UserGoodsPreferenceActuatorImpl implements UserGoodsPreferenceActua
              * TODO 校验结果
              */
         }
+        /**
+         * TODO 处理结果
+         */
+        return true;
     }
 
 
     @Override
-    public void refresh(long userId, long goodsId) {
+    public boolean refresh(long userId, long goodsId) {
         Date startTime = getDefaultStartTime();
-        refresh(userId, goodsId, startTime);
+        return refresh(userId, goodsId, startTime);
     }
 
     @Override
-    public void refresh(long userId, long goodsId, Date startTime) {
+    public boolean refresh(long userId, long goodsId, Date startTime) {
         PageDto behaviorDto = behaviorService.listByUserAndGoodsAndStartTime(userId, goodsId, startTime);
         if (behaviorDto.getTotalCount() <= 0) {
             // 为获取到数据
@@ -127,43 +136,43 @@ public class UserGoodsPreferenceActuatorImpl implements UserGoodsPreferenceActua
         for (UserBehavior behavior : behaviorList) {
             preference += preferenceCalculation.calculation(behavior.getBehavior());
         }
-        refresh(userId, goodsId, preference);
+        return refresh(userId, goodsId, preference);
     }
 
     @Override
-    public void refresh(long userId, long goodsId, int preference) {
+    public boolean refresh(long userId, long goodsId, int preference) {
         UserPreference userPreference = new UserPreference(userId, goodsId, preference);
-        refresh(userPreference);
+        return refresh(userPreference);
     }
 
     @Override
-    public void append(UserBehavior userBehavior) {
+    public boolean append(UserBehavior userBehavior) {
         if (userBehavior == null) {
             log.error("UserGoodsPreferenceActuator#append: param is null.");
             throw new AsyncBusinessException(ErrorEnum.PARAM_IS_NULL);
         }
         int preference = preferenceCalculation.calculation(userBehavior.getBehavior());
-        appendByPreference(userBehavior.getUserId().longValue(), userBehavior.getGoodsId().longValue(), preference);
+        return appendByPreference(userBehavior.getUserId().longValue(), userBehavior.getGoodsId().longValue(), preference);
     }
 
     @Override
-    public void append(long userId, long goodsId, int behavior) {
+    public boolean append(long userId, long goodsId, int behavior) {
         UserBehaviorEnum behaviorEnum = UserBehaviorUtil.getByBehavior(behavior);
-        append(userId, goodsId, behaviorEnum);
+        return append(userId, goodsId, behaviorEnum);
     }
 
     @Override
-    public void append(long userId, long goodsId, UserBehaviorEnum behaviorEnum) {
+    public boolean append(long userId, long goodsId, UserBehaviorEnum behaviorEnum) {
         if (userId <= 0 || goodsId <= 0 || behaviorEnum == null) {
             log.error("UserGoodsPreferenceActuator#append: param is illegal. userId={}, goodsId={}, " +
                     "behaviorEnum={}. ", userId, goodsId, behaviorEnum);
             throw new AsyncBusinessException(ErrorEnum.PARAM_ILLEGAL);
         }
-        appendByPreference(userId, goodsId, behaviorEnum.getFactor());
+        return appendByPreference(userId, goodsId, behaviorEnum.getFactor());
     }
 
     @Override
-    public void appendByPreference(long usrId, long goodsId, int preference) {
+    public boolean appendByPreference(long usrId, long goodsId, int preference) {
         if (usrId <= 0 || goodsId <= 0 || preference < 0) {
             log.error("UserGoodsPreferenceActuator#appendByPreference: param is illegal. userId={}, goodsId={}," +
                     " preference={}. ", usrId, goodsId, preference);
@@ -177,7 +186,7 @@ public class UserGoodsPreferenceActuatorImpl implements UserGoodsPreferenceActua
         }
         preference += userPreference.getPreference() == null ? 0 : userPreference.getPreference();
         userPreference.setPreference(preference);
-        refresh(userPreference);
+        return refresh(userPreference);
     }
 
 

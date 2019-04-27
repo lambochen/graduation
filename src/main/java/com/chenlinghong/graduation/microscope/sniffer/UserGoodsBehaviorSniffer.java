@@ -23,14 +23,14 @@ public interface UserGoodsBehaviorSniffer extends BehaviorSniffer {
      *
      * @param userBehavior
      */
-    void common(UserBehavior userBehavior);
+    boolean common(UserBehavior userBehavior);
 
     /**
      * 添加多个用户行为记录
      *
      * @param userBehaviorList
      */
-    void common(List<UserBehavior> userBehaviorList);
+    boolean common(List<UserBehavior> userBehaviorList);
 
     /**
      * 点击行为
@@ -38,14 +38,14 @@ public interface UserGoodsBehaviorSniffer extends BehaviorSniffer {
      * @param goodsId
      * @param request
      */
-    void click(long goodsId, HttpServletRequest request);
+    boolean click(long goodsId, HttpServletRequest request);
 
     /**
      * 点击行为
      *
      * @param behavior
      */
-    void click(UserBehavior behavior);
+    boolean click(UserBehavior behavior);
 
     /**
      * 添加购物车
@@ -53,21 +53,21 @@ public interface UserGoodsBehaviorSniffer extends BehaviorSniffer {
      * @param goodsId
      * @param request
      */
-    void addToShoppingCart(long goodsId, HttpServletRequest request);
+    boolean addToShoppingCart(long goodsId, HttpServletRequest request);
 
     /**
      * 添加购物车
      *
      * @param behavior
      */
-    void addToShoppingCart(UserBehavior behavior);
+    boolean addToShoppingCart(UserBehavior behavior);
 
     /**
      * 购买
      *
      * @param goodsOrder
      */
-    void purchase(GoodsOrder goodsOrder);
+    boolean purchase(GoodsOrder goodsOrder);
 
     /**
      * 购买
@@ -76,21 +76,21 @@ public interface UserGoodsBehaviorSniffer extends BehaviorSniffer {
      * @param goodsId
      * @param frequency 购买数量
      */
-    void purchase(long userId, long goodsId, int frequency);
+    boolean purchase(long userId, long goodsId, int frequency);
 
     /**
      * 购买
      *
      * @param behavior
      */
-    void purchase(UserBehavior behavior);
+    boolean purchase(UserBehavior behavior);
 
     /**
      * 评论
      *
      * @param goodsComment 商品评论对象
      */
-    void comment(GoodsComment goodsComment);
+    boolean comment(GoodsComment goodsComment);
 
     /**
      * 评论
@@ -99,7 +99,7 @@ public interface UserGoodsBehaviorSniffer extends BehaviorSniffer {
      * @param goodsId
      * @param score   评分
      */
-    void comment(long userId, long goodsId, int score);
+    boolean comment(long userId, long goodsId, int score);
 
     /**
      * 评论
@@ -108,34 +108,34 @@ public interface UserGoodsBehaviorSniffer extends BehaviorSniffer {
      * @param goodsId
      * @param scoreEnum 评分枚举
      */
-    void comment(long userId, long goodsId, GoodsCommentScoreEnum scoreEnum);
+    boolean comment(long userId, long goodsId, GoodsCommentScoreEnum scoreEnum);
 
     /**
      * 评论
      *
      * @param behavior
      */
-    void comment(UserBehavior behavior);
+    boolean comment(UserBehavior behavior);
 
     /**
      * 搜索
      *
      * @param goodsPageDto
      */
-    void search(PageDto<Goods> goodsPageDto, HttpServletRequest request);
+    boolean search(PageDto<Goods> goodsPageDto, HttpServletRequest request);
 
     /**
      * 搜索
      *
      * @param goodsList
      */
-    void search(List<Goods> goodsList, HttpServletRequest request);
+    boolean search(List<Goods> goodsList, HttpServletRequest request);
 
     /**
      * 搜索
      *
      * @param userBehaviorList
      */
-    void search(List<UserBehavior> userBehaviorList);
+    boolean search(List<UserBehavior> userBehaviorList);
 
 }

@@ -1,6 +1,7 @@
 package com.chenlinghong.graduation.microscope.sniffer.impl;
 
 import com.chenlinghong.graduation.common.PageDto;
+import com.chenlinghong.graduation.constant.NumericConstant;
 import com.chenlinghong.graduation.enums.ErrorEnum;
 import com.chenlinghong.graduation.enums.GoodsCommentScoreEnum;
 import com.chenlinghong.graduation.enums.UserBehaviorEnum;
@@ -19,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
+import java.awt.geom.RectangularShape;
 import java.util.List;
 
 /**
@@ -38,7 +40,7 @@ public class UserGoodsBehaviorSnifferImpl implements UserGoodsBehaviorSniffer {
     private UserBehaviorService userBehaviorService;
 
     @Override
-    public void common(UserBehavior userBehavior) {
+    public boolean common(UserBehavior userBehavior) {
         if (userBehavior == null) {
             log.error("UserGoodsSniffer#common: param is null.");
             throw new AsyncBusinessException(ErrorEnum.PARAM_IS_NULL);
@@ -47,10 +49,17 @@ public class UserGoodsBehaviorSnifferImpl implements UserGoodsBehaviorSniffer {
         /**
          * TODO 处理结果
          */
+        if (result != NumericConstant.ONE){
+            /**
+             * TODO 处理异常
+             */
+            return false;
+        }
+        return true;
     }
 
     @Override
-    public void common(List<UserBehavior> userBehaviorList) {
+    public boolean common(List<UserBehavior> userBehaviorList) {
         if (userBehaviorList == null || userBehaviorList.size() <= 0) {
             log.error("UserGoodsSniffer#common: param is null. userBehaviorList={}. ", userBehaviorList);
             throw new AsyncBusinessException(ErrorEnum.PARAM_IS_NULL);
@@ -59,6 +68,13 @@ public class UserGoodsBehaviorSnifferImpl implements UserGoodsBehaviorSniffer {
         /**
          * TODO 处理结果
          */
+        if (result != userBehaviorList.size()){
+            /**
+             * TODO 处理异常
+             */
+            return false;
+        }
+        return true;
     }
 
     /**
@@ -68,7 +84,7 @@ public class UserGoodsBehaviorSnifferImpl implements UserGoodsBehaviorSniffer {
      * @param request
      */
     @Override
-    public void click(long goodsId, HttpServletRequest request) {
+    public boolean click(long goodsId, HttpServletRequest request) {
         if (goodsId <= 0) {
             log.error("UserGoodsSniffer#click: goodsId is illegal. goodsId={}, requst={}. ", goodsId, request);
             throw new AsyncBusinessException(ErrorEnum.PARAM_ILLEGAL);
@@ -87,11 +103,18 @@ public class UserGoodsBehaviorSnifferImpl implements UserGoodsBehaviorSniffer {
         /**
          * TODO 后期对返回结果处理
          */
+        if (insertResult != NumericConstant.ONE){
+            /**
+             * TODO 处理异常
+             */
+            return false;
+        }
+        return true;
     }
 
     @Override
-    public void click(UserBehavior behavior) {
-        common(behavior);
+    public boolean click(UserBehavior behavior) {
+        return common(behavior);
     }
 
 
@@ -102,7 +125,7 @@ public class UserGoodsBehaviorSnifferImpl implements UserGoodsBehaviorSniffer {
      * @param request
      */
     @Override
-    public void addToShoppingCart(long goodsId, HttpServletRequest request) {
+    public boolean addToShoppingCart(long goodsId, HttpServletRequest request) {
         if (goodsId <= 0) {
             log.error("UserGoodsSniffer#addToShoppingCart: goodsId is illegal. goodsId={}, requst={}. ", goodsId, request);
             throw new AsyncBusinessException(ErrorEnum.PARAM_ILLEGAL);
@@ -121,10 +144,11 @@ public class UserGoodsBehaviorSnifferImpl implements UserGoodsBehaviorSniffer {
         /**
          * TODO 后期对返回结果处理
          */
+        
     }
 
     @Override
-    public void addToShoppingCart(UserBehavior behavior) {
+    public boolean addToShoppingCart(UserBehavior behavior) {
         common(behavior);
     }
 
@@ -134,7 +158,7 @@ public class UserGoodsBehaviorSnifferImpl implements UserGoodsBehaviorSniffer {
      * @param goodsOrder
      */
     @Override
-    public void purchase(GoodsOrder goodsOrder) {
+    public boolean purchase(GoodsOrder goodsOrder) {
         purchase(goodsOrder.getUserId(), goodsOrder.getGoodsId(), goodsOrder.getNumber());
     }
 
@@ -145,7 +169,7 @@ public class UserGoodsBehaviorSnifferImpl implements UserGoodsBehaviorSniffer {
      * @param goodsId
      */
     @Override
-    public void purchase(long userId, long goodsId, int frequency) {
+    public boolean purchase(long userId, long goodsId, int frequency) {
         if (userId <= 0 || goodsId <= 0 || frequency <= 0) {
             // 参数非法
             log.error("UserGoodsSniffer#purchase: param is illegal. userId={}, goodsId={}, frequency={}. ",
@@ -163,7 +187,7 @@ public class UserGoodsBehaviorSnifferImpl implements UserGoodsBehaviorSniffer {
     }
 
     @Override
-    public void purchase(UserBehavior behavior) {
+    public boolean purchase(UserBehavior behavior) {
         common(behavior);
     }
 
@@ -173,7 +197,7 @@ public class UserGoodsBehaviorSnifferImpl implements UserGoodsBehaviorSniffer {
      * @param goodsComment
      */
     @Override
-    public void comment(GoodsComment goodsComment) {
+    public boolean comment(GoodsComment goodsComment) {
         if (goodsComment == null) {
             log.error("UserGoodsSniffer#comment: param is null.");
             throw new AsyncBusinessException(ErrorEnum.PARAM_IS_NULL);
@@ -182,7 +206,7 @@ public class UserGoodsBehaviorSnifferImpl implements UserGoodsBehaviorSniffer {
     }
 
     @Override
-    public void comment(long userId, long goodsId, int score) {
+    public boolean comment(long userId, long goodsId, int score) {
         if (userId <= 0 || goodsId <= 0 || score <= 0) {
             log.error("UserGoodsSniffer#comment: param is illegal. userId={}, goodsId={}, score={}. ",
                     userId, goodsId, score);
@@ -205,18 +229,18 @@ public class UserGoodsBehaviorSnifferImpl implements UserGoodsBehaviorSniffer {
     }
 
     @Override
-    public void comment(long userId, long goodsId, GoodsCommentScoreEnum scoreEnum) {
+    public boolean comment(long userId, long goodsId, GoodsCommentScoreEnum scoreEnum) {
         comment(userId, goodsId, scoreEnum.getScore());
     }
 
     @Override
-    public void comment(UserBehavior behavior) {
+    public boolean comment(UserBehavior behavior) {
         common(behavior);
     }
 
 
     @Override
-    public void search(PageDto<Goods> goodsPageDto, HttpServletRequest request) {
+    public boolean search(PageDto<Goods> goodsPageDto, HttpServletRequest request) {
         if (goodsPageDto == null) {
             log.error("UserGoodsSniffer#search: param is null, request={}.", request);
             throw new AsyncBusinessException(ErrorEnum.PARAM_IS_NULL);
@@ -225,7 +249,7 @@ public class UserGoodsBehaviorSnifferImpl implements UserGoodsBehaviorSniffer {
     }
 
     @Override
-    public void search(List<Goods> goodsList, HttpServletRequest request) {
+    public boolean search(List<Goods> goodsList, HttpServletRequest request) {
         if (goodsList == null || goodsList.size() <= 0) {
             log.error("UserGoodsSniffer#search: param is null. goodsList={}, request={}. ", goodsList, request);
             throw new AsyncBusinessException(ErrorEnum.PARAM_IS_NULL);
@@ -245,7 +269,7 @@ public class UserGoodsBehaviorSnifferImpl implements UserGoodsBehaviorSniffer {
     }
 
     @Override
-    public void search(List<UserBehavior> userBehaviorList) {
+    public boolean search(List<UserBehavior> userBehaviorList) {
         if (userBehaviorList == null || userBehaviorList.size() <= 0) {
             log.error("UserGoodsSniffer#search: param is null. userBehaviorList={}. ", userBehaviorList);
             throw new AsyncBusinessException(ErrorEnum.PARAM_IS_NULL);
