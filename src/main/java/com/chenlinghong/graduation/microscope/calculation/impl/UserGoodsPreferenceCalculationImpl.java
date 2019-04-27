@@ -160,7 +160,7 @@ public class UserGoodsPreferenceCalculationImpl implements UserGoodsPreferenceCa
             @Override
             public int compare(UserBehavior o1, UserBehavior o2) {
                 Collator collator = Collator.getInstance(Locale.CHINA);
-                return collator.compare(o1.getGoodsId(), o2.getBehavior());
+                return collator.compare(o1.getGoodsId().toString(), o2.getGoodsId().toString());
             }
         });
         return behaviorList;
