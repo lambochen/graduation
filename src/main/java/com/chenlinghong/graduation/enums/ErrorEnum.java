@@ -66,6 +66,12 @@ public enum ErrorEnum {
      * 7XXX 用户行为相关
      */
     ERROR_TO_INSERT_USER_BEHAVIOR(7000, "新增用户行为失败"),
+    BEHAVIOR_DATA_NOT_EXISTS(7001, "用户行为数据不存在"),
+
+    /**
+     * 8XXX 用户偏好相关
+     */
+    USER_PREFERENCE_NOT_EXISTS(8000, "用户偏好信息不存在"),
 
 
 

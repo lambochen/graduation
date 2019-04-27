@@ -225,7 +225,8 @@ create table if not exists `user_goods_preference` (
     primary key (`id`),
     key `idx_user` (`user_id`),
     key `idx_goods` (`goods_id`),
-    key `idx_user_goods` (`user_id`, `goods_id`)
+    key `idx_user_goods` (`user_id`, `goods_id`),
+    unique key `uk_user_goods` (`user_id`, `goods_id`)
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 DEFAULT CHARSET = utf8mb4 COMMENT = '用户-物品偏好表';
 
 

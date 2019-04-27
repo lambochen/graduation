@@ -5,7 +5,7 @@ import com.chenlinghong.graduation.common.ResultUtil;
 import com.chenlinghong.graduation.common.ResultVo;
 import com.chenlinghong.graduation.enums.ErrorEnum;
 import com.chenlinghong.graduation.exception.BusinessException;
-import com.chenlinghong.graduation.microscope.sniffer.UserGoodsSniffer;
+import com.chenlinghong.graduation.microscope.sniffer.UserGoodsBehaviorSniffer;
 import com.chenlinghong.graduation.service.GoodsCatalogService;
 import com.chenlinghong.graduation.service.GoodsService;
 import lombok.extern.slf4j.Slf4j;
@@ -37,7 +37,7 @@ public class GoodsController {
     private GoodsService goodsService;
 
     @Autowired
-    private UserGoodsSniffer userGoodsSniffer;
+    private UserGoodsBehaviorSniffer userGoodsBehaviorSniffer;
 
     /**
      * 获取目录（获取一级目录）
@@ -95,7 +95,7 @@ public class GoodsController {
         /**
          * 采集用户点击记录，异步
          */
-        userGoodsSniffer.click(id, request);
+        userGoodsBehaviorSniffer.click(id, request);
 
         return ResultUtil.success(goodsService.getById(id));
     }
@@ -168,7 +168,7 @@ public class GoodsController {
         /**
          * 采集用户搜索记录
          */
-        userGoodsSniffer.search(result, request);
+        userGoodsBehaviorSniffer.search(result, request);
         return ResultUtil.success(result);
     }
 

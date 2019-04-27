@@ -1,13 +1,13 @@
-package com.chenlinghong.graduation.microscope.sniffer;
+package com.chenlinghong.graduation.microscope.calculation;
 
 import com.chenlinghong.graduation.constant.AsyncNameConstant;
 import org.springframework.scheduling.annotation.Async;
 
 /**
- * @Description 嗅探器
+ * @Description 计算
  * @Author chenlinghong
- * @Date 2019/4/25 22:48
+ * @Date 2019/4/26 13:27
  * @Version V1.0
  */
-public interface Sniffer {
+public interface Calculation {
 }

@@ -3,6 +3,7 @@ package com.chenlinghong.graduation.repository.dao;
 import com.chenlinghong.graduation.repository.domain.UserBehavior;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -32,4 +33,25 @@ public interface UserBehaviorDao extends IBaseDao<UserBehavior> {
      * @return
      */
     int batchInsertByUserBehavior(@Param("behaviorList") List<UserBehavior> behaviorList);
+
+    /**
+     * 通过用户、商品、开始时间获取
+     *
+     * @param userId
+     * @param goodsId
+     * @param startTime
+     * @return
+     */
+    List<UserBehavior> listByUserAndGoodsAndStartTime(@Param("userId") long userId, @Param("goodsId") long goodsId,
+                                                      @Param("startTime") Date startTime);
+
+    /**
+     * 通过用户、开始时间获取用户所有行为记录
+     *
+     * @param userId
+     * @param startTime
+     * @return
+     */
+    List<UserBehavior> listByUserAndStartTime(@Param("userId") long userId, @Param("startTime") Date startTime);
+
 }

@@ -5,6 +5,7 @@ import com.chenlinghong.graduation.enums.ErrorEnum;
 import com.chenlinghong.graduation.enums.UserBehaviorEnum;
 import com.chenlinghong.graduation.exception.AsyncBusinessException;
 import com.chenlinghong.graduation.exception.BusinessException;
+import com.chenlinghong.graduation.microscope.actuator.UserGoodsPreferenceActuator;
 import com.chenlinghong.graduation.microscope.sniffer.util.UserBehaviorUtil;
 import com.chenlinghong.graduation.repository.dao.UserBehaviorDao;
 import com.chenlinghong.graduation.repository.domain.UserBehavior;
@@ -13,8 +14,8 @@ import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -23,15 +24,17 @@ import java.util.List;
  * @Date 2019/4/25 18:25
  * @Version V1.0
  */
-@Slf4j(topic = "me")
+@Slf4j
 @Service
 public class UserBehaviorServiceImpl implements UserBehaviorService {
 
     @Autowired
     private UserBehaviorDao behaviorDao;
 
+    @Autowired
+    private UserGoodsPreferenceActuator userGoodsPreferenceActuator;
+
     @Override
-    @Transactional
     public int insert(UserBehavior userBehavior) {
         if (userBehavior == null) {
             log.error("UserBehaviorService#insert: param is null.");
@@ -53,12 +56,14 @@ public class UserBehaviorServiceImpl implements UserBehaviorService {
             log.error("UserBehaviorService#insert: insert error. userBehavior={}, result={}. ", userBehavior, result);
             throw new AsyncBusinessException(ErrorEnum.ERROR_TO_INSERT_USER_BEHAVIOR);
         }
-        // 插入成功
+        /**
+         * 插入成功, 刷新用户偏好
+         */
+        userGoodsPreferenceActuator.append(userBehavior);
         return result;
     }
 
     @Override
-    @Transactional
     public int insert(List<UserBehavior> behaviorList) {
         if (behaviorList == null || behaviorList.size() <= 0) {
             log.error("UserBehaviorService#insert: param is null. behaviorList={}. ", behaviorList);
@@ -85,6 +90,10 @@ public class UserBehaviorServiceImpl implements UserBehaviorService {
                     behaviorList, result);
             throw new AsyncBusinessException(ErrorEnum.ERROR_TO_INSERT_USER_BEHAVIOR);
         }
+        /**
+         * 写入数据成功，刷新用户偏好
+         */
+        userGoodsPreferenceActuator.refresh(behaviorList.get(0).getUserId());
         return result;
     }
 
@@ -106,7 +115,6 @@ public class UserBehaviorServiceImpl implements UserBehaviorService {
     }
 
     @Override
-    @Transactional
     public int insert(long goodsId, long userId, int behavior, int frequency) {
         if (goodsId <= 0 || userId <= 0 || frequency <= 0) {
             log.error("UserBehaviorService#insert: param is illegal. goodsId={}, userId={}, behavior={}, " +
@@ -129,7 +137,10 @@ public class UserBehaviorServiceImpl implements UserBehaviorService {
                             "frequencyList={}. result={}", goodsId, userId, behavior, frequencyList, result);
                     throw new AsyncBusinessException(ErrorEnum.ERROR_TO_INSERT_USER_BEHAVIOR);
                 }
-                // 全部写入成功
+                /**
+                 * 全部写入成功, 刷新用户偏好
+                 */
+                userGoodsPreferenceActuator.refresh(userId, goodsId);
                 return result;
             }
         }
@@ -141,13 +152,20 @@ public class UserBehaviorServiceImpl implements UserBehaviorService {
         return insert(goodsId, userId, behaviorEnum.getCode(), frequency);
     }
 
+
     @Override
     public int deleteById(long id) {
         if (id <= 0) {
             log.error("UserBehaviorService#deleteById: param is illegal. id={}. ", id);
             throw new AsyncBusinessException(ErrorEnum.PARAM_ILLEGAL);
         }
-        return behaviorDao.deleteById(id);
+        int result = behaviorDao.deleteById(id);
+        if (result == 1) {
+            /**
+             * TODO 刷新用户偏好
+             */
+        }
+        return result;
     }
 
     @Override
@@ -162,6 +180,18 @@ public class UserBehaviorServiceImpl implements UserBehaviorService {
     @Override
     public PageDto<UserBehavior> listAll(long pageNo, long pageSize) {
         return null;
+    }
+
+    @Override
+    public PageDto<UserBehavior> listByUserAndGoodsAndStartTime(long userId, long goodsId, Date startTime) {
+        List<UserBehavior> behaviorList = behaviorDao.listByUserAndGoodsAndStartTime(userId, goodsId, startTime);
+        return new PageDto<>(behaviorList);
+    }
+
+    @Override
+    public PageDto<UserBehavior> listByUserAndStartTime(long userId, Date startTime) {
+        List<UserBehavior> behaviorList = behaviorDao.listByUserAndStartTime(userId, startTime);
+        return new PageDto<>(behaviorList);
     }
 
     @Override

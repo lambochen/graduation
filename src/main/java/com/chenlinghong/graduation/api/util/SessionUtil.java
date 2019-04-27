@@ -1,6 +1,7 @@
 package com.chenlinghong.graduation.api.util;
 
 import com.chenlinghong.graduation.api.vo.UserVo;
+import com.chenlinghong.graduation.constant.AsyncNameConstant;
 import com.chenlinghong.graduation.constant.SessionConstant;
 import com.chenlinghong.graduation.enums.ErrorEnum;
 import com.chenlinghong.graduation.exception.BusinessException;
@@ -36,7 +37,7 @@ public class SessionUtil {
      * @param telephone
      * @param request
      */
-    @Async(value = "asyncSessionExecutor")
+    @Async(value = AsyncNameConstant.SESSION)
     public void putTelephone(String telephone, HttpServletRequest request) {
         HttpSession session = request.getSession();
         session.setAttribute(SessionConstant.TELEPHONE, telephone);

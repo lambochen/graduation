@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -42,6 +44,16 @@ public class UserBehaviorDaoTest {
         behaviorList.add(behavior2);
         int result = behaviorDao.batchInsertByUserBehavior(behaviorList);
         Assert.assertEquals(2, result);
+    }
+
+    @Test
+    public void listByUserAndGoodsAndStartTime() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date());
+        calendar.add(Calendar.MONTH, -1);
+        List<UserBehavior> userBehaviorList =
+                behaviorDao.listByUserAndGoodsAndStartTime(3, 2, calendar.getTime());
+        System.out.println(userBehaviorList);
     }
 
 }
