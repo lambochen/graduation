@@ -37,6 +37,15 @@
         values(#{userId}, #{goodsCatalogOneId}, #{goodsCatalogTwoId})
     </insert>
 
+    <insert id="insertBatch">
+        INSERT into
+        user_tag(<include refid="Base_Column_List"></include>)
+        values
+        <foreach collection="userTagList" item="item" separator=",">
+            (#{item.userId}, #{item.goodsCatalogOneId}, #{item.goodsCatalogTwoId})
+        </foreach>
+    </insert>
+
     <update id="deleteById" parameterType="long">
         update total
         set deleted = '1'
@@ -67,6 +76,15 @@
                 limit 0,10
             </otherwise>
         </choose>
+    </select>
+
+    <select id="listByUser" resultMap="BaseResultMap">
+        SELECT
+        <include refid="column_list"/>
+        FROM
+        user_tag
+        where `deleted` = '0' and `user_id` = #{userId}
+        order by id desc
     </select>
 
     <select id="count" resultType="long">
