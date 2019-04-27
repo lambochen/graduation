@@ -46,9 +46,17 @@ public class UserGoodsPreferenceActuatorImpl implements UserGoodsPreferenceActua
             log.error("UserGoodsPreferenceActuator#refresh: param is null.");
             throw new AsyncBusinessException(ErrorEnum.PARAM_IS_NULL);
         }
-        int result = preferenceService.update(userPreference);
+        int result = 0;
+        if (preferenceService.isNotAliveUserPreference(userPreference)) {
+            /**
+             * 新增偏好信息
+             */
+            result = preferenceService.insert(userPreference);
+        } else {
+            result = preferenceService.update(userPreference);
+        }
 
-        if (result == NumericConstant.ONE){
+        if (result == NumericConstant.ONE) {
             return true;
         }
         /**
@@ -184,14 +192,16 @@ public class UserGoodsPreferenceActuatorImpl implements UserGoodsPreferenceActua
                     "goodsId={}, preference={}. ", usrId, goodsId, preference);
             // throw new AsyncBusinessException(ErrorEnum.USER_PREFERENCE_NOT_EXISTS);
             /**
-             * TODO 不存在偏好信息，即新增偏好信息
+             * 偏好信息不存在，进行新建
              */
+            userPreference = new UserPreference();
+            userPreference.setUserId(usrId);
+            userPreference.setGoodsId(goodsId);
         }
         preference += userPreference.getPreference() == null ? 0 : userPreference.getPreference();
         userPreference.setPreference(preference);
         return refresh(userPreference);
     }
-
 
     /**
      * 获取默认时间窗口，三个月

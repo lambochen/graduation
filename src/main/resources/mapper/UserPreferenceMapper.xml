@@ -86,7 +86,7 @@
         where `deleted` = '0'
     </select>
 
-    <select id="countByUserAndGoods" resultType="long">
+    <select id="countByUserAndGoods" resultType="int">
         SELECT
         count(`id`)
         FROM

@@ -76,8 +76,18 @@ public class UserPreferenceServiceImpl implements UserPreferenceService {
     }
 
     @Override
+    public boolean isNotAliveUserPreference(long userId, long goodsId) {
+        return !isAliveUserPreference(userId,goodsId);
+    }
+
+    @Override
     public boolean isAliveUserPreference(@NonNull UserPreference preference) {
         return isAliveUserPreference(preference.getUserId(), preference.getGoodsId());
+    }
+
+    @Override
+    public boolean isNotAliveUserPreference(@NonNull UserPreference preference) {
+        return !isAliveUserPreference(preference);
     }
 
     @Override

@@ -49,12 +49,28 @@ public interface UserPreferenceService extends IBaseService<UserPreference> {
     boolean isAliveUserPreference(long userId, long goodsId);
 
     /**
+     * 无效的用户偏好数据
+     *
+     * @param userId
+     * @param goodsId
+     * @return
+     */
+    boolean isNotAliveUserPreference(long userId, long goodsId);
+
+    /**
      * 是否是有效的用户偏好数据
      *
      * @param preference
      * @return
      */
     boolean isAliveUserPreference(@NonNull UserPreference preference);
+
+    /**
+     * 无效的用户偏好数据
+     * @param preference
+     * @return
+     */
+    boolean isNotAliveUserPreference(@NonNull UserPreference preference);
 
     /**
      * 批量更新
