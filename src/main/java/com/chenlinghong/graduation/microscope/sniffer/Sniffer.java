@@ -9,6 +9,5 @@ import org.springframework.scheduling.annotation.Async;
  * @Date 2019/4/25 22:48
  * @Version V1.0
  */
-@Async(value = AsyncNameConstant.MICROSCOPE)
 public interface Sniffer {
 }

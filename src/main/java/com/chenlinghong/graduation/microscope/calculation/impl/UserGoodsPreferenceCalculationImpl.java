@@ -24,10 +24,10 @@ import java.util.Locale;
 public class UserGoodsPreferenceCalculationImpl implements UserGoodsPreferenceCalculation {
 
     @Override
-    public int calculation(int behavior) {
+    public Integer calculation(int behavior) {
         UserBehaviorEnum behaviorEnum = UserBehaviorUtil.getByBehavior(behavior);
         if (behaviorEnum != null) {
-            return behaviorEnum.getFactor();
+            return behaviorEnum.getFactor().intValue();
         }
         return 0;
     }
@@ -42,7 +42,7 @@ public class UserGoodsPreferenceCalculationImpl implements UserGoodsPreferenceCa
 
     @Override
     public UserPreference calculation(long userId, long goodsId, int behavior) {
-        return new UserPreference(userId, goodsId, calculation(behavior));
+        return new UserPreference(userId, goodsId, calculation(behavior).intValue());
     }
 
     @Override
@@ -81,7 +81,7 @@ public class UserGoodsPreferenceCalculationImpl implements UserGoodsPreferenceCa
     }
 
     @Override
-    public int calculationByBehavior(List<Integer> behaviorList) {
+    public Integer calculationByBehavior(List<Integer> behaviorList) {
         int preference = 0;
         for (Integer item : behaviorList) {
             preference += calculation(item);

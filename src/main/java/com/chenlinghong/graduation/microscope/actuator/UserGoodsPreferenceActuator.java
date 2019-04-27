@@ -1,8 +1,10 @@
 package com.chenlinghong.graduation.microscope.actuator;
 
+import com.chenlinghong.graduation.constant.AsyncNameConstant;
 import com.chenlinghong.graduation.enums.UserBehaviorEnum;
 import com.chenlinghong.graduation.repository.domain.UserBehavior;
 import com.chenlinghong.graduation.repository.domain.UserPreference;
+import org.springframework.scheduling.annotation.Async;
 
 import java.util.Date;
 
@@ -12,6 +14,7 @@ import java.util.Date;
  * @Date 2019/4/26 15:19
  * @Version V1.0
  */
+@Async(value = AsyncNameConstant.MICROSCOPE)
 public interface UserGoodsPreferenceActuator extends PreferenceActuator {
 
     /**
@@ -19,14 +22,14 @@ public interface UserGoodsPreferenceActuator extends PreferenceActuator {
      *
      * @param userPreference
      */
-    boolean refresh(UserPreference userPreference);
+    Boolean refresh(UserPreference userPreference);
 
     /**
      * 刷新用户偏好，所有商品均刷新，采用默认时间窗口
      *
      * @param userId
      */
-    boolean refresh(long userId);
+    Boolean refresh(long userId);
 
     /**
      * 刷新用户偏好，所有商品均刷新
@@ -42,7 +45,7 @@ public interface UserGoodsPreferenceActuator extends PreferenceActuator {
      * @param userId
      * @param startTime
      */
-    boolean refresh(long userId, Date startTime);
+    Boolean refresh(long userId, Date startTime);
 
     /**
      * 刷新用户偏好，采用默认时间窗口
@@ -50,7 +53,7 @@ public interface UserGoodsPreferenceActuator extends PreferenceActuator {
      * @param userId  用户ID
      * @param goodsId 商品ID
      */
-    boolean refresh(long userId, long goodsId);
+    Boolean refresh(long userId, long goodsId);
 
     /**
      * 刷新用户偏好，抓取数据startTime
@@ -59,7 +62,7 @@ public interface UserGoodsPreferenceActuator extends PreferenceActuator {
      * @param goodsId   商户ID
      * @param startTime 开始时间
      */
-    boolean refresh(long userId, long goodsId, Date startTime);
+    Boolean refresh(long userId, long goodsId, Date startTime);
 
     /**
      * 刷新用户偏好
@@ -68,14 +71,14 @@ public interface UserGoodsPreferenceActuator extends PreferenceActuator {
      * @param goodsId
      * @param preference 用户偏好新值
      */
-    boolean refresh(long userId, long goodsId, int preference);
+    Boolean refresh(long userId, long goodsId, int preference);
 
     /**
      * 刷新用户偏好，以追加方式
      *
      * @param userBehavior 用户行为
      */
-    boolean append(UserBehavior userBehavior);
+    Boolean append(UserBehavior userBehavior);
 
     /**
      * 刷新用户偏好，以追加方式
@@ -84,7 +87,7 @@ public interface UserGoodsPreferenceActuator extends PreferenceActuator {
      * @param goodsId
      * @param behavior 用户行为
      */
-    boolean append(long userId, long goodsId, int behavior);
+    Boolean append(long userId, long goodsId, int behavior);
 
     /**
      * 刷新用户偏好，以追加方式
@@ -93,7 +96,7 @@ public interface UserGoodsPreferenceActuator extends PreferenceActuator {
      * @param goodsId
      * @param behaviorEnum 用户行为枚举
      */
-    boolean append(long userId, long goodsId, UserBehaviorEnum behaviorEnum);
+    Boolean append(long userId, long goodsId, UserBehaviorEnum behaviorEnum);
 
     /**
      * 刷新用户偏好，以追加方式
@@ -102,6 +105,6 @@ public interface UserGoodsPreferenceActuator extends PreferenceActuator {
      * @param goodsId
      * @param preference 追加的偏好值
      */
-    boolean appendByPreference(long usrId, long goodsId, int preference);
+    Boolean appendByPreference(long usrId, long goodsId, int preference);
 
 }

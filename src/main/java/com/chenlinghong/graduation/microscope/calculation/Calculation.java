@@ -9,6 +9,5 @@ import org.springframework.scheduling.annotation.Async;
  * @Date 2019/4/26 13:27
  * @Version V1.0
  */
-@Async(value = AsyncNameConstant.MICROSCOPE)
 public interface Calculation {
 }

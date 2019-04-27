@@ -13,6 +13,7 @@ import java.util.List;
  * @Date 2019/4/26 13:29
  * @Version V1.0
  */
+// @Async(value = AsyncNameConstant.MICROSCOPE)
 public interface UserGoodsPreferenceCalculation extends PreferenceCalculation {
 
     /**
@@ -21,7 +22,7 @@ public interface UserGoodsPreferenceCalculation extends PreferenceCalculation {
      * @param behavior
      * @return
      */
-    int calculation(int behavior);
+    Integer calculation(int behavior);
 
     /**
      * 计算用户偏好
@@ -80,7 +81,7 @@ public interface UserGoodsPreferenceCalculation extends PreferenceCalculation {
      * @param behaviorList
      * @return
      */
-    int calculationByBehavior(List<Integer> behaviorList);
+    Integer calculationByBehavior(List<Integer> behaviorList);
 
 
 }

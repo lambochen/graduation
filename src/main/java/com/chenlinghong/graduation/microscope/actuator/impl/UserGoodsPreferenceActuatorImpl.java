@@ -41,7 +41,7 @@ public class UserGoodsPreferenceActuatorImpl implements UserGoodsPreferenceActua
     private UserGoodsPreferenceCalculation preferenceCalculation;
 
     @Override
-    public boolean refresh(UserPreference userPreference) {
+    public Boolean refresh(UserPreference userPreference) {
         if (userPreference == null) {
             log.error("UserGoodsPreferenceActuator#refresh: param is null.");
             throw new AsyncBusinessException(ErrorEnum.PARAM_IS_NULL);
@@ -58,14 +58,14 @@ public class UserGoodsPreferenceActuatorImpl implements UserGoodsPreferenceActua
     }
 
     @Override
-    public boolean refresh(long userId) {
+    public Boolean refresh(long userId) {
         Date startTime = getDefaultStartTime();
         return refresh(userId, startTime);
     }
 
 
     @Override
-    public boolean refresh(long userId, Date startTime) {
+    public Boolean refresh(long userId, Date startTime) {
         /**
          * 1、获取所有用户行为
          */
@@ -117,13 +117,13 @@ public class UserGoodsPreferenceActuatorImpl implements UserGoodsPreferenceActua
 
 
     @Override
-    public boolean refresh(long userId, long goodsId) {
+    public Boolean refresh(long userId, long goodsId) {
         Date startTime = getDefaultStartTime();
         return refresh(userId, goodsId, startTime);
     }
 
     @Override
-    public boolean refresh(long userId, long goodsId, Date startTime) {
+    public Boolean refresh(long userId, long goodsId, Date startTime) {
         PageDto behaviorDto = behaviorService.listByUserAndGoodsAndStartTime(userId, goodsId, startTime);
         if (behaviorDto.getTotalCount() <= 0) {
             // 为获取到数据
@@ -140,13 +140,13 @@ public class UserGoodsPreferenceActuatorImpl implements UserGoodsPreferenceActua
     }
 
     @Override
-    public boolean refresh(long userId, long goodsId, int preference) {
+    public Boolean refresh(long userId, long goodsId, int preference) {
         UserPreference userPreference = new UserPreference(userId, goodsId, preference);
         return refresh(userPreference);
     }
 
     @Override
-    public boolean append(UserBehavior userBehavior) {
+    public Boolean append(UserBehavior userBehavior) {
         if (userBehavior == null) {
             log.error("UserGoodsPreferenceActuator#append: param is null.");
             throw new AsyncBusinessException(ErrorEnum.PARAM_IS_NULL);
@@ -156,13 +156,13 @@ public class UserGoodsPreferenceActuatorImpl implements UserGoodsPreferenceActua
     }
 
     @Override
-    public boolean append(long userId, long goodsId, int behavior) {
+    public Boolean append(long userId, long goodsId, int behavior) {
         UserBehaviorEnum behaviorEnum = UserBehaviorUtil.getByBehavior(behavior);
         return append(userId, goodsId, behaviorEnum);
     }
 
     @Override
-    public boolean append(long userId, long goodsId, UserBehaviorEnum behaviorEnum) {
+    public Boolean append(long userId, long goodsId, UserBehaviorEnum behaviorEnum) {
         if (userId <= 0 || goodsId <= 0 || behaviorEnum == null) {
             log.error("UserGoodsPreferenceActuator#append: param is illegal. userId={}, goodsId={}, " +
                     "behaviorEnum={}. ", userId, goodsId, behaviorEnum);
@@ -172,7 +172,7 @@ public class UserGoodsPreferenceActuatorImpl implements UserGoodsPreferenceActua
     }
 
     @Override
-    public boolean appendByPreference(long usrId, long goodsId, int preference) {
+    public Boolean appendByPreference(long usrId, long goodsId, int preference) {
         if (usrId <= 0 || goodsId <= 0 || preference < 0) {
             log.error("UserGoodsPreferenceActuator#appendByPreference: param is illegal. userId={}, goodsId={}," +
                     " preference={}. ", usrId, goodsId, preference);
@@ -182,7 +182,10 @@ public class UserGoodsPreferenceActuatorImpl implements UserGoodsPreferenceActua
         if (userPreference == null) {
             log.error("UserGoodsPreferenceActuator#appendByPreference: user preference is not exists. userId={}, " +
                     "goodsId={}, preference={}. ", usrId, goodsId, preference);
-            throw new AsyncBusinessException(ErrorEnum.USER_PREFERENCE_NOT_EXISTS);
+            // throw new AsyncBusinessException(ErrorEnum.USER_PREFERENCE_NOT_EXISTS);
+            /**
+             * TODO 不存在偏好信息，即新增偏好信息
+             */
         }
         preference += userPreference.getPreference() == null ? 0 : userPreference.getPreference();
         userPreference.setPreference(preference);

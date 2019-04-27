@@ -14,7 +14,6 @@ import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
@@ -36,7 +35,6 @@ public class UserBehaviorServiceImpl implements UserBehaviorService {
     private UserGoodsPreferenceActuator userGoodsPreferenceActuator;
 
     @Override
-    @Transactional
     public int insert(UserBehavior userBehavior) {
         if (userBehavior == null) {
             log.error("UserBehaviorService#insert: param is null.");
@@ -66,7 +64,6 @@ public class UserBehaviorServiceImpl implements UserBehaviorService {
     }
 
     @Override
-    @Transactional
     public int insert(List<UserBehavior> behaviorList) {
         if (behaviorList == null || behaviorList.size() <= 0) {
             log.error("UserBehaviorService#insert: param is null. behaviorList={}. ", behaviorList);
@@ -118,7 +115,6 @@ public class UserBehaviorServiceImpl implements UserBehaviorService {
     }
 
     @Override
-    @Transactional
     public int insert(long goodsId, long userId, int behavior, int frequency) {
         if (goodsId <= 0 || userId <= 0 || frequency <= 0) {
             log.error("UserBehaviorService#insert: param is illegal. goodsId={}, userId={}, behavior={}, " +
