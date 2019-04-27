@@ -41,6 +41,8 @@ public enum ErrorEnum {
     PASSWORD_IS_ERROR(3001, "密码不正确"),
     INSERT_USER_ERROR(3002, "新增用户失败"),
     UPDATE_USER_ERROR(3003, "更新用户信息失败"),
+    INSERT_USER_TAG_ERROR(3004, "新增用户标签失败"),
+    UPDATE_USER_TAG_ERROR(3005, "更新用户标签失败"),
 
 
     /**
@@ -72,7 +74,6 @@ public enum ErrorEnum {
      * 8XXX 用户偏好相关
      */
     USER_PREFERENCE_NOT_EXISTS(8000, "用户偏好信息不存在"),
-
 
 
     ;
