@@ -58,6 +58,16 @@ public class UserBasedCFRecommender extends AbstractUserBasedRecommender {
         defaultInit(dataSource, neighborhoodNumber);
     }
 
+    @Override
+    public List<RecommendedItem> recommend(long userId) {
+        return null;
+    }
+
+    @Override
+    public List<RecommendedItem> recommend(long userId, int recommendNum) {
+        return null;
+    }
+
     /**
      * 默认初始化方法
      *
@@ -75,16 +85,6 @@ public class UserBasedCFRecommender extends AbstractUserBasedRecommender {
         this.userSimilarity = new PearsonCorrelationSimilarity(this.mysqlDataModel);
         this.userNeighborhood =
                 new NearestNUserNeighborhood(neighborhoodNumber, this.userSimilarity, this.mysqlDataModel);
-    }
-
-    @Override
-    public List<RecommendedItem> recommend(long userId) {
-        return null;
-    }
-
-    @Override
-    public List<RecommendedItem> recommend(long userId, int recommendNum) {
-        return null;
     }
 
 }
