@@ -20,7 +20,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
-import java.awt.geom.RectangularShape;
 import java.util.List;
 
 /**
@@ -49,7 +48,7 @@ public class UserGoodsBehaviorSnifferImpl implements UserGoodsBehaviorSniffer {
         /**
          * TODO 处理结果
          */
-        if (result != NumericConstant.ONE){
+        if (result != NumericConstant.ONE) {
             /**
              * TODO 处理异常
              */
@@ -68,7 +67,7 @@ public class UserGoodsBehaviorSnifferImpl implements UserGoodsBehaviorSniffer {
         /**
          * TODO 处理结果
          */
-        if (result != userBehaviorList.size()){
+        if (result != userBehaviorList.size()) {
             /**
              * TODO 处理异常
              */
@@ -103,7 +102,7 @@ public class UserGoodsBehaviorSnifferImpl implements UserGoodsBehaviorSniffer {
         /**
          * TODO 后期对返回结果处理
          */
-        if (insertResult != NumericConstant.ONE){
+        if (insertResult != NumericConstant.ONE) {
             /**
              * TODO 处理异常
              */
@@ -144,12 +143,18 @@ public class UserGoodsBehaviorSnifferImpl implements UserGoodsBehaviorSniffer {
         /**
          * TODO 后期对返回结果处理
          */
-        
+        if (insertResult != NumericConstant.ONE) {
+            /**
+             * TODO 处理异常
+             */
+            return false;
+        }
+        return true;
     }
 
     @Override
     public boolean addToShoppingCart(UserBehavior behavior) {
-        common(behavior);
+        return common(behavior);
     }
 
     /**
@@ -159,7 +164,7 @@ public class UserGoodsBehaviorSnifferImpl implements UserGoodsBehaviorSniffer {
      */
     @Override
     public boolean purchase(GoodsOrder goodsOrder) {
-        purchase(goodsOrder.getUserId(), goodsOrder.getGoodsId(), goodsOrder.getNumber());
+        return purchase(goodsOrder.getUserId(), goodsOrder.getGoodsId(), goodsOrder.getNumber());
     }
 
     /**
@@ -184,11 +189,18 @@ public class UserGoodsBehaviorSnifferImpl implements UserGoodsBehaviorSniffer {
         /**
          * TODO 后期对返回结果处理
          */
+        if (insertResult != frequency) {
+            /**
+             * TODO 处理异常
+             */
+            return false;
+        }
+        return true;
     }
 
     @Override
     public boolean purchase(UserBehavior behavior) {
-        common(behavior);
+        return common(behavior);
     }
 
     /**
@@ -202,7 +214,7 @@ public class UserGoodsBehaviorSnifferImpl implements UserGoodsBehaviorSniffer {
             log.error("UserGoodsSniffer#comment: param is null.");
             throw new AsyncBusinessException(ErrorEnum.PARAM_IS_NULL);
         }
-        comment(goodsComment.getUserId(), goodsComment.getGoodsId(), goodsComment.getScore());
+        return comment(goodsComment.getUserId(), goodsComment.getGoodsId(), goodsComment.getScore());
     }
 
     @Override
@@ -223,19 +235,23 @@ public class UserGoodsBehaviorSnifferImpl implements UserGoodsBehaviorSniffer {
             throw new AsyncBusinessException(ErrorEnum.PARAM_ILLEGAL);
         }
         int insertResult = userBehaviorService.insert(goodsId, userId, behaviorEnum.getCode());
-        /**
-         * TODO 后期对返回结果处理
-         */
+        if (insertResult != NumericConstant.ONE) {
+            /**
+             * TODO 处理异常
+             */
+            return false;
+        }
+        return true;
     }
 
     @Override
     public boolean comment(long userId, long goodsId, GoodsCommentScoreEnum scoreEnum) {
-        comment(userId, goodsId, scoreEnum.getScore());
+        return comment(userId, goodsId, scoreEnum.getScore());
     }
 
     @Override
     public boolean comment(UserBehavior behavior) {
-        common(behavior);
+        return common(behavior);
     }
 
 
@@ -245,7 +261,7 @@ public class UserGoodsBehaviorSnifferImpl implements UserGoodsBehaviorSniffer {
             log.error("UserGoodsSniffer#search: param is null, request={}.", request);
             throw new AsyncBusinessException(ErrorEnum.PARAM_IS_NULL);
         }
-        search(goodsPageDto.getData(), request);
+        return search(goodsPageDto.getData(), request);
     }
 
     @Override
@@ -265,7 +281,7 @@ public class UserGoodsBehaviorSnifferImpl implements UserGoodsBehaviorSniffer {
             UserBehavior behavior = new UserBehavior(userId, goods.getId().longValue(), UserBehaviorEnum.SEARCH.getCode());
             behaviorList.add(behavior);
         }
-        search(behaviorList);
+        return search(behaviorList);
     }
 
     @Override
@@ -275,9 +291,13 @@ public class UserGoodsBehaviorSnifferImpl implements UserGoodsBehaviorSniffer {
             throw new AsyncBusinessException(ErrorEnum.PARAM_IS_NULL);
         }
         int insertResult = userBehaviorService.insert(userBehaviorList);
-        /**
-         * TODO 处理结果
-         */
+        if (insertResult != NumericConstant.ONE) {
+            /**
+             * TODO 处理异常
+             */
+            return false;
+        }
+        return true;
     }
 
 }
