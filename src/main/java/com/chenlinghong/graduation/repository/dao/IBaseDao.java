@@ -1,5 +1,6 @@
 package com.chenlinghong.graduation.repository.dao;
 
+import lombok.NonNull;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -18,7 +19,7 @@ public interface IBaseDao<T> {
      * @param t
      * @return
      */
-    int insert(T t);
+    int insert(@NonNull T t);
 
     /**
      * 根据ID删除
@@ -58,5 +59,5 @@ public interface IBaseDao<T> {
      * @param t
      * @return
      */
-    int update(T t);
+    int update(@NonNull T t);
 }
