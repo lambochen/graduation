@@ -1,6 +1,7 @@
 package com.chenlinghong.graduation.recommender;
 
 import com.chenlinghong.graduation.recommender.data.GraduationRecommendItem;
+import org.apache.mahout.cf.taste.common.TasteException;
 
 import java.util.List;
 
@@ -18,7 +19,7 @@ public interface GraduationRecommender {
      * @param userId
      * @return
      */
-    List<GraduationRecommendItem> recommendGraduation(final long userId);
+    List<GraduationRecommendItem> recommendGraduation(final long userId) throws TasteException;
 
     /**
      * 指定推荐数目
@@ -27,7 +28,7 @@ public interface GraduationRecommender {
      * @param recommendNum
      * @return
      */
-    List<GraduationRecommendItem> recommendGraduation(final long userId, final int recommendNum);
+    List<GraduationRecommendItem> recommendGraduation(final long userId, final int recommendNum) throws TasteException;
 
 
 }

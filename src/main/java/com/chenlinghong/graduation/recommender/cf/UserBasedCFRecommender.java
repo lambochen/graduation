@@ -57,13 +57,13 @@ public class UserBasedCFRecommender extends AbstractUserBasedRecommender {
     }
 
     @Override
-    public List<GraduationRecommendItem> recommendGraduation(long userId) {
-        return null;
+    public List<GraduationRecommendItem> recommendGraduation(long userId) throws TasteException {
+        return converter(userId, recommend(userId));
     }
 
     @Override
-    public List<GraduationRecommendItem> recommendGraduation(long userId, int recommendNum) {
-        return null;
+    public List<GraduationRecommendItem> recommendGraduation(long userId, int recommendNum) throws TasteException {
+        return converter(userId, recommend(userId, recommendNum));
     }
 
     /**

@@ -1,6 +1,7 @@
 package com.chenlinghong.graduation.recommender;
 
 import com.chenlinghong.graduation.recommender.data.GraduationRecommendItem;
+import com.google.common.collect.Lists;
 import lombok.NonNull;
 import org.apache.mahout.cf.taste.recommender.RecommendedItem;
 
@@ -23,7 +24,15 @@ public abstract class AbstractGraduationMahoutRecommender implements MahoutRecom
      */
     protected List<GraduationRecommendItem> converter(final long userId,
                                                       @NonNull final List<RecommendedItem> recommendedItemList) {
-        return null;
+        List<GraduationRecommendItem> result = Lists.newArrayList();
+        for (RecommendedItem item : recommendedItemList) {
+            GraduationRecommendItem graduationRecommendItem = new GraduationRecommendItem();
+            graduationRecommendItem.setUserId(userId);
+            graduationRecommendItem.setItemId(item.getItemID());
+            graduationRecommendItem.setPreference(item.getValue());
+            result.add(graduationRecommendItem);
+        }
+        return result;
     }
 
 }
