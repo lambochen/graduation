@@ -31,7 +31,7 @@ public abstract class AbstractItemBasedRecommender extends AbstractGraduationMah
     protected DataModel dataModel;
 
     /**
-     * 数据源
+     * data source
      */
     protected DataSource dataSource;
 

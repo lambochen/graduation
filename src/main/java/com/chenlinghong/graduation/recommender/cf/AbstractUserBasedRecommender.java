@@ -16,12 +16,12 @@ import javax.sql.DataSource;
 public abstract class AbstractUserBasedRecommender extends AbstractGraduationMahoutRecommender {
 
     /**
-     * 用户相似度矩阵
+     * user similarity matrix
      */
     protected UserSimilarity userSimilarity;
 
     /**
-     * 邻居
+     * neighborhood
      */
     protected UserNeighborhood userNeighborhood;
 
@@ -36,7 +36,7 @@ public abstract class AbstractUserBasedRecommender extends AbstractGraduationMah
     protected DataModel dataModel;
 
     /**
-     * 数据源
+     * data source
      */
     protected DataSource dataSource;
 
