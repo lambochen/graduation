@@ -20,7 +20,7 @@ public interface MahoutRecommender {
      * @param userId
      * @return
      */
-    List<RecommendedItem> recommend(long userId) throws TasteException;
+    List<RecommendedItem> recommend(final long userId) throws TasteException;
 
     /**
      * 指定推荐数目
@@ -29,7 +29,7 @@ public interface MahoutRecommender {
      * @param recommendNum
      * @return
      */
-    List<RecommendedItem> recommend(long userId, int recommendNum) throws TasteException;
+    List<RecommendedItem> recommend(final long userId, final int recommendNum) throws TasteException;
 
 
 }

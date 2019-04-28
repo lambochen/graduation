@@ -24,7 +24,7 @@ public class GraduationMysqlDataModel extends MySQLJDBCDataModel implements Grad
     }
 
     public GraduationMysqlDataModel(DataSource dataSource) {
-        super(dataSource,
+        this(dataSource,
                 AttributeNameConstant.USER_GOODS_PREFERENCE_TABLE,
                 AttributeNameConstant.USER_ID_COLUMN,
                 AttributeNameConstant.GOODS_ID_COLUMN,
