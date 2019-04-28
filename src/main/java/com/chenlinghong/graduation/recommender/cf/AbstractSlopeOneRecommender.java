@@ -1,11 +1,6 @@
 package com.chenlinghong.graduation.recommender.cf;
 
-import com.chenlinghong.graduation.recommender.GraduationRecommender;
-import com.chenlinghong.graduation.recommender.MahoutRecommender;
-import org.apache.mahout.cf.taste.model.DataModel;
-import org.apache.mahout.cf.taste.recommender.Recommender;
-
-import javax.sql.DataSource;
+import com.chenlinghong.graduation.recommender.AbstractGraduationMahoutRecommender;
 
 /**
  * https://www.php3.cn/a/178.html
@@ -31,22 +26,6 @@ import javax.sql.DataSource;
  * @Date 2019/4/28 16:38
  * @Version V1.0
  */
-public abstract class AbstractSlopeOneRecommender implements MahoutRecommender, GraduationRecommender {
-
-    /**
-     * recommender
-     */
-    protected Recommender recommender;
-
-    /**
-     * MySQL DataModel
-     */
-    protected DataModel dataModel;
-
-    /**
-     * data source
-     */
-    protected DataSource dataSource;
-
+public abstract class AbstractSlopeOneRecommender extends AbstractGraduationMahoutRecommender {
 
 }

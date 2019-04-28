@@ -3,8 +3,11 @@ package com.chenlinghong.graduation.recommender;
 import com.chenlinghong.graduation.recommender.data.GraduationRecommendItem;
 import com.google.common.collect.Lists;
 import lombok.NonNull;
+import org.apache.mahout.cf.taste.model.DataModel;
 import org.apache.mahout.cf.taste.recommender.RecommendedItem;
+import org.apache.mahout.cf.taste.recommender.Recommender;
 
+import javax.sql.DataSource;
 import java.util.List;
 
 /**
@@ -14,6 +17,21 @@ import java.util.List;
  * @Version V1.0
  */
 public abstract class AbstractGraduationMahoutRecommender implements MahoutRecommender, GraduationRecommender {
+
+    /**
+     * recommender
+     */
+    protected Recommender recommender;
+
+    /**
+     * MySQL DataModel
+     */
+    protected DataModel dataModel;
+
+    /**
+     * data source
+     */
+    protected DataSource dataSource;
 
     /**
      * 数据转换,
