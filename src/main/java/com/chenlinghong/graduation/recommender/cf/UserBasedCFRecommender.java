@@ -1,7 +1,6 @@
 package com.chenlinghong.graduation.recommender.cf;
 
 import com.chenlinghong.graduation.constant.NumericConstant;
-import com.chenlinghong.graduation.recommender.AbstractUserBasedRecommender;
 import com.chenlinghong.graduation.recommender.data.GraduationRecommendItem;
 import com.chenlinghong.graduation.recommender.data.model.GraduationMysqlDataModel;
 import org.apache.mahout.cf.taste.common.TasteException;

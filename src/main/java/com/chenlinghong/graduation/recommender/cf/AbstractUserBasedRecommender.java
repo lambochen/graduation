@@ -1,5 +1,6 @@
-package com.chenlinghong.graduation.recommender;
+package com.chenlinghong.graduation.recommender.cf;
 
+import com.chenlinghong.graduation.recommender.AbstractGraduationMahoutRecommender;
 import org.apache.mahout.cf.taste.model.DataModel;
 import org.apache.mahout.cf.taste.neighborhood.UserNeighborhood;
 import org.apache.mahout.cf.taste.similarity.UserSimilarity;
