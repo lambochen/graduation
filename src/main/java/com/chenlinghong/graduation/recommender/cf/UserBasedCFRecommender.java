@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.apache.mahout.cf.taste.common.TasteException;
 import org.apache.mahout.cf.taste.impl.neighborhood.NearestNUserNeighborhood;
+import org.apache.mahout.cf.taste.impl.recommender.CachingRecommender;
+import org.apache.mahout.cf.taste.impl.recommender.GenericUserBasedRecommender;
 import org.apache.mahout.cf.taste.impl.similarity.PearsonCorrelationSimilarity;
 import org.apache.mahout.cf.taste.recommender.RecommendedItem;
 
@@ -59,13 +61,16 @@ public class UserBasedCFRecommender extends AbstractUserBasedRecommender {
     }
 
     @Override
-    public List<RecommendedItem> recommend(long userId) {
-        return null;
+    public List<RecommendedItem> recommend(long userId) throws TasteException {
+        /**
+         * 默认推荐10条数据
+         */
+        return recommend(userId, NumericConstant.TEN);
     }
 
     @Override
-    public List<RecommendedItem> recommend(long userId, int recommendNum) {
-        return null;
+    public List<RecommendedItem> recommend(long userId, int recommendNum) throws TasteException {
+        return recommender.recommend(userId,recommendNum);
     }
 
     /**
@@ -85,6 +90,8 @@ public class UserBasedCFRecommender extends AbstractUserBasedRecommender {
         this.userSimilarity = new PearsonCorrelationSimilarity(this.mysqlDataModel);
         this.userNeighborhood =
                 new NearestNUserNeighborhood(neighborhoodNumber, this.userSimilarity, this.mysqlDataModel);
+        this.recommender = new CachingRecommender(
+                new GenericUserBasedRecommender(this.mysqlDataModel, this.userNeighborhood,this.userSimilarity));
     }
 
 }
