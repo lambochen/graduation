@@ -42,7 +42,6 @@ public class ItemBasedCFRecommender extends AbstractItemBasedRecommender {
         defaultInit(dataSource);
     }
 
-
     @Override
     public List<RecommendedItem> recommend(long userId) throws TasteException {
         /**
@@ -53,7 +52,8 @@ public class ItemBasedCFRecommender extends AbstractItemBasedRecommender {
 
     @Override
     public List<RecommendedItem> recommend(long userId, int recommendNum) throws TasteException {
-        return null;
+        // Mahout推荐
+        return recommender.recommend(userId, recommendNum);
     }
 
     @Override
