@@ -56,4 +56,9 @@ public class Goods extends BaseDomain {
      */
     private Long businessInfoId;
 
+    /**
+     * 封面图片
+     */
+    private String coverImg;
+
 }
