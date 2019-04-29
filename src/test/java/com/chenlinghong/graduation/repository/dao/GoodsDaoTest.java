@@ -29,6 +29,7 @@ public class GoodsDaoTest {
         goods.setPrice(1.0);
         goods.setRemarks("test");
         goods.setGoodsInfo("test  ");
+        goods.setCoverImg("http://pic37.nipic.com/20140113/8800276_184927469000_2.png");
         int result = goodsDao.insert(goods);
         Assert.assertEquals(1, result);
     }

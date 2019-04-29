@@ -98,6 +98,7 @@ create table if not exists `goods` (
     `price` decimal  null comment '价格',
     `remarks` varchar(512) null comment '备注',
     `business_id` bigint not null comment '商户ID【FK(user)】',
+    `cover_img` varchar(256) not null comment '封面图片',
     primary key (`id`),
     index `idx_name`(`name`)
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 DEFAULT CHARSET = utf8mb4 COMMENT = '商品基本信息表';
