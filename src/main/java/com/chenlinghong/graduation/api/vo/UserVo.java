@@ -22,5 +22,9 @@ public class UserVo implements Serializable {
      */
     private User userInfo;
 
+    /**
+     * 是否新用户
+     */
+    private boolean newUser = false;
 
 }
