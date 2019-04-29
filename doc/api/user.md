@@ -23,7 +23,6 @@
     gender [int] : 性别（0：保密 1：男 2：女）
     birthday [date] : 出生日期
     
-    
 返回
 
     {
