@@ -88,7 +88,10 @@ public class UserServiceImpl implements UserService {
              */
             int insertResult = insert(telephone);
             if (insertResult == 1) {
-                return getUserVoByTelephone(telephone);
+                UserVo userVo = getUserVoByTelephone(telephone);
+                // 标记为新用户
+                userVo.setNewUser(true);
+                return userVo;
             } else {
                 // 插入用户数据有误
                 log.error("UserService#loginBySms: failed to insert user. telephone={}", telephone);

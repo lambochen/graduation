@@ -21,4 +21,8 @@ public class NumericConstant {
     public static final int NINE = 9;
     public static final int TEN = 10;
 
+    public static final int TWENTY = 20;
+    public static final int FIFTY = 50;
+    public static final int ONE_HUNDRED = 100;
+
 }
