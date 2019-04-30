@@ -7,15 +7,18 @@ import com.chenlinghong.graduation.common.ResultVo;
 import com.chenlinghong.graduation.enums.ErrorEnum;
 import com.chenlinghong.graduation.exception.BusinessException;
 import com.chenlinghong.graduation.repository.domain.User;
+import com.chenlinghong.graduation.service.UserBehaviorService;
 import com.chenlinghong.graduation.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
@@ -36,6 +39,9 @@ public class UserController {
 
     @Autowired
     private SessionUtil sessionUtil;
+
+    @Autowired
+    private UserBehaviorService userBehaviorService;
 
     /**
      * 通过密码登录
@@ -102,6 +108,22 @@ public class UserController {
          * 注册后直接返回空对象，强制要求用户登录一次
          */
         return ResultUtil.success();
+    }
+
+    /**
+     * 获取用户行为历史
+     *
+     * @param pageNo
+     * @param pageSize
+     * @param request
+     * @return
+     */
+    @GetMapping(value = "/history")
+    public ResultVo history(@RequestParam(value = "pageNo", required = false, defaultValue = "1") long pageNo,
+                            @RequestParam(value = "pageSize", required = false, defaultValue = "10") long pageSize,
+                            HttpServletRequest request) {
+        long userId = sessionUtil.getUserId(request);
+        return ResultUtil.success(userBehaviorService.listByUser(userId, pageNo, pageSize));
     }
 
 

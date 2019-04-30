@@ -195,6 +195,18 @@ public class UserBehaviorServiceImpl implements UserBehaviorService {
     }
 
     @Override
+    public PageDto<UserBehavior> listByUser(long userId, long pageNo, long pageSize) {
+        if (userId <= 0 || pageNo <= 0 || pageSize < 0) {
+            log.error("UserBehaviorService#listByUser: param is illegal. userId={}, pageNo={}, " +
+                    "pageSize={}.", userId, pageNo, pageSize);
+            throw new BusinessException(ErrorEnum.PARAM_ILLEGAL);
+        }
+        List<UserBehavior> behaviorList = behaviorDao.listByUser(userId, (pageNo - 1) * pageSize, pageSize);
+        long total = behaviorDao.countByUser(userId);
+        return new PageDto<>(behaviorList, pageNo, pageSize, total);
+    }
+
+    @Override
     public int update(UserBehavior userBehavior) {
         return 0;
     }

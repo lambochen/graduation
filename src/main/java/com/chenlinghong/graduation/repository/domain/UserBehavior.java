@@ -28,6 +28,11 @@ public class UserBehavior extends BaseDomain {
     private Long goodsId;
 
     /**
+     * 商品对象
+     */
+    private Goods goods;
+
+    /**
      * 行为: 1点击, 2加入购物车, 3购买, 4评价-1, 5评价-2, 6评价-3, 7评价-4， 8评价-5
      */
     private Integer behavior;
