@@ -11,7 +11,7 @@ import java.util.List;
  * @Date 2019/4/27 17:45
  * @Version V1.0
  */
-public interface GraduationRecommender {
+public interface GraduationRecommender extends Recommender {
 
     /**
      * 采用默认的紧邻计算，推荐默认条数据

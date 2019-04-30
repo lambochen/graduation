@@ -8,6 +8,9 @@ package com.chenlinghong.graduation.scheduler;
  */
 public interface Scheduler {
 
-
+    /**
+     * 执行方法
+     */
+    // void schedule();
 
 }
