@@ -54,4 +54,23 @@ public interface UserBehaviorDao extends IBaseDao<UserBehavior> {
      */
     List<UserBehavior> listByUserAndStartTime(@Param("userId") long userId, @Param("startTime") Date startTime);
 
+    /**
+     * 根据用户获取
+     *
+     * @param userId
+     * @param offset
+     * @param rows
+     * @return
+     */
+    List<UserBehavior> listByUser(@Param("userId") long userId, @Param("offset") long offset, @Param("rows") long rows);
+
+    /**
+     * 根据用户获取记录数
+     *
+     * @param userId
+     * @return
+     */
+    long countByUser(@Param("userId") long userId);
+
+
 }
