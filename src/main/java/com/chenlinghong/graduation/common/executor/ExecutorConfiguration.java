@@ -54,6 +54,13 @@ public class ExecutorConfiguration {
     private String threadNamePrefixMicroscope;
 
     /**
+     * 线程池中线程的名称前缀 执行器
+     */
+    @Value("${executor.thread_name_prefix_scheduler}")
+    private String threadNamePrefixScheduler;
+
+
+    /**
      * 保持线程空闲时间
      */
     @Value("${executor.keep_alive_seconds}")
@@ -102,6 +109,12 @@ public class ExecutorConfiguration {
     public Executor asyncMicroscopeExecutor() {
         log.info("ExecutorConfiguration#asyncMicroscopeExecutor start...");
         return getMicroscopeExecutor();
+    }
+
+    @Bean
+    public Executor asyncSchedulerExecutor(){
+        log.info("ExecutorConfiguration#asyncSchedulerExecutor start...");
+        return getDefaultExecutor();
     }
 
 
