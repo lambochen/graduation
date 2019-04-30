@@ -17,7 +17,7 @@ import java.util.List;
 @Slf4j
 @Service
 public class RecommenderConvertorImpl implements RecommenderConvertor {
-    
+
     @Override
     public List<Goods> convert(List<RecommendedItem> itemList) {
         return null;

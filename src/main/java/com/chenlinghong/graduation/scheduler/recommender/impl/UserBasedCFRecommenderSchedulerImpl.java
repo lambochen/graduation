@@ -2,6 +2,7 @@ package com.chenlinghong.graduation.scheduler.recommender.impl;
 
 import com.chenlinghong.graduation.common.PageDto;
 import com.chenlinghong.graduation.constant.NumericConstant;
+import com.chenlinghong.graduation.converter.RecommenderConvertor;
 import com.chenlinghong.graduation.recommender.cf.UserBasedCFRecommender;
 import com.chenlinghong.graduation.repository.domain.Goods;
 import com.chenlinghong.graduation.repository.domain.User;
@@ -38,6 +39,9 @@ public class UserBasedCFRecommenderSchedulerImpl implements UserBasedCFRecommend
 
     @Autowired
     private RedisKeyUtil redisKeyUtil;
+
+    @Autowired
+    RecommenderConvertor recommenderConvertor;
 
     /**
      * 基于用户推荐器
@@ -100,11 +104,12 @@ public class UserBasedCFRecommenderSchedulerImpl implements UserBasedCFRecommend
                     "recommendNum={}, recommendData={}.", userId, recommendNum, recommendData);
             return null;
         }
-        PageDto<Goods> result = new PageDto<>();
         /**
          * 转换数据
          */
-        List<Goods> goodsList =
+        List<Goods> goodsList = recommenderConvertor.convert(recommendData);
+        PageDto<Goods> result = new PageDto<>(goodsList);
+        return result;
     }
 
     /**
