@@ -66,10 +66,13 @@ public class HomePageServiceImpl implements HomePageService {
              * 3、SlopeOne
              */
             /**
-             * TODO 基于用户的协同过滤推荐，协商推荐条数
+             * 基于用户的协同过滤推荐，推荐3条
              */
-            RecommendDto userBasedRecommendDto = userBasedCFRecommenderScheduler.recommend(userId);
+            RecommendDto userBasedRecommendDto = userBasedCFRecommenderScheduler.recommend(userId, NumericConstant.THREE);
             result.setUserBasedRecommend(userBasedRecommendDto);
+            /**
+             * 基于物品的协同过滤推荐
+             */
 
         }
 
