@@ -103,6 +103,7 @@
 |   name    |   varchar(16) |   String  |   目录名称    |   not null    |   |
 |   description |   varchar(256)    |   String  |   描述  |   null    |   |
 |   catalog_one_id  |   int  |   Long   |   外键依赖一级目录    |   FK(goods_catalog_one), not null |   |
+|   season  |   int  |   Integer   |   时令    |   0表示不区分,1-12表示具体月份 |   |
 
 其它说明：
 
@@ -131,6 +132,7 @@
 |   goods_info  |   text    |   String  |   商品信息(富文本)    |   not null    |   |
 |   price   |   decimal     |   Double  |   价格      |   null    |   |
 |   remarks     |   varchar(512)    |   String      |   备注      |   null    |   |
+|   cover_img     |   varchar(256)    |   String      |   封面图片      |   null    |   |
 |   business_id    |   bigint |   Long  |   商户ID  |   FK(business_info), not null    |   |
 
 

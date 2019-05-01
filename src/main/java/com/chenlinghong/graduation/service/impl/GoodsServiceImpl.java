@@ -1,6 +1,7 @@
 package com.chenlinghong.graduation.service.impl;
 
 import com.chenlinghong.graduation.common.PageDto;
+import com.chenlinghong.graduation.constant.NumericConstant;
 import com.chenlinghong.graduation.repository.dao.GoodsDao;
 import com.chenlinghong.graduation.repository.domain.Goods;
 import com.chenlinghong.graduation.service.GoodsCatalogService;
@@ -71,6 +72,20 @@ public class GoodsServiceImpl implements GoodsService {
         List<Goods> goodsList = goodsDao.listByName(name, (pageNo - 1) * pageSize, pageSize);
         long count = goodsDao.countByName(name);
         return new PageDto<>(goodsList, pageNo, pageSize, count);
+    }
+
+    @Override
+    public boolean isNotGoods(long goodsId) {
+        return !isGoods(goodsId);
+    }
+
+    @Override
+    public boolean isGoods(long goodsId) {
+        int goodsCount = goodsDao.countByGoodsId(goodsId);
+        if (goodsCount == NumericConstant.ONE) {
+            return true;
+        }
+        return false;
     }
 
     @Override

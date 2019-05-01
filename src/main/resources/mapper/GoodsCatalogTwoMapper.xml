@@ -12,10 +12,11 @@
         <result column="name" property="name" jdbcType="VARCHAR" javaType="String"/>
         <result column="description" property="description" jdbcType="VARCHAR" javaType="String"/>
         <result column="catalog_one_id" property="catalogOneId" jdbcType="INTEGER" javaType="Long"/>
+        <result column="season" property="season" jdbcType="INTEGER" javaType="Integer"/>
     </resultMap>
 
     <sql id="Base_Column_List">
-        gmt_create, gmt_modified, deleted, `name`, `description`, `catalog_one_id`
+        gmt_create, gmt_modified, deleted, `name`, `description`, `catalog_one_id`, `season`
     </sql>
 
     <sql id="column_list">
@@ -36,7 +37,7 @@
         <include refid="Base_Column_List"/>
         )
         values(
-        <include refid="value_list"/>,#{name},#{description}, #{catalogOneId}
+        <include refid="value_list"/>,#{name},#{description}, #{catalogOneId}, #{season}
         )
     </insert>
 

@@ -1,9 +1,9 @@
 package com.chenlinghong.graduation.api.controller;
 
+import com.chenlinghong.graduation.api.util.SessionUtil;
 import com.chenlinghong.graduation.api.vo.HomePageVo;
 import com.chenlinghong.graduation.common.ResultUtil;
 import com.chenlinghong.graduation.common.ResultVo;
-import com.chenlinghong.graduation.microscope.util.SessionUtil;
 import com.chenlinghong.graduation.service.HomePageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,7 +23,7 @@ import javax.servlet.http.HttpServletRequest;
 public class HomePageController {
 
     @Autowired
-    private SessionUtil microscopeSessionUtil;
+    private SessionUtil sessionUtil;
 
     @Autowired
     private HomePageService homePageService;
@@ -36,7 +36,7 @@ public class HomePageController {
      */
     @GetMapping(value = {"/home", "/recommend"})
     public ResultVo<HomePageVo> home(HttpServletRequest request) {
-        long userId = microscopeSessionUtil.getUserId(request);
+        long userId = sessionUtil.getUserIdNoCheck(request);
         HomePageVo result = homePageService.get(userId);
         return ResultUtil.success(result);
     }

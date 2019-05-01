@@ -79,6 +79,7 @@ create table if not exists `goods_catalog_two` (
     `name` varchar(16) null comment '目录名称',
     `description` varchar(256) null comment '描述',
     `catalog_one_id` int not null comment '一级目录ID，FK(goods_catalog_one)',
+    `season` int null default '0' comment '时令，0代表尚未分类',
     primary key (`id`),
     unique key `uk_name`(`name`),
     index `idx_name`(`name`)
