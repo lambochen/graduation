@@ -36,6 +36,11 @@ public class GoodsOrder extends BaseDomain {
     private Long goodsId;
 
     /**
+     * 商品基本信息
+     */
+    private Goods goods;
+
+    /**
      * 用户ID
      */
     private Long userId;
