@@ -1,7 +1,7 @@
-package com.chenlinghong.graduation.microscope.calculation.impl;
+package com.chenlinghong.graduation.calculator.impl;
 
 import com.chenlinghong.graduation.enums.UserBehaviorEnum;
-import com.chenlinghong.graduation.microscope.calculation.UserGoodsPreferenceCalculation;
+import com.chenlinghong.graduation.calculator.UserGoodsPreferenceCalculation;
 import com.chenlinghong.graduation.microscope.sniffer.util.UserBehaviorUtil;
 import com.chenlinghong.graduation.repository.domain.UserBehavior;
 import com.chenlinghong.graduation.repository.domain.UserPreference;

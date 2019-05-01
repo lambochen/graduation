@@ -1,4 +1,4 @@
-package com.chenlinghong.graduation.microscope.calculation;
+package com.chenlinghong.graduation.calculator;
 
 import com.chenlinghong.graduation.repository.domain.UserBehavior;
 import com.chenlinghong.graduation.repository.domain.UserPreference;
