@@ -150,7 +150,8 @@
     </select>
 
     <select id="listByName" resultMap="BaseResultMap">
-        select <include refid="column_list"></include>
+        select
+        <include refid="column_list"></include>
         from goods
         where deleted = '0' and name like '%${name}%'
         order by id desc
@@ -168,6 +169,12 @@
         select count(id)
         from goods
         where deleted = '0' and name like '%${name}%'
+    </select>
+
+    <select id="countByGoodsId" resultType="int">
+        select count(distinct id)
+        from goods
+        where deleted = '0' and id = #{goodsId}
     </select>
 
     <update id="update" parameterType="com.chenlinghong.graduation.repository.domain.Goods">
