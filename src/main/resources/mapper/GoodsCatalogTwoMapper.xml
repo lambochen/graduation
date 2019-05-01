@@ -109,4 +109,14 @@
         deleted = "0" and catalog_one_id = #{catalogOneId}
     </select>
 
+    <select id="listBySeason" parameterType="int" resultMap="BaseResultMap">
+        SELECT
+        <include refid="column_list"/>
+        FROM
+        goods_catalog_two
+        WHERE
+        deleted = "0" and season = #{season}
+        order by id desc
+    </select>
+
 </mapper>
