@@ -1,6 +1,6 @@
 package com.chenlinghong.graduation.converter.impl;
 
-import com.chenlinghong.graduation.converter.RecommenderConvertor;
+import com.chenlinghong.graduation.converter.RecommenderConverter;
 import com.chenlinghong.graduation.repository.domain.Goods;
 import com.chenlinghong.graduation.scheduler.recommender.dto.RecommendGoodsDto;
 import com.chenlinghong.graduation.service.GoodsService;
@@ -20,7 +20,7 @@ import java.util.List;
  */
 @Slf4j
 @Service
-public class RecommenderConvertorImpl implements RecommenderConvertor {
+public class RecommenderConverterImpl implements RecommenderConverter {
 
     @Autowired
     private GoodsService goodsService;

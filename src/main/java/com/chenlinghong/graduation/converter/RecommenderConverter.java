@@ -11,7 +11,7 @@ import java.util.List;
  * @Date 2019/4/30 23:08
  * @Version V1.0
  */
-public interface RecommenderConvertor extends Converter {
+public interface RecommenderConverter extends Converter {
 
     /**
      * 由推荐Item转换为Goods列表
