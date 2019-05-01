@@ -88,6 +88,15 @@ public interface GoodsDao extends IBaseDao<Goods> {
      */
     long countByName(@Param("name") String name);
 
+
+    /**
+     * 通过ID列表获取
+     *
+     * @param goodsIdList
+     * @return
+     */
+    List<Goods> listByIdList(@Param("goodsIdList") List<Long> goodsIdList);
+
     /**
      * 根据商品ID获取记录数
      *

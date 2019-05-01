@@ -1,4 +1,4 @@
-package com.chenlinghong.graduation.microscope.calculation;
+package com.chenlinghong.graduation.calculator;
 
 /**
  * @Description 偏好计算器

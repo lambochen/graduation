@@ -87,4 +87,9 @@ public class GoodsServiceImpl implements GoodsService {
         }
         return false;
     }
+
+    @Override
+    public List<Goods> listByIdList(List<Long> goodsIdList) {
+        return goodsDao.listByIdList(goodsIdList);
+    }
 }

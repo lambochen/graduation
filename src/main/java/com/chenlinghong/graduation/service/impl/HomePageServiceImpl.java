@@ -5,10 +5,15 @@ import com.chenlinghong.graduation.common.PageDto;
 import com.chenlinghong.graduation.constant.NumericConstant;
 import com.chenlinghong.graduation.enums.CheckUserTypeEnum;
 import com.chenlinghong.graduation.repository.domain.GoodsCatalogOne;
+import com.chenlinghong.graduation.scheduler.recommender.ItemBasedCFRecommenderScheduler;
+import com.chenlinghong.graduation.scheduler.recommender.SlopeOneCFRecommenderScheduler;
+import com.chenlinghong.graduation.scheduler.recommender.UserBasedCFRecommenderScheduler;
+import com.chenlinghong.graduation.scheduler.recommender.dto.RecommendDto;
 import com.chenlinghong.graduation.service.GoodsCatalogService;
 import com.chenlinghong.graduation.service.GoodsService;
 import com.chenlinghong.graduation.service.HomePageService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.mahout.cf.taste.common.TasteException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,8 +33,26 @@ public class HomePageServiceImpl implements HomePageService {
     @Autowired
     private GoodsService goodsService;
 
+    /**
+     * 基于用户的协同过滤推荐
+     */
+    @Autowired
+    private UserBasedCFRecommenderScheduler userBasedCFRecommenderScheduler;
+
+    /**
+     * 基于物品的协同过滤推荐
+     */
+    @Autowired
+    private ItemBasedCFRecommenderScheduler itemBasedCFRecommenderScheduler;
+
+    /**
+     * SlopeOne推荐
+     */
+    @Autowired
+    private SlopeOneCFRecommenderScheduler slopeOneCFRecommenderScheduler;
+
     @Override
-    public HomePageVo get(long userId) {
+    public HomePageVo get(long userId) throws TasteException {
         HomePageVo result = new HomePageVo();
         /**
          * 获取目录信息
@@ -50,23 +73,42 @@ public class HomePageServiceImpl implements HomePageService {
             /**
              * TODO 冷启动问题
              */
-        } else if (userCheckType == CheckUserTypeEnum.OLD_USER) {
-            // 老用户
+        }
+        if (userCheckType == CheckUserTypeEnum.OLD_USER) {
             /**
-             * TODO 个性化推荐
+             * 老用户
+             *
              * 1、基于用户
              * 2、基于物品
              * 3、SlopeOne
              */
-        } else {
-            // 非登录用户
             /**
-             * TODO 非登录用户推荐
-             * 1、热门推荐、时令推荐
-             * 2、聚类推荐
-             * 3、拟用户推荐、随机推荐
+             * 基于用户的协同过滤推荐，推荐3条
              */
+            RecommendDto userBasedRecommendDto =
+                    userBasedCFRecommenderScheduler.recommend(userId, NumericConstant.THREE);
+            result.setUserBasedRecommend(userBasedRecommendDto);
+            /**
+             * 基于物品的协同过滤推荐
+             */
+            RecommendDto itemBasedRecommendDto =
+                    itemBasedCFRecommenderScheduler.recommend(userId, NumericConstant.THREE);
+            result.setItemBasedRecommend(itemBasedRecommendDto);
+            /**
+             * SlopeOne推荐
+             */
+            RecommendDto slopeOneCFRecommendDto =
+                    slopeOneCFRecommenderScheduler.recommend(userId, NumericConstant.THREE);
+            result.setSlopeOneRecommend(slopeOneCFRecommendDto);
         }
+
+        // 非登录用户
+        /**
+         * TODO 非登录用户推荐
+         * 1、热门推荐、时令推荐
+         * 2、聚类推荐
+         * 3、拟用户推荐、随机推荐
+         */
         return null;
     }
 

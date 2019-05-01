@@ -11,7 +11,7 @@ import java.util.List;
  * @Date 2019/4/28 9:26
  * @Version V1.0
  */
-public interface MahoutRecommender {
+public interface MahoutRecommender extends Recommender {
 
 
     /**

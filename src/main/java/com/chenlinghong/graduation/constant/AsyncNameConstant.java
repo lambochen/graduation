@@ -27,4 +27,9 @@ public final class AsyncNameConstant {
      * 显微镜 异步执行器
      */
     public static final String MICROSCOPE = "asyncMicroscopeExecutor";
+
+    /**
+     * 执行器 异步执行器
+     */
+    public static final String SCHEDULER = "asyncSchedulerExecutor";
 }

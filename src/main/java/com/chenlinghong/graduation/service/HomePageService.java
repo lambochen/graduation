@@ -1,6 +1,7 @@
 package com.chenlinghong.graduation.service;
 
 import com.chenlinghong.graduation.api.vo.HomePageVo;
+import org.apache.mahout.cf.taste.common.TasteException;
 
 /**
  * @Description 首页
@@ -16,6 +17,6 @@ public interface HomePageService {
      * @param userId 用户ID，可不填
      * @return
      */
-    HomePageVo get(long userId);
+    HomePageVo get(long userId) throws TasteException;
 
 }
