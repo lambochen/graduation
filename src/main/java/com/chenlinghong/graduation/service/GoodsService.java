@@ -41,4 +41,19 @@ public interface GoodsService extends IBaseService<Goods> {
      */
     PageDto<Goods> searchByName(String name, long pageNo, long pageSize);
 
+    /**
+     * 不是合法商品
+     *
+     * @param goodsId
+     * @return
+     */
+    boolean isNotGoods(long goodsId);
+
+    /**
+     * 是合法商品
+     *
+     * @param goodsId
+     * @return
+     */
+    boolean isGoods(long goodsId);
 }

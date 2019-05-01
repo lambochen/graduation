@@ -20,6 +20,10 @@
         <result column="post_city" property="postCity" jdbcType="VARCHAR" javaType="String"/>
         <result column="post_position" property="postPosition" jdbcType="VARCHAR" javaType="String"/>
         <result column="number" property="number" jdbcType="INTEGER" javaType="Integer"/>
+        <association property="goods" column="goods_id"
+                     select="com.chenlinghong.graduation.repository.dao.GoodsDao.getById"
+                     javaType="com.chenlinghong.graduation.repository.domain.Goods">
+        </association>
     </resultMap>
 
     <sql id="Base_Column_List">

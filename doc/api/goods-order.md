@@ -45,6 +45,20 @@
             "name": "test",
             "description": "test",
             "goodsId": 1,
+            "goods": {
+                "id": 1,
+                "gmtCreate": 1556528551000,
+                "gmtModified": 1556528551000,
+                "name": "test",
+                "description": "test",
+                "catalogOneId": 1,
+                "catalogTwoId": 1,
+                "goodsInfo": "test  ",
+                "price": 1,
+                "remarks": "test",
+                "businessInfoId": 1000,
+                "coverImg": "http://pic37.nipic.com/20140113/8800276_184927469000_2.png"
+            },
             "userId": 3,
             "price": 1,
             "remarks": "test",
@@ -79,6 +93,20 @@
                     "name": "test",
                     "description": "test",
                     "goodsId": 1,
+                    "goods": {
+                        "id": 1,
+                        "gmtCreate": 1556528551000,
+                        "gmtModified": 1556528551000,
+                        "name": "test",
+                        "description": "test",
+                        "catalogOneId": 1,
+                        "catalogTwoId": 1,
+                        "goodsInfo": "test  ",
+                        "price": 1,
+                        "remarks": "test",
+                        "businessInfoId": 1000,
+                        "coverImg": "http://pic37.nipic.com/20140113/8800276_184927469000_2.png"
+                    },
                     "userId": 3,
                     "price": 1,
                     "remarks": "test",
@@ -119,6 +147,20 @@
                     "name": "test",
                     "description": "test",
                     "goodsId": 1,
+                    "goods": {
+                        "id": 1,
+                        "gmtCreate": 1556528551000,
+                        "gmtModified": 1556528551000,
+                        "name": "test",
+                        "description": "test",
+                        "catalogOneId": 1,
+                        "catalogTwoId": 1,
+                        "goodsInfo": "test  ",
+                        "price": 1,
+                        "remarks": "test",
+                        "businessInfoId": 1000,
+                        "coverImg": "http://pic37.nipic.com/20140113/8800276_184927469000_2.png"
+                    },
                     "userId": 3,
                     "price": 1,
                     "remarks": "test",
@@ -134,4 +176,3 @@
             "totalCount": 1
         }
     }
-
