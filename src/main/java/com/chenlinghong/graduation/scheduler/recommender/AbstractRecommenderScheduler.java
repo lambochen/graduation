@@ -31,7 +31,7 @@ public abstract class AbstractRecommenderScheduler {
         return recommend(userId, NumericConstant.TEN);
     }
 
-    public RecommendDto recommend(long userId, int recommendNum) throws TasteException {
+    public RecommendDto<RecommendGoodsDto> recommend(long userId, int recommendNum) throws TasteException {
         if (userId <= 0 || recommendNum <= 0) {
             // log.error("UserBasedCFRecommenderScheduler#recommend: param is illegal. userId={}, " +
             //         "recommendNum={}.", userId, recommendNum);
@@ -42,7 +42,7 @@ public abstract class AbstractRecommenderScheduler {
          * 2、获取推荐结果
          */
         // 填充userId
-        RecommendDto<RecommendGoodsDto> result = new RecommendDto<>();
+        RecommendDto result = new RecommendDto<>();
         result.setUserId(userId);
         // 填充User基本信息
         User user = getUser(userId);

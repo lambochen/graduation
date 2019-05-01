@@ -1,9 +1,9 @@
 package com.chenlinghong.graduation.api.vo;
 
 import com.chenlinghong.graduation.common.PageDto;
-import com.chenlinghong.graduation.repository.domain.Goods;
 import com.chenlinghong.graduation.repository.domain.GoodsCatalogOne;
 import com.chenlinghong.graduation.scheduler.recommender.dto.RecommendDto;
+import com.chenlinghong.graduation.scheduler.recommender.dto.RecommendGoodsDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -31,31 +31,31 @@ public class HomePageVo implements Serializable {
     /**
      * 基于用户推荐
      */
-    RecommendDto<Goods> userBasedRecommend;
+    RecommendDto<RecommendGoodsDto> userBasedRecommend;
 
     /**
      * 基于物品推荐
      */
-    RecommendDto<Goods> itemBasedRecommend;
+    RecommendDto<RecommendGoodsDto> itemBasedRecommend;
 
     /**
      * SlopeOne推荐，基于评分推荐
      */
-    RecommendDto<Goods> slopeOneRecommend;
+    RecommendDto<RecommendGoodsDto> slopeOneRecommend;
 
     /**
      * 热门推荐
      */
-    RecommendDto<Goods> popularRecommend;
+    RecommendDto<RecommendGoodsDto> popularRecommend;
 
     /**
      * 时令推荐
      */
-    RecommendDto<Goods> seasonRecommend;
+    RecommendDto<RecommendGoodsDto> seasonRecommend;
 
     /**
      * 基于用户标签的推荐
      */
-    RecommendDto<Goods> userTagBasedRecommend;
+    RecommendDto<RecommendGoodsDto> userTagBasedRecommend;
 
 }
