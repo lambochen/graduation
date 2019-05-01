@@ -183,7 +183,7 @@ public class SessionUtil {
      * @return
      */
     public UserVo getUserVoNoCheck(HttpServletRequest request) {
-        String telephone = getTelephone(request);
+        String telephone = getTelephoneNoCheck(request);
         UserVo result = redisUtil.getUserVo(telephone);
         if (result == null) {
             // 从DB获取数据
@@ -199,7 +199,7 @@ public class SessionUtil {
      * @return
      */
     public User getUserNoCheck(HttpServletRequest request) {
-        UserVo userVo = getUserVo(request);
+        UserVo userVo = getUserVoNoCheck(request);
         return userVo == null ? null : userVo.getUserInfo();
     }
 
