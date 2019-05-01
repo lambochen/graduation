@@ -72,4 +72,9 @@ public class GoodsServiceImpl implements GoodsService {
         long count = goodsDao.countByName(name);
         return new PageDto<>(goodsList, pageNo, pageSize, count);
     }
+
+    @Override
+    public List<Goods> listByIdList(List<Long> goodsIdList) {
+        return goodsDao.listByIdList(goodsIdList);
+    }
 }

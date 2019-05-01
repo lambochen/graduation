@@ -4,17 +4,16 @@ import com.chenlinghong.graduation.common.PageDto;
 import com.chenlinghong.graduation.constant.NumericConstant;
 import com.chenlinghong.graduation.converter.RecommenderConvertor;
 import com.chenlinghong.graduation.recommender.cf.UserBasedCFRecommender;
-import com.chenlinghong.graduation.repository.domain.Goods;
 import com.chenlinghong.graduation.repository.domain.User;
 import com.chenlinghong.graduation.scheduler.recommender.UserBasedCFRecommenderScheduler;
 import com.chenlinghong.graduation.scheduler.recommender.dto.RecommendDto;
+import com.chenlinghong.graduation.scheduler.recommender.dto.RecommendGoodsDto;
 import com.chenlinghong.graduation.util.MyRedisUtil;
 import com.chenlinghong.graduation.util.RedisKeyUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.mahout.cf.taste.common.TasteException;
 import org.apache.mahout.cf.taste.recommender.RecommendedItem;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -31,7 +30,7 @@ import java.util.List;
 @Service
 public class UserBasedCFRecommenderSchedulerImpl implements UserBasedCFRecommenderScheduler {
 
-    @Qualifier(value = "dataSource")
+    @Autowired
     private DataSource dataSource;
 
     @Autowired
@@ -73,7 +72,7 @@ public class UserBasedCFRecommenderSchedulerImpl implements UserBasedCFRecommend
                     "recommendNum={}.", userId, recommendNum);
             return null;
         }
-        RecommendDto<Goods> result = new RecommendDto<>();
+        RecommendDto<RecommendGoodsDto> result = new RecommendDto<>();
         result.setUserId(userId);
         /**
          * 填充User
@@ -94,7 +93,7 @@ public class UserBasedCFRecommenderSchedulerImpl implements UserBasedCFRecommend
      * @param userId
      * @return
      */
-    private PageDto<Goods> recommendByUserCF(final long userId, final int recommendNum) throws TasteException {
+    private PageDto<RecommendGoodsDto> recommendByUserCF(final long userId, final int recommendNum) throws TasteException {
         /**
          * 获取推荐结果
          */
@@ -107,8 +106,8 @@ public class UserBasedCFRecommenderSchedulerImpl implements UserBasedCFRecommend
         /**
          * 转换数据
          */
-        List<Goods> goodsList = recommenderConvertor.convert(recommendData);
-        PageDto<Goods> result = new PageDto<>(goodsList);
+        List<RecommendGoodsDto> goodsList = recommenderConvertor.convert(recommendData);
+        PageDto<RecommendGoodsDto> result = new PageDto<>(goodsList);
         return result;
     }
 

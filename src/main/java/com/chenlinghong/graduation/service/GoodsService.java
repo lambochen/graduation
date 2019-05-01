@@ -3,6 +3,8 @@ package com.chenlinghong.graduation.service;
 import com.chenlinghong.graduation.common.PageDto;
 import com.chenlinghong.graduation.repository.domain.Goods;
 
+import java.util.List;
+
 /**
  * @Description 商品基本信息
  * @Author chenlinghong
@@ -41,4 +43,11 @@ public interface GoodsService extends IBaseService<Goods> {
      */
     PageDto<Goods> searchByName(String name, long pageNo, long pageSize);
 
+    /**
+     * 获取商品列表
+     *
+     * @param goodsIdList 商品ID列表
+     * @return
+     */
+    List<Goods> listByIdList(List<Long> goodsIdList);
 }

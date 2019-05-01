@@ -88,6 +88,15 @@ public interface GoodsDao extends IBaseDao<Goods> {
      */
     long countByName(@Param("name") String name);
 
+
+    /**
+     * 通过ID列表获取
+     *
+     * @param goodsIdList
+     * @return
+     */
+    List<Goods> listByIdList(@Param("goodsIdList") List<Long> goodsIdList);
+
     /**
      * 更新价格
      *
@@ -96,6 +105,5 @@ public interface GoodsDao extends IBaseDao<Goods> {
      * @return
      */
     long updatePrice(@Param("price") double price, @Param("id") long id);
-
 
 }

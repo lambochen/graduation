@@ -1,6 +1,6 @@
 package com.chenlinghong.graduation.converter;
 
-import com.chenlinghong.graduation.repository.domain.Goods;
+import com.chenlinghong.graduation.scheduler.recommender.dto.RecommendGoodsDto;
 import org.apache.mahout.cf.taste.recommender.RecommendedItem;
 
 import java.util.List;
@@ -19,6 +19,6 @@ public interface RecommenderConvertor extends Converter {
      * @param itemList  推荐系统推荐结果
      * @return
      */
-    List<Goods> convert(List<RecommendedItem> itemList);
+    List<RecommendGoodsDto> convert(List<RecommendedItem> itemList);
 
 }
