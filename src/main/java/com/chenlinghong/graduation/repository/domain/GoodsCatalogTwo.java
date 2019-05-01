@@ -30,6 +30,11 @@ public class GoodsCatalogTwo extends BaseDomain {
      */
     private Long catalogOneId;
 
+    /**
+     * 时令
+     */
+    private Integer season;
+
     public GoodsCatalogTwo(String name, long catalogOneId) {
         this.name = name;
         this.catalogOneId = catalogOneId;

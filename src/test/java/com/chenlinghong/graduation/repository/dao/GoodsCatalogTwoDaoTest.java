@@ -20,7 +20,7 @@ public class GoodsCatalogTwoDaoTest {
 
     @Test
     public void insert() {
-        GoodsCatalogTwo catalogTwo = new GoodsCatalogTwo("test-1", 1);
+        GoodsCatalogTwo catalogTwo = new GoodsCatalogTwo("test", 1);
         int result = catalogTwoDao.insert(catalogTwo);
         Assert.assertEquals(1, result);
         System.out.println(result);
