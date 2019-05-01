@@ -144,4 +144,63 @@ public class SessionUtil {
         }
         return user.getId();
     }
+
+
+    /**
+     * 以下部分为不进行校验用户登录
+     */
+
+
+    /**
+     * 获取用户ID
+     *
+     * @param request
+     * @return
+     */
+    public long getUserIdNoCheck(HttpServletRequest request) {
+        User user = getUserNoCheck(request);
+        return user == null ? -1 : user.getId();
+    }
+
+    /**
+     * 获取电话号码
+     *
+     * @param request
+     * @return
+     */
+    public String getTelephoneNoCheck(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        if (session.isNew() == false) {
+            return (String) session.getAttribute(SessionConstant.TELEPHONE);
+        }
+        return null;
+    }
+
+    /**
+     * 获取UserVO对象
+     *
+     * @param request
+     * @return
+     */
+    public UserVo getUserVoNoCheck(HttpServletRequest request) {
+        String telephone = getTelephone(request);
+        UserVo result = redisUtil.getUserVo(telephone);
+        if (result == null) {
+            // 从DB获取数据
+            result = userService.getUserVoByTelephoneNotPushCache(telephone);
+        }
+        return result;
+    }
+
+    /**
+     * 获取user对象
+     *
+     * @param request
+     * @return
+     */
+    public User getUserNoCheck(HttpServletRequest request) {
+        UserVo userVo = getUserVo(request);
+        return userVo == null ? null : userVo.getUserInfo();
+    }
+
 }

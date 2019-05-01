@@ -62,6 +62,7 @@ public enum ErrorEnum {
      */
     COMMENT_INSERT_ERROR(6000, "添加评论失败"),
     FAILED_TO_INSERT_SHOPPING_CART(6001, "添加购物车失败"),
+    NO_GOODS(6002, "商品不存在"),
 
 
     /**
