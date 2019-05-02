@@ -1,68 +1,29 @@
 package com.chenlinghong.graduation.recommender.season;
 
-import com.chenlinghong.graduation.common.PageDto;
-import com.chenlinghong.graduation.constant.NumericConstant;
-import com.chenlinghong.graduation.recommender.GraduationRecommender;
-import com.chenlinghong.graduation.recommender.data.GraduationRecommendItem;
-import com.chenlinghong.graduation.repository.domain.GoodsCatalogTwo;
-import com.chenlinghong.graduation.service.GoodsCatalogService;
-import com.chenlinghong.graduation.service.GoodsService;
-import lombok.extern.slf4j.Slf4j;
-import org.apache.mahout.cf.taste.common.TasteException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import java.util.List;
+import com.chenlinghong.graduation.recommender.Recommender;
+import com.chenlinghong.graduation.scheduler.recommender.dto.RecommendDto;
+import com.chenlinghong.graduation.scheduler.recommender.dto.RecommendGoodsDto;
 
 /**
- * @Description 基于时令推荐
+ * @Description 时令推荐
  * @Author chenlinghong
- * @Date 2019/5/1 23:18
+ * @Date 2019/5/2 15:56
  * @Version V1.0
  */
-@Slf4j
-@Service
-public class SeasonBasedRecommender implements GraduationRecommender {
-
-    @Autowired
-    private GoodsCatalogService goodsCatalogService;
-
-    @Autowired
-    private GoodsService goodsService;
+public interface SeasonBasedRecommender extends Recommender {
 
     /**
-     * 无参构造
+     * 推荐默认条数
+     * @return
      */
-    public SeasonBasedRecommender() {
-
-    }
-
-    @Override
-    public List<GraduationRecommendItem> recommendGraduation(long userId) throws TasteException {
-        return recommendGraduation(userId, NumericConstant.TEN);
-    }
-
-    @Override
-    public List<GraduationRecommendItem> recommendGraduation(long userId, int recommendNum) throws TasteException {
-        /**
-         * 获取时令
-         */
-        int currentSeason = getCurrentSeason();
-        /**
-         * 获取当前时令种类
-         */
-        PageDto<GoodsCatalogTwo> goodsCatalogTwoList = goodsCatalogService.listBySeason(currentSeason);
-
-        return null;
-    }
+    RecommendDto<RecommendGoodsDto> recommend();
 
     /**
-     * 获取当前时令,
+     * 推荐指定条数
      *
-     * @return 1-12表示具体月份
+     * @param recommendNum 推荐条数
+     * @return
      */
-    private int getCurrentSeason() {
-        return 0;
-    }
+    RecommendDto<RecommendGoodsDto> recommend(final int recommendNum);
 
 }

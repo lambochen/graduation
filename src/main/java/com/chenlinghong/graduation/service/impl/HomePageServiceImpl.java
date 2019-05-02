@@ -4,13 +4,13 @@ import com.chenlinghong.graduation.api.vo.HomePageVo;
 import com.chenlinghong.graduation.common.PageDto;
 import com.chenlinghong.graduation.constant.NumericConstant;
 import com.chenlinghong.graduation.enums.CheckUserTypeEnum;
+import com.chenlinghong.graduation.recommender.season.SeasonBasedRecommender;
 import com.chenlinghong.graduation.repository.domain.GoodsCatalogOne;
 import com.chenlinghong.graduation.scheduler.recommender.ItemBasedCFRecommenderScheduler;
 import com.chenlinghong.graduation.scheduler.recommender.SlopeOneCFRecommenderScheduler;
 import com.chenlinghong.graduation.scheduler.recommender.UserBasedCFRecommenderScheduler;
 import com.chenlinghong.graduation.scheduler.recommender.dto.RecommendDto;
 import com.chenlinghong.graduation.service.GoodsCatalogService;
-import com.chenlinghong.graduation.service.GoodsService;
 import com.chenlinghong.graduation.service.HomePageService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.mahout.cf.taste.common.TasteException;
@@ -30,9 +30,6 @@ public class HomePageServiceImpl implements HomePageService {
     @Autowired
     private GoodsCatalogService goodsCatalogService;
 
-    @Autowired
-    private GoodsService goodsService;
-
     /**
      * 基于用户的协同过滤推荐
      */
@@ -50,6 +47,12 @@ public class HomePageServiceImpl implements HomePageService {
      */
     @Autowired
     private SlopeOneCFRecommenderScheduler slopeOneCFRecommenderScheduler;
+
+    /**
+     * 时令推荐
+     */
+    @Autowired
+    private SeasonBasedRecommender seasonBasedRecommender;
 
     @Override
     public HomePageVo get(long userId) throws TasteException {
@@ -109,6 +112,12 @@ public class HomePageServiceImpl implements HomePageService {
          * 2、聚类推荐
          * 3、拟用户推荐、随机推荐
          */
+        /**
+         * 时令推荐
+         */
+        RecommendDto seasonRecommendDto = seasonBasedRecommender.recommend(NumericConstant.THREE);
+        result.setSeasonRecommend(seasonRecommendDto);
+
         return null;
     }
 

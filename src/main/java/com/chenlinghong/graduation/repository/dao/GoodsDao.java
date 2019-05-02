@@ -1,6 +1,7 @@
 package com.chenlinghong.graduation.repository.dao;
 
 import com.chenlinghong.graduation.repository.domain.Goods;
+import com.chenlinghong.graduation.repository.domain.GoodsCatalogTwo;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -114,4 +115,12 @@ public interface GoodsDao extends IBaseDao<Goods> {
      */
     long updatePrice(@Param("price") double price, @Param("id") long id);
 
+    /**
+     * 通过二级目录列表获取
+     *
+     * @param catalogTwoList
+     * @param count
+     * @return
+     */
+    List<Goods> listByCatalogTwoList(List<GoodsCatalogTwo> catalogTwoList, long count);
 }
