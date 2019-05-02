@@ -1,6 +1,6 @@
 package com.chenlinghong.graduation.recommender.cf;
 
-import com.chenlinghong.graduation.recommender.AbstractGraduationMahoutRecommender;
+import com.chenlinghong.graduation.recommender.AbstractMahoutRecommender;
 
 /**
  * https://www.php3.cn/a/178.html
@@ -26,6 +26,6 @@ import com.chenlinghong.graduation.recommender.AbstractGraduationMahoutRecommend
  * @Date 2019/4/28 16:38
  * @Version V1.0
  */
-public abstract class AbstractSlopeOneRecommender extends AbstractGraduationMahoutRecommender {
+public abstract class AbstractSlopeOneRecommender extends AbstractMahoutRecommender {
 
 }

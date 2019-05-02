@@ -1,9 +1,7 @@
 package com.chenlinghong.graduation.recommender;
 
-import com.chenlinghong.graduation.recommender.data.GraduationRecommendItem;
-import org.apache.mahout.cf.taste.common.TasteException;
-
-import java.util.List;
+import com.chenlinghong.graduation.scheduler.recommender.dto.RecommendDto;
+import com.chenlinghong.graduation.scheduler.recommender.dto.RecommendGoodsDto;
 
 /**
  * @Description 推荐器
@@ -14,21 +12,36 @@ import java.util.List;
 public interface GraduationRecommender extends Recommender {
 
     /**
-     * 采用默认的紧邻计算，推荐默认条数据
+     * 推荐默认条数
      *
-     * @param userId
      * @return
      */
-    List<GraduationRecommendItem> recommendGraduation(final long userId) throws TasteException;
+    RecommendDto<RecommendGoodsDto> recommend();
 
     /**
-     * 指定推荐数目
+     * 推荐指定条数
      *
-     * @param userId
-     * @param recommendNum
+     * @param recommendNum 推荐条数
      * @return
      */
-    List<GraduationRecommendItem> recommendGraduation(final long userId, final int recommendNum) throws TasteException;
+    RecommendDto<RecommendGoodsDto> recommend(final int recommendNum);
+
+    /**
+     * 推荐默认条数
+     *
+     * @param userId 用户ID
+     * @return
+     */
+    RecommendDto<RecommendGoodsDto> recommend(final long userId);
+
+    /**
+     * 推荐指定条数
+     *
+     * @param userId       用户ID
+     * @param recommendNum 推荐条数
+     * @return
+     */
+    RecommendDto<RecommendGoodsDto> recommend(final long userId, final int recommendNum);
 
 
 }

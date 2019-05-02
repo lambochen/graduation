@@ -1,6 +1,6 @@
 package com.chenlinghong.graduation.recommender.cf;
 
-import com.chenlinghong.graduation.recommender.AbstractGraduationMahoutRecommender;
+import com.chenlinghong.graduation.recommender.AbstractMahoutRecommender;
 import org.apache.mahout.cf.taste.neighborhood.UserNeighborhood;
 import org.apache.mahout.cf.taste.similarity.UserSimilarity;
 
@@ -10,7 +10,7 @@ import org.apache.mahout.cf.taste.similarity.UserSimilarity;
  * @Date 2019/4/27 22:45
  * @Version V1.0
  */
-public abstract class AbstractUserBasedRecommender extends AbstractGraduationMahoutRecommender {
+public abstract class AbstractUserBasedRecommender extends AbstractMahoutRecommender {
 
     /**
      * user similarity matrix

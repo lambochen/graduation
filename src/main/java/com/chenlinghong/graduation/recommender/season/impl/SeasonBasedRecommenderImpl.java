@@ -2,6 +2,7 @@ package com.chenlinghong.graduation.recommender.season.impl;
 
 import com.chenlinghong.graduation.common.PageDto;
 import com.chenlinghong.graduation.constant.NumericConstant;
+import com.chenlinghong.graduation.recommender.AbstractGraduationRecommender;
 import com.chenlinghong.graduation.recommender.season.SeasonBasedRecommender;
 import com.chenlinghong.graduation.repository.domain.Goods;
 import com.chenlinghong.graduation.repository.domain.GoodsCatalogTwo;
@@ -9,14 +10,12 @@ import com.chenlinghong.graduation.scheduler.recommender.dto.RecommendDto;
 import com.chenlinghong.graduation.scheduler.recommender.dto.RecommendGoodsDto;
 import com.chenlinghong.graduation.service.GoodsCatalogService;
 import com.chenlinghong.graduation.service.GoodsService;
-import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 
 /**
  * @Description 基于时令推荐
@@ -26,7 +25,7 @@ import java.util.List;
  */
 @Slf4j
 @Service
-public class SeasonBasedRecommenderImpl implements SeasonBasedRecommender {
+public class SeasonBasedRecommenderImpl extends AbstractGraduationRecommender implements SeasonBasedRecommender {
 
     @Autowired
     private GoodsCatalogService goodsCatalogService;
@@ -65,24 +64,14 @@ public class SeasonBasedRecommenderImpl implements SeasonBasedRecommender {
         return converter(goodsPageDto);
     }
 
-    /**
-     * 数据转换
-     *
-     * @param goodsPageDto
-     * @return
-     */
-    private RecommendDto<RecommendGoodsDto> converter(PageDto<Goods> goodsPageDto) {
-        RecommendDto<RecommendGoodsDto> result = new RecommendDto<>();
-        List<RecommendGoodsDto> data = Lists.newArrayList();
-        if (goodsPageDto != null) {
-            for (Goods goods : goodsPageDto.getData()) {
-                RecommendGoodsDto item = new RecommendGoodsDto();
-                item.setGoods(goods);
-                data.add(item);
-            }
-        }
-        result.setData(new PageDto<>(data));
-        return result;
+    @Override
+    public RecommendDto<RecommendGoodsDto> recommend(long userId) {
+        return null;
+    }
+
+    @Override
+    public RecommendDto<RecommendGoodsDto> recommend(long userId, int recommendNum) {
+        return null;
     }
 
     /**
