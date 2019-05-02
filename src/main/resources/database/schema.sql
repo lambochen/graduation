@@ -241,6 +241,7 @@ create table if not exists `recommend_ranking_goods` (
     `goods_id` bigint not null comment '商品ID【FK(goods)】',
     `ranking` int not null default '0' comment '推荐次数',
     primary key (`id`),
+    key `idx_goods` (`goods_id`),
     unique key `uk_goods` (`goods_id`)
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 DEFAULT CHARSET = utf8mb4 COMMENT = '物品推荐排行榜表';
 
