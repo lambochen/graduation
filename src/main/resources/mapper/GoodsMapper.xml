@@ -15,13 +15,14 @@
         <result column="catalog_one_id" property="catalogOneId" jdbcType="INTEGER" javaType="Integer"/>
         <result column="catalog_two_id" property="catalogTwoId" jdbcType="INTEGER" javaType="Integer"/>
         <result column="goods_info" property="goodsInfo" jdbcType="VARCHAR" javaType="String"/>
+        <result column="cover_img" property="coverImg" jdbcType="VARCHAR" javaType="String"/>
         <result column="price" property="price" jdbcType="DECIMAL" javaType="Double"/>
         <result column="business_id" property="businessInfoId" jdbcType="BIGINT" javaType="Long"/>
     </resultMap>
 
     <sql id="Base_Column_List">
         gmt_create, gmt_modified, deleted, `name`, description, remarks, catalog_one_id, catalog_two_id
-        , goods_info, price, business_id
+        , goods_info, price, business_id, cover_img
     </sql>
 
     <sql id="column_list">
@@ -38,7 +39,7 @@
         <include refid="Base_Column_List"/>
         )
         values(current_timestamp, current_timestamp, "0", #{name}, #{description}, #{remarks}, #{catalogOneId},
-        #{catalogTwoId}, #{goodsInfo}, #{price}, #{businessInfoId} )
+        #{catalogTwoId}, #{goodsInfo}, #{price}, #{businessInfoId}, #{coverImg})
     </insert>
 
     <update id="deleteById">
@@ -149,7 +150,8 @@
     </select>
 
     <select id="listByName" resultMap="BaseResultMap">
-        select <include refid="column_list"></include>
+        select
+        <include refid="column_list"></include>
         from goods
         where deleted = '0' and name like '%${name}%'
         order by id desc
@@ -169,13 +171,43 @@
         where deleted = '0' and name like '%${name}%'
     </select>
 
+    <select id="countByGoodsId" resultType="int">
+        select count(distinct id)
+        from goods
+        where deleted = '0' and id = #{goodsId}
+    </select>
+
+    <select id="listByIdList" resultMap="BaseResultMap">
+        select <include refid="column_list"></include>
+        from goods
+        where deleted = '0'
+        <foreach collection="goodsIdList" item="goodsId" separator=" or " open=" and ( " close=" )">
+            id = #{goodsId}
+        </foreach>
+        order by id desc
+    </select>
+
+    <select id="listByCatalogTwoList" resultMap="BaseResultMap">
+        select <include refid="column_list"></include>
+        from goods
+        where deleted = '0'
+        <foreach collection="catalogTwoList" item="item" separator=" or " open=" and ( " close=" )">
+            catalog_two_id = #{item.id}
+        </foreach>
+        order by id desc
+        limit 0,#{count}
+    </select>
+
     <update id="update" parameterType="com.chenlinghong.graduation.repository.domain.Goods">
         update goods
         set `name`       = #{name},
             `goods_info` = #{goodInfo},
             `remarks`    = #{remarks},
+            `cover_img`    = #{coverImg},
             gmt_modified = current_timestamp
         where id = #{id}
     </update>
+
+
 
 </mapper>

@@ -79,6 +79,7 @@ create table if not exists `goods_catalog_two` (
     `name` varchar(16) null comment '目录名称',
     `description` varchar(256) null comment '描述',
     `catalog_one_id` int not null comment '一级目录ID，FK(goods_catalog_one)',
+    `season` int null default '0' comment '时令，0代表尚未分类',
     primary key (`id`),
     unique key `uk_name`(`name`),
     index `idx_name`(`name`)
@@ -98,6 +99,7 @@ create table if not exists `goods` (
     `price` decimal  null comment '价格',
     `remarks` varchar(512) null comment '备注',
     `business_id` bigint not null comment '商户ID【FK(user)】',
+    `cover_img` varchar(256) not null comment '封面图片',
     primary key (`id`),
     index `idx_name`(`name`)
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 DEFAULT CHARSET = utf8mb4 COMMENT = '商品基本信息表';

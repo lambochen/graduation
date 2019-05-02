@@ -42,4 +42,10 @@ public class GoodsCatalogServiceImpl implements GoodsCatalogService {
         int total = catalogTwoDao.countByCatalogOne(catalogOneId);
         return new PageDto<>(catalogTwoList, pageNo, pageSize, total);
     }
+
+    @Override
+    public PageDto<GoodsCatalogTwo> listBySeason(int currentSeason) {
+        List<GoodsCatalogTwo> goodsCatalogTwoList = catalogTwoDao.listBySeason(currentSeason);
+        return new PageDto<>(goodsCatalogTwoList);
+    }
 }

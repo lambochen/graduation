@@ -77,9 +77,20 @@ public interface UserBehaviorService extends IBaseService<UserBehavior> {
 
     /**
      * 根据用户获取所有行为记录
+     *
      * @param userId
      * @param startTime 开始时间
      * @return
      */
     PageDto<UserBehavior> listByUserAndStartTime(long userId, Date startTime);
+
+    /**
+     * 根据用户获取
+     *
+     * @param userId
+     * @param pageNo
+     * @param pageSize
+     * @return
+     */
+    PageDto<UserBehavior> listByUser(long userId, long pageNo, long pageSize);
 }

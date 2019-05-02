@@ -20,14 +20,6 @@
         "data": {
             "data": [
                 {
-                    "id": 2,
-                    "gmtCreate": 1555225976000,
-                    "gmtModified": 1555225976000,
-                    "name": "test-1",
-                    "description": null,
-                    "catalogTwoList": []
-                },
-                {
                     "id": 1,
                     "gmtCreate": 1553425721000,
                     "gmtModified": 1553425721000,
@@ -36,26 +28,28 @@
                     "catalogTwoList": [
                         {
                             "id": 2,
-                            "gmtCreate": 1555225869000,
-                            "gmtModified": 1555225869000,
-                            "name": "test-1",
+                            "gmtCreate": 1556681686000,
+                            "gmtModified": 1556681686000,
+                            "name": "test",
                             "description": null,
-                            "catalogOneId": 1
+                            "catalogOneId": 1,
+                            "season": 0
                         },
                         {
                             "id": 1,
-                            "gmtCreate": 1553426662000,
-                            "gmtModified": 1553426662000,
-                            "name": "test",
+                            "gmtCreate": 1556681654000,
+                            "gmtModified": 1556681654000,
+                            "name": "test-1",
                             "description": null,
-                            "catalogOneId": 1
+                            "catalogOneId": 1,
+                            "season": 0
                         }
                     ]
                 }
             ],
             "pageNo": 1,
             "pageSize": 10,
-            "totalCount": 2
+            "totalCount": 1
         }
     }
     
@@ -78,19 +72,21 @@
             "data": [
                 {
                     "id": 2,
-                    "gmtCreate": 1555225869000,
-                    "gmtModified": 1555225869000,
-                    "name": "test-1",       //二级目录名称
+                    "gmtCreate": 1556681686000,
+                    "gmtModified": 1556681686000,
+                    "name": "test",
                     "description": null,
-                    "catalogOneId": 1
+                    "catalogOneId": 1,
+                    "season": 0
                 },
                 {
                     "id": 1,
-                    "gmtCreate": 1553426662000,
-                    "gmtModified": 1553426662000,
-                    "name": "test",
+                    "gmtCreate": 1556681654000,
+                    "gmtModified": 1556681654000,
+                    "name": "test-1",
                     "description": null,
-                    "catalogOneId": 1
+                    "catalogOneId": 1,
+                    "season": 0
                 }
             ],
             "pageNo": 1,
@@ -114,8 +110,8 @@
         "msg": "请求成功",
         "data": {
             "id": 1,
-            "gmtCreate": 1553935461000,
-            "gmtModified": 1553935461000,
+            "gmtCreate": 1556528551000,
+            "gmtModified": 1556528551000,
             "name": "test",
             "description": "test",
             "catalogOneId": 1,
@@ -123,7 +119,8 @@
             "goodsInfo": "test  ",
             "price": 1,
             "remarks": "test",
-            "businessInfoId": 1000
+            "businessInfoId": 1000,
+            "coverImg": "http://pic37.nipic.com/20140113/8800276_184927469000_2.png"
         }
     }
     
@@ -149,22 +146,9 @@
         "data": {
             "data": [
                 {
-                    "id": 2,
-                    "gmtCreate": 1555228757000,
-                    "gmtModified": 1555228757000,
-                    "name": "test",
-                    "description": "test",
-                    "catalogOneId": 1,
-                    "catalogTwoId": 1,
-                    "goodsInfo": "test  ",
-                    "price": 1,
-                    "remarks": "test",
-                    "businessInfoId": 1000
-                },
-                {
                     "id": 1,
-                    "gmtCreate": 1553935461000,
-                    "gmtModified": 1553935461000,
+                    "gmtCreate": 1556528551000,
+                    "gmtModified": 1556528551000,
                     "name": "test",
                     "description": "test",
                     "catalogOneId": 1,
@@ -172,12 +156,13 @@
                     "goodsInfo": "test  ",
                     "price": 1,
                     "remarks": "test",
-                    "businessInfoId": 1000
+                    "businessInfoId": 1000,
+                    "coverImg": "http://pic37.nipic.com/20140113/8800276_184927469000_2.png"
                 }
             ],
             "pageNo": 1,
             "pageSize": 10,
-            "totalCount": 2
+            "totalCount": 1
         }
     }
 
@@ -203,22 +188,9 @@
         "data": {
             "data": [
                 {
-                    "id": 2,
-                    "gmtCreate": 1555228757000,
-                    "gmtModified": 1555228757000,
-                    "name": "test",
-                    "description": "test",
-                    "catalogOneId": 1,
-                    "catalogTwoId": 1,
-                    "goodsInfo": "test  ",
-                    "price": 1,
-                    "remarks": "test",
-                    "businessInfoId": 1000
-                },
-                {
                     "id": 1,
-                    "gmtCreate": 1553935461000,
-                    "gmtModified": 1553935461000,
+                    "gmtCreate": 1556528551000,
+                    "gmtModified": 1556528551000,
                     "name": "test",
                     "description": "test",
                     "catalogOneId": 1,
@@ -226,12 +198,13 @@
                     "goodsInfo": "test  ",
                     "price": 1,
                     "remarks": "test",
-                    "businessInfoId": 1000
+                    "businessInfoId": 1000,
+                    "coverImg": "http://pic37.nipic.com/20140113/8800276_184927469000_2.png"
                 }
             ],
             "pageNo": 1,
             "pageSize": 10,
-            "totalCount": 2
+            "totalCount": 1
         }
     }
 
@@ -254,22 +227,9 @@
         "data": {
             "data": [
                 {
-                    "id": 2,
-                    "gmtCreate": 1555228757000,
-                    "gmtModified": 1555228757000,
-                    "name": "test",
-                    "description": "test",
-                    "catalogOneId": 1,
-                    "catalogTwoId": 1,
-                    "goodsInfo": "test  ",
-                    "price": 1,
-                    "remarks": "test",
-                    "businessInfoId": 1000
-                },
-                {
                     "id": 1,
-                    "gmtCreate": 1553935461000,
-                    "gmtModified": 1553935461000,
+                    "gmtCreate": 1556528551000,
+                    "gmtModified": 1556528551000,
                     "name": "test",
                     "description": "test",
                     "catalogOneId": 1,
@@ -277,12 +237,13 @@
                     "goodsInfo": "test  ",
                     "price": 1,
                     "remarks": "test",
-                    "businessInfoId": 1000
+                    "businessInfoId": 1000,
+                    "coverImg": "http://pic37.nipic.com/20140113/8800276_184927469000_2.png"
                 }
             ],
             "pageNo": 1,
             "pageSize": 10,
-            "totalCount": 2
+            "totalCount": 1
         }
     }
 
