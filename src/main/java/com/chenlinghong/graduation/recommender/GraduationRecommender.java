@@ -13,6 +13,7 @@ public interface GraduationRecommender extends Recommender {
 
     /**
      * 推荐默认条数
+     *
      * @return
      */
     RecommendDto<RecommendGoodsDto> recommend();
@@ -24,6 +25,23 @@ public interface GraduationRecommender extends Recommender {
      * @return
      */
     RecommendDto<RecommendGoodsDto> recommend(final int recommendNum);
+
+    /**
+     * 推荐默认条数
+     *
+     * @param userId 用户ID
+     * @return
+     */
+    RecommendDto<RecommendGoodsDto> recommend(final long userId);
+
+    /**
+     * 推荐指定条数
+     *
+     * @param userId       用户ID
+     * @param recommendNum 推荐条数
+     * @return
+     */
+    RecommendDto<RecommendGoodsDto> recommend(final long userId, final int recommendNum);
 
 
 }
