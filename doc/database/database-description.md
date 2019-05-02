@@ -424,4 +424,56 @@
     charset: utf8mb4
     comment: 用户偏好
 
+**物品推荐排行榜表(recommend_ranking_goods)**
 
+| 列 | 数据类型 | 对应Java类型 | 列描述 | 约束/默认值 | 备注 |
+| ------- | ------- | ------- | ------- | ------- | ------- |
+|   id          |   bigint      |   Long        |   ID      | PK，auto_increment   |   |
+|   gmt_create  |   timestamp   |   Date        |   记录创建时间  |    default:current_timestamp, not null |  |
+|   gmt_modified    |   timestamp   |   Date    |   最近修改时间  |   default:current_timestamp, not null |   |
+|   deleted     |   varchar(1)  |   Integer     |   是否删除（0：未删除  1：已删除）     |  default:"0", not null   | 逻辑删除   |
+|   goods_id    |   bigint |   Long  |   商品ID    |   FK(goods),not null    |   |
+|   ranking    |   int |   Integer  |   推荐次数    |   not null,default 0   |   |
+
+其它说明：
+
+    PK: id
+    FK: fk_goods(goods_id)
+    KEY: idx_goods(goods_id)
+    UNIQUE KEY: uk_goods(goods_id)
+    engine: InnoDB
+    auto_increment: 1
+    charset: utf8mb4
+    comment: 物品推荐排行榜表
+
+**用户-物品推荐队列表(recommend_queue_goods)**
+
+| 列 | 数据类型 | 对应Java类型 | 列描述 | 约束/默认值 | 备注 |
+| ------- | ------- | ------- | ------- | ------- | ------- |
+|   id          |   bigint      |   Long        |   ID      | PK，auto_increment   |   |
+|   gmt_create  |   timestamp   |   Date        |   记录创建时间  |    default:current_timestamp, not null |  |
+|   gmt_modified    |   timestamp   |   Date    |   最近修改时间  |   default:current_timestamp, not null |   |
+|   deleted     |   varchar(1)  |   Integer     |   是否删除（0：未删除  1：已删除）     |  default:"0", not null   | 逻辑删除   |
+|   goods_id    |   bigint |   Long  |   商品ID    |   FK(goods),not null    |   |
+|   user_id    |   bigint |   Long  |   用户ID    |   FK(user),not null    |   |
+|   recommend_type    |   int |   Integer  |   推荐类型    |   not null,default 0   |   |
+
+recommend_type说明
+
+    USER_BASED_RECOMMEND(1, "基于用户的协同过滤推荐"),
+    ITEM_BASED_RECOMMEND(2, "基于物品的协同过滤推荐"),
+    SLOPE_ONE_RECOMMEND(3, "SlopeOne协同过滤推荐"),
+    POPULAR_RECOMMEND(4, "热门推荐"),
+    SEASON_RECOMMEND(5, "时令推荐"),
+    USER_TAG_BASED_RECOMMEND(6, "基于用户标签的推荐")
+
+其它说明：
+
+    PK: id
+    FK: fk_goods(goods_id)
+    FK: fk_user(user_id)
+    KEY: idx_user(user_id)
+    engine: InnoDB
+    auto_increment: 1
+    charset: utf8mb4
+    comment: 用户-物品推荐队列表
