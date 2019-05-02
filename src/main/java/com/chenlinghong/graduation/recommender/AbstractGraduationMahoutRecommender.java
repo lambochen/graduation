@@ -16,7 +16,7 @@ import java.util.List;
  * @Date 2019/4/28 9:56
  * @Version V1.0
  */
-public abstract class AbstractGraduationMahoutRecommender implements MahoutRecommender, GraduationRecommender {
+public abstract class AbstractGraduationMahoutRecommender implements MahoutRecommender {
 
     /**
      * recommender
