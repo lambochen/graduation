@@ -3,7 +3,7 @@ package com.chenlinghong.graduation.scheduler.recommender;
 import com.chenlinghong.graduation.common.PageDto;
 import com.chenlinghong.graduation.constant.NumericConstant;
 import com.chenlinghong.graduation.converter.RecommenderConverter;
-import com.chenlinghong.graduation.recommender.AbstractGraduationMahoutRecommender;
+import com.chenlinghong.graduation.recommender.AbstractMahoutRecommender;
 import com.chenlinghong.graduation.repository.domain.User;
 import com.chenlinghong.graduation.scheduler.recommender.dto.RecommendDto;
 import com.chenlinghong.graduation.scheduler.recommender.dto.RecommendGoodsDto;
@@ -22,7 +22,7 @@ public abstract class AbstractRecommenderScheduler {
 
     protected RecommenderConverter recommenderConverter;
 
-    protected AbstractGraduationMahoutRecommender recommender;
+    protected AbstractMahoutRecommender recommender;
 
     public RecommendDto recommend(final long userId) throws TasteException {
         /**

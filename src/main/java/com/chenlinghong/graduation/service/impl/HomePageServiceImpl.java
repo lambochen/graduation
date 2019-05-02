@@ -5,6 +5,7 @@ import com.chenlinghong.graduation.common.PageDto;
 import com.chenlinghong.graduation.constant.NumericConstant;
 import com.chenlinghong.graduation.enums.CheckUserTypeEnum;
 import com.chenlinghong.graduation.recommender.season.SeasonBasedRecommender;
+import com.chenlinghong.graduation.recommender.user.UserTagBasedRecommender;
 import com.chenlinghong.graduation.repository.domain.GoodsCatalogOne;
 import com.chenlinghong.graduation.scheduler.recommender.ItemBasedCFRecommenderScheduler;
 import com.chenlinghong.graduation.scheduler.recommender.SlopeOneCFRecommenderScheduler;
@@ -54,6 +55,12 @@ public class HomePageServiceImpl implements HomePageService {
     @Autowired
     private SeasonBasedRecommender seasonBasedRecommender;
 
+    /**
+     * 基于用户标签推荐
+     */
+    @Autowired
+    private UserTagBasedRecommender userTagBasedRecommender;
+
     @Override
     public HomePageVo get(long userId) throws TasteException {
         HomePageVo result = new HomePageVo();
@@ -76,6 +83,11 @@ public class HomePageServiceImpl implements HomePageService {
             /**
              * TODO 冷启动问题
              */
+            /**
+             * 基于用户标签推荐
+             */
+            RecommendDto userTagBasedRecommendDto = userTagBasedRecommender.recommend(userId, NumericConstant.THREE);
+            result.setUserTagBasedRecommend(userTagBasedRecommendDto);
         }
         if (userCheckType == CheckUserTypeEnum.OLD_USER) {
             /**
@@ -114,6 +126,7 @@ public class HomePageServiceImpl implements HomePageService {
          */
         /**
          * 时令推荐
+         * TODO 需要校验结果，可能会出现方法调用问题
          */
         RecommendDto seasonRecommendDto = seasonBasedRecommender.recommend(NumericConstant.THREE);
         result.setSeasonRecommend(seasonRecommendDto);

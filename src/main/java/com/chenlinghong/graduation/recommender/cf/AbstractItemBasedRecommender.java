@@ -1,6 +1,6 @@
 package com.chenlinghong.graduation.recommender.cf;
 
-import com.chenlinghong.graduation.recommender.AbstractGraduationMahoutRecommender;
+import com.chenlinghong.graduation.recommender.AbstractMahoutRecommender;
 import org.apache.mahout.cf.taste.eval.RecommenderBuilder;
 
 /**
@@ -9,7 +9,7 @@ import org.apache.mahout.cf.taste.eval.RecommenderBuilder;
  * @Date 2019/4/27 22:31
  * @Version V1.0
  */
-public abstract class AbstractItemBasedRecommender extends AbstractGraduationMahoutRecommender {
+public abstract class AbstractItemBasedRecommender extends AbstractMahoutRecommender {
 
     /**
      * Recommender builder
