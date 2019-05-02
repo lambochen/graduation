@@ -2,6 +2,7 @@ package com.chenlinghong.graduation.service;
 
 import com.chenlinghong.graduation.common.PageDto;
 import com.chenlinghong.graduation.repository.domain.Goods;
+import com.chenlinghong.graduation.repository.domain.GoodsCatalogTwo;
 
 import java.util.List;
 
@@ -66,5 +67,21 @@ public interface GoodsService extends IBaseService<Goods> {
      * @return
      */
     List<Goods> listByIdList(List<Long> goodsIdList);
+
+    /**
+     * 根据二级目录列表获取,默认10条数据
+     *
+     * @param data
+     * @return
+     */
+    PageDto<Goods> listByCatalogTwoList(List<GoodsCatalogTwo> data);
+
+    /**
+     * 根据二级目录列表获取，指定条数
+     * @param data
+     * @param count
+     * @return
+     */
+    PageDto<Goods> listByCatalogTwoList(List<GoodsCatalogTwo> data, long count);
 
 }

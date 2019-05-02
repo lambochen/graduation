@@ -29,7 +29,7 @@ public class UserBasedCFRecommenderSchedulerImpl
     /**
      * 邻居数
      */
-    private static final int neighborhoodNumber = NumericConstant.TWENTY;
+    private static final int neighborhoodNumber = NumericConstant.TEN;
 
     @PostConstruct
     private void init() throws TasteException {

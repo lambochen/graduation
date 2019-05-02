@@ -30,4 +30,12 @@ public interface GoodsCatalogTwoDao extends IBaseDao<GoodsCatalogTwo> {
      * @return
      */
     int countByCatalogOne(@Param("catalogOneId") int catalogOneId);
+
+    /**
+     * 根据时令获取列表
+     *
+     * @param season
+     * @return
+     */
+    List<GoodsCatalogTwo> listBySeason(int season);
 }
