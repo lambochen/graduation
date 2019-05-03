@@ -21,7 +21,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 @RestController
 @RequestMapping(value = "/recommend")
-public class HomePageController {
+public class RecommendController {
 
     @Autowired
     private SessionUtil sessionUtil;
