@@ -1,7 +1,7 @@
 package com.chenlinghong.graduation.scheduler.recommender.cf.impl;
 
 import com.chenlinghong.graduation.recommender.cf.ItemBasedCFRecommender;
-import com.chenlinghong.graduation.scheduler.recommender.AbstractRecommenderScheduler;
+import com.chenlinghong.graduation.scheduler.recommender.AbstractMahoutRecommenderScheduler;
 import com.chenlinghong.graduation.scheduler.recommender.cf.ItemBasedCFRecommenderScheduler;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.mahout.cf.taste.common.TasteException;
@@ -20,7 +20,7 @@ import javax.sql.DataSource;
 @Slf4j
 @Service
 public class ItemBasedCFRecommenderSchedulerImpl
-        extends AbstractRecommenderScheduler implements ItemBasedCFRecommenderScheduler {
+        extends AbstractMahoutRecommenderScheduler implements ItemBasedCFRecommenderScheduler {
 
     @Autowired
     private DataSource dataSource;
@@ -29,5 +29,7 @@ public class ItemBasedCFRecommenderSchedulerImpl
     private void init() throws TasteException {
         recommender = new ItemBasedCFRecommender(dataSource);
     }
+
+
 
 }

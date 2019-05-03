@@ -1,7 +1,7 @@
 package com.chenlinghong.graduation.scheduler.recommender.cf.impl;
 
 import com.chenlinghong.graduation.recommender.cf.SlopeOneCFRecommender;
-import com.chenlinghong.graduation.scheduler.recommender.AbstractRecommenderScheduler;
+import com.chenlinghong.graduation.scheduler.recommender.AbstractMahoutRecommenderScheduler;
 import com.chenlinghong.graduation.scheduler.recommender.cf.SlopeOneCFRecommenderScheduler;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.mahout.cf.taste.common.TasteException;
@@ -20,7 +20,7 @@ import javax.sql.DataSource;
 @Service
 @Slf4j
 public class SlopeOneCFRecommenderSchedulerImpl
-        extends AbstractRecommenderScheduler implements SlopeOneCFRecommenderScheduler {
+        extends AbstractMahoutRecommenderScheduler implements SlopeOneCFRecommenderScheduler {
 
     @Autowired
     private DataSource dataSource;

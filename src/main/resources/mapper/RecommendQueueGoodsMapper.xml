@@ -109,5 +109,11 @@
         where deleted = '0'
     </select>
 
+    <update id="markRead">
+        update recommend_queue_goods
+        set deleted = '1'
+        where user_id = #{userId} and recomment_type = #{recommendType} and deleted = '0'
+    </update>
+
 
 </mapper>

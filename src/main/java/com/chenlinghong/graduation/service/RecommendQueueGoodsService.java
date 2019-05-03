@@ -4,6 +4,7 @@ import com.chenlinghong.graduation.common.PageDto;
 import com.chenlinghong.graduation.enums.RecommendTypeEnum;
 import com.chenlinghong.graduation.repository.domain.RecommendQueueGoods;
 import com.chenlinghong.graduation.service.dto.RecommendQueueGoodsDto;
+import org.apache.mahout.cf.taste.common.TasteException;
 
 import java.util.List;
 
@@ -48,6 +49,14 @@ public interface RecommendQueueGoodsService extends IBaseService<RecommendQueueG
      * @param userId
      * @return
      */
-    RecommendQueueGoodsDto listByUser(long userId);
+    RecommendQueueGoodsDto listByUser(long userId) throws TasteException;
 
+    /**
+     * 标记为已读
+     *
+     * @param userId
+     * @param userBasedRecommend
+     * @return
+     */
+    int markRead(long userId, RecommendTypeEnum userBasedRecommend);
 }

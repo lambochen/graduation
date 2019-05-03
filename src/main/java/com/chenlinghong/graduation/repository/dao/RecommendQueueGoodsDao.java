@@ -43,4 +43,13 @@ public interface RecommendQueueGoodsDao extends IBaseDao<RecommendQueueGoods> {
      * @return
      */
     int countByUserAndType(@Param("userId") long userId, @Param("recommendType") int recommendType);
+
+    /**
+     * 标记为已读
+     *
+     * @param userId
+     * @param recommendType
+     * @return
+     */
+    int markRead(@Param("userId") long userId, @Param("recommendType") int recommendType);
 }

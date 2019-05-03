@@ -7,9 +7,11 @@ import com.chenlinghong.graduation.recommender.ranking.RankingGoodsRecommender;
 import com.chenlinghong.graduation.repository.dao.RecommendQueueGoodsDao;
 import com.chenlinghong.graduation.repository.domain.RecommendQueueGoods;
 import com.chenlinghong.graduation.repository.domain.RecommendRankingGoods;
+import com.chenlinghong.graduation.scheduler.recommender.cf.UserBasedCFRecommenderScheduler;
 import com.chenlinghong.graduation.service.RecommendQueueGoodsService;
 import com.chenlinghong.graduation.service.dto.RecommendQueueGoodsDto;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.mahout.cf.taste.common.TasteException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,6 +35,12 @@ public class RecommendQueueGoodsServiceImpl implements RecommendQueueGoodsServic
      */
     @Autowired
     private RankingGoodsRecommender rankingGoodsRecommender;
+
+    /**
+     * 基于用户的协同过滤推荐执行器
+     */
+    @Autowired
+    private UserBasedCFRecommenderScheduler userBasedCFRecommenderScheduler;
 
     @Override
     public int insert(RecommendQueueGoods recommendQueueGoods) {
@@ -100,7 +108,7 @@ public class RecommendQueueGoodsServiceImpl implements RecommendQueueGoodsServic
     }
 
     @Override
-    public RecommendQueueGoodsDto listByUser(long userId) {
+    public RecommendQueueGoodsDto listByUser(long userId) throws TasteException {
         /**
          * TODO 获取数据后，需要重新进行推荐写入
          */
@@ -110,6 +118,7 @@ public class RecommendQueueGoodsServiceImpl implements RecommendQueueGoodsServic
          */
         PageDto<RecommendQueueGoods> userBasedRecommend = listByUserAndType(userId, RecommendTypeEnum.USER_BASED_RECOMMEND);
         result.setUserBasedRecommend(userBasedRecommend);
+        userBasedCFRecommenderScheduler.refreshRecommendQueue(userId);
         /**
          * 基于物品推荐
          */
@@ -136,6 +145,11 @@ public class RecommendQueueGoodsServiceImpl implements RecommendQueueGoodsServic
         PageDto<RecommendQueueGoods> userTagBasedRecommend = listByUserAndType(userId, RecommendTypeEnum.USER_TAG_BASED_RECOMMEND);
         result.setUserTagBasedRecommend(userTagBasedRecommend);
         return result;
+    }
+
+    @Override
+    public int markRead(long userId, RecommendTypeEnum userBasedRecommend) {
+        return recommendQueueGoodsDao.markRead(userId, userBasedRecommend.getCode());
     }
 
     @Override

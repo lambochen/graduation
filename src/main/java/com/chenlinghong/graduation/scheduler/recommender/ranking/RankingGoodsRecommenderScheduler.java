@@ -10,6 +10,4 @@ import com.chenlinghong.graduation.scheduler.recommender.RecommenderScheduler;
  */
 public interface RankingGoodsRecommenderScheduler extends RecommenderScheduler {
 
-
-
 }

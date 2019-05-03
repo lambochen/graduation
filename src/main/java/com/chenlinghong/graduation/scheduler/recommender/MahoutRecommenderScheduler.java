@@ -1,8 +1,12 @@
 package com.chenlinghong.graduation.scheduler.recommender;
 
+import com.chenlinghong.graduation.repository.domain.RecommendQueueGoods;
 import com.chenlinghong.graduation.scheduler.Scheduler;
 import com.chenlinghong.graduation.scheduler.recommender.dto.RecommendDto;
+import com.chenlinghong.graduation.scheduler.recommender.dto.RecommendGoodsDto;
 import org.apache.mahout.cf.taste.common.TasteException;
+
+import java.util.List;
 
 /**
  * @Description 推荐调度器
@@ -28,5 +32,13 @@ public interface MahoutRecommenderScheduler extends Scheduler {
      * @return
      */
     RecommendDto recommend(final long userId, final int recommendNum) throws TasteException;
+
+    /**
+     * 转换数据
+     *
+     * @param recommendDto
+     * @return
+     */
+    List<RecommendQueueGoods> converter(RecommendDto<RecommendGoodsDto> recommendDto);
 
 }
