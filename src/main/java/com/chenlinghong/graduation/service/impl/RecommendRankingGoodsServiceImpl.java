@@ -1,6 +1,7 @@
 package com.chenlinghong.graduation.service.impl;
 
 import com.chenlinghong.graduation.common.PageDto;
+import com.chenlinghong.graduation.constant.NumericConstant;
 import com.chenlinghong.graduation.repository.dao.RecommendRankingGoodsDao;
 import com.chenlinghong.graduation.repository.domain.RecommendRankingGoods;
 import com.chenlinghong.graduation.service.RecommendRankingGoodsService;
@@ -32,8 +33,8 @@ public class RecommendRankingGoodsServiceImpl implements RecommendRankingGoodsSe
         /**
          * 校验是否存在该商品
          */
-        int count = recommendRankingGoodsDao.countByGoods(recommendRankingGoods.getGoodsId());
-        if (count <= 0) {
+        RecommendRankingGoods dbGoods = recommendRankingGoodsDao.getByGoods(recommendRankingGoods.getGoodsId());
+        if (dbGoods == null) {
             // 不存在该商品，插入
             int result = recommendRankingGoodsDao.insert(recommendRankingGoods);
             /**
@@ -42,8 +43,11 @@ public class RecommendRankingGoodsServiceImpl implements RecommendRankingGoodsSe
             return result;
         }
         /**
-         * TODO 存在该商品
+         * 存在该商品，更新rank
          */
+        double rank = (dbGoods.getRanking() == null ? 0 : dbGoods.getRanking()) + recommendRankingGoods.getRanking();
+        recommendRankingGoods.setRanking(rank);
+        recommendRankingGoodsDao.update(recommendRankingGoods);
         return 0;
     }
 
@@ -85,5 +89,31 @@ public class RecommendRankingGoodsServiceImpl implements RecommendRankingGoodsSe
             return 0;
         }
         return recommendRankingGoodsDao.update(recommendRankingGoods);
+    }
+
+    @Override
+    public int incrementRank(long goodsId) {
+        return incrementRank(goodsId, NumericConstant.ONE);
+    }
+
+    @Override
+    public int incrementRank(long goodsId, int rank) {
+        /**
+         * 校验数据库是否存在goods
+         */
+        RecommendRankingGoods rankingGoods = new RecommendRankingGoods();
+        rankingGoods.setGoodsId(goodsId);
+        rankingGoods.setRanking((double) rank);
+        return insert(rankingGoods);
+    }
+
+    @Override
+    public List<RecommendRankingGoods> listByGoodsList(List<RecommendRankingGoods> rankingGoodsList) {
+        return recommendRankingGoodsDao.listByGoodsList(rankingGoodsList);
+    }
+
+    @Override
+    public int count() {
+        return recommendRankingGoodsDao.count();
     }
 }

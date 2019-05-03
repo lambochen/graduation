@@ -22,7 +22,8 @@
     </sql>
 
     <sql id="column_list">
-        `id`, <include refid="Base_Column_List"></include>
+        `id`,
+        <include refid="Base_Column_List"></include>
     </sql>
 
     <insert id="insert" parameterType="com.chenlinghong.graduation.repository.domain.RecommendRankingGoods">
@@ -42,18 +43,19 @@
 
     <select id="getById" parameterType="Integer" resultMap="BaseResultMap">
         SELECT
-        <include refid="Base_Column_List"/>
+        <include refid="column_list"/>
         FROM
         recommend_ranking_goods
         WHERE
-        id=#{id}
+        id=#{id} and deleted = '0'
     </select>
 
     <select id="listAll" resultMap="BaseResultMap">
         SELECT
-        <include refid="Base_Column_List"/>
+        <include refid="column_list"/>
         FROM
         recommend_ranking_goods
+        where deleted = '0'
         order by id desc
         <choose>
             <when test="offset != null and rows != null">
@@ -70,12 +72,32 @@
         count(*)
         FROM
         recommend_ranking_goods
+        where deleted = '0'
     </select>
 
     <select id="countByGoods" resultType="int">
         select count(distinct id)
         from recommend_ranking_goods
-        where goods_id = #{goodsId}
+        where goods_id = #{goodsId} and deleted = '0'
+    </select>
+
+    <select id="getByGoods" resultMap="BaseResultMap">
+        SELECT
+        <include refid="column_list"/>
+        FROM
+        recommend_ranking_goods
+        where goods_id = #{goodsId} and deleted = '0'
+    </select>
+
+    <select id="listByGoodsList" resultMap="BaseResultMap">
+        SELECT
+        <include refid="column_list"/>
+        FROM
+        recommend_ranking_goods
+        where deleted = '0'
+        <foreach collection="rankingGoodsList" item="item" separator=" or " open="and (" close=")">
+            goods_id = #{item.goodsId}
+        </foreach>
     </select>
 
     <update id="update" parameterType="RecommendRankingGoods">

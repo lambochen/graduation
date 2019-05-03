@@ -42,4 +42,9 @@ public final class RedisConstant {
      */
     public static final String RECOMMEND_RANKING_GOODS = "recommend_ranking_goods";
 
+    /**
+     * ranking ttl
+     */
+    public static final long RANKING_GOODS_TTL = 2 * 30 * 24 * 60 * 60 * 1000L;
+
 }

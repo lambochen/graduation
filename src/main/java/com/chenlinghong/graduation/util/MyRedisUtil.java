@@ -225,7 +225,9 @@ public class MyRedisUtil {
     public double incrementScoreToRankginGoods(long goodsId, double score) {
         String key = redisKeyUtil.generateKeyForRecommendRankingGoods();
         String value = String.valueOf(goodsId);
-        return redisUtil.zIncrementScore(key, value, score);
+        double result = redisUtil.zIncrementScore(key, value, score);
+        redisUtil.expire(key, RedisConstant.RANKING_GOODS_TTL, TimeUnit.MILLISECONDS);
+        return result;
     }
 
     /**
@@ -280,6 +282,16 @@ public class MyRedisUtil {
         return rangeWithScoresToRankingGoods(0, n);
     }
 
+    /**
+     * 返回排名
+     *
+     * @param goodsId
+     * @return
+     */
+    public Long rankToRankingGoods(long goodsId) {
+        String key = redisKeyUtil.generateKeyForRecommendRankingGoods();
+        return redisUtil.zRank(key, String.valueOf(goodsId));
+    }
 
     /**
      * 获取userVo
