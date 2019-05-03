@@ -6,7 +6,7 @@ import com.chenlinghong.graduation.enums.UserBehaviorEnum;
 import com.chenlinghong.graduation.exception.AsyncBusinessException;
 import com.chenlinghong.graduation.exception.BusinessException;
 import com.chenlinghong.graduation.microscope.actuator.UserGoodsPreferenceActuator;
-import com.chenlinghong.graduation.microscope.sniffer.util.UserBehaviorUtil;
+import com.chenlinghong.graduation.microscope.sniffer.behavior.util.UserBehaviorUtil;
 import com.chenlinghong.graduation.repository.dao.UserBehaviorDao;
 import com.chenlinghong.graduation.repository.domain.UserBehavior;
 import com.chenlinghong.graduation.service.UserBehaviorService;

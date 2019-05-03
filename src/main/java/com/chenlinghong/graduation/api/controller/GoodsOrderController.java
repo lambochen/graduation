@@ -4,7 +4,7 @@ import com.chenlinghong.graduation.api.util.SessionUtil;
 import com.chenlinghong.graduation.common.ResultUtil;
 import com.chenlinghong.graduation.common.ResultVo;
 import com.chenlinghong.graduation.enums.ErrorEnum;
-import com.chenlinghong.graduation.microscope.sniffer.UserGoodsBehaviorSniffer;
+import com.chenlinghong.graduation.microscope.sniffer.behavior.UserGoodsBehaviorSniffer;
 import com.chenlinghong.graduation.repository.domain.GoodsOrder;
 import com.chenlinghong.graduation.service.GoodsOrderService;
 import lombok.extern.slf4j.Slf4j;

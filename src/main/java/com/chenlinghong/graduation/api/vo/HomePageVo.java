@@ -2,6 +2,7 @@ package com.chenlinghong.graduation.api.vo;
 
 import com.chenlinghong.graduation.common.PageDto;
 import com.chenlinghong.graduation.repository.domain.GoodsCatalogOne;
+import com.chenlinghong.graduation.repository.domain.RecommendRankingGoods;
 import com.chenlinghong.graduation.scheduler.recommender.dto.RecommendDto;
 import com.chenlinghong.graduation.scheduler.recommender.dto.RecommendGoodsDto;
 import lombok.AllArgsConstructor;
@@ -46,7 +47,7 @@ public class HomePageVo implements Serializable {
     /**
      * 热门推荐
      */
-    RecommendDto<RecommendGoodsDto> popularRecommend;
+    PageDto<RecommendRankingGoods> popularRecommend;
 
     /**
      * 时令推荐

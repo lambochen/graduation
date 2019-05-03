@@ -4,9 +4,11 @@ import com.chenlinghong.graduation.api.vo.HomePageVo;
 import com.chenlinghong.graduation.common.PageDto;
 import com.chenlinghong.graduation.constant.NumericConstant;
 import com.chenlinghong.graduation.enums.CheckUserTypeEnum;
+import com.chenlinghong.graduation.recommender.ranking.RankingGoodsRecommender;
 import com.chenlinghong.graduation.recommender.season.SeasonBasedRecommender;
 import com.chenlinghong.graduation.recommender.user.UserTagBasedRecommender;
 import com.chenlinghong.graduation.repository.domain.GoodsCatalogOne;
+import com.chenlinghong.graduation.repository.domain.RecommendRankingGoods;
 import com.chenlinghong.graduation.scheduler.recommender.ItemBasedCFRecommenderScheduler;
 import com.chenlinghong.graduation.scheduler.recommender.SlopeOneCFRecommenderScheduler;
 import com.chenlinghong.graduation.scheduler.recommender.UserBasedCFRecommenderScheduler;
@@ -60,6 +62,12 @@ public class HomePageServiceImpl implements HomePageService {
      */
     @Autowired
     private UserTagBasedRecommender userTagBasedRecommender;
+
+    /**
+     * 热门推荐，商品ranking
+     */
+    @Autowired
+    private RankingGoodsRecommender rankingGoodsRecommender;
 
     @Override
     public HomePageVo get(long userId) throws TasteException {
@@ -130,8 +138,13 @@ public class HomePageServiceImpl implements HomePageService {
          */
         RecommendDto seasonRecommendDto = seasonBasedRecommender.recommend(NumericConstant.THREE);
         result.setSeasonRecommend(seasonRecommendDto);
+        /**
+         * 热门推荐
+         */
+        PageDto<RecommendRankingGoods> rankingGoodsPageDto = rankingGoodsRecommender.topN(NumericConstant.THREE);
+        result.setPopularRecommend(rankingGoodsPageDto);
 
-        return null;
+        return result;
     }
 
     /**

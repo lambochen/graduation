@@ -1,4 +1,4 @@
-package com.chenlinghong.graduation.microscope.sniffer;
+package com.chenlinghong.graduation.microscope.sniffer.behavior;
 
 import com.chenlinghong.graduation.common.PageDto;
 import com.chenlinghong.graduation.constant.AsyncNameConstant;

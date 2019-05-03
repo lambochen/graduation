@@ -30,5 +30,5 @@ public class RecommendRankingGoods extends BaseDomain {
     /**
      * 排行榜
      */
-    private Integer ranking;
+    private Double ranking;
 }

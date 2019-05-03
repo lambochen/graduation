@@ -1,4 +1,4 @@
-package com.chenlinghong.graduation.microscope.sniffer.impl;
+package com.chenlinghong.graduation.microscope.sniffer.behavior.impl;
 
 import com.chenlinghong.graduation.common.PageDto;
 import com.chenlinghong.graduation.constant.NumericConstant;
@@ -6,8 +6,8 @@ import com.chenlinghong.graduation.enums.ErrorEnum;
 import com.chenlinghong.graduation.enums.GoodsCommentScoreEnum;
 import com.chenlinghong.graduation.enums.UserBehaviorEnum;
 import com.chenlinghong.graduation.exception.AsyncBusinessException;
-import com.chenlinghong.graduation.microscope.sniffer.UserGoodsBehaviorSniffer;
-import com.chenlinghong.graduation.microscope.sniffer.util.UserBehaviorUtil;
+import com.chenlinghong.graduation.microscope.sniffer.behavior.UserGoodsBehaviorSniffer;
+import com.chenlinghong.graduation.microscope.sniffer.behavior.util.UserBehaviorUtil;
 import com.chenlinghong.graduation.microscope.util.SessionUtil;
 import com.chenlinghong.graduation.repository.domain.Goods;
 import com.chenlinghong.graduation.repository.domain.GoodsComment;
