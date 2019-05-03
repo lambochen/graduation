@@ -35,6 +35,15 @@
         values(current_timestamp , current_timestamp ,'0', #{userId}, #{goodsId}, #{recommendType})
     </insert>
 
+    <insert id="insertBatch">
+        INSERT into
+        recommend_queue_goods(<include refid="Base_Column_List"></include>)
+        values
+        <foreach collection="recommendQueueGoodsList" item="item" separator=",">
+            (current_timestamp , current_timestamp ,'0', #{item.userId}, #{item.goodsId}, #{item.recommendType})
+        </foreach>
+    </insert>
+
     <update id="deleteById" parameterType="int">
         update recommend_queue_goods
         set deleted = '1'
@@ -47,7 +56,7 @@
         FROM
         recommend_queue_goods
         WHERE
-        id=#{id}
+        id=#{id} and deleted = '0'
     </select>
 
     <select id="listAll" resultMap="BaseResultMap">
@@ -55,6 +64,7 @@
         <include refid="Base_Column_List"/>
         FROM
         recommend_queue_goods
+        where deleted = '0'
         order by id desc
         <choose>
             <when test="offset != null and rows != null">
@@ -66,11 +76,38 @@
         </choose>
     </select>
 
+    <select id="listByUserAndType" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM
+        recommend_queue_goods
+        where user_id = #{userId} and recommend_type = #{recommendType} and deleted = '0'
+        order by id desc
+        <choose>
+            <when test="offset != null and rows != null">
+                limit #{offset},#{rows}
+            </when>
+            <otherwise>
+                limit 0,10
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="countByUserAndType" resultType="int">
+        SELECT
+        count(distinct id)
+        FROM
+        recommend_queue_goods
+        where user_id = #{userId} and recommend_type = #{recommendType} and deleted = '0'
+    </select>
+
     <select id="count" resultType="int">
         SELECT
         count(*)
         FROM
         recommend_queue_goods
+        where deleted = '0'
     </select>
+
 
 </mapper>
