@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 /**
- * @Description 推荐商品排行榜
+ * @Description 推荐商品排行榜，可异步执行
  * @Author chenlinghong
  * @Date 2019/5/3 10:38
  * @Version V1.0
