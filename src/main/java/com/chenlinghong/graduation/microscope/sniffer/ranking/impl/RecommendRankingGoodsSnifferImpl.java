@@ -1,7 +1,10 @@
 package com.chenlinghong.graduation.microscope.sniffer.ranking.impl;
 
+import com.chenlinghong.graduation.common.PageDto;
 import com.chenlinghong.graduation.constant.AsyncNameConstant;
+import com.chenlinghong.graduation.constant.NumericConstant;
 import com.chenlinghong.graduation.microscope.sniffer.ranking.RecommendRankingGoodsSniffer;
+import com.chenlinghong.graduation.repository.domain.RecommendRankingGoods;
 import com.chenlinghong.graduation.service.RecommendRankingGoodsService;
 import com.chenlinghong.graduation.util.MyRedisUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -56,12 +59,13 @@ public class RecommendRankingGoodsSnifferImpl implements RecommendRankingGoodsSn
     }
 
 
-
     /**
-     * TODO 将DB中的数据写入redis
+     * 将DB中的数据写入redis
      */
     private void initRedis() {
-
+        int total = rankingGoodsService.count();
+        PageDto<RecommendRankingGoods> rankingGoodsList = rankingGoodsService.listAll(NumericConstant.ONE, total);
+        redisUtil.putRecommendRankingGoods(rankingGoodsList.getData());
     }
 
 

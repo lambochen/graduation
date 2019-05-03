@@ -25,4 +25,6 @@ public class NumericConstant {
     public static final int FIFTY = 50;
     public static final int ONE_HUNDRED = 100;
 
+    public static final int ONE_MILLION = 1000000;
+
 }
