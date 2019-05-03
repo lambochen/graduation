@@ -20,7 +20,7 @@ import javax.servlet.http.HttpServletRequest;
  * @Version V1.0
  */
 @RestController
-@RequestMapping(value = "/home")
+@RequestMapping(value = "/recommend")
 public class HomePageController {
 
     @Autowired
@@ -35,7 +35,7 @@ public class HomePageController {
      * @param request
      * @return
      */
-    @GetMapping(value = {"/home", "/recommend"})
+    @GetMapping(value = {"/home"})
     public ResultVo<HomePageVo> home(HttpServletRequest request) throws TasteException {
         long userId = sessionUtil.getUserIdNoCheck(request);
         HomePageVo result = homePageService.get(userId);

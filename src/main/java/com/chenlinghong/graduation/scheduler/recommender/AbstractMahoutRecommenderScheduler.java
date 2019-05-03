@@ -18,7 +18,7 @@ import java.util.List;
  * @Date 2019/5/1 22:17
  * @Version V1.0
  */
-public abstract class AbstractRecommenderScheduler {
+public abstract class AbstractMahoutRecommenderScheduler {
 
     protected RecommenderConverter recommenderConverter;
 

@@ -11,10 +11,10 @@
         <result column="deleted" property="deleted" jdbcType="VARCHAR" javaType="Integer"/>
         <result column="goods_id" property="goodsId" jdbcType="BIGINT" javaType="java.lang.Long"/>
         <result column="ranking" property="ranking" jdbcType="INTEGER" javaType="java.lang.Double"/>
-        <association property="goods" column="goods_id"
-                     javaType="com.chenlinghong.graduation.repository.domain.Goods"
-                     select="com.chenlinghong.graduation.repository.dao.GoodsDao.getById">
-        </association>
+<!--        <association property="goods" column="goods_id"-->
+<!--                     javaType="com.chenlinghong.graduation.repository.domain.Goods"-->
+<!--                     select="com.chenlinghong.graduation.repository.dao.GoodsDao.getById">-->
+<!--        </association>-->
     </resultMap>
 
     <sql id="Base_Column_List">

@@ -33,13 +33,6 @@ public class SeasonBasedRecommenderImpl extends AbstractGraduationRecommender im
     @Autowired
     private GoodsService goodsService;
 
-    /**
-     * 无参构造
-     */
-    public SeasonBasedRecommenderImpl() {
-
-    }
-
     @Override
     public RecommendDto<RecommendGoodsDto> recommend() {
         return recommend(NumericConstant.TEN);
