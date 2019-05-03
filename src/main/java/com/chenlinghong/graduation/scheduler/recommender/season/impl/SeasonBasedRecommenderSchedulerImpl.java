@@ -2,7 +2,7 @@ package com.chenlinghong.graduation.scheduler.recommender.season.impl;
 
 import com.chenlinghong.graduation.constant.AsyncNameConstant;
 import com.chenlinghong.graduation.enums.RecommendTypeEnum;
-import com.chenlinghong.graduation.recommender.AbstractGraduationRecommender;
+import com.chenlinghong.graduation.recommender.GraduationRecommender;
 import com.chenlinghong.graduation.repository.domain.RecommendQueueGoods;
 import com.chenlinghong.graduation.scheduler.recommender.dto.RecommendDto;
 import com.chenlinghong.graduation.scheduler.recommender.dto.RecommendGoodsDto;
@@ -12,10 +12,10 @@ import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.mahout.cf.taste.common.TasteException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -31,8 +31,8 @@ public class SeasonBasedRecommenderSchedulerImpl implements SeasonBasedRecommend
     @Autowired
     private RecommendQueueGoodsService recommendQueueGoodsService;
 
-    @Resource
-    private AbstractGraduationRecommender seasonBasedRecommender;
+    @Qualifier(value = "seasonBasedRecommender")
+    private GraduationRecommender seasonBasedRecommender;
 
     @Override
     public RecommendDto recommend(long userId) throws TasteException {

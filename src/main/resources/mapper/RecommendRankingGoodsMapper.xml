@@ -5,16 +5,16 @@
 <mapper namespace="com.chenlinghong.graduation.repository.dao.RecommendRankingGoodsDao">
 
     <resultMap id="BaseResultMap" type="com.chenlinghong.graduation.repository.domain.RecommendRankingGoods">
-        <id column="id" property="id" jdbcType="INTEGER" javaType="Integer"/>
+        <id column="id" property="id" jdbcType="BIGINT" javaType="java.lang.Long"/>
         <result column="gmt_create" property="gmtCreate" jdbcType="TIMESTAMP" javaType="Date"/>
         <result column="gmt_modified" property="gmtModified" jdbcType="TIMESTAMP" javaType="Date"/>
         <result column="deleted" property="deleted" jdbcType="VARCHAR" javaType="Integer"/>
         <result column="goods_id" property="goodsId" jdbcType="BIGINT" javaType="java.lang.Long"/>
         <result column="ranking" property="ranking" jdbcType="INTEGER" javaType="java.lang.Double"/>
-<!--        <association property="goods" column="goods_id"-->
-<!--                     javaType="com.chenlinghong.graduation.repository.domain.Goods"-->
-<!--                     select="com.chenlinghong.graduation.repository.dao.GoodsDao.getById">-->
-<!--        </association>-->
+        <association property="goods" column="goods_id"
+                     javaType="com.chenlinghong.graduation.repository.domain.Goods"
+                     select="com.chenlinghong.graduation.repository.dao.GoodsDao.getById">
+        </association>
     </resultMap>
 
     <sql id="Base_Column_List">

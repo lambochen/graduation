@@ -25,7 +25,7 @@ import java.util.List;
  * @Version V1.0
  */
 @Slf4j
-@Service
+@Service(value = "userTagBasedRecommender")
 public class UserTagBasedRecommenderImpl extends AbstractGraduationRecommender implements UserTagBasedRecommender {
 
     @Autowired

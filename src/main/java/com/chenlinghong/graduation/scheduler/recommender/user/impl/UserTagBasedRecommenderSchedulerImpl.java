@@ -12,10 +12,10 @@ import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.mahout.cf.taste.common.TasteException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -31,8 +31,8 @@ public class UserTagBasedRecommenderSchedulerImpl implements UserTagBasedRecomme
     @Autowired
     private RecommendQueueGoodsService recommendQueueGoodsService;
 
-    @Resource
-    GraduationRecommender userTagBasedRecommender;
+    @Qualifier(value = "userTagBasedRecommender")
+    private GraduationRecommender userTagBasedRecommender;
 
     @Override
     public RecommendDto recommend(long userId) throws TasteException {
