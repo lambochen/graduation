@@ -10,6 +10,7 @@ import com.chenlinghong.graduation.repository.domain.RecommendRankingGoods;
 import com.chenlinghong.graduation.scheduler.recommender.cf.ItemBasedCFRecommenderScheduler;
 import com.chenlinghong.graduation.scheduler.recommender.cf.SlopeOneCFRecommenderScheduler;
 import com.chenlinghong.graduation.scheduler.recommender.cf.UserBasedCFRecommenderScheduler;
+import com.chenlinghong.graduation.scheduler.recommender.season.SeasonBasedRecommenderScheduler;
 import com.chenlinghong.graduation.service.RecommendQueueGoodsService;
 import com.chenlinghong.graduation.service.dto.RecommendQueueGoodsDto;
 import lombok.extern.slf4j.Slf4j;
@@ -55,6 +56,12 @@ public class RecommendQueueGoodsServiceImpl implements RecommendQueueGoodsServic
      */
     @Autowired
     private SlopeOneCFRecommenderScheduler slopeOneCFRecommenderScheduler;
+
+    /**
+     * 时令推荐
+     */
+    @Autowired
+    private SeasonBasedRecommenderScheduler seasonBasedRecommenderScheduler;
 
 
     @Override
@@ -156,6 +163,7 @@ public class RecommendQueueGoodsServiceImpl implements RecommendQueueGoodsServic
          */
         PageDto<RecommendQueueGoods> seasonRecommend = listByUserAndType(userId, RecommendTypeEnum.SEASON_RECOMMEND);
         result.setSeasonRecommend(seasonRecommend);
+        seasonBasedRecommenderScheduler.refreshRecommendQueue(userId);
         /**
          * 基于用户标签的推荐
          */

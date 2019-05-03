@@ -1,13 +1,12 @@
-package com.chenlinghong.graduation.scheduler.recommender.cf.impl;
+package com.chenlinghong.graduation.scheduler.recommender.season.impl;
 
 import com.chenlinghong.graduation.constant.AsyncNameConstant;
 import com.chenlinghong.graduation.enums.RecommendTypeEnum;
-import com.chenlinghong.graduation.recommender.cf.SlopeOneCFRecommender;
+import com.chenlinghong.graduation.recommender.AbstractGraduationRecommender;
 import com.chenlinghong.graduation.repository.domain.RecommendQueueGoods;
-import com.chenlinghong.graduation.scheduler.recommender.AbstractMahoutRecommenderScheduler;
-import com.chenlinghong.graduation.scheduler.recommender.cf.SlopeOneCFRecommenderScheduler;
 import com.chenlinghong.graduation.scheduler.recommender.dto.RecommendDto;
 import com.chenlinghong.graduation.scheduler.recommender.dto.RecommendGoodsDto;
+import com.chenlinghong.graduation.scheduler.recommender.season.SeasonBasedRecommenderScheduler;
 import com.chenlinghong.graduation.service.RecommendQueueGoodsService;
 import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
@@ -16,30 +15,33 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.PostConstruct;
-import javax.sql.DataSource;
+import javax.annotation.Resource;
 import java.util.List;
 
 /**
- * @Description SlopeOne 基于评分推荐实现类
+ * @Description 时令推荐
  * @Author chenlinghong
- * @Date 2019/5/1 22:34
+ * @Date 2019/5/3 22:43
  * @Version V1.0
  */
-@Service
 @Slf4j
-public class SlopeOneCFRecommenderSchedulerImpl
-        extends AbstractMahoutRecommenderScheduler implements SlopeOneCFRecommenderScheduler {
-
-    @Autowired
-    private DataSource dataSource;
+@Service
+public class SeasonBasedRecommenderSchedulerImpl implements SeasonBasedRecommenderScheduler {
 
     @Autowired
     private RecommendQueueGoodsService recommendQueueGoodsService;
 
-    @PostConstruct
-    private void init() throws TasteException {
-        recommender = new SlopeOneCFRecommender(dataSource);
+    @Resource
+    private AbstractGraduationRecommender seasonBasedRecommender;
+
+    @Override
+    public RecommendDto recommend(long userId) throws TasteException {
+        return null;
+    }
+
+    @Override
+    public RecommendDto recommend(long userId, int recommendNum) throws TasteException {
+        return null;
     }
 
     @Override
@@ -53,7 +55,7 @@ public class SlopeOneCFRecommenderSchedulerImpl
         }
         for (RecommendGoodsDto goodsDto : recommendDto.getData().getData()) {
             RecommendQueueGoods queueGoods = new RecommendQueueGoods();
-            queueGoods.setRecommendType(RecommendTypeEnum.SLOPE_ONE_RECOMMEND.getCode());
+            queueGoods.setRecommendType(RecommendTypeEnum.SEASON_RECOMMEND.getCode());
             queueGoods.setUserId(recommendDto.getUserId());
             if (goodsDto.getGoods() == null) {
                 continue;
@@ -70,11 +72,12 @@ public class SlopeOneCFRecommenderSchedulerImpl
         /**
          * 更新推荐队列数据
          */
-        int markResult = recommendQueueGoodsService.markRead(userId, RecommendTypeEnum.SLOPE_ONE_RECOMMEND);
+        int markResult = recommendQueueGoodsService.markRead(userId, RecommendTypeEnum.SEASON_RECOMMEND);
         /**
          * 获取推荐结束
          */
-        RecommendDto recommendDto = recommend(userId);
+        RecommendDto recommendDto = seasonBasedRecommender.recommend(userId);
+
         /**
          * 转换推荐队列数据
          */
