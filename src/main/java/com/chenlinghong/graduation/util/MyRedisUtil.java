@@ -4,16 +4,24 @@ import com.alibaba.fastjson.JSON;
 import com.chenlinghong.graduation.api.vo.UserVo;
 import com.chenlinghong.graduation.common.redis.RedisUtil;
 import com.chenlinghong.graduation.constant.AsyncNameConstant;
+import com.chenlinghong.graduation.constant.NumericConstant;
 import com.chenlinghong.graduation.constant.RedisConstant;
+import com.chenlinghong.graduation.repository.domain.RecommendRankingGoods;
 import com.chenlinghong.graduation.repository.domain.User;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.google.common.collect.Sets;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.DefaultTypedTuple;
+import org.springframework.data.redis.core.ZSetOperations;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -77,7 +85,7 @@ public class MyRedisUtil {
      *
      * @param telephone 电话号码
      * @param smsCode   短信验证码
-     * @return
+     * @return redis key
      */
     @Async(value = AsyncNameConstant.REDIS)
     public String putSmsCode(String telephone, String smsCode) {
@@ -91,6 +99,187 @@ public class MyRedisUtil {
         log.info("MyRedisUtil#putSmsCode: ended. telephone={}, smsCode={}", telephone, smsCode);
         return redisKey;
     }
+
+
+    /**
+     * 商品推荐排名 写入Redis
+     *
+     * @param rankingGoodsList 推荐商品排名列表
+     * @return redis key
+     */
+    @Async(value = AsyncNameConstant.REDIS)
+    public String putRecommendRankingGoods(List<RecommendRankingGoods> rankingGoodsList) {
+        String key = redisKeyUtil.generateKeyForRecommendRankingGoods();
+        /**
+         * 构造set
+         */
+        Set<ZSetOperations.TypedTuple<String>> goodsSet = Sets.newHashSet();
+        for (RecommendRankingGoods item : rankingGoodsList) {
+            if (item == null || item.getGoodsId() == null) {
+                // value is not null
+                continue;
+            }
+            double ranking = 0;
+            if (item.getRanking() != null && item.getRanking() > 0) {
+                ranking = item.getRanking();
+            }
+            ZSetOperations.TypedTuple<String> tuple =
+                    new DefaultTypedTuple<>("" + item.getGoodsId(), ranking);
+            goodsSet.add(tuple);
+        }
+        /**
+         * 批量写入redis
+         */
+        long putResult = redisUtil.zAdd(key, goodsSet);
+        /**
+         * TODO 校验返回结果
+         */
+        return key;
+    }
+
+    /**
+     * 写入ranking
+     *
+     * @param key
+     * @param value
+     * @param score
+     */
+    @Async(value = AsyncNameConstant.REDIS)
+    public String putRecommendRankingGoods(String key, String value, double score) {
+        if (StringUtils.isBlank(key) || StringUtils.isBlank(value)) {
+            return null;
+        }
+        boolean putResult = redisUtil.zAdd(key, value, score);
+        /**
+         * TODO 处理结果
+         */
+        return key;
+    }
+
+    /**
+     * 写入ranking
+     *
+     * @param value 商品值
+     * @param score 分数
+     * @return redis key
+     */
+    public String putRecommendRankingGoods(String value, double score) {
+        if (StringUtils.isBlank(value)) {
+            return null;
+        }
+        String key = redisKeyUtil.generateKeyForRecommendRankingGoods();
+        return putRecommendRankingGoods(key, value, score);
+    }
+
+    /**
+     * 写入ranking
+     *
+     * @param goodsId 商品ID
+     * @param score   分数
+     * @return redis key
+     */
+    public String putRecommendRankingGoods(long goodsId, double score) {
+        if (goodsId <= 0) {
+            return null;
+        }
+        return putRecommendRankingGoods("" + goodsId, score);
+    }
+
+    /**
+     * 移出ranking
+     *
+     * @param key    redis key
+     * @param values 具体value列表
+     * @return 移出个数
+     */
+    @Async(value = AsyncNameConstant.REDIS)
+    public long removeRecommendRankingGoods(String key, String... values) {
+        if (StringUtils.isBlank(key)) {
+            return 0;
+        }
+        return redisUtil.zRemove(key, values);
+    }
+
+    /**
+     * 移出ranking
+     *
+     * @param goodsId 商品ID
+     * @return
+     */
+    public long removeRecommendRankingGoods(long goodsId) {
+        if (goodsId <= 0) {
+            return 0;
+        }
+        String key = redisKeyUtil.generateKeyForRecommendRankingGoods();
+        String value = String.valueOf(goodsId);
+        return removeRecommendRankingGoods(key, value);
+    }
+
+    /**
+     * 增加分数
+     *
+     * @param goodsId
+     * @param score
+     * @return
+     */
+    public double incrementScoreToRankginGoods(long goodsId, double score) {
+        String key = redisKeyUtil.generateKeyForRecommendRankingGoods();
+        String value = String.valueOf(goodsId);
+        return redisUtil.zIncrementScore(key, value, score);
+    }
+
+    /**
+     * 增加分数，默认1分
+     *
+     * @param goodsId
+     * @return
+     */
+    public double incrementScoreToRankginGoods(long goodsId) {
+        return incrementScoreToRankginGoods(goodsId, NumericConstant.ONE);
+    }
+
+    /**
+     * range data and score
+     *
+     * @param key   redis key
+     * @param start 开始下标，0为第一个
+     * @param end   结束下标
+     * @return
+     */
+    public List<RecommendRankingGoods> rangeWithScoresToRankingGoods(String key, int start, int end) {
+        Set<ZSetOperations.TypedTuple<String>> redisData = redisUtil.zRangeByScoreWithScores(key, start, end);
+        List<RecommendRankingGoods> result = Lists.newArrayList();
+        for (ZSetOperations.TypedTuple<String> item : redisData) {
+            RecommendRankingGoods tmp = new RecommendRankingGoods();
+            tmp.setGoodsId(Long.parseLong(item.getValue()));
+            tmp.setRanking(item.getScore());
+            result.add(tmp);
+        }
+        return result;
+    }
+
+    /**
+     * range data and score
+     *
+     * @param start
+     * @param end
+     * @return
+     */
+    public List<RecommendRankingGoods> rangeWithScoresToRankingGoods(int start, int end) {
+        String key = redisKeyUtil.generateKeyForRecommendRankingGoods();
+        return rangeWithScoresToRankingGoods(key, start, end);
+    }
+
+    /**
+     * top n to ranking
+     *
+     * @param n
+     * @return
+     */
+    public List<RecommendRankingGoods> topNForRangeWithScoresToRankingGoods(int n) {
+        return rangeWithScoresToRankingGoods(0, n);
+    }
+
 
     /**
      * 获取userVo

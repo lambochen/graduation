@@ -1,7 +1,7 @@
 package com.chenlinghong.graduation.microscope.sniffer.ranking;
 
 import com.chenlinghong.graduation.common.PageDto;
-import com.chenlinghong.graduation.microscope.sniffer.ranking.dto.RecommendRankingGoodsDto;
+import com.chenlinghong.graduation.repository.domain.RecommendRankingGoods;
 
 /**
  * @Description 商品 推荐排名嗅探器
@@ -23,13 +23,13 @@ public interface RecommendRankingGoodsSniffer extends RecommendRankingSniffer {
      * @param goodsId
      * @return
      */
-    RecommendRankingGoodsDto getByGoods(long goodsId);
+    RecommendRankingGoods getByGoods(long goodsId);
 
     /**
      * top n
      * @param n
      * @return
      */
-    PageDto<RecommendRankingGoodsDto> topN(int n);
+    PageDto<RecommendRankingGoods> topN(int n);
 
 }
