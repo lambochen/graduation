@@ -1,4 +1,6 @@
-package com.chenlinghong.graduation.microscope.sniffer;
+package com.chenlinghong.graduation.microscope.sniffer.behavior;
+
+import com.chenlinghong.graduation.microscope.sniffer.Sniffer;
 
 /**
  * @Description 行为嗅探器

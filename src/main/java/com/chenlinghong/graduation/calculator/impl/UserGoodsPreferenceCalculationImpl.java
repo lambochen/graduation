@@ -2,7 +2,7 @@ package com.chenlinghong.graduation.calculator.impl;
 
 import com.chenlinghong.graduation.enums.UserBehaviorEnum;
 import com.chenlinghong.graduation.calculator.UserGoodsPreferenceCalculation;
-import com.chenlinghong.graduation.microscope.sniffer.util.UserBehaviorUtil;
+import com.chenlinghong.graduation.microscope.sniffer.behavior.util.UserBehaviorUtil;
 import com.chenlinghong.graduation.repository.domain.UserBehavior;
 import com.chenlinghong.graduation.repository.domain.UserPreference;
 import com.google.common.collect.Lists;

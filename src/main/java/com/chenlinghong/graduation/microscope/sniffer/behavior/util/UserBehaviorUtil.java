@@ -1,4 +1,4 @@
-package com.chenlinghong.graduation.microscope.sniffer.util;
+package com.chenlinghong.graduation.microscope.sniffer.behavior.util;
 
 import com.chenlinghong.graduation.constant.NumericConstant;
 import com.chenlinghong.graduation.enums.UserBehaviorEnum;

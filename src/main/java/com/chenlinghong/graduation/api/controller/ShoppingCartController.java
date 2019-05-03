@@ -6,7 +6,7 @@ import com.chenlinghong.graduation.common.ResultVo;
 import com.chenlinghong.graduation.constant.NumericConstant;
 import com.chenlinghong.graduation.enums.ErrorEnum;
 import com.chenlinghong.graduation.exception.BusinessException;
-import com.chenlinghong.graduation.microscope.sniffer.UserGoodsBehaviorSniffer;
+import com.chenlinghong.graduation.microscope.sniffer.behavior.UserGoodsBehaviorSniffer;
 import com.chenlinghong.graduation.repository.domain.ShoppingCart;
 import com.chenlinghong.graduation.service.ShoppingCartService;
 import lombok.extern.slf4j.Slf4j;
