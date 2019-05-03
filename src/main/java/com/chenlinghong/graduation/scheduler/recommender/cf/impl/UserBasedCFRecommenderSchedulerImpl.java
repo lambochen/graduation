@@ -1,4 +1,4 @@
-package com.chenlinghong.graduation.scheduler.recommender.impl;
+package com.chenlinghong.graduation.scheduler.recommender.cf.impl;
 
 import com.chenlinghong.graduation.constant.NumericConstant;
 import com.chenlinghong.graduation.recommender.cf.UserBasedCFRecommender;

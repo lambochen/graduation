@@ -2,6 +2,7 @@ package com.chenlinghong.graduation.service.dto;
 
 import com.chenlinghong.graduation.common.PageDto;
 import com.chenlinghong.graduation.repository.domain.RecommendQueueGoods;
+import com.chenlinghong.graduation.repository.domain.RecommendRankingGoods;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -39,7 +40,7 @@ public class RecommendQueueGoodsDto implements Serializable {
     /**
      * 热门推荐
      */
-    private PageDto<RecommendQueueGoods> popularRecommend;
+    private PageDto<RecommendRankingGoods> popularRecommend;
 
     /**
      * 时令推荐

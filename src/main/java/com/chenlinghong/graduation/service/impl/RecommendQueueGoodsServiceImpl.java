@@ -3,8 +3,10 @@ package com.chenlinghong.graduation.service.impl;
 import com.chenlinghong.graduation.common.PageDto;
 import com.chenlinghong.graduation.constant.NumericConstant;
 import com.chenlinghong.graduation.enums.RecommendTypeEnum;
+import com.chenlinghong.graduation.recommender.ranking.RankingGoodsRecommender;
 import com.chenlinghong.graduation.repository.dao.RecommendQueueGoodsDao;
 import com.chenlinghong.graduation.repository.domain.RecommendQueueGoods;
+import com.chenlinghong.graduation.repository.domain.RecommendRankingGoods;
 import com.chenlinghong.graduation.service.RecommendQueueGoodsService;
 import com.chenlinghong.graduation.service.dto.RecommendQueueGoodsDto;
 import lombok.extern.slf4j.Slf4j;
@@ -25,6 +27,12 @@ public class RecommendQueueGoodsServiceImpl implements RecommendQueueGoodsServic
 
     @Autowired
     private RecommendQueueGoodsDao recommendQueueGoodsDao;
+
+    /**
+     * 热门推荐
+     */
+    @Autowired
+    private RankingGoodsRecommender rankingGoodsRecommender;
 
     @Override
     public int insert(RecommendQueueGoods recommendQueueGoods) {
@@ -115,7 +123,7 @@ public class RecommendQueueGoodsServiceImpl implements RecommendQueueGoodsServic
         /**
          * 热门推荐
          */
-        PageDto<RecommendQueueGoods> popularRecommend = listByUserAndType(userId, RecommendTypeEnum.POPULAR_RECOMMEND);
+        PageDto<RecommendRankingGoods> popularRecommend = rankingGoodsRecommender.topN(NumericConstant.THREE);
         result.setPopularRecommend(popularRecommend);
         /**
          * 时令推荐
