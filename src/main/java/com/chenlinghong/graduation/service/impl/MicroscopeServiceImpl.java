@@ -1,6 +1,7 @@
 package com.chenlinghong.graduation.service.impl;
 
 import com.chenlinghong.graduation.enums.UserBehaviorEnum;
+import com.chenlinghong.graduation.microscope.sniffer.ranking.RecommendRankingGoodsSniffer;
 import com.chenlinghong.graduation.service.GoodsService;
 import com.chenlinghong.graduation.service.MicroscopeService;
 import com.chenlinghong.graduation.service.UserBehaviorService;
@@ -24,6 +25,9 @@ public class MicroscopeServiceImpl implements MicroscopeService {
     @Autowired
     private GoodsService goodsService;
 
+    @Autowired
+    private RecommendRankingGoodsSniffer recommendRankingGoodsSniffer;
+
     @Override
     public void clickGoods(long userId, long goodsId) {
         if (goodsService.isNotGoods(goodsId)) {
@@ -32,8 +36,10 @@ public class MicroscopeServiceImpl implements MicroscopeService {
             return;
         }
         /**
-         * TODO 刷新商品排行榜
+         * 刷新商品排行榜
          */
+        Boolean rankingResult = recommendRankingGoodsSniffer.pushRanking(goodsId);
+
         if (userId <= 0) {
             // 用户未登录
             log.error("MicroscopeService#clickGoods: user not logged in. userId={}, goodsId={}.", userId, goodsId);

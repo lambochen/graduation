@@ -8,6 +8,7 @@ import com.chenlinghong.graduation.enums.UserBehaviorEnum;
 import com.chenlinghong.graduation.exception.AsyncBusinessException;
 import com.chenlinghong.graduation.microscope.sniffer.behavior.UserGoodsBehaviorSniffer;
 import com.chenlinghong.graduation.microscope.sniffer.behavior.util.UserBehaviorUtil;
+import com.chenlinghong.graduation.microscope.sniffer.ranking.RecommendRankingGoodsSniffer;
 import com.chenlinghong.graduation.microscope.util.SessionUtil;
 import com.chenlinghong.graduation.repository.domain.Goods;
 import com.chenlinghong.graduation.repository.domain.GoodsComment;
@@ -38,6 +39,9 @@ public class UserGoodsBehaviorSnifferImpl implements UserGoodsBehaviorSniffer {
     @Autowired
     private UserBehaviorService userBehaviorService;
 
+    @Autowired
+    private RecommendRankingGoodsSniffer recommendRankingGoodsSniffer;
+
     @Override
     public Boolean common(UserBehavior userBehavior) {
         if (userBehavior == null) {
@@ -45,6 +49,10 @@ public class UserGoodsBehaviorSnifferImpl implements UserGoodsBehaviorSniffer {
             throw new AsyncBusinessException(ErrorEnum.PARAM_IS_NULL);
         }
         int result = userBehaviorService.insert(userBehavior);
+        /**
+         * 刷新商品排行榜
+         */
+        pushRanking(userBehavior.getGoodsId());
         /**
          * TODO 处理结果
          */
@@ -64,6 +72,10 @@ public class UserGoodsBehaviorSnifferImpl implements UserGoodsBehaviorSniffer {
             throw new AsyncBusinessException(ErrorEnum.PARAM_IS_NULL);
         }
         int result = userBehaviorService.insert(userBehaviorList);
+        /**
+         * 刷新商品排行榜
+         */
+        pushRanking(userBehaviorList);
         /**
          * TODO 处理结果
          */
@@ -97,8 +109,15 @@ public class UserGoodsBehaviorSnifferImpl implements UserGoodsBehaviorSniffer {
              */
             throw new AsyncBusinessException(ErrorEnum.NO_USER);
         }
-        // 记录用户浏览该商品记录
+        /**
+         *  记录用户浏览该商品记录
+         */
         int insertResult = userBehaviorService.insert(goodsId, userId, UserBehaviorEnum.CLICK);
+        /**
+         * 刷新商品推荐排行榜
+         */
+        pushRanking(goodsId);
+
         /**
          * TODO 后期对返回结果处理
          */
@@ -138,8 +157,14 @@ public class UserGoodsBehaviorSnifferImpl implements UserGoodsBehaviorSniffer {
              */
             throw new AsyncBusinessException(ErrorEnum.NO_USER);
         }
-        // 记录用户添加购物车行为
+        /**
+         *  记录用户添加购物车行为
+         */
         int insertResult = userBehaviorService.insert(goodsId, userId, UserBehaviorEnum.ADD_TO_CART);
+        /**
+         * 刷新商品排行榜
+         */
+        pushRanking(goodsId);
         /**
          * TODO 后期对返回结果处理
          */
@@ -186,6 +211,10 @@ public class UserGoodsBehaviorSnifferImpl implements UserGoodsBehaviorSniffer {
          * TODO 需要进行批量插入
          */
         int insertResult = userBehaviorService.insert(goodsId, userId, UserBehaviorEnum.PURCHASE, frequency);
+        /**
+         * 刷新商品排行榜
+         */
+        pushRanking(goodsId);
         /**
          * TODO 后期对返回结果处理
          */
@@ -235,6 +264,11 @@ public class UserGoodsBehaviorSnifferImpl implements UserGoodsBehaviorSniffer {
             throw new AsyncBusinessException(ErrorEnum.PARAM_ILLEGAL);
         }
         int insertResult = userBehaviorService.insert(goodsId, userId, behaviorEnum.getCode());
+        /**
+         * 刷新商品排行榜
+         */
+        pushRanking(goodsId);
+
         if (insertResult != NumericConstant.ONE) {
             /**
              * TODO 处理异常
@@ -291,6 +325,10 @@ public class UserGoodsBehaviorSnifferImpl implements UserGoodsBehaviorSniffer {
             throw new AsyncBusinessException(ErrorEnum.PARAM_IS_NULL);
         }
         int insertResult = userBehaviorService.insert(userBehaviorList);
+        /**
+         * 刷新推荐排行榜
+         */
+        pushRanking(userBehaviorList);
         if (insertResult != NumericConstant.ONE) {
             /**
              * TODO 处理异常
@@ -298,6 +336,32 @@ public class UserGoodsBehaviorSnifferImpl implements UserGoodsBehaviorSniffer {
             return false;
         }
         return true;
+    }
+
+    /**
+     * 写入ranking
+     *
+     * @param goodsId
+     */
+    private void pushRanking(long goodsId) {
+        /**
+         * 刷新商品排行榜
+         */
+        Boolean rankingResult = recommendRankingGoodsSniffer.pushRanking(goodsId);
+        /**
+         * TODO 处理结果
+         */
+    }
+
+    /**
+     * 写入ranking
+     *
+     * @param userBehaviorList
+     */
+    private void pushRanking(List<UserBehavior> userBehaviorList) {
+        for (UserBehavior userBehavior : userBehaviorList) {
+            pushRanking(userBehavior.getGoodsId());
+        }
     }
 
 }
