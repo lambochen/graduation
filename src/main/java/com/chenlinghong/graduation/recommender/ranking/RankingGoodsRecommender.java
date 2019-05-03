@@ -1,8 +1,9 @@
 package com.chenlinghong.graduation.recommender.ranking;
 
-import com.chenlinghong.graduation.common.PageDto;
 import com.chenlinghong.graduation.recommender.Recommender;
 import com.chenlinghong.graduation.repository.domain.RecommendRankingGoods;
+
+import java.util.List;
 
 /**
  * @Description 热门推荐
@@ -26,7 +27,7 @@ public interface RankingGoodsRecommender extends Recommender {
      * @param n
      * @return
      */
-    PageDto<RecommendRankingGoods> topN(int n);
+    List<RecommendRankingGoods> topN(int n);
 
     /**
      * range
@@ -35,6 +36,6 @@ public interface RankingGoodsRecommender extends Recommender {
      * @param pageSize
      * @return
      */
-    PageDto<RecommendRankingGoods> range(int pageNo, int pageSize);
+    List<RecommendRankingGoods> range(int pageNo, int pageSize);
 
 }
