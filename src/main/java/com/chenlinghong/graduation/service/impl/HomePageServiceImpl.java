@@ -130,6 +130,10 @@ public class HomePageServiceImpl implements HomePageService {
          */
         RecommendDto seasonRecommendDto = seasonBasedRecommender.recommend(NumericConstant.THREE);
         result.setSeasonRecommend(seasonRecommendDto);
+        /**
+         * 热门推荐
+         */
+        // RecommendDto topRecommendDto =
 
         return null;
     }

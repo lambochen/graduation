@@ -19,29 +19,6 @@ public interface RecommendRankingGoodsSniffer extends RecommendRankingSniffer {
      */
     Boolean pushRanking(long goodsId);
 
-    /**
-     * 通过商品ID获取
-     *
-     * @param goodsId
-     * @return
-     */
-    Long getByGoods(long goodsId);
 
-    /**
-     * top n
-     *
-     * @param n
-     * @return
-     */
-    PageDto<RecommendRankingGoods> topN(int n);
-
-    /**
-     * range
-     *
-     * @param pageNo
-     * @param pageSize
-     * @return
-     */
-    PageDto<RecommendRankingGoods> range(int pageNo, int pageSize);
 
 }
