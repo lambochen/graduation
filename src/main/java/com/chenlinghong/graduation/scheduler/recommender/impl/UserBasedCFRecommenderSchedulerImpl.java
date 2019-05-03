@@ -3,7 +3,7 @@ package com.chenlinghong.graduation.scheduler.recommender.impl;
 import com.chenlinghong.graduation.constant.NumericConstant;
 import com.chenlinghong.graduation.recommender.cf.UserBasedCFRecommender;
 import com.chenlinghong.graduation.scheduler.recommender.AbstractRecommenderScheduler;
-import com.chenlinghong.graduation.scheduler.recommender.UserBasedCFRecommenderScheduler;
+import com.chenlinghong.graduation.scheduler.recommender.cf.UserBasedCFRecommenderScheduler;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.mahout.cf.taste.common.TasteException;
 import org.springframework.beans.factory.annotation.Autowired;
