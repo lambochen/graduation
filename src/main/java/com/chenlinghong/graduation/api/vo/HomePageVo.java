@@ -47,7 +47,7 @@ public class HomePageVo implements Serializable {
     /**
      * 热门推荐
      */
-    RecommendDto<RecommendRankingGoods> popularRecommend;
+    PageDto<RecommendRankingGoods> popularRecommend;
 
     /**
      * 时令推荐

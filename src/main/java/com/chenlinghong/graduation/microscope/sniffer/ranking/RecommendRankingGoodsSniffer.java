@@ -1,8 +1,5 @@
 package com.chenlinghong.graduation.microscope.sniffer.ranking;
 
-import com.chenlinghong.graduation.common.PageDto;
-import com.chenlinghong.graduation.repository.domain.RecommendRankingGoods;
-
 /**
  * @Description 商品 推荐排名嗅探器
  * @Author chenlinghong
@@ -12,7 +9,7 @@ import com.chenlinghong.graduation.repository.domain.RecommendRankingGoods;
 public interface RecommendRankingGoodsSniffer extends RecommendRankingSniffer {
 
     /**
-     * 加入排名
+     * TODO 加入排名,需要埋点
      *
      * @param goodsId
      * @return
