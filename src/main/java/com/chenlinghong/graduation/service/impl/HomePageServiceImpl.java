@@ -10,6 +10,7 @@ import com.chenlinghong.graduation.service.HomePageService;
 import com.chenlinghong.graduation.service.RecommendQueueGoodsService;
 import com.chenlinghong.graduation.service.dto.RecommendQueueGoodsDto;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.mahout.cf.taste.common.TasteException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -144,7 +145,7 @@ public class HomePageServiceImpl implements HomePageService {
     // }
 
     @Override
-    public HomePageVo get(long userId) {
+    public HomePageVo get(long userId) throws TasteException {
         HomePageVo result = new HomePageVo();
         /**
          * 获取目录信息

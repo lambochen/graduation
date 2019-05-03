@@ -11,6 +11,7 @@ import com.chenlinghong.graduation.scheduler.recommender.cf.ItemBasedCFRecommend
 import com.chenlinghong.graduation.scheduler.recommender.cf.SlopeOneCFRecommenderScheduler;
 import com.chenlinghong.graduation.scheduler.recommender.cf.UserBasedCFRecommenderScheduler;
 import com.chenlinghong.graduation.scheduler.recommender.season.SeasonBasedRecommenderScheduler;
+import com.chenlinghong.graduation.scheduler.recommender.user.UserTagBasedRecommenderScheduler;
 import com.chenlinghong.graduation.service.RecommendQueueGoodsService;
 import com.chenlinghong.graduation.service.dto.RecommendQueueGoodsDto;
 import lombok.extern.slf4j.Slf4j;
@@ -62,6 +63,12 @@ public class RecommendQueueGoodsServiceImpl implements RecommendQueueGoodsServic
      */
     @Autowired
     private SeasonBasedRecommenderScheduler seasonBasedRecommenderScheduler;
+
+    /**
+     * 基于用户标签推荐
+     */
+    @Autowired
+    private UserTagBasedRecommenderScheduler userTagBasedRecommenderScheduler;
 
 
     @Override
@@ -169,6 +176,7 @@ public class RecommendQueueGoodsServiceImpl implements RecommendQueueGoodsServic
          */
         PageDto<RecommendQueueGoods> userTagBasedRecommend = listByUserAndType(userId, RecommendTypeEnum.USER_TAG_BASED_RECOMMEND);
         result.setUserTagBasedRecommend(userTagBasedRecommend);
+        userTagBasedRecommenderScheduler.refreshRecommendQueue(userId);
         return result;
     }
 
