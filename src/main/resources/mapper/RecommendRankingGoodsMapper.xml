@@ -72,6 +72,12 @@
         recommend_ranking_goods
     </select>
 
+    <select id="countByGoods" resultType="int">
+        select count(distinct id)
+        from recommend_ranking_goods
+        where goods_id = #{goodsId}
+    </select>
+
     <update id="update" parameterType="RecommendRankingGoods">
         update recommend_ranking_goods
         set `ranking`       = #{ranking},
