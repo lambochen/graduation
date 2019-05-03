@@ -31,7 +31,7 @@ public interface RecommendQueueGoodsService extends IBaseService<RecommendQueueG
      * @param typeEnum
      * @return
      */
-    PageDto<RecommendQueueGoods> listByUserAndType(long userId, RecommendTypeEnum typeEnum, int pageNo, int pageSize);
+    PageDto<RecommendQueueGoods> listByUserAndType(long userId, RecommendTypeEnum typeEnum, int pageNo, int pageSize) throws TasteException;
 
     /**
      * 根据用户和推荐类型获取，获取默认条数
@@ -40,7 +40,7 @@ public interface RecommendQueueGoodsService extends IBaseService<RecommendQueueG
      * @param typeEnum
      * @return
      */
-    PageDto<RecommendQueueGoods> listByUserAndType(long userId, RecommendTypeEnum typeEnum);
+    PageDto<RecommendQueueGoods> listByUserAndType(long userId, RecommendTypeEnum typeEnum) throws TasteException;
 
 
     /**

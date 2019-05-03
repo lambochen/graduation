@@ -124,42 +124,45 @@ public class RecommendQueueGoodsServiceImpl implements RecommendQueueGoodsServic
     }
 
     @Override
-    public PageDto<RecommendQueueGoods> listByUserAndType(long userId, RecommendTypeEnum typeEnum, int pageNo, int pageSize) {
-        List<RecommendQueueGoods> data =
-                recommendQueueGoodsDao.listByUserAndType(userId, typeEnum.getCode(), (pageNo - 1) * pageSize, pageSize);
+    public PageDto<RecommendQueueGoods> listByUserAndType(long userId, RecommendTypeEnum typeEnum,
+                                                          int pageNo, int pageSize) throws TasteException {
+        List<RecommendQueueGoods> data = recommendQueueGoodsDao.listByUserAndType(userId, typeEnum.getCode(),
+                (pageNo - 1) * pageSize, pageSize);
         int total = recommendQueueGoodsDao.countByUserAndType(userId, typeEnum.getCode());
+        refreshRecommendQueue(userId, typeEnum);
         return new PageDto<>(data, pageNo, pageSize, total);
     }
 
     @Override
-    public PageDto<RecommendQueueGoods> listByUserAndType(long userId, RecommendTypeEnum typeEnum) {
+    public PageDto<RecommendQueueGoods> listByUserAndType(long userId, RecommendTypeEnum typeEnum)
+            throws TasteException {
         return listByUserAndType(userId, typeEnum, NumericConstant.ONE, NumericConstant.THREE);
     }
 
     @Override
     public RecommendQueueGoodsDto listByUser(long userId) throws TasteException {
         /**
-         * TODO 获取数据后，需要重新进行推荐写入
+         * 获取数据后，需要重新进行推荐写入
          */
         RecommendQueueGoodsDto result = new RecommendQueueGoodsDto();
         /**
          * 基于用户的协同过滤推荐
          */
-        PageDto<RecommendQueueGoods> userBasedRecommend = listByUserAndType(userId, RecommendTypeEnum.USER_BASED_RECOMMEND);
+        PageDto<RecommendQueueGoods> userBasedRecommend =
+                listByUserAndType(userId, RecommendTypeEnum.USER_BASED_RECOMMEND);
         result.setUserBasedRecommend(userBasedRecommend);
-        userBasedCFRecommenderScheduler.refreshRecommendQueue(userId);
         /**
          * 基于物品推荐
          */
-        PageDto<RecommendQueueGoods> itemBasedRecommend = listByUserAndType(userId, RecommendTypeEnum.ITEM_BASED_RECOMMEND);
+        PageDto<RecommendQueueGoods> itemBasedRecommend =
+                listByUserAndType(userId, RecommendTypeEnum.ITEM_BASED_RECOMMEND);
         result.setItemBasedRecommend(itemBasedRecommend);
-        itemBasedCFRecommenderScheduler.refreshRecommendQueue(userId);
         /**
          * SlopeOne推荐，基于评分推荐
          */
-        PageDto<RecommendQueueGoods> slopeOneRecommend = listByUserAndType(userId, RecommendTypeEnum.SLOPE_ONE_RECOMMEND);
+        PageDto<RecommendQueueGoods> slopeOneRecommend =
+                listByUserAndType(userId, RecommendTypeEnum.SLOPE_ONE_RECOMMEND);
         result.setSlopeOneRecommend(slopeOneRecommend);
-        slopeOneCFRecommenderScheduler.refreshRecommendQueue(userId);
         /**
          * 热门推荐
          */
@@ -170,13 +173,12 @@ public class RecommendQueueGoodsServiceImpl implements RecommendQueueGoodsServic
          */
         PageDto<RecommendQueueGoods> seasonRecommend = listByUserAndType(userId, RecommendTypeEnum.SEASON_RECOMMEND);
         result.setSeasonRecommend(seasonRecommend);
-        seasonBasedRecommenderScheduler.refreshRecommendQueue(userId);
         /**
          * 基于用户标签的推荐
          */
-        PageDto<RecommendQueueGoods> userTagBasedRecommend = listByUserAndType(userId, RecommendTypeEnum.USER_TAG_BASED_RECOMMEND);
+        PageDto<RecommendQueueGoods> userTagBasedRecommend =
+                listByUserAndType(userId, RecommendTypeEnum.USER_TAG_BASED_RECOMMEND);
         result.setUserTagBasedRecommend(userTagBasedRecommend);
-        userTagBasedRecommenderScheduler.refreshRecommendQueue(userId);
         return result;
     }
 
@@ -192,6 +194,55 @@ public class RecommendQueueGoodsServiceImpl implements RecommendQueueGoodsServic
             return 0;
         }
         return recommendQueueGoodsDao.update(recommendQueueGoods);
+    }
+
+    /**
+     * 刷新推荐队列
+     *
+     * @param userId   用户ID
+     * @param typeEnum 推荐类型
+     * @return 新写入数据数目
+     */
+    private Long refreshRecommendQueue(long userId, RecommendTypeEnum typeEnum) throws TasteException {
+        long result = 0;
+        switch (typeEnum) {
+            /**
+             * 基于用户的协同过滤推荐
+             */
+            case USER_BASED_RECOMMEND:
+                result = userBasedCFRecommenderScheduler.refreshRecommendQueue(userId);
+                break;
+            /**
+             * 基于物品推荐
+             */
+            case ITEM_BASED_RECOMMEND:
+                result = itemBasedCFRecommenderScheduler.refreshRecommendQueue(userId);
+                break;
+            /**
+             * SlopeOne推荐，基于评分推荐
+             */
+            case SLOPE_ONE_RECOMMEND:
+                result = slopeOneCFRecommenderScheduler.refreshRecommendQueue(userId);
+                break;
+            /**
+             * 时令推荐
+             */
+            case SEASON_RECOMMEND:
+                result = seasonBasedRecommenderScheduler.refreshRecommendQueue(userId);
+                break;
+            /**
+             * 基于用户标签的推荐
+             */
+            case USER_TAG_BASED_RECOMMEND:
+                result = userTagBasedRecommenderScheduler.refreshRecommendQueue(userId);
+                break;
+            /**
+             * 热门推荐
+             */
+            case POPULAR_RECOMMEND:
+                break;
+        }
+        return result;
     }
 
 
