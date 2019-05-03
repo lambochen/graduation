@@ -41,4 +41,12 @@ public interface MahoutRecommenderScheduler extends Scheduler {
      */
     List<RecommendQueueGoods> converter(RecommendDto<RecommendGoodsDto> recommendDto);
 
+    /**
+     * 刷新推荐队列
+     *
+     * @param userId 用户ID
+     * @return
+     */
+    Long refreshRecommendQueue(long userId) throws TasteException;
+
 }

@@ -8,6 +8,7 @@ import com.chenlinghong.graduation.repository.dao.RecommendQueueGoodsDao;
 import com.chenlinghong.graduation.repository.domain.RecommendQueueGoods;
 import com.chenlinghong.graduation.repository.domain.RecommendRankingGoods;
 import com.chenlinghong.graduation.scheduler.recommender.cf.ItemBasedCFRecommenderScheduler;
+import com.chenlinghong.graduation.scheduler.recommender.cf.SlopeOneCFRecommenderScheduler;
 import com.chenlinghong.graduation.scheduler.recommender.cf.UserBasedCFRecommenderScheduler;
 import com.chenlinghong.graduation.service.RecommendQueueGoodsService;
 import com.chenlinghong.graduation.service.dto.RecommendQueueGoodsDto;
@@ -48,6 +49,12 @@ public class RecommendQueueGoodsServiceImpl implements RecommendQueueGoodsServic
      */
     @Autowired
     private ItemBasedCFRecommenderScheduler itemBasedCFRecommenderScheduler;
+
+    /**
+     * SlopeOne协同过滤推荐执行器
+     */
+    @Autowired
+    private SlopeOneCFRecommenderScheduler slopeOneCFRecommenderScheduler;
 
 
     @Override
@@ -138,6 +145,7 @@ public class RecommendQueueGoodsServiceImpl implements RecommendQueueGoodsServic
          */
         PageDto<RecommendQueueGoods> slopeOneRecommend = listByUserAndType(userId, RecommendTypeEnum.SLOPE_ONE_RECOMMEND);
         result.setSlopeOneRecommend(slopeOneRecommend);
+        slopeOneCFRecommenderScheduler.refreshRecommendQueue(userId);
         /**
          * 热门推荐
          */

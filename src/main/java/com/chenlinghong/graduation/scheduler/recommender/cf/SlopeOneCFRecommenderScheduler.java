@@ -9,4 +9,5 @@ import com.chenlinghong.graduation.scheduler.recommender.MahoutRecommenderSchedu
  * @Version V1.0
  */
 public interface SlopeOneCFRecommenderScheduler extends MahoutRecommenderScheduler {
+
 }
