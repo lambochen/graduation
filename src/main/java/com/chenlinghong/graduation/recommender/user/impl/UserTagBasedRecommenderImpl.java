@@ -71,7 +71,7 @@ public class UserTagBasedRecommenderImpl extends AbstractGraduationRecommender i
         List<GoodsCatalogTwo> catalogTwoList = converter(userTagDto.getData());
         PageDto<Goods> goodsPageDto =
                 goodsService.listByCatalogTwoList(catalogTwoList, NumericConstant.THREE);
-        return converter(goodsPageDto);
+        return converter(goodsPageDto, userId);
     }
 
     /**

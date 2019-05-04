@@ -7,11 +7,7 @@ import com.chenlinghong.graduation.recommender.ranking.RankingGoodsRecommender;
 import com.chenlinghong.graduation.repository.dao.RecommendQueueGoodsDao;
 import com.chenlinghong.graduation.repository.domain.RecommendQueueGoods;
 import com.chenlinghong.graduation.repository.domain.RecommendRankingGoods;
-import com.chenlinghong.graduation.scheduler.recommender.cf.ItemBasedCFRecommenderScheduler;
-import com.chenlinghong.graduation.scheduler.recommender.cf.SlopeOneCFRecommenderScheduler;
-import com.chenlinghong.graduation.scheduler.recommender.cf.UserBasedCFRecommenderScheduler;
-import com.chenlinghong.graduation.scheduler.recommender.season.SeasonBasedRecommenderScheduler;
-import com.chenlinghong.graduation.scheduler.recommender.user.UserTagBasedRecommenderScheduler;
+import com.chenlinghong.graduation.scheduler.recommender.RecommendQueueScheduler;
 import com.chenlinghong.graduation.service.RecommendQueueGoodsService;
 import com.chenlinghong.graduation.service.dto.RecommendQueueGoodsDto;
 import lombok.extern.slf4j.Slf4j;
@@ -40,35 +36,8 @@ public class RecommendQueueGoodsServiceImpl implements RecommendQueueGoodsServic
     @Autowired
     private RankingGoodsRecommender rankingGoodsRecommender;
 
-    /**
-     * 基于用户的协同过滤推荐执行器
-     */
     @Autowired
-    private UserBasedCFRecommenderScheduler userBasedCFRecommenderScheduler;
-
-    /**
-     * 基于物品的协同过滤推荐执行器
-     */
-    @Autowired
-    private ItemBasedCFRecommenderScheduler itemBasedCFRecommenderScheduler;
-
-    /**
-     * SlopeOne协同过滤推荐执行器
-     */
-    @Autowired
-    private SlopeOneCFRecommenderScheduler slopeOneCFRecommenderScheduler;
-
-    /**
-     * 时令推荐
-     */
-    @Autowired
-    private SeasonBasedRecommenderScheduler seasonBasedRecommenderScheduler;
-
-    /**
-     * 基于用户标签推荐
-     */
-    @Autowired
-    private UserTagBasedRecommenderScheduler userTagBasedRecommenderScheduler;
+    private RecommendQueueScheduler recommendQueueScheduler;
 
 
     @Override
@@ -129,7 +98,7 @@ public class RecommendQueueGoodsServiceImpl implements RecommendQueueGoodsServic
         List<RecommendQueueGoods> data = recommendQueueGoodsDao.listByUserAndType(userId, typeEnum.getCode(),
                 (pageNo - 1) * pageSize, pageSize);
         int total = recommendQueueGoodsDao.countByUserAndType(userId, typeEnum.getCode());
-        refreshRecommendQueue(userId, typeEnum);
+        recommendQueueScheduler.refreshRecommendQueue(userId, typeEnum);
         return new PageDto<>(data, pageNo, pageSize, total);
     }
 
@@ -196,54 +165,6 @@ public class RecommendQueueGoodsServiceImpl implements RecommendQueueGoodsServic
         return recommendQueueGoodsDao.update(recommendQueueGoods);
     }
 
-    /**
-     * 刷新推荐队列
-     *
-     * @param userId   用户ID
-     * @param typeEnum 推荐类型
-     * @return 新写入数据数目
-     */
-    private Long refreshRecommendQueue(long userId, RecommendTypeEnum typeEnum) throws TasteException {
-        long result = 0;
-        switch (typeEnum) {
-            /**
-             * 基于用户的协同过滤推荐
-             */
-            case USER_BASED_RECOMMEND:
-                result = userBasedCFRecommenderScheduler.refreshRecommendQueue(userId);
-                break;
-            /**
-             * 基于物品推荐
-             */
-            case ITEM_BASED_RECOMMEND:
-                result = itemBasedCFRecommenderScheduler.refreshRecommendQueue(userId);
-                break;
-            /**
-             * SlopeOne推荐，基于评分推荐
-             */
-            case SLOPE_ONE_RECOMMEND:
-                result = slopeOneCFRecommenderScheduler.refreshRecommendQueue(userId);
-                break;
-            /**
-             * 时令推荐
-             */
-            case SEASON_RECOMMEND:
-                result = seasonBasedRecommenderScheduler.refreshRecommendQueue(userId);
-                break;
-            /**
-             * 基于用户标签的推荐
-             */
-            case USER_TAG_BASED_RECOMMEND:
-                result = userTagBasedRecommenderScheduler.refreshRecommendQueue(userId);
-                break;
-            /**
-             * 热门推荐
-             */
-            case POPULAR_RECOMMEND:
-                break;
-        }
-        return result;
-    }
 
 
 }
