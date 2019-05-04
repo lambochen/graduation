@@ -45,6 +45,6 @@ public final class RedisConstant {
     /**
      * TODO 上线需要修改 ranking ttl
      */
-    public static final long RANKING_GOODS_TTL = 1 * 24 * 60 * 60 * 1000L;
+    public static final long RANKING_GOODS_TTL = 30 * 24 * 60 * 60 * 1000L;
 
 }
