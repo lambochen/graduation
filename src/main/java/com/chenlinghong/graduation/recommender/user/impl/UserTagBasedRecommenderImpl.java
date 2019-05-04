@@ -25,7 +25,7 @@ import java.util.List;
  * @Version V1.0
  */
 @Slf4j
-@Service
+@Service(value = "userTagBasedRecommender")
 public class UserTagBasedRecommenderImpl extends AbstractGraduationRecommender implements UserTagBasedRecommender {
 
     @Autowired
@@ -71,7 +71,7 @@ public class UserTagBasedRecommenderImpl extends AbstractGraduationRecommender i
         List<GoodsCatalogTwo> catalogTwoList = converter(userTagDto.getData());
         PageDto<Goods> goodsPageDto =
                 goodsService.listByCatalogTwoList(catalogTwoList, NumericConstant.THREE);
-        return converter(goodsPageDto);
+        return converter(goodsPageDto, userId);
     }
 
     /**

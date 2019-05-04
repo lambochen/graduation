@@ -2,7 +2,7 @@ package com.chenlinghong.graduation.scheduler.recommender.user.impl;
 
 import com.chenlinghong.graduation.constant.AsyncNameConstant;
 import com.chenlinghong.graduation.enums.RecommendTypeEnum;
-import com.chenlinghong.graduation.recommender.GraduationRecommender;
+import com.chenlinghong.graduation.recommender.user.UserTagBasedRecommender;
 import com.chenlinghong.graduation.repository.domain.RecommendQueueGoods;
 import com.chenlinghong.graduation.scheduler.recommender.dto.RecommendDto;
 import com.chenlinghong.graduation.scheduler.recommender.dto.RecommendGoodsDto;
@@ -15,7 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -31,8 +30,8 @@ public class UserTagBasedRecommenderSchedulerImpl implements UserTagBasedRecomme
     @Autowired
     private RecommendQueueGoodsService recommendQueueGoodsService;
 
-    @Resource
-    GraduationRecommender userTagBasedRecommender;
+    @Autowired
+    private UserTagBasedRecommender userTagBasedRecommender;
 
     @Override
     public RecommendDto recommend(long userId) throws TasteException {

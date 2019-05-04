@@ -4,16 +4,16 @@ import com.chenlinghong.graduation.common.PageDto;
 import com.chenlinghong.graduation.constant.NumericConstant;
 import com.chenlinghong.graduation.enums.RecommendTypeEnum;
 import com.chenlinghong.graduation.recommender.ranking.RankingGoodsRecommender;
+import com.chenlinghong.graduation.recommender.season.SeasonBasedRecommender;
 import com.chenlinghong.graduation.repository.dao.RecommendQueueGoodsDao;
 import com.chenlinghong.graduation.repository.domain.RecommendQueueGoods;
 import com.chenlinghong.graduation.repository.domain.RecommendRankingGoods;
-import com.chenlinghong.graduation.scheduler.recommender.cf.ItemBasedCFRecommenderScheduler;
-import com.chenlinghong.graduation.scheduler.recommender.cf.SlopeOneCFRecommenderScheduler;
-import com.chenlinghong.graduation.scheduler.recommender.cf.UserBasedCFRecommenderScheduler;
-import com.chenlinghong.graduation.scheduler.recommender.season.SeasonBasedRecommenderScheduler;
-import com.chenlinghong.graduation.scheduler.recommender.user.UserTagBasedRecommenderScheduler;
+import com.chenlinghong.graduation.scheduler.recommender.RecommendQueueScheduler;
+import com.chenlinghong.graduation.scheduler.recommender.dto.RecommendDto;
+import com.chenlinghong.graduation.scheduler.recommender.dto.RecommendGoodsDto;
 import com.chenlinghong.graduation.service.RecommendQueueGoodsService;
 import com.chenlinghong.graduation.service.dto.RecommendQueueGoodsDto;
+import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.mahout.cf.taste.common.TasteException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,34 +41,13 @@ public class RecommendQueueGoodsServiceImpl implements RecommendQueueGoodsServic
     private RankingGoodsRecommender rankingGoodsRecommender;
 
     /**
-     * 基于用户的协同过滤推荐执行器
-     */
-    @Autowired
-    private UserBasedCFRecommenderScheduler userBasedCFRecommenderScheduler;
-
-    /**
-     * 基于物品的协同过滤推荐执行器
-     */
-    @Autowired
-    private ItemBasedCFRecommenderScheduler itemBasedCFRecommenderScheduler;
-
-    /**
-     * SlopeOne协同过滤推荐执行器
-     */
-    @Autowired
-    private SlopeOneCFRecommenderScheduler slopeOneCFRecommenderScheduler;
-
-    /**
      * 时令推荐
      */
     @Autowired
-    private SeasonBasedRecommenderScheduler seasonBasedRecommenderScheduler;
+    private SeasonBasedRecommender seasonBasedRecommender;
 
-    /**
-     * 基于用户标签推荐
-     */
     @Autowired
-    private UserTagBasedRecommenderScheduler userTagBasedRecommenderScheduler;
+    private RecommendQueueScheduler recommendQueueScheduler;
 
 
     @Override
@@ -129,7 +108,7 @@ public class RecommendQueueGoodsServiceImpl implements RecommendQueueGoodsServic
         List<RecommendQueueGoods> data = recommendQueueGoodsDao.listByUserAndType(userId, typeEnum.getCode(),
                 (pageNo - 1) * pageSize, pageSize);
         int total = recommendQueueGoodsDao.countByUserAndType(userId, typeEnum.getCode());
-        refreshRecommendQueue(userId, typeEnum);
+        recommendQueueScheduler.refreshRecommendQueue(userId, typeEnum);
         return new PageDto<>(data, pageNo, pageSize, total);
     }
 
@@ -171,8 +150,9 @@ public class RecommendQueueGoodsServiceImpl implements RecommendQueueGoodsServic
         /**
          * 时令推荐
          */
-        PageDto<RecommendQueueGoods> seasonRecommend = listByUserAndType(userId, RecommendTypeEnum.SEASON_RECOMMEND);
-        result.setSeasonRecommend(seasonRecommend);
+        RecommendDto<RecommendGoodsDto> seasonRecommendDto = seasonBasedRecommender.recommend(NumericConstant.THREE);
+        result.setSeasonRecommend(converter(seasonRecommendDto));
+
         /**
          * 基于用户标签的推荐
          */
@@ -197,52 +177,29 @@ public class RecommendQueueGoodsServiceImpl implements RecommendQueueGoodsServic
     }
 
     /**
-     * 刷新推荐队列
+     * 转换数据
      *
-     * @param userId   用户ID
-     * @param typeEnum 推荐类型
-     * @return 新写入数据数目
+     * @param recommendDto
+     * @return
      */
-    private Long refreshRecommendQueue(long userId, RecommendTypeEnum typeEnum) throws TasteException {
-        long result = 0;
-        switch (typeEnum) {
-            /**
-             * 基于用户的协同过滤推荐
-             */
-            case USER_BASED_RECOMMEND:
-                result = userBasedCFRecommenderScheduler.refreshRecommendQueue(userId);
-                break;
-            /**
-             * 基于物品推荐
-             */
-            case ITEM_BASED_RECOMMEND:
-                result = itemBasedCFRecommenderScheduler.refreshRecommendQueue(userId);
-                break;
-            /**
-             * SlopeOne推荐，基于评分推荐
-             */
-            case SLOPE_ONE_RECOMMEND:
-                result = slopeOneCFRecommenderScheduler.refreshRecommendQueue(userId);
-                break;
-            /**
-             * 时令推荐
-             */
-            case SEASON_RECOMMEND:
-                result = seasonBasedRecommenderScheduler.refreshRecommendQueue(userId);
-                break;
-            /**
-             * 基于用户标签的推荐
-             */
-            case USER_TAG_BASED_RECOMMEND:
-                result = userTagBasedRecommenderScheduler.refreshRecommendQueue(userId);
-                break;
-            /**
-             * 热门推荐
-             */
-            case POPULAR_RECOMMEND:
-                break;
+    @Override
+    public PageDto<RecommendQueueGoods> converter(RecommendDto<RecommendGoodsDto> recommendDto) {
+        List<RecommendQueueGoods> goodsList = Lists.newArrayList();
+        if (recommendDto == null || recommendDto.getData() == null
+                || recommendDto.getData().getData() == null
+                || recommendDto.getData().getData().size() <= 0) {
+            return new PageDto<>();
         }
-        return result;
+        for (RecommendGoodsDto item : recommendDto.getData().getData()) {
+            RecommendQueueGoods goods = new RecommendQueueGoods();
+            goods.setGoods(item.getGoods());
+            if (item.getGoods() != null) {
+                goods.setGoodsId(item.getGoods().getId());
+            }
+            goods.setRecommendType(RecommendTypeEnum.SEASON_RECOMMEND.getCode());
+            goodsList.add(goods);
+        }
+        return new PageDto<>(goodsList);
     }
 
 

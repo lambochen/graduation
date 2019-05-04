@@ -96,12 +96,12 @@ public class GoodsServiceImpl implements GoodsService {
 
     @Override
     public PageDto<Goods> listByCatalogTwoList(List<GoodsCatalogTwo> data) {
-        return listByCatalogTwoList(data,NumericConstant.TEN);
+        return listByCatalogTwoList(data, NumericConstant.ONE, NumericConstant.TEN);
     }
 
     @Override
-    public PageDto<Goods> listByCatalogTwoList(List<GoodsCatalogTwo> data, long count) {
-        List<Goods> goodsList = goodsDao.listByCatalogTwoList(data,count);
+    public PageDto<Goods> listByCatalogTwoList(List<GoodsCatalogTwo> data, int pageNo, int pageSize) {
+        List<Goods> goodsList = goodsDao.listByCatalogTwoList(data, (pageNo - 1) * pageSize, pageSize);
         return new PageDto<>(goodsList);
     }
 }

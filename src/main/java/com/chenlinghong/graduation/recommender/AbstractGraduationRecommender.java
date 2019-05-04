@@ -20,6 +20,19 @@ public abstract class AbstractGraduationRecommender implements GraduationRecomme
      * 数据转换
      *
      * @param goodsPageDto
+     * @param userId
+     * @return
+     */
+    protected RecommendDto<RecommendGoodsDto> converter(PageDto<Goods> goodsPageDto, long userId) {
+        RecommendDto<RecommendGoodsDto> result = converter(goodsPageDto);
+        result.setUserId(userId);
+        return result;
+    }
+
+    /**
+     * 数据转换
+     *
+     * @param goodsPageDto
      * @return
      */
     protected RecommendDto<RecommendGoodsDto> converter(PageDto<Goods> goodsPageDto) {

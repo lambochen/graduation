@@ -299,6 +299,7 @@
 |   receiver    |   bigint |   Long  |   接收者ID    |   FK(user),not null    |   |
 |   content |   varchar(2048)    |   String  |   消息内容(富文本)  |   not null    |   |
 |   chat_id |   varchar(256)    |   String  |   会话ID  |   not null    |   |
+|   read |   int    |   Integer  |   是否已读（0已读 1未读）  |   null,default 1    |   |
 
 其它说明：
 

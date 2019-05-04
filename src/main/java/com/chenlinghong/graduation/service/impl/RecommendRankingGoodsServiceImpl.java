@@ -45,8 +45,9 @@ public class RecommendRankingGoodsServiceImpl implements RecommendRankingGoodsSe
         /**
          * 存在该商品，更新rank
          */
-        double rank = (dbGoods.getRanking() == null ? 0 : dbGoods.getRanking()) + recommendRankingGoods.getRanking();
+        int rank = (dbGoods.getRanking() == null ? 0 : dbGoods.getRanking()) + recommendRankingGoods.getRanking();
         recommendRankingGoods.setRanking(rank);
+        recommendRankingGoods.setId(dbGoods.getId());
         recommendRankingGoodsDao.update(recommendRankingGoods);
         return 0;
     }
@@ -103,7 +104,7 @@ public class RecommendRankingGoodsServiceImpl implements RecommendRankingGoodsSe
          */
         RecommendRankingGoods rankingGoods = new RecommendRankingGoods();
         rankingGoods.setGoodsId(goodsId);
-        rankingGoods.setRanking((double) rank);
+        rankingGoods.setRanking(rank);
         return insert(rankingGoods);
     }
 

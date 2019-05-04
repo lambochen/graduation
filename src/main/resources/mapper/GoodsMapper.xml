@@ -195,7 +195,14 @@
             catalog_two_id = #{item.id}
         </foreach>
         order by id desc
-        limit 0,#{count}
+        <choose>
+            <when test="offset != null and rows != null">
+                limit #{offset},#{rows}
+            </when>
+            <otherwise>
+                limit 0,10
+            </otherwise>
+        </choose>
     </select>
 
     <update id="update" parameterType="com.chenlinghong.graduation.repository.domain.Goods">
