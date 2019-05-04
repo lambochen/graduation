@@ -26,7 +26,7 @@ import java.util.List;
  * @Date 2019/5/1 22:34
  * @Version V1.0
  */
-@Service
+@Service(value = "slopeOneCFRecommenderScheduler")
 @Slf4j
 public class SlopeOneCFRecommenderSchedulerImpl
         extends AbstractMahoutRecommenderScheduler implements SlopeOneCFRecommenderScheduler {

@@ -28,7 +28,7 @@ import java.util.List;
  * @Version V1.0
  */
 @Slf4j
-@Service
+@Service(value = "userBasedCFRecommenderScheduler")
 public class UserBasedCFRecommenderSchedulerImpl
         extends AbstractMahoutRecommenderScheduler implements UserBasedCFRecommenderScheduler {
 

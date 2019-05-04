@@ -9,7 +9,7 @@ import com.chenlinghong.graduation.exception.AsyncBusinessException;
 import com.chenlinghong.graduation.microscope.sniffer.behavior.UserGoodsBehaviorSniffer;
 import com.chenlinghong.graduation.microscope.sniffer.behavior.util.UserBehaviorUtil;
 import com.chenlinghong.graduation.microscope.sniffer.ranking.RecommendRankingGoodsSniffer;
-import com.chenlinghong.graduation.microscope.util.SessionUtil;
+import com.chenlinghong.graduation.api.util.SessionUtil;
 import com.chenlinghong.graduation.repository.domain.Goods;
 import com.chenlinghong.graduation.repository.domain.GoodsComment;
 import com.chenlinghong.graduation.repository.domain.GoodsOrder;
@@ -30,7 +30,7 @@ import java.util.List;
  * @Version V1.0
  */
 @Slf4j
-@Service
+@Service(value = "graduationUserGoodsBehaviorSniffer")
 public class UserGoodsBehaviorSnifferImpl implements UserGoodsBehaviorSniffer {
 
     @Autowired
@@ -100,7 +100,7 @@ public class UserGoodsBehaviorSnifferImpl implements UserGoodsBehaviorSniffer {
             log.error("UserGoodsSniffer#click: goodsId is illegal. goodsId={}, requst={}. ", goodsId, request);
             throw new AsyncBusinessException(ErrorEnum.PARAM_ILLEGAL);
         }
-        long userId = sessionUtil.getUserId(request);
+        long userId = sessionUtil.getUserIdNoCheck(request);
         if (userId <= 0) {
             // 用户未登录，暂不做任何处理
             log.error("UserGoodsSniffer#click: user not logged in. goodsId={}, requst={}. ", goodsId, request);
@@ -148,7 +148,7 @@ public class UserGoodsBehaviorSnifferImpl implements UserGoodsBehaviorSniffer {
             log.error("UserGoodsSniffer#addToShoppingCart: goodsId is illegal. goodsId={}, requst={}. ", goodsId, request);
             throw new AsyncBusinessException(ErrorEnum.PARAM_ILLEGAL);
         }
-        long userId = sessionUtil.getUserId(request);
+        long userId = sessionUtil.getUserIdNoCheck(request);
         if (userId <= 0) {
             // 用户未登录，暂不做任何处理
             log.error("UserGoodsSniffer#addToShoppingCart: user not logged in. goodsId={}, requst={}. ", goodsId, request);
@@ -304,7 +304,7 @@ public class UserGoodsBehaviorSnifferImpl implements UserGoodsBehaviorSniffer {
             log.error("UserGoodsSniffer#search: param is null. goodsList={}, request={}. ", goodsList, request);
             throw new AsyncBusinessException(ErrorEnum.PARAM_IS_NULL);
         }
-        long userId = sessionUtil.getUserId(request);
+        long userId = sessionUtil.getUserIdNoCheck(request);
         if (userId <= 0) {
             // 获取失败，用户尚未登录
             log.error("UserGoodsSniffer#search: user is not logged in. goodsList={}, request={}. ", goodsList, request);

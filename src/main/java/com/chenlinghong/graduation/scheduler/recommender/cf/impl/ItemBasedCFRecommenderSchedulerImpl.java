@@ -27,7 +27,7 @@ import java.util.List;
  * @Version V1.0
  */
 @Slf4j
-@Service
+@Service(value = "itemBasedCFRecommenderScheduler")
 public class ItemBasedCFRecommenderSchedulerImpl
         extends AbstractMahoutRecommenderScheduler implements ItemBasedCFRecommenderScheduler {
 
