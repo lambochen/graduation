@@ -1,0 +1,24 @@
+package com.chenlinghong.graduation.converter;
+
+import com.chenlinghong.graduation.scheduler.recommender.dto.RecommendGoodsDto;
+import org.apache.mahout.cf.taste.recommender.RecommendedItem;
+
+import java.util.List;
+
+/**
+ * @Description 推荐系统转换器
+ * @Author chenlinghong
+ * @Date 2019/4/30 23:08
+ * @Version V1.0
+ */
+public interface RecommenderConverter extends Converter {
+
+    /**
+     * 由推荐Item转换为Goods列表
+     *
+     * @param itemList  推荐系统推荐结果
+     * @return
+     */
+    List<RecommendGoodsDto> convert(List<RecommendedItem> itemList);
+
+}

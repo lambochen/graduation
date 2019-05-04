@@ -2,6 +2,9 @@ package com.chenlinghong.graduation.service;
 
 import com.chenlinghong.graduation.common.PageDto;
 import com.chenlinghong.graduation.repository.domain.Goods;
+import com.chenlinghong.graduation.repository.domain.GoodsCatalogTwo;
+
+import java.util.List;
 
 /**
  * @Description 商品基本信息
@@ -56,4 +59,29 @@ public interface GoodsService extends IBaseService<Goods> {
      * @return
      */
     boolean isGoods(long goodsId);
+
+    /**
+     * 获取商品列表
+     *
+     * @param goodsIdList 商品ID列表
+     * @return
+     */
+    List<Goods> listByIdList(List<Long> goodsIdList);
+
+    /**
+     * 根据二级目录列表获取,默认10条数据
+     *
+     * @param data
+     * @return
+     */
+    PageDto<Goods> listByCatalogTwoList(List<GoodsCatalogTwo> data);
+
+    /**
+     * 根据二级目录列表获取，指定条数
+     * @param data
+     * @param count
+     * @return
+     */
+    PageDto<Goods> listByCatalogTwoList(List<GoodsCatalogTwo> data, int pageNo, int pageSize);
+
 }

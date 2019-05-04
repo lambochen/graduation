@@ -232,5 +232,52 @@ create table if not exists `user_goods_preference` (
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 DEFAULT CHARSET = utf8mb4 COMMENT = '用户-物品偏好表';
 
 
+-- 物品推荐排行榜表
+create table if not exists `recommend_ranking_goods` (
+    `id` bigint not null auto_increment comment 'ID',
+    `gmt_create`   timestamp NULL     DEFAULT CURRENT_TIMESTAMP  COMMENT '创建时间戳',
+    `gmt_modified` timestamp NULL     DEFAULT CURRENT_TIMESTAMP  COMMENT '最近修改时间戳',
+    `deleted`      varchar(1)         default '0'  COMMENT '是否删除：0未删除，1已删除',
+    `goods_id` bigint not null comment '商品ID【FK(goods)】',
+    `ranking` int not null default '0' comment '推荐次数',
+    primary key (`id`),
+    key `idx_goods` (`goods_id`),
+    unique key `uk_goods` (`goods_id`)
+) ENGINE = InnoDB AUTO_INCREMENT = 1 DEFAULT CHARSET = utf8mb4 COMMENT = '物品推荐排行榜表';
 
+-- 用户-物品推荐队列表
+create table if not exists `recommend_queue_goods` (
+    `id` bigint not null auto_increment comment 'ID',
+    `gmt_create`   timestamp NULL     DEFAULT CURRENT_TIMESTAMP  COMMENT '创建时间戳',
+    `gmt_modified` timestamp NULL     DEFAULT CURRENT_TIMESTAMP  COMMENT '最近修改时间戳',
+    `deleted`      varchar(1)         default '0'  COMMENT '是否删除：0未删除，1已删除',
+    `user_id` bigint not null comment '用户ID【FK(user)】',
+    `goods_id` bigint not null comment '商品ID【FK(goods)】',
+    `recommend_type` int not null default '0' comment '推荐类型',
+    primary key (`id`),
+    key `idx_user` (`user_id`)
+) ENGINE = InnoDB AUTO_INCREMENT = 1 DEFAULT CHARSET = utf8mb4 COMMENT = '用户-物品推荐队列表';
+
+
+
+
+
+
+
+---------------------------------------
+-- 分析数据
+---------------------------------------
+
+-- JDATA行为表
+create table if not exists `jdata_action` (
+    `id` bigint not null auto_increment comment 'ID',
+    `user_id` bigint comment '用户ID',
+    `sku_id` bigint comment '商品编号',
+    `time` timestamp comment '行为时间',
+    `model_id` int comment '点击模块编号',
+    `type` int comment '行为类型',
+    `cate` bigint comment '品类ID',
+    `brand` bigint comment '品牌ID',
+    primary key (`id`)
+) ENGINE = InnoDB AUTO_INCREMENT = 1 DEFAULT CHARSET = utf8mb4 COMMENT = 'JDATA行为表';
 

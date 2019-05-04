@@ -28,7 +28,7 @@
 参数
 
     receiver [long] : 接收方用户ID 【必填】
-    content [long] : 消息内容 【必填】
+    content [string] : 消息内容 【必填】
     
 返回
 

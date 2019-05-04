@@ -177,6 +177,34 @@
         where deleted = '0' and id = #{goodsId}
     </select>
 
+    <select id="listByIdList" resultMap="BaseResultMap">
+        select <include refid="column_list"></include>
+        from goods
+        where deleted = '0'
+        <foreach collection="goodsIdList" item="goodsId" separator=" or " open=" and ( " close=" )">
+            id = #{goodsId}
+        </foreach>
+        order by id desc
+    </select>
+
+    <select id="listByCatalogTwoList" resultMap="BaseResultMap">
+        select <include refid="column_list"></include>
+        from goods
+        where deleted = '0'
+        <foreach collection="catalogTwoList" item="item" separator=" or " open=" and ( " close=" )">
+            catalog_two_id = #{item.id}
+        </foreach>
+        order by id desc
+        <choose>
+            <when test="offset != null and rows != null">
+                limit #{offset},#{rows}
+            </when>
+            <otherwise>
+                limit 0,10
+            </otherwise>
+        </choose>
+    </select>
+
     <update id="update" parameterType="com.chenlinghong.graduation.repository.domain.Goods">
         update goods
         set `name`       = #{name},
@@ -186,5 +214,7 @@
             gmt_modified = current_timestamp
         where id = #{id}
     </update>
+
+
 
 </mapper>

@@ -110,6 +110,15 @@ public class RedisKeyUtil<T> {
     }
 
     /**
+     * 推荐商品排名
+     *
+     * @return
+     */
+    public String generateKeyForRecommendRankingGoods() {
+        return RedisConstant.RECOMMEND_RANKING_GOODS;
+    }
+
+    /**
      * 获取domain对象的类名
      *
      * @param data

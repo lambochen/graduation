@@ -4,6 +4,7 @@ import com.chenlinghong.graduation.common.PageDto;
 import com.chenlinghong.graduation.constant.NumericConstant;
 import com.chenlinghong.graduation.repository.dao.GoodsDao;
 import com.chenlinghong.graduation.repository.domain.Goods;
+import com.chenlinghong.graduation.repository.domain.GoodsCatalogTwo;
 import com.chenlinghong.graduation.service.GoodsCatalogService;
 import com.chenlinghong.graduation.service.GoodsService;
 import lombok.extern.slf4j.Slf4j;
@@ -86,5 +87,21 @@ public class GoodsServiceImpl implements GoodsService {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public List<Goods> listByIdList(List<Long> goodsIdList) {
+        return goodsDao.listByIdList(goodsIdList);
+    }
+
+    @Override
+    public PageDto<Goods> listByCatalogTwoList(List<GoodsCatalogTwo> data) {
+        return listByCatalogTwoList(data, NumericConstant.ONE, NumericConstant.TEN);
+    }
+
+    @Override
+    public PageDto<Goods> listByCatalogTwoList(List<GoodsCatalogTwo> data, int pageNo, int pageSize) {
+        List<Goods> goodsList = goodsDao.listByCatalogTwoList(data, (pageNo - 1) * pageSize, pageSize);
+        return new PageDto<>(goodsList);
     }
 }

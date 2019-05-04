@@ -24,11 +24,18 @@ public interface GoodsCatalogService {
     /**
      * 根据一级目录ID获取二级目录
      *
-     * @param catalogOneId  一级目录ID
+     * @param catalogOneId 一级目录ID
      * @param pageNo
      * @param pageSize
      * @return
      */
     PageDto<GoodsCatalogTwo> listByCatalogOne(int catalogOneId, int pageNo, int pageSize);
 
+    /**
+     * 根据时令获取列表
+     *
+     * @param currentSeason
+     * @return
+     */
+    PageDto<GoodsCatalogTwo> listBySeason(int currentSeason);
 }
