@@ -104,7 +104,7 @@
 
     <update id="update" parameterType="com.chenlinghong.graduation.repository.domain.UserPreference">
         update user_goods_preference
-        set `user_id`       = #{caseNumber},
+        set `user_id`       = #{userId},
             `goods_id` = #{goodsId},
             `preference` = #{preference},
             `gmt_modified` = current_timestamp

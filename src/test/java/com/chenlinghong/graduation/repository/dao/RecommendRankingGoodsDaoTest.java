@@ -23,7 +23,7 @@ public class RecommendRankingGoodsDaoTest {
     public void insert() {
         RecommendRankingGoods rankingGoods = new RecommendRankingGoods();
         rankingGoods.setGoodsId(2L);
-        rankingGoods.setRanking(1.0);
+        rankingGoods.setRanking(1);
         int result = recommendRankingGoodsDao.insert(rankingGoods);
         assertEquals(1, result);
     }
