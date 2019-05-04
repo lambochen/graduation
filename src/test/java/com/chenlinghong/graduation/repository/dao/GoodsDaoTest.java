@@ -57,7 +57,7 @@ public class GoodsDaoTest {
         GoodsCatalogTwo two = new GoodsCatalogTwo();
         two.setId(1L);
         catalogTwoList.add(two);
-        List<Goods> goodsList = goodsDao.listByCatalogTwoList(catalogTwoList,3);
+        List<Goods> goodsList = goodsDao.listByCatalogTwoList(catalogTwoList,0,3);
         System.out.println(goodsList);
     }
 
