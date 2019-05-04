@@ -4,12 +4,16 @@ import com.chenlinghong.graduation.common.PageDto;
 import com.chenlinghong.graduation.constant.NumericConstant;
 import com.chenlinghong.graduation.enums.RecommendTypeEnum;
 import com.chenlinghong.graduation.recommender.ranking.RankingGoodsRecommender;
+import com.chenlinghong.graduation.recommender.season.SeasonBasedRecommender;
 import com.chenlinghong.graduation.repository.dao.RecommendQueueGoodsDao;
 import com.chenlinghong.graduation.repository.domain.RecommendQueueGoods;
 import com.chenlinghong.graduation.repository.domain.RecommendRankingGoods;
 import com.chenlinghong.graduation.scheduler.recommender.RecommendQueueScheduler;
+import com.chenlinghong.graduation.scheduler.recommender.dto.RecommendDto;
+import com.chenlinghong.graduation.scheduler.recommender.dto.RecommendGoodsDto;
 import com.chenlinghong.graduation.service.RecommendQueueGoodsService;
 import com.chenlinghong.graduation.service.dto.RecommendQueueGoodsDto;
+import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.mahout.cf.taste.common.TasteException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +39,12 @@ public class RecommendQueueGoodsServiceImpl implements RecommendQueueGoodsServic
      */
     @Autowired
     private RankingGoodsRecommender rankingGoodsRecommender;
+
+    /**
+     * 时令推荐
+     */
+    @Autowired
+    private SeasonBasedRecommender seasonBasedRecommender;
 
     @Autowired
     private RecommendQueueScheduler recommendQueueScheduler;
@@ -140,8 +150,9 @@ public class RecommendQueueGoodsServiceImpl implements RecommendQueueGoodsServic
         /**
          * 时令推荐
          */
-        PageDto<RecommendQueueGoods> seasonRecommend = listByUserAndType(userId, RecommendTypeEnum.SEASON_RECOMMEND);
-        result.setSeasonRecommend(seasonRecommend);
+        RecommendDto<RecommendGoodsDto> seasonRecommendDto = seasonBasedRecommender.recommend(NumericConstant.THREE);
+        result.setSeasonRecommend(converter(seasonRecommendDto));
+
         /**
          * 基于用户标签的推荐
          */
@@ -165,6 +176,31 @@ public class RecommendQueueGoodsServiceImpl implements RecommendQueueGoodsServic
         return recommendQueueGoodsDao.update(recommendQueueGoods);
     }
 
+    /**
+     * 转换数据
+     *
+     * @param recommendDto
+     * @return
+     */
+    @Override
+    public PageDto<RecommendQueueGoods> converter(RecommendDto<RecommendGoodsDto> recommendDto) {
+        List<RecommendQueueGoods> goodsList = Lists.newArrayList();
+        if (recommendDto == null || recommendDto.getData() == null
+                || recommendDto.getData().getData() == null
+                || recommendDto.getData().getData().size() <= 0) {
+            return new PageDto<>();
+        }
+        for (RecommendGoodsDto item : recommendDto.getData().getData()) {
+            RecommendQueueGoods goods = new RecommendQueueGoods();
+            goods.setGoods(item.getGoods());
+            if (item.getGoods() != null) {
+                goods.setGoodsId(item.getGoods().getId());
+            }
+            goods.setRecommendType(RecommendTypeEnum.SEASON_RECOMMEND.getCode());
+            goodsList.add(goods);
+        }
+        return new PageDto<>(goodsList);
+    }
 
 
 }

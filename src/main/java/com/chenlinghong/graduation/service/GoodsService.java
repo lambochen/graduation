@@ -82,6 +82,6 @@ public interface GoodsService extends IBaseService<Goods> {
      * @param count
      * @return
      */
-    PageDto<Goods> listByCatalogTwoList(List<GoodsCatalogTwo> data, long count);
+    PageDto<Goods> listByCatalogTwoList(List<GoodsCatalogTwo> data, int pageNo, int pageSize);
 
 }

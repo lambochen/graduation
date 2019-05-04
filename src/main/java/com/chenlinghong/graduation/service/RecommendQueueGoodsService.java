@@ -3,6 +3,8 @@ package com.chenlinghong.graduation.service;
 import com.chenlinghong.graduation.common.PageDto;
 import com.chenlinghong.graduation.enums.RecommendTypeEnum;
 import com.chenlinghong.graduation.repository.domain.RecommendQueueGoods;
+import com.chenlinghong.graduation.scheduler.recommender.dto.RecommendDto;
+import com.chenlinghong.graduation.scheduler.recommender.dto.RecommendGoodsDto;
 import com.chenlinghong.graduation.service.dto.RecommendQueueGoodsDto;
 import org.apache.mahout.cf.taste.common.TasteException;
 
@@ -59,4 +61,11 @@ public interface RecommendQueueGoodsService extends IBaseService<RecommendQueueG
      * @return
      */
     int markRead(long userId, RecommendTypeEnum userBasedRecommend);
+
+    /**
+     * 转换数据
+     * @param recommendDto
+     * @return
+     */
+    PageDto<RecommendQueueGoods> converter(RecommendDto<RecommendGoodsDto> recommendDto);
 }

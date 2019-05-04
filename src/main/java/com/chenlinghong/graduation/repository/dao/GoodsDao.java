@@ -119,8 +119,10 @@ public interface GoodsDao extends IBaseDao<Goods> {
      * 通过二级目录列表获取
      *
      * @param catalogTwoList
-     * @param count
+     * @param offset
+     * @param rows
      * @return
      */
-    List<Goods> listByCatalogTwoList(List<GoodsCatalogTwo> catalogTwoList, long count);
+    List<Goods> listByCatalogTwoList(@Param("catalogTwoList") List<GoodsCatalogTwo> catalogTwoList,
+                                     @Param("offset") long offset, @Param("rows") long rows);
 }

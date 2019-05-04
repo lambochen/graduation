@@ -40,6 +40,11 @@ public class SeasonBasedRecommenderImpl extends AbstractGraduationRecommender im
 
     @Override
     public RecommendDto<RecommendGoodsDto> recommend(int recommendNum) {
+        return recommend(NumericConstant.ONE, recommendNum);
+    }
+
+    @Override
+    public RecommendDto<RecommendGoodsDto> recommend(int pageNo, int pageSize) {
         /**
          * 获取时令
          */
@@ -53,7 +58,7 @@ public class SeasonBasedRecommenderImpl extends AbstractGraduationRecommender im
             return null;
         }
         PageDto<Goods> goodsPageDto =
-                goodsService.listByCatalogTwoList(goodsCatalogTwoList.getData(), NumericConstant.THREE);
+                goodsService.listByCatalogTwoList(goodsCatalogTwoList.getData(), (pageNo - 1) * pageSize, pageSize);
         return converter(goodsPageDto);
     }
 
@@ -77,5 +82,6 @@ public class SeasonBasedRecommenderImpl extends AbstractGraduationRecommender im
         calendar.setTime(new Date());
         return NumericConstant.ONE + calendar.get(Calendar.MONTH);
     }
+
 
 }

@@ -4,14 +4,17 @@ import com.chenlinghong.graduation.api.util.SessionUtil;
 import com.chenlinghong.graduation.api.vo.HomePageVo;
 import com.chenlinghong.graduation.common.ResultUtil;
 import com.chenlinghong.graduation.common.ResultVo;
+import com.chenlinghong.graduation.enums.RecommendTypeEnum;
 import com.chenlinghong.graduation.service.HomePageService;
 import org.apache.mahout.cf.taste.common.TasteException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+
 
 /**
  * @Description 首页
@@ -40,6 +43,52 @@ public class RecommendController {
         long userId = sessionUtil.getUserIdNoCheck(request);
         HomePageVo result = homePageService.get(userId);
         return ResultUtil.success(result);
+    }
+
+    /**
+     * 根据推荐类型获取
+     *
+     * @param request
+     * @return
+     */
+    @GetMapping(value = "/recommend/{recommendType}")
+    public ResultVo listByType(@PathVariable(value = "recommendType") int recommendType, HttpServletRequest request) {
+        /**
+         * TODO 热门推荐、时令推荐需单独处理
+         */
+        RecommendTypeEnum typeEnum = getByCode(recommendType);
+        /**
+         * 热门推荐
+         */
+
+        return null;
+    }
+
+    /**
+     * 获取推荐类型
+     * @param recommendType
+     * @return
+     */
+    private RecommendTypeEnum getByCode(int recommendType) {
+        RecommendTypeEnum result = null;
+        if (recommendType == RecommendTypeEnum.USER_BASED_RECOMMEND.getCode()){
+            result = RecommendTypeEnum.USER_BASED_RECOMMEND;
+        } else if (recommendType == RecommendTypeEnum.ITEM_BASED_RECOMMEND.getCode()){
+            result = RecommendTypeEnum.ITEM_BASED_RECOMMEND;
+        } else if (recommendType == RecommendTypeEnum.SLOPE_ONE_RECOMMEND.getCode()){
+            result = RecommendTypeEnum.SLOPE_ONE_RECOMMEND;
+        } else if (recommendType == RecommendTypeEnum.POPULAR_RECOMMEND.getCode()){
+            result = RecommendTypeEnum.POPULAR_RECOMMEND;
+        } else if (recommendType == RecommendTypeEnum.SEASON_RECOMMEND.getCode()){
+            result = RecommendTypeEnum.SEASON_RECOMMEND;
+        } else if (recommendType == RecommendTypeEnum.USER_TAG_BASED_RECOMMEND.getCode()){
+            result = RecommendTypeEnum.USER_TAG_BASED_RECOMMEND;
+        } else {
+            /**
+             * TODO 参数错误
+             */
+        }
+        return result;
     }
 
 }
