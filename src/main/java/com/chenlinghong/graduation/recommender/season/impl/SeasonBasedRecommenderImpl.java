@@ -58,7 +58,7 @@ public class SeasonBasedRecommenderImpl extends AbstractGraduationRecommender im
             return null;
         }
         PageDto<Goods> goodsPageDto =
-                goodsService.listByCatalogTwoList(goodsCatalogTwoList.getData(), (pageNo - 1) * pageSize, pageSize);
+                goodsService.listByCatalogTwoList(goodsCatalogTwoList.getData(), pageNo, pageSize);
         return converter(goodsPageDto);
     }
 
