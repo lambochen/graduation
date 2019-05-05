@@ -24,7 +24,7 @@ import java.util.Date;
  * @Version V1.0
  */
 @Slf4j
-@Service(value = "seasonBasedRecommender")
+@Service(value = "seasonBasedRecommenderImpl")
 public class SeasonBasedRecommenderImpl extends AbstractGraduationRecommender implements SeasonBasedRecommender {
 
     @Autowired

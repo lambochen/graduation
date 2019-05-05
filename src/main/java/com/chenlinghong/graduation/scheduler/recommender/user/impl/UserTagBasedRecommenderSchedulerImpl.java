@@ -24,7 +24,7 @@ import java.util.List;
  * @Version V1.0
  */
 @Slf4j
-@Service
+@Service(value = "userTagBasedRecommenderScheduler")
 public class UserTagBasedRecommenderSchedulerImpl implements UserTagBasedRecommenderScheduler {
 
     @Autowired

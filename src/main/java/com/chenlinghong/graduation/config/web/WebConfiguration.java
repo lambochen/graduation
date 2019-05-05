@@ -4,7 +4,6 @@ import com.chenlinghong.graduation.api.filter.AllowOriginFilter;
 import com.chenlinghong.graduation.constant.FilePathConstant;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.web.client.RestTemplate;
@@ -22,7 +21,6 @@ import java.io.IOException;
  **/
 @Configuration
 @EnableWebMvc
-@ComponentScan("com.chenlinghong.graduation.api.controller")
 public class WebConfiguration extends WebMvcConfigurerAdapter {
 
     /**

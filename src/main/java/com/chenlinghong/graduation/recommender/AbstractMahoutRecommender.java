@@ -2,12 +2,12 @@ package com.chenlinghong.graduation.recommender;
 
 import com.chenlinghong.graduation.recommender.data.GraduationRecommendItem;
 import com.google.common.collect.Lists;
+import com.mysql.cj.jdbc.MysqlDataSource;
 import lombok.NonNull;
 import org.apache.mahout.cf.taste.model.DataModel;
 import org.apache.mahout.cf.taste.recommender.RecommendedItem;
 import org.apache.mahout.cf.taste.recommender.Recommender;
 
-import javax.sql.DataSource;
 import java.util.List;
 
 /**
@@ -31,7 +31,10 @@ public abstract class AbstractMahoutRecommender implements MahoutRecommender {
     /**
      * data source
      */
-    protected DataSource dataSource;
+    // protected DataSource dataSource;
+
+    protected MysqlDataSource mysqlDataSource;
+
 
     /**
      * 数据转换,
@@ -51,6 +54,18 @@ public abstract class AbstractMahoutRecommender implements MahoutRecommender {
             result.add(graduationRecommendItem);
         }
         return result;
+    }
+
+    /**
+     * 初始化数据源
+     */
+    protected void initDataSource() {
+        mysqlDataSource = new MysqlDataSource();
+        mysqlDataSource.setServerName("localhost");
+        mysqlDataSource.setUser("root");
+        mysqlDataSource.setPassword("123456");
+        mysqlDataSource.setDatabaseName("graduation");
+        mysqlDataSource.setUrl("jdbc:mysql://127.0.0.1:3306/graduation?useUnicode=true&charactorEncoding=utf8&useSSL=false&zeroDateTimeBehavior=convertToNull&serverTimezone=GMT%2B8&autoReconnect=true");
     }
 
 }

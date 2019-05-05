@@ -71,8 +71,11 @@ public class SlopeOneCFRecommender extends AbstractSlopeOneRecommender {
      * @param dataSource
      */
     protected void defaultInit(DataSource dataSource) throws TasteException {
-        this.dataSource = dataSource;
-        this.dataModel = new GraduationMysqlDataModel(dataSource);
+        // this.dataSource = dataSource;
+        initDataSource();
+
+        this.dataModel = new GraduationMysqlDataModel(mysqlDataSource);
         this.recommender = new CachingRecommender(new SlopeOneRecommender(dataModel));
     }
+
 }

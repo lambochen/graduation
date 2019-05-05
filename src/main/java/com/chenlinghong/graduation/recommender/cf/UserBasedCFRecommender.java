@@ -73,8 +73,9 @@ public class UserBasedCFRecommender extends AbstractUserBasedRecommender {
      * @throws TasteException
      */
     private void defaultInit(final DataSource dataSource, final int neighborhoodNumber) throws TasteException {
-        this.dataSource = dataSource;
-        this.dataModel = new GraduationMysqlDataModel(dataSource);
+        // this.dataSource = dataSource;
+        initDataSource();
+        this.dataModel = new GraduationMysqlDataModel(mysqlDataSource);
         // 邻居个数，默认20
         this.neighborhoodNumber = neighborhoodNumber;
         /**
