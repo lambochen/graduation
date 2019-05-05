@@ -11,6 +11,7 @@ import com.chenlinghong.graduation.scheduler.recommender.dto.RecommendDto;
 import com.chenlinghong.graduation.scheduler.recommender.dto.RecommendGoodsDto;
 import com.chenlinghong.graduation.service.RecommendQueueGoodsService;
 import com.google.common.collect.Lists;
+import com.mysql.cj.jdbc.MysqlDataSource;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.mahout.cf.taste.common.TasteException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
-import javax.sql.DataSource;
+import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -32,8 +33,8 @@ import java.util.List;
 public class UserBasedCFRecommenderSchedulerImpl
         extends AbstractMahoutRecommenderScheduler implements UserBasedCFRecommenderScheduler {
 
-    @Autowired
-    private DataSource dataSource;
+    @Resource(name = "mysqlDataSource")
+    private MysqlDataSource dataSource;
 
     @Autowired
     private RecommendQueueGoodsService recommendQueueGoodsService;
@@ -44,7 +45,7 @@ public class UserBasedCFRecommenderSchedulerImpl
     private static final int neighborhoodNumber = NumericConstant.TEN;
 
     @PostConstruct
-    private void init() throws TasteException {
+    public void init() throws TasteException {
         recommender = new UserBasedCFRecommender(dataSource, neighborhoodNumber);
     }
 

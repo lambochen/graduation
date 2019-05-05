@@ -72,10 +72,10 @@ public class ItemBasedCFRecommender extends AbstractItemBasedRecommender {
      * @throws TasteException
      */
     protected void defaultInit(DataSource dataSource) throws TasteException {
-        // this.dataSource = dataSource;
-        initDataSource();
+        this.dataSource = dataSource;
+        // initDataSource();
 
-        this.dataModel = new GraduationMysqlDataModel(mysqlDataSource);
+        this.dataModel = new GraduationMysqlDataModel(this.dataSource);
         this.recommenderBuilder = new RecommenderBuilder() {
             @Override
             public Recommender buildRecommender(DataModel model) throws TasteException {

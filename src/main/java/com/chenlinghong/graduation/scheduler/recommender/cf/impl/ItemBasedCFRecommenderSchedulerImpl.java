@@ -17,6 +17,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
 import javax.sql.DataSource;
 import java.util.List;
 
@@ -31,14 +32,14 @@ import java.util.List;
 public class ItemBasedCFRecommenderSchedulerImpl
         extends AbstractMahoutRecommenderScheduler implements ItemBasedCFRecommenderScheduler {
 
-    @Autowired
+    @Resource(name = "mysqlDataSource")
     private DataSource dataSource;
 
     @Autowired
     private RecommendQueueGoodsService recommendQueueGoodsService;
 
     @PostConstruct
-    private void init() throws TasteException {
+    public void init() throws TasteException {
         recommender = new ItemBasedCFRecommender(dataSource);
     }
 
