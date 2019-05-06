@@ -5,7 +5,7 @@ import com.chenlinghong.graduation.common.ResultUtil;
 import com.chenlinghong.graduation.common.ResultVo;
 import com.chenlinghong.graduation.enums.ErrorEnum;
 import com.chenlinghong.graduation.exception.BusinessException;
-import com.chenlinghong.graduation.microscope.util.SessionUtil;
+import com.chenlinghong.graduation.api.util.SessionUtil;
 import com.chenlinghong.graduation.repository.domain.UserTag;
 import com.chenlinghong.graduation.service.UserTagService;
 import lombok.extern.slf4j.Slf4j;
@@ -52,7 +52,7 @@ public class UserTagController {
                     userTagList, request);
             throw new BusinessException(ErrorEnum.PARAM_IS_NULL);
         }
-        long userId = sessionUtil.getUserId(request);
+        long userId = sessionUtil.getUserIdNoCheck(request);
         List<UserTag> userTagList1 = JSON.parseArray(userTagList, UserTag.class);
         /**
          * 填充UserId
@@ -75,7 +75,7 @@ public class UserTagController {
      */
     @GetMapping(value = "/list")
     public ResultVo listByUser(HttpServletRequest request) {
-        long userId = sessionUtil.getUserId(request);
+        long userId = sessionUtil.getUserIdNoCheck(request);
         return ResultUtil.success(userTagService.listByUser(userId));
     }
 

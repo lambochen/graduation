@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
@@ -37,7 +38,7 @@ public class GoodsOrderController {
     @Autowired
     private SessionUtil sessionUtil;
 
-    @Autowired
+    @Resource(name = "graduationUserGoodsBehaviorSniffer")
     private UserGoodsBehaviorSniffer userGoodsBehaviorSniffer;
 
     /**

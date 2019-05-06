@@ -1,6 +1,5 @@
 package com.chenlinghong.graduation.scheduler.recommender.cf.impl;
 
-import com.chenlinghong.graduation.constant.AsyncNameConstant;
 import com.chenlinghong.graduation.constant.NumericConstant;
 import com.chenlinghong.graduation.enums.RecommendTypeEnum;
 import com.chenlinghong.graduation.recommender.cf.UserBasedCFRecommender;
@@ -14,7 +13,6 @@ import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.mahout.cf.taste.common.TasteException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -28,7 +26,7 @@ import java.util.List;
  * @Version V1.0
  */
 @Slf4j
-@Service
+@Service(value = "userBasedCFRecommenderScheduler")
 public class UserBasedCFRecommenderSchedulerImpl
         extends AbstractMahoutRecommenderScheduler implements UserBasedCFRecommenderScheduler {
 
@@ -44,13 +42,20 @@ public class UserBasedCFRecommenderSchedulerImpl
     private static final int neighborhoodNumber = NumericConstant.TEN;
 
     @PostConstruct
-    private void init() throws TasteException {
+    public void init() throws TasteException {
         recommender = new UserBasedCFRecommender(dataSource, neighborhoodNumber);
     }
 
     @Override
-    @Async(value = AsyncNameConstant.SCHEDULER)
+    // @Async(value = AsyncNameConstant.SCHEDULER)
     public Long refreshRecommendQueue(long userId) throws TasteException {
+        if (recommender == null){
+            synchronized (UserBasedCFRecommenderSchedulerImpl.class){
+                if (recommender == null){
+                    recommender = new UserBasedCFRecommender(dataSource, neighborhoodNumber);
+                }
+            }
+        }
         /**
          * 更新推荐队列数据
          */

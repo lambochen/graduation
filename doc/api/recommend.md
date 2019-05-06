@@ -39,8 +39,122 @@
         当推荐类型为 1，2，3，6时，不需要填写 
     
 返回-推荐类型为热门推荐
+
+    {
+        "code": 0,
+        "msg": "请求成功",
+        "data": {
+            "data": [
+                {
+                    "id": 1,
+                    "gmtCreate": 1556803668000,
+                    "gmtModified": 1556937115000,
+                    "goodsId": 1,
+                    "goods": {
+                        "id": 1,
+                        "gmtCreate": 1556528551000,
+                        "gmtModified": 1556528551000,
+                        "name": "test",
+                        "description": "test",
+                        "catalogOneId": 1,
+                        "catalogTwoId": 1,
+                        "goodsInfo": "test  ",
+                        "price": 1,
+                        "remarks": "test",
+                        "businessInfoId": 1000,
+                        "coverImg": "http://pic37.nipic.com/20140113/8800276_184927469000_2.png"
+                    },
+                    "ranking": 2
+                },
+                {
+                    "id": 3,
+                    "gmtCreate": 1556803945000,
+                    "gmtModified": 1556936988000,
+                    "goodsId": 2,
+                    "goods": {
+                        "id": 2,
+                        "gmtCreate": 1556674536000,
+                        "gmtModified": 1556674536000,
+                        "name": "test",
+                        "description": "test",
+                        "catalogOneId": 1,
+                        "catalogTwoId": 1,
+                        "goodsInfo": "test  ",
+                        "price": 1,
+                        "remarks": "test",
+                        "businessInfoId": 1000,
+                        "coverImg": "http://pic37.nipic.com/20140113/8800276_184927469000_2.png"
+                    },
+                    "ranking": 2
+                }
+            ],
+            "pageNo": 1,
+            "pageSize": 10,
+            "totalCount": 2
+        }
+    }
+    
 返回-推荐类型为时令推荐
+
+    {
+        "code": 0,
+        "msg": "请求成功",
+        "data": {
+            "data": [
+                {
+                    "id": null,
+                    "gmtCreate": null,
+                    "gmtModified": null,
+                    "userId": null,
+                    "goodsId": 2,
+                    "goods": {
+                        "id": 2,
+                        "gmtCreate": 1556674536000,
+                        "gmtModified": 1556674536000,
+                        "name": "test",
+                        "description": "test",
+                        "catalogOneId": 1,
+                        "catalogTwoId": 1,
+                        "goodsInfo": "test  ",
+                        "price": 1,
+                        "remarks": "test",
+                        "businessInfoId": 1000,
+                        "coverImg": "http://pic37.nipic.com/20140113/8800276_184927469000_2.png"
+                    },
+                    "recommendType": 5
+                },
+                {
+                    "id": null,
+                    "gmtCreate": null,
+                    "gmtModified": null,
+                    "userId": null,
+                    "goodsId": 1,
+                    "goods": {
+                        "id": 1,
+                        "gmtCreate": 1556528551000,
+                        "gmtModified": 1556528551000,
+                        "name": "test",
+                        "description": "test",
+                        "catalogOneId": 1,
+                        "catalogTwoId": 1,
+                        "goodsInfo": "test  ",
+                        "price": 1,
+                        "remarks": "test",
+                        "businessInfoId": 1000,
+                        "coverImg": "http://pic37.nipic.com/20140113/8800276_184927469000_2.png"
+                    },
+                    "recommendType": 5
+                }
+            ],
+            "pageNo": 1,
+            "pageSize": 2,
+            "totalCount": 2
+        }
+    }
+    
 返回-其它类型
+
+    
 
 
 

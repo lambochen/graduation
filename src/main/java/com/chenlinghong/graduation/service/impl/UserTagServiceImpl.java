@@ -7,7 +7,6 @@ import com.chenlinghong.graduation.exception.BusinessException;
 import com.chenlinghong.graduation.repository.dao.UserTagDao;
 import com.chenlinghong.graduation.repository.domain.UserTag;
 import com.chenlinghong.graduation.service.UserTagService;
-import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -42,8 +41,8 @@ public class UserTagServiceImpl implements UserTagService {
     }
 
     @Override
-    public int insert(@NonNull List<UserTag> userTagList) {
-        if (userTagList.size() <= 0) {
+    public int insert(List<UserTag> userTagList) {
+        if (userTagList == null || userTagList.size() <= 0) {
             log.error("UserTagService#insert: param is null.");
             throw new BusinessException(ErrorEnum.PARAM_IS_NULL);
         }

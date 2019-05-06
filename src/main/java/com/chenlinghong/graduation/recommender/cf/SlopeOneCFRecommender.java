@@ -20,13 +20,6 @@ import java.util.List;
 public class SlopeOneCFRecommender extends AbstractSlopeOneRecommender {
 
     /**
-     * 无参构造
-     */
-    public SlopeOneCFRecommender() {
-
-    }
-
-    /**
      * 添加数据源，使用默认初始化
      *
      * @param dataSource
@@ -72,7 +65,8 @@ public class SlopeOneCFRecommender extends AbstractSlopeOneRecommender {
      */
     protected void defaultInit(DataSource dataSource) throws TasteException {
         this.dataSource = dataSource;
-        this.dataModel = new GraduationMysqlDataModel(dataSource);
+        this.dataModel = new GraduationMysqlDataModel(this.dataSource);
         this.recommender = new CachingRecommender(new SlopeOneRecommender(dataModel));
     }
+
 }

@@ -26,7 +26,7 @@ import java.util.List;
  * @Date 2019/5/1 22:34
  * @Version V1.0
  */
-@Service
+@Service(value = "slopeOneCFRecommenderScheduler")
 @Slf4j
 public class SlopeOneCFRecommenderSchedulerImpl
         extends AbstractMahoutRecommenderScheduler implements SlopeOneCFRecommenderScheduler {
@@ -38,7 +38,7 @@ public class SlopeOneCFRecommenderSchedulerImpl
     private RecommendQueueGoodsService recommendQueueGoodsService;
 
     @PostConstruct
-    private void init() throws TasteException {
+    public void init() throws TasteException {
         recommender = new SlopeOneCFRecommender(dataSource);
     }
 
@@ -67,6 +67,13 @@ public class SlopeOneCFRecommenderSchedulerImpl
     @Override
     @Async(value = AsyncNameConstant.SCHEDULER)
     public Long refreshRecommendQueue(long userId) throws TasteException {
+        if (recommender == null) {
+            synchronized (SlopeOneCFRecommenderSchedulerImpl.class) {
+                if (recommender == null) {
+                    recommender = new SlopeOneCFRecommender(dataSource);
+                }
+            }
+        }
         /**
          * 更新推荐队列数据
          */

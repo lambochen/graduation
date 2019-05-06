@@ -254,7 +254,7 @@ public class MyRedisUtil {
         for (ZSetOperations.TypedTuple<String> item : redisData) {
             RecommendRankingGoods tmp = new RecommendRankingGoods();
             tmp.setGoodsId(Long.parseLong(item.getValue()));
-            tmp.setRanking(Integer.parseInt(String.valueOf(item.getScore())));
+            tmp.setRanking(item.getScore().intValue());
             result.add(tmp);
         }
         return result;

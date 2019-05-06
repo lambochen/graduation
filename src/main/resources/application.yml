@@ -1,11 +1,12 @@
-#server:
-#  port: 8080
+server:
+  port: 8080
 #  servlet:
 #    context-path: /graduation
 
 jdbc:
   driver: com.mysql.cj.jdbc.Driver
   url: jdbc:mysql://127.0.0.1:3306/graduation?useUnicode=true&charactorEncoding=utf8&useSSL=false&zeroDateTimeBehavior=convertToNull&serverTimezone=GMT%2B8&autoReconnect=true
+  database-name: graduation
   username: root
   password: graduation-mysql
 #  password: 123456
@@ -39,6 +40,8 @@ spring:
       min-idle: 0
     # 连接超时时间（毫秒）
     timeout: 20000
+  aop:
+    auto: true
 
 # 线程池配置
 executor:

@@ -1,8 +1,16 @@
 package com.chenlinghong.graduation.recommender.ranking;
 
 import com.chenlinghong.graduation.common.PageDto;
+import com.chenlinghong.graduation.constant.NumericConstant;
 import com.chenlinghong.graduation.recommender.Recommender;
 import com.chenlinghong.graduation.repository.domain.RecommendRankingGoods;
+import com.chenlinghong.graduation.service.RecommendRankingGoodsService;
+import com.chenlinghong.graduation.util.MyRedisUtil;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * @Description 热门推荐
@@ -10,7 +18,15 @@ import com.chenlinghong.graduation.repository.domain.RecommendRankingGoods;
  * @Date 2019/5/3 16:31
  * @Version V1.0
  */
-public interface RankingGoodsRecommender extends Recommender {
+@Slf4j
+@Service
+public class RankingGoodsRecommender implements Recommender {
+
+    @Autowired
+    private MyRedisUtil redisUtil;
+
+    @Autowired
+    private RecommendRankingGoodsService rankingGoodsService;
 
     /**
      * 通过商品ID获取
@@ -18,7 +34,9 @@ public interface RankingGoodsRecommender extends Recommender {
      * @param goodsId
      * @return
      */
-    Long getByGoods(long goodsId);
+    public Long getByGoods(long goodsId) {
+        return redisUtil.rankToRankingGoods(goodsId);
+    }
 
     /**
      * top n
@@ -26,7 +44,9 @@ public interface RankingGoodsRecommender extends Recommender {
      * @param n
      * @return
      */
-    PageDto<RecommendRankingGoods> topN(int n);
+    public PageDto<RecommendRankingGoods> topN(int n) {
+        return range(NumericConstant.ONE, n);
+    }
 
     /**
      * range
@@ -35,6 +55,28 @@ public interface RankingGoodsRecommender extends Recommender {
      * @param pageSize
      * @return
      */
-    PageDto<RecommendRankingGoods> range(int pageNo, int pageSize);
+    public PageDto<RecommendRankingGoods> range(int pageNo, int pageSize) {
+        if (pageNo <= 0 || pageSize < 0) {
+            log.error("RecommendRankingGoodsSniffer#range: param is illegal. pageNo={}, pageSize={}.",
+                    pageNo, pageSize);
+            return new PageDto<>();
+        }
+        List<RecommendRankingGoods> rankingGoodsList =
+                redisUtil.rangeWithScoresToRankingGoods((pageNo - 1) * pageSize, pageSize);
+        return fillGoods(rankingGoodsList, pageNo, pageSize);
+    }
+
+    /**
+     * 填充Goods数据
+     *
+     * @param rankingGoodsList
+     * @return
+     */
+    private PageDto<RecommendRankingGoods> fillGoods(List<RecommendRankingGoods> rankingGoodsList,
+                                                     int pageNo, int pageSize) {
+        List<RecommendRankingGoods> dbData = rankingGoodsService.listByGoodsList(rankingGoodsList);
+        int total = rankingGoodsService.count();
+        return new PageDto<>(dbData, pageNo, pageSize, total);
+    }
 
 }

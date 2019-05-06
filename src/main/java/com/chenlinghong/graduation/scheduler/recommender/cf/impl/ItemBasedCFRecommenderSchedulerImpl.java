@@ -27,7 +27,7 @@ import java.util.List;
  * @Version V1.0
  */
 @Slf4j
-@Service
+@Service(value = "itemBasedCFRecommenderScheduler")
 public class ItemBasedCFRecommenderSchedulerImpl
         extends AbstractMahoutRecommenderScheduler implements ItemBasedCFRecommenderScheduler {
 
@@ -38,7 +38,7 @@ public class ItemBasedCFRecommenderSchedulerImpl
     private RecommendQueueGoodsService recommendQueueGoodsService;
 
     @PostConstruct
-    private void init() throws TasteException {
+    public void init() throws TasteException {
         recommender = new ItemBasedCFRecommender(dataSource);
     }
 
@@ -67,6 +67,13 @@ public class ItemBasedCFRecommenderSchedulerImpl
     @Override
     @Async(value = AsyncNameConstant.SCHEDULER)
     public Long refreshRecommendQueue(long userId) throws TasteException {
+        if (recommender == null){
+            synchronized (ItemBasedCFRecommenderSchedulerImpl.class){
+                if (recommender == null){
+                    recommender = new ItemBasedCFRecommender(dataSource);
+                }
+            }
+        }
         /**
          * 更新推荐队列数据
          */

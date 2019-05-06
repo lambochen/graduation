@@ -38,7 +38,7 @@ public class UserBasedCFRecommender extends AbstractUserBasedRecommender {
      * @param neighborhoodNumber 邻居
      * @throws TasteException
      */
-    public UserBasedCFRecommender(final DataSource dataSource, final int neighborhoodNumber) throws TasteException {
+    public UserBasedCFRecommender(DataSource dataSource, final int neighborhoodNumber) throws TasteException {
         defaultInit(dataSource, neighborhoodNumber);
     }
 
@@ -74,7 +74,8 @@ public class UserBasedCFRecommender extends AbstractUserBasedRecommender {
      */
     private void defaultInit(final DataSource dataSource, final int neighborhoodNumber) throws TasteException {
         this.dataSource = dataSource;
-        this.dataModel = new GraduationMysqlDataModel(dataSource);
+        // initDataSource();
+        this.dataModel = new GraduationMysqlDataModel(this.dataSource);
         // 邻居个数，默认20
         this.neighborhoodNumber = neighborhoodNumber;
         /**
