@@ -16,8 +16,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.PostConstruct;
-import javax.annotation.Resource;
 import javax.sql.DataSource;
 import java.util.List;
 
@@ -32,16 +30,16 @@ import java.util.List;
 public class SlopeOneCFRecommenderSchedulerImpl
         extends AbstractMahoutRecommenderScheduler implements SlopeOneCFRecommenderScheduler {
 
-    @Resource(name = "mysqlDataSource")
+    @Autowired
     private DataSource dataSource;
 
     @Autowired
     private RecommendQueueGoodsService recommendQueueGoodsService;
 
-    @PostConstruct
-    public void init() throws TasteException {
-        recommender = new SlopeOneCFRecommender(dataSource);
-    }
+    // @PostConstruct
+    // public void init() throws TasteException {
+    //     recommender = new SlopeOneCFRecommender(dataSource);
+    // }
 
     @Override
     public List<RecommendQueueGoods> converter(RecommendDto<RecommendGoodsDto> recommendDto) {
@@ -68,6 +66,13 @@ public class SlopeOneCFRecommenderSchedulerImpl
     @Override
     @Async(value = AsyncNameConstant.SCHEDULER)
     public Long refreshRecommendQueue(long userId) throws TasteException {
+        if (recommender == null){
+            synchronized (SlopeOneCFRecommenderSchedulerImpl.class){
+                if (recommender == null){
+                    recommender = new SlopeOneCFRecommender(dataSource);
+                }
+            }
+        }
         /**
          * 更新推荐队列数据
          */

@@ -11,15 +11,13 @@ import com.chenlinghong.graduation.scheduler.recommender.dto.RecommendDto;
 import com.chenlinghong.graduation.scheduler.recommender.dto.RecommendGoodsDto;
 import com.chenlinghong.graduation.service.RecommendQueueGoodsService;
 import com.google.common.collect.Lists;
-import com.mysql.cj.jdbc.MysqlDataSource;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.mahout.cf.taste.common.TasteException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.PostConstruct;
-import javax.annotation.Resource;
+import javax.sql.DataSource;
 import java.util.List;
 
 /**
@@ -33,8 +31,8 @@ import java.util.List;
 public class UserBasedCFRecommenderSchedulerImpl
         extends AbstractMahoutRecommenderScheduler implements UserBasedCFRecommenderScheduler {
 
-    @Resource(name = "mysqlDataSource")
-    private MysqlDataSource dataSource;
+    @Autowired
+    private DataSource dataSource;
 
     @Autowired
     private RecommendQueueGoodsService recommendQueueGoodsService;
@@ -44,14 +42,21 @@ public class UserBasedCFRecommenderSchedulerImpl
      */
     private static final int neighborhoodNumber = NumericConstant.TEN;
 
-    @PostConstruct
-    public void init() throws TasteException {
-        recommender = new UserBasedCFRecommender(dataSource, neighborhoodNumber);
-    }
+    // @PostConstruct
+    // public void init() throws TasteException {
+    //     recommender = new UserBasedCFRecommender(dataSource, neighborhoodNumber);
+    // }
 
     @Override
     @Async(value = AsyncNameConstant.SCHEDULER)
     public Long refreshRecommendQueue(long userId) throws TasteException {
+        if (recommender == null){
+            synchronized (UserBasedCFRecommenderSchedulerImpl.class){
+                if (recommender == null){
+                    recommender = new UserBasedCFRecommender(dataSource, neighborhoodNumber);
+                }
+            }
+        }
         /**
          * 更新推荐队列数据
          */

@@ -1,7 +1,6 @@
 package com.chenlinghong.graduation.config.dao;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
-import com.mysql.cj.jdbc.MysqlDataSource;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -50,16 +49,16 @@ public class DataSourceConfiguration {
      * MySQL datasource
      * @return
      */
-    @Bean(name = "mysqlDataSource")
-    public MysqlDataSource createMysqlDataSource() {
-        MysqlDataSource mysqlDataSource = new MysqlDataSource();
-        mysqlDataSource.setServerName("localhost");
-        mysqlDataSource.setUser(jdbcUsername);
-        mysqlDataSource.setPassword(jdbcPassword);
-        mysqlDataSource.setDatabaseName(jdbcDatabaseName);
-        mysqlDataSource.setUrl(jdbcUrl);
-        return mysqlDataSource;
-    }
+    // @Bean(name = "mysqlDataSource")
+    // public MysqlDataSource createMysqlDataSource() {
+    //     MysqlDataSource mysqlDataSource = new MysqlDataSource();
+    //     mysqlDataSource.setServerName("localhost");
+    //     mysqlDataSource.setUser(jdbcUsername);
+    //     mysqlDataSource.setPassword(jdbcPassword);
+    //     mysqlDataSource.setDatabaseName(jdbcDatabaseName);
+    //     mysqlDataSource.setUrl(jdbcUrl);
+    //     return mysqlDataSource;
+    // }
 
 
 }
