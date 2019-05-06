@@ -9,19 +9,22 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.sql.DataSource;
+
 import java.util.List;
+
+import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class UserBasedCFRecommenderTest {
+public class ItemBasedCFRecommenderTest {
 
     @Autowired
     private DataSource dataSource;
 
     @Test
     public void recommend() throws TasteException {
-        UserBasedCFRecommender recommender = new UserBasedCFRecommender(dataSource);
-        List<RecommendedItem> itemList = recommender.recommend(3);
+        ItemBasedCFRecommender recommender = new ItemBasedCFRecommender(dataSource);
+        List<RecommendedItem> itemList = recommender.recommend(1);
         System.out.println(itemList);
     }
 

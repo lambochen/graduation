@@ -20,7 +20,7 @@ import java.util.List;
  * @Version V1.0
  */
 @Slf4j
-@Service
+@Service(value = "goodsService")
 public class GoodsServiceImpl implements GoodsService {
 
     @Autowired

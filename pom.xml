@@ -252,18 +252,18 @@
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/org.apache.mahout/mahout-math -->
-        <dependency>
-            <groupId>org.apache.mahout</groupId>
-            <artifactId>mahout-math</artifactId>
-            <version>0.13.0</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.apache.mahout</groupId>-->
+<!--            <artifactId>mahout-math</artifactId>-->
+<!--            <version>0.13.0</version>-->
+<!--        </dependency>-->
 
         <!-- https://mvnrepository.com/artifact/org.apache.mahout/mahout-collections -->
-        <dependency>
-            <groupId>org.apache.mahout</groupId>
-            <artifactId>mahout-collections</artifactId>
-            <version>1.0</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.apache.mahout</groupId>-->
+<!--            <artifactId>mahout-collections</artifactId>-->
+<!--            <version>1.0</version>-->
+<!--        </dependency>-->
 
         <!--        &lt;!&ndash; https://mvnrepository.com/artifact/org.apache.mahout/mahout-hdfs &ndash;&gt;-->
         <!--        <dependency>-->
@@ -280,25 +280,25 @@
         <!--        </dependency>-->
 
         <!-- https://mvnrepository.com/artifact/org.apache.mahout/mahout-utils -->
-        <dependency>
-            <groupId>org.apache.mahout</groupId>
-            <artifactId>mahout-utils</artifactId>
-            <version>0.5</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.apache.mahout</groupId>-->
+<!--            <artifactId>mahout-utils</artifactId>-->
+<!--            <version>0.5</version>-->
+<!--        </dependency>-->
 
         <!-- https://mvnrepository.com/artifact/org.apache.mahout/mahout-integration -->
-        <dependency>
-            <groupId>org.apache.mahout</groupId>
-            <artifactId>mahout-integration</artifactId>
-            <version>0.13.0</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.apache.mahout</groupId>-->
+<!--            <artifactId>mahout-integration</artifactId>-->
+<!--            <version>0.13.0</version>-->
+<!--        </dependency>-->
 
         <!-- https://mvnrepository.com/artifact/org.apache.mahout/mahout-examples -->
-        <dependency>
-            <groupId>org.apache.mahout</groupId>
-            <artifactId>mahout-examples</artifactId>
-            <version>0.13.0</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.apache.mahout</groupId>-->
+<!--            <artifactId>mahout-examples</artifactId>-->
+<!--            <version>0.13.0</version>-->
+<!--        </dependency>-->
 
         <dependency>
             <groupId>org.apache.mahout</groupId>
@@ -325,7 +325,7 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
                 <configuration>
-                    <warName>grad</warName>
+                    <warName>graduation</warName>
                 </configuration>
             </plugin>
             <plugin>

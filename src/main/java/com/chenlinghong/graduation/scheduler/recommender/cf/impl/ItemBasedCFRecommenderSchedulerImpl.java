@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import javax.sql.DataSource;
 import java.util.List;
 
@@ -36,10 +37,10 @@ public class ItemBasedCFRecommenderSchedulerImpl
     @Autowired
     private RecommendQueueGoodsService recommendQueueGoodsService;
 
-    // @PostConstruct
-    // public void init() throws TasteException {
-    //     recommender = new ItemBasedCFRecommender(dataSource);
-    // }
+    @PostConstruct
+    public void init() throws TasteException {
+        recommender = new ItemBasedCFRecommender(dataSource);
+    }
 
     @Override
     public List<RecommendQueueGoods> converter(RecommendDto<RecommendGoodsDto> recommendDto) {

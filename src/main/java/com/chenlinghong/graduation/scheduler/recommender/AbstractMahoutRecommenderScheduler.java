@@ -9,6 +9,7 @@ import com.chenlinghong.graduation.scheduler.recommender.dto.RecommendDto;
 import com.chenlinghong.graduation.scheduler.recommender.dto.RecommendGoodsDto;
 import org.apache.mahout.cf.taste.common.TasteException;
 import org.apache.mahout.cf.taste.recommender.RecommendedItem;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,6 +23,7 @@ import java.util.List;
 @Service
 public abstract class AbstractMahoutRecommenderScheduler {
 
+    @Autowired
     protected RecommenderConverter recommenderConverter;
 
     protected AbstractMahoutRecommender recommender;

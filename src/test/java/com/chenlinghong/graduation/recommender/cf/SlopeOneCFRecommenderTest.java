@@ -9,25 +9,17 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.sql.DataSource;
+
 import java.util.List;
+
+import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class UserBasedCFRecommenderTest {
+public class SlopeOneCFRecommenderTest {
 
     @Autowired
     private DataSource dataSource;
-
-    @Test
-    public void recommend() throws TasteException {
-        UserBasedCFRecommender recommender = new UserBasedCFRecommender(dataSource);
-        List<RecommendedItem> itemList = recommender.recommend(3);
-        System.out.println(itemList);
-    }
-
-    @Test
-    public void recommend1() {
-    }
 
     @Test
     public void recommendGraduation() {
@@ -35,5 +27,16 @@ public class UserBasedCFRecommenderTest {
 
     @Test
     public void recommendGraduation1() {
+    }
+
+    @Test
+    public void recommend() throws TasteException {
+        SlopeOneCFRecommender recommender = new SlopeOneCFRecommender(dataSource);
+        List<RecommendedItem> itemList = recommender.recommend(1, 3);
+        System.out.println(itemList);
+    }
+
+    @Test
+    public void recommend1() {
     }
 }

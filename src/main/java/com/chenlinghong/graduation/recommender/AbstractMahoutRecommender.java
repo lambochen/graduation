@@ -2,7 +2,6 @@ package com.chenlinghong.graduation.recommender;
 
 import com.chenlinghong.graduation.recommender.data.GraduationRecommendItem;
 import com.google.common.collect.Lists;
-import lombok.NonNull;
 import org.apache.mahout.cf.taste.model.DataModel;
 import org.apache.mahout.cf.taste.recommender.RecommendedItem;
 import org.apache.mahout.cf.taste.recommender.Recommender;
@@ -44,7 +43,7 @@ public abstract class AbstractMahoutRecommender implements MahoutRecommender {
      * @return
      */
     protected List<GraduationRecommendItem> converter(final long userId,
-                                                      @NonNull final List<RecommendedItem> recommendedItemList) {
+                                                      final List<RecommendedItem> recommendedItemList) {
         List<GraduationRecommendItem> result = Lists.newArrayList();
         for (RecommendedItem item : recommendedItemList) {
             GraduationRecommendItem graduationRecommendItem = new GraduationRecommendItem();
