@@ -1,5 +1,6 @@
 package com.chenlinghong.graduation.scheduler.recommender.cf.impl;
 
+import com.chenlinghong.graduation.constant.AsyncNameConstant;
 import com.chenlinghong.graduation.constant.NumericConstant;
 import com.chenlinghong.graduation.enums.RecommendTypeEnum;
 import com.chenlinghong.graduation.recommender.cf.UserBasedCFRecommender;
@@ -13,6 +14,7 @@ import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.mahout.cf.taste.common.TasteException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -47,7 +49,7 @@ public class UserBasedCFRecommenderSchedulerImpl
     }
 
     @Override
-    // @Async(value = AsyncNameConstant.SCHEDULER)
+    @Async(value = AsyncNameConstant.SCHEDULER)
     public Long refreshRecommendQueue(long userId) throws TasteException {
         if (recommender == null){
             synchronized (UserBasedCFRecommenderSchedulerImpl.class){
