@@ -1,5 +1,7 @@
 package com.chenlinghong.graduation.service;
 
+import com.chenlinghong.graduation.enums.UserBehaviorEnum;
+
 /**
  * @Description 显微镜
  * @Author chenlinghong
@@ -15,5 +17,14 @@ public interface MicroscopeService {
      * @param goodsId 商品ID
      */
     void clickGoods(long userId, long goodsId);
+
+    /**
+     * 上报用户行为
+     *
+     * @param userId       用户ID
+     * @param goodsId      商品ID
+     * @param behaviorEnum 行为
+     */
+    void report(long userId, long goodsId, UserBehaviorEnum behaviorEnum);
 
 }

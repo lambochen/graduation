@@ -4,6 +4,8 @@ import com.chenlinghong.graduation.api.util.SessionUtil;
 import com.chenlinghong.graduation.common.ResultUtil;
 import com.chenlinghong.graduation.common.ResultVo;
 import com.chenlinghong.graduation.enums.ErrorEnum;
+import com.chenlinghong.graduation.enums.UserBehaviorEnum;
+import com.chenlinghong.graduation.exception.BusinessException;
 import com.chenlinghong.graduation.service.MicroscopeService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,5 +49,54 @@ public class MicroscopeController {
         microscopeService.clickGoods(userId, goodsId);
         return ResultUtil.success();
     }
+
+    /**
+     * 上报用户行为
+     *
+     * @param goodsId  商品ID
+     * @param behavior
+     * @param request
+     * @return
+     */
+    @PostMapping(value = "/report")
+    public ResultVo report(long goodsId, int behavior, HttpServletRequest request) {
+        if (goodsId <= 0) {
+            log.error("MicroscopeController#click: param is illegal. goodsId={}", goodsId);
+            return ResultUtil.error(ErrorEnum.PARAM_ILLEGAL);
+        }
+        long userId = sessionUtil.getUserIdNoCheck(request);
+        /**
+         * 根据behavior获取枚举类
+         */
+        UserBehaviorEnum behaviorEnum = getBehaviorEnum(behavior);
+        if (behaviorEnum == null) {
+            /**
+             * 参数非法
+             */
+            log.error("MicroscopeController#report: param is illegal. goodsId={}, behavior={}, " +
+                    "userId={}.", goodsId, behavior, userId);
+            throw new BusinessException(ErrorEnum.PARAM_ILLEGAL);
+        }
+        microscopeService.report(userId, goodsId, behaviorEnum);
+        return ResultUtil.success();
+    }
+
+    /**
+     * 获取behavior枚举类
+     *
+     * @param behavior
+     * @return
+     */
+    private UserBehaviorEnum getBehaviorEnum(int behavior) {
+        UserBehaviorEnum result = null;
+        for (UserBehaviorEnum behaviorEnum : UserBehaviorEnum.values()) {
+            if (behaviorEnum.getCode() == behavior) {
+                result = behaviorEnum;
+                break;
+            }
+        }
+        return result;
+    }
+
 
 }
