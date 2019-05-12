@@ -30,6 +30,11 @@ public class MicroscopeServiceImpl implements MicroscopeService {
 
     @Override
     public void clickGoods(long userId, long goodsId) {
+        report(userId, goodsId, UserBehaviorEnum.CLICK);
+    }
+
+    @Override
+    public void report(long userId, long goodsId, UserBehaviorEnum behaviorEnum) {
         if (goodsService.isNotGoods(goodsId)) {
             // 商品不存在
             log.error("MicroscopeService#clickGoods: no goods. userId={}, goodsId={}.", userId, goodsId);
@@ -46,9 +51,9 @@ public class MicroscopeServiceImpl implements MicroscopeService {
             return;
         }
         /**
-         * 写入数据库，记录用户行为
+         * 写入数据库，
          */
-        int result = userBehaviorService.insert(goodsId, userId, UserBehaviorEnum.CLICK);
+        int result = userBehaviorService.insert(goodsId, userId, behaviorEnum);
         /**
          * TODO 校验结果
          */
