@@ -4,10 +4,12 @@ import com.chenlinghong.graduation.api.util.SessionUtil;
 import com.chenlinghong.graduation.common.ResultUtil;
 import com.chenlinghong.graduation.common.ResultVo;
 import com.chenlinghong.graduation.enums.ErrorEnum;
+import com.chenlinghong.graduation.exception.BusinessException;
 import com.chenlinghong.graduation.microscope.sniffer.behavior.UserGoodsBehaviorSniffer;
 import com.chenlinghong.graduation.repository.domain.GoodsOrder;
 import com.chenlinghong.graduation.service.GoodsOrderService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -50,9 +52,22 @@ public class GoodsOrderController {
      * @return
      */
     @PostMapping(value = "/order")
-    public ResultVo insert(@Valid GoodsOrder goodsOrder, BindingResult bindingResult, HttpServletRequest request) {
+    public ResultVo insert(@Valid GoodsOrder goodsOrder, BindingResult bindingResult,
+                           @RequestParam(value = "smsCode") String smsCode,
+                           HttpServletRequest request) {
         if (bindingResult.hasErrors()) {
             return ResultUtil.error(ErrorEnum.PARAM_ERROR.getCode(), bindingResult.getFieldError().getDefaultMessage());
+        }
+        log.info("GoodsController#insert: parameter info. goodsOrder={}, smsCode={}, request={}. ", smsCode, goodsOrder, request);
+        if (StringUtils.isBlank(smsCode)) {
+            // 参数为空
+            log.error("GoodsController#insert: parameter is null. smsCode={}, goodsOrder={} request={}. ", smsCode, goodsOrder, request);
+            throw new BusinessException(ErrorEnum.PARAM_IS_NULL);
+        }
+        boolean checkResult = sessionUtil.checkSmsCode(smsCode, request);
+        if (checkResult == false) {
+            log.info("GoodsController#insert: smsCode is timeout. smsCode={}, request={}. ", smsCode, request);
+            throw new BusinessException(ErrorEnum.SMS_TIMEOUT);
         }
         long userId = sessionUtil.getUserId(request);
         goodsOrder.setUserId(userId);

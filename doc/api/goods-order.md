@@ -16,6 +16,7 @@
     postCity [string]: 城市
     postPosition [string]: 具体地址
     number [int] : 购买数量 【必填,正数】
+    smsCode [string] : 短信验证码 【必填】
     
 返回
 
