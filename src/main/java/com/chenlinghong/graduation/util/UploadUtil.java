@@ -84,7 +84,7 @@ public class UploadUtil {
 
             //先判断文件是否存在
             String fileAdd = new SimpleDateFormat("yyyyMMdd").format(new Date());
-            File file1 = new File(result.toString() + "/" + fileAdd);
+            File file1 = new File("/data/app/graduation/file" + result.toString() + "/" + fileAdd);
             //如果文件夹不存在则创建
             if (!file1.exists() && !file1.isDirectory()) {
                 file1.mkdir();

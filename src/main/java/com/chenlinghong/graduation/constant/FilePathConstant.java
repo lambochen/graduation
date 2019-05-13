@@ -10,7 +10,7 @@ public final class FilePathConstant {
     /**
      * 文件请求前缀
      */
-    public static final String URL_PRE = "http://api.xhunccd.top/graduation/file/download?file=";
+    public static final String URL_PRE = "http://res.xhunccd.top";
 
     /**
      * 临时文件夹
@@ -20,7 +20,7 @@ public final class FilePathConstant {
     /**
      * 项目文件存储路径
      */
-    public static final String FILE_PATH = "/data/app/graduation/file/";
+    public static final String FILE_PATH = "/";
 
     /**
      * 测试目录
@@ -30,6 +30,6 @@ public final class FilePathConstant {
     /**
      * 默认头像
      */
-    public static final String DEFAULT_AVATAR = "http://api.xhunccd.top/graduation/file/download?file=/data/app/graduation/file/user/20190423/1556021929746_613.png";
+    public static final String DEFAULT_AVATAR = "http://res.xhunccd.top/user/20190423/1556021929746_613.png";
 
 }
