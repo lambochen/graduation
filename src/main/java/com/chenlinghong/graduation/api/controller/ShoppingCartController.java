@@ -105,7 +105,12 @@ public class ShoppingCartController {
     public ResultVo deleteByIdList(String idList, HttpServletRequest request) {
         long userId = sessionUtil.getUserId(request);
         String[] idArray = idList.split(",");
-        shoppingCartService.deleteByIdList(array2list(idArray), userId);
+        List<Long> dataList = array2list(idArray);
+        int result = shoppingCartService.deleteByIdList(dataList, userId);
+        if (result != dataList.size()){
+            log.error("ShoppingCartController#deleteByIdList: 删除失败. idList={}, userId={}.", idList, userId);
+            throw new BusinessException(ErrorEnum.DELETE_ERROR);
+        }
         return ResultUtil.success();
     }
 
