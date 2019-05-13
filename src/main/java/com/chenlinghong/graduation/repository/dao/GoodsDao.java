@@ -1,6 +1,7 @@
 package com.chenlinghong.graduation.repository.dao;
 
 import com.chenlinghong.graduation.repository.domain.Goods;
+import com.chenlinghong.graduation.repository.domain.GoodsCatalogTwo;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -10,47 +11,8 @@ import java.util.List;
  * @Author chenlinghong
  * @Date 2019/3/30 11:32
  **/
-public interface GoodsDao {
+public interface GoodsDao extends IBaseDao<Goods> {
 
-    /**
-     * 新增商品信息
-     *
-     * @param goods
-     * @return
-     */
-    int insert(Goods goods);
-
-    /**
-     * 根据ID删除
-     *
-     * @param id
-     * @return
-     */
-    int deleteById(long id);
-
-    /**
-     * 根据ID获取
-     *
-     * @param id
-     * @return
-     */
-    Goods getById(long id);
-
-    /**
-     * 分页获取所有记录
-     *
-     * @param offset 偏移量
-     * @param rows   每页条数
-     * @return
-     */
-    List<Goods> listAll(@Param("offset") long offset, @Param("rows") long rows);
-
-    /**
-     * 获取总记录数
-     *
-     * @return
-     */
-    long count();
 
     /**
      * 根据一级目录ID分页获取
@@ -110,12 +72,39 @@ public interface GoodsDao {
     long countByBusiness(@Param("businessId") long businessId);
 
     /**
-     * 更改基本信息，具体字段见SQL
+     * 通过名称模糊搜索
      *
-     * @param goods
+     * @param name
+     * @param offset
+     * @param rows
      * @return
      */
-    int update(Goods goods);
+    List<Goods> listByName(@Param("name") String name, @Param("offset") long offset, @Param("rows") long rows);
+
+    /**
+     * 通过名称获取记录数
+     *
+     * @param name
+     * @return
+     */
+    long countByName(@Param("name") String name);
+
+
+    /**
+     * 通过ID列表获取
+     *
+     * @param goodsIdList
+     * @return
+     */
+    List<Goods> listByIdList(@Param("goodsIdList") List<Long> goodsIdList);
+
+    /**
+     * 根据商品ID获取记录数
+     *
+     * @param goodsId
+     * @return
+     */
+    int countByGoodsId(long goodsId);
 
     /**
      * 更新价格
@@ -126,5 +115,14 @@ public interface GoodsDao {
      */
     long updatePrice(@Param("price") double price, @Param("id") long id);
 
-
+    /**
+     * 通过二级目录列表获取
+     *
+     * @param catalogTwoList
+     * @param offset
+     * @param rows
+     * @return
+     */
+    List<Goods> listByCatalogTwoList(@Param("catalogTwoList") List<GoodsCatalogTwo> catalogTwoList,
+                                     @Param("offset") long offset, @Param("rows") long rows);
 }

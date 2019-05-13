@@ -15,7 +15,7 @@ import java.beans.PropertyVetoException;
  **/
 @Configuration
 // 配置mybatis mapper扫描路径
-@MapperScan("com.chenlinghong.graduation.repository.dao")
+@MapperScan(value = {"com.chenlinghong.graduation.repository.dao", "com.chenlinghong.graduation.recommender"})
 public class DataSourceConfiguration {
 
     @Value("${jdbc.driver}")
@@ -30,6 +30,9 @@ public class DataSourceConfiguration {
     @Value("${jdbc.password}")
     private String jdbcPassword;
 
+    @Value("${jdbc.database-name}")
+    private String jdbcDatabaseName;
+
     @Bean(name = "dataSource")
     public ComboPooledDataSource createComboPooledDataSource() throws PropertyVetoException {
         ComboPooledDataSource comboPooledDataSource = new ComboPooledDataSource();
@@ -41,6 +44,21 @@ public class DataSourceConfiguration {
         comboPooledDataSource.setAutoCommitOnClose(false);
         return comboPooledDataSource;
     }
+
+    /**
+     * MySQL datasource
+     * @return
+     */
+    // @Bean(name = "mysqlDataSource")
+    // public MysqlDataSource createMysqlDataSource() {
+    //     MysqlDataSource mysqlDataSource = new MysqlDataSource();
+    //     mysqlDataSource.setServerName("localhost");
+    //     mysqlDataSource.setUser(jdbcUsername);
+    //     mysqlDataSource.setPassword(jdbcPassword);
+    //     mysqlDataSource.setDatabaseName(jdbcDatabaseName);
+    //     mysqlDataSource.setUrl(jdbcUrl);
+    //     return mysqlDataSource;
+    // }
 
 
 }

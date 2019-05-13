@@ -1,5 +1,6 @@
 package com.chenlinghong.graduation.repository.domain;
 
+import com.chenlinghong.graduation.service.impl.ChatServiceImpl;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -35,4 +36,17 @@ public class Chat extends BaseDomain {
      * 会话ID
      */
     private String chatId;
+
+    /**
+     * 是否已读
+     */
+    private Integer read;
+
+    public Chat(long sender, long receiver, String content) {
+        this.sender = sender;
+        this.receiver = receiver;
+        this.content = content;
+        this.read = 1;
+        this.chatId = ChatServiceImpl.generateChatId(sender, receiver);
+    }
 }

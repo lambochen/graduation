@@ -23,8 +23,8 @@ public class BusinessInfoDaoTest {
         BusinessInfo businessInfo = new BusinessInfo();
         businessInfo.setName("test");
         businessInfo.setAvatarUrl("test");
-        businessInfo.setUserId(1000L);
-        businessInfo.setTelephone("13008142306");
+        businessInfo.setUserId(3L);
+        businessInfo.setTelephone("13008142307");
         int result = businessInfoDao.insert(businessInfo);
         Assert.assertEquals(1, result);
     }

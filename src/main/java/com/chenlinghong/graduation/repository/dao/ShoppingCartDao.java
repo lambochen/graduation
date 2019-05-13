@@ -10,35 +10,15 @@ import java.util.List;
  * @Author chenlinghong
  * @Date 2019/4/2 18:06
  **/
-public interface ShoppingCartDao {
+public interface ShoppingCartDao extends IBaseDao<ShoppingCart> {
+
 
     /**
-     * 新增
-     * @param shoppingCart
-     * @return
-     */
-    int insert(ShoppingCart shoppingCart);
-
-    /**
-     * 根据ID删除
-     * @param id
-     * @return
-     */
-    int deleteById(long id);
-
-    /**
-     * 根据ID批量删除 TODO 后期完善
+     * 根据ID批量删除
      * @param idList
      * @return
      */
-    // int deleteById(List<Long> idList);
-
-    /**
-     * 根据ID获取
-     * @param id
-     * @return
-     */
-    ShoppingCart getById(long id);
+    int deleteByIdList(List<Long> idList, long userId);
 
     /**
      * 根据用户分页获取
@@ -55,6 +35,16 @@ public interface ShoppingCartDao {
      * @param userId
      * @return
      */
-    int countByUser(long userId);
+    long countByUser(long userId);
+
+    ShoppingCart getByUserGoods(@Param("goodsId") long goodsId, @Param("userId") long userId);
+
+    /**
+     * 更新数量
+     * @param id
+     * @param count
+     * @return
+     */
+    int updateCount(@Param("id") long id, @Param("count") int count);
 
 }

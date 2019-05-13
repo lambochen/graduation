@@ -4,8 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 /**
  * @Description 商品二级目录
  * @Author chenlinghong
@@ -33,9 +31,9 @@ public class GoodsCatalogTwo extends BaseDomain {
     private Long catalogOneId;
 
     /**
-     * 二级目录列表
+     * 时令
      */
-    private List<GoodsCatalogTwo> catalogTwoList;
+    private Integer season;
 
     public GoodsCatalogTwo(String name, long catalogOneId) {
         this.name = name;

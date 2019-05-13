@@ -18,10 +18,16 @@ public class BusinessException extends RuntimeException {
 
     public BusinessException(String message, Throwable cause) {
         super(message, cause);
+        this.code = ErrorEnum.UNKNOWN_ERROR.getCode();
     }
 
     public BusinessException(ErrorEnum errorEnum) {
         super(errorEnum.getMsg());
         this.code = errorEnum.getCode();
+    }
+
+    public BusinessException(int code, String message) {
+        super(message);
+        this.code = code;
     }
 }

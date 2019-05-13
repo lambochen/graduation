@@ -10,23 +10,8 @@ import java.util.List;
  * @Author chenlinghong
  * @Date 2019/4/2 17:08
  **/
-public interface GoodsCommentDao {
+public interface GoodsCommentDao extends IBaseDao<GoodsComment> {
 
-    /**
-     * 新增商品订单评论
-     *
-     * @param goodsComment
-     * @return
-     */
-    int insert(GoodsComment goodsComment);
-
-    /**
-     * 根据ID删除
-     *
-     * @param id
-     * @return
-     */
-    int deleteById(long id);
 
     /**
      * 根据用户ID批量删除
@@ -44,13 +29,6 @@ public interface GoodsCommentDao {
      */
     int deleteByGoods(long goodsId);
 
-    /**
-     * 根据ID获取
-     *
-     * @param id
-     * @return
-     */
-    GoodsComment getById(long id);
 
     /**
      * 根据用户分页获取
@@ -69,7 +47,7 @@ public interface GoodsCommentDao {
      * @param userId
      * @return
      */
-    int countByUser(long userId);
+    long countByUser(long userId);
 
     /**
      * 根据商品分页获取
@@ -88,13 +66,6 @@ public interface GoodsCommentDao {
      * @param goodsId
      * @return
      */
-    int countByGoods(long goodsId);
+    long countByGoods(long goodsId);
 
-    /**
-     * 更新
-     *
-     * @param goodsComment
-     * @return
-     */
-    int update(GoodsComment goodsComment);
 }

@@ -57,7 +57,7 @@
         FROM
         business_info
         WHERE
-        id=#{id}
+        id=#{id} and `deleted` = '0'
     </select>
 
     <select id="listAll" resultMap="BaseResultMap">
@@ -65,18 +65,22 @@
         <include refid="column_list"/>
         FROM
         business_info
+        where `deleted` = '0'
         order by id desc
-        <if test="offset != null and rows != null">
-            limit #{offset},#{rows}
-        </if>
-        <if test="offset == null or rows == null">
-            limit 0,10
-        </if>
+        <choose>
+            <when test="offset != null and rows != null">
+                limit #{offset},#{rows}
+            </when>
+            <otherwise>
+                limit 0,10
+            </otherwise>
+        </choose>
     </select>
 
     <select id="count" resultType="long">
         SELECT count(*)
         FROM business_info
+        where `deleted` = '0'
     </select>
 
     <select id="listByUser" resultMap="BaseResultMap">
@@ -84,20 +88,22 @@
         <include refid="column_list"/>
         FROM
         business_info
-        where user_id = #{userId}
+        where user_id = #{userId} and `deleted` = '0'
         order by id desc
-        <if test="offset != null and rows != null">
-            limit #{offset},#{rows}
-        </if>
-        <if test="offset == null or rows == null">
-            limit 0,10
-        </if>
+        <choose>
+            <when test="offset != null and rows != null">
+                limit #{offset},#{rows}
+            </when>
+            <otherwise>
+                limit 0,10
+            </otherwise>
+        </choose>
     </select>
 
     <select id="countByUser" resultType="long">
         SELECT count(*)
         FROM business_info
-        where user_id = #{userId}
+        where user_id = #{userId} and `deleted` = '0'
     </select>
 
     <!--<update id="update" parameterType="GoodsOrder">-->

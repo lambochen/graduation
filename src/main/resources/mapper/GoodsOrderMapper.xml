@@ -19,11 +19,16 @@
         <result column="post_province" property="postProvince" jdbcType="VARCHAR" javaType="String"/>
         <result column="post_city" property="postCity" jdbcType="VARCHAR" javaType="String"/>
         <result column="post_position" property="postPosition" jdbcType="VARCHAR" javaType="String"/>
+        <result column="number" property="number" jdbcType="INTEGER" javaType="Integer"/>
+        <association property="goods" column="goods_id"
+                     select="com.chenlinghong.graduation.repository.dao.GoodsDao.getById"
+                     javaType="com.chenlinghong.graduation.repository.domain.Goods">
+        </association>
     </resultMap>
 
     <sql id="Base_Column_List">
         gmt_create, gmt_modified, deleted, `name`, description, goods_id, user_id, price, remarks, post_country
-        , post_province, post_city, post_position
+        , post_province, post_city, post_position, `number`
     </sql>
 
     <sql id="column_list">
@@ -40,7 +45,7 @@
         <include refid="Base_Column_List"/>
         )
         values(current_timestamp, current_timestamp, "0", #{name}, #{description}, #{goodsId}, #{userId},
-        #{price}, #{remarks}, #{postCountry}, #{postProvince}, #{postCity}, #{postPosition} )
+        #{price}, #{remarks}, #{postCountry}, #{postProvince}, #{postCity}, #{postPosition}, #{number})
     </insert>
 
     <update id="deleteById">
@@ -55,7 +60,7 @@
         FROM
         goods_order
         WHERE
-        id=#{id}
+        id=#{id} and `deleted` = '0'
     </select>
 
     <select id="listAll" resultMap="BaseResultMap">
@@ -63,18 +68,22 @@
         <include refid="column_list"/>
         FROM
         goods_order
+        where `deleted` = '0'
         order by id desc
-        <if test="offset != null and rows != null">
-            limit #{offset},#{rows}
-        </if>
-        <if test="offset == null or rows == null">
-            limit 0,10
-        </if>
+        <choose>
+            <when test="offset != null and rows != null">
+                limit #{offset},#{rows}
+            </when>
+            <otherwise>
+                limit 0,10
+            </otherwise>
+        </choose>
     </select>
 
     <select id="count" resultType="long">
         SELECT count(*)
         FROM goods_order
+        where `deleted` = '0'
     </select>
 
     <select id="listByGoods" resultMap="BaseResultMap">
@@ -82,20 +91,22 @@
         <include refid="column_list"/>
         FROM
         goods_order
-        where goods_id = #{goodsId}
+        where goods_id = #{goodsId} and `deleted` = '0'
         order by id desc
-        <if test="offset != null and rows != null">
-            limit #{offset},#{rows}
-        </if>
-        <if test="offset == null or rows == null">
-            limit 0,10
-        </if>
+        <choose>
+            <when test="offset != null and rows != null">
+                limit #{offset},#{rows}
+            </when>
+            <otherwise>
+                limit 0,10
+            </otherwise>
+        </choose>
     </select>
 
     <select id="countByGoods" resultType="long">
         SELECT count(*)
         FROM goods_order
-        where goods_id = #{goodsId}
+        where goods_id = #{goodsId} and `deleted` = '0'
     </select>
 
     <select id="listByUser" resultMap="BaseResultMap">
@@ -103,20 +114,22 @@
         <include refid="column_list"/>
         FROM
         goods_order
-        where user_id = #{userId}
+        where user_id = #{userId} and `deleted` = '0'
         order by id desc
-        <if test="offset != null and rows != null">
-            limit #{offset},#{rows}
-        </if>
-        <if test="offset == null or rows == null">
-            limit 0,10
-        </if>
+        <choose>
+            <when test="offset != null and rows != null">
+                limit #{offset},#{rows}
+            </when>
+            <otherwise>
+                limit 0,10
+            </otherwise>
+        </choose>
     </select>
 
     <select id="countByUser" resultType="long">
         SELECT count(*)
         FROM goods_order
-        where user_id = #{userId}
+        where user_id = #{userId} and `deleted` = '0'
     </select>
 
     <update id="update" parameterType="com.chenlinghong.graduation.repository.domain.GoodsOrder">

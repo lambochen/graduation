@@ -10,7 +10,9 @@
     </parent>
     <groupId>com.chenlinghong</groupId>
     <artifactId>graduation</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.2.0-SNAPSHOT</version>
+    <packaging>war</packaging>
+
     <name>graduation</name>
     <description>graduation project</description>
 
@@ -28,11 +30,11 @@
             <version>1.3.2</version>
         </dependency>
 
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <scope>runtime</scope>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>mysql</groupId>-->
+<!--            <artifactId>mysql-connector-java</artifactId>-->
+<!--            <scope>runtime</scope>-->
+<!--        </dependency>-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
@@ -49,6 +51,11 @@
                     <artifactId>spring-boot-starter-logging</artifactId>
                 </exclusion>
             </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-aop</artifactId>
         </dependency>
 
         <!-- 引入log4j日志依赖 -->
@@ -244,6 +251,68 @@
             <version>4.12</version>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/org.apache.mahout/mahout-math -->
+<!--        <dependency>-->
+<!--            <groupId>org.apache.mahout</groupId>-->
+<!--            <artifactId>mahout-math</artifactId>-->
+<!--            <version>0.13.0</version>-->
+<!--        </dependency>-->
+
+        <!-- https://mvnrepository.com/artifact/org.apache.mahout/mahout-collections -->
+<!--        <dependency>-->
+<!--            <groupId>org.apache.mahout</groupId>-->
+<!--            <artifactId>mahout-collections</artifactId>-->
+<!--            <version>1.0</version>-->
+<!--        </dependency>-->
+
+        <!--        &lt;!&ndash; https://mvnrepository.com/artifact/org.apache.mahout/mahout-hdfs &ndash;&gt;-->
+        <!--        <dependency>-->
+        <!--            <groupId>org.apache.mahout</groupId>-->
+        <!--            <artifactId>mahout-hdfs</artifactId>-->
+        <!--            <version>0.13.0</version>-->
+        <!--        </dependency>-->
+
+        <!--        &lt;!&ndash; https://mvnrepository.com/artifact/org.apache.mahout/mahout-math-scala &ndash;&gt;-->
+        <!--        <dependency>-->
+        <!--            <groupId>org.apache.mahout</groupId>-->
+        <!--            <artifactId>mahout-math-scala_2.10</artifactId>-->
+        <!--            <version>0.13.0</version>-->
+        <!--        </dependency>-->
+
+        <!-- https://mvnrepository.com/artifact/org.apache.mahout/mahout-utils -->
+<!--        <dependency>-->
+<!--            <groupId>org.apache.mahout</groupId>-->
+<!--            <artifactId>mahout-utils</artifactId>-->
+<!--            <version>0.5</version>-->
+<!--        </dependency>-->
+
+        <!-- https://mvnrepository.com/artifact/org.apache.mahout/mahout-integration -->
+<!--        <dependency>-->
+<!--            <groupId>org.apache.mahout</groupId>-->
+<!--            <artifactId>mahout-integration</artifactId>-->
+<!--            <version>0.13.0</version>-->
+<!--        </dependency>-->
+
+        <!-- https://mvnrepository.com/artifact/org.apache.mahout/mahout-examples -->
+<!--        <dependency>-->
+<!--            <groupId>org.apache.mahout</groupId>-->
+<!--            <artifactId>mahout-examples</artifactId>-->
+<!--            <version>0.13.0</version>-->
+<!--        </dependency>-->
+
+        <dependency>
+            <groupId>org.apache.mahout</groupId>
+            <artifactId>mahout-core</artifactId>
+            <version>0.5</version>
+        </dependency>
+
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.15</version>
+        </dependency>
+
+
     </dependencies>
 
     <build>
@@ -256,7 +325,7 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
                 <configuration>
-                    <warName>eto</warName>
+                    <warName>graduation</warName>
                 </configuration>
             </plugin>
             <plugin>

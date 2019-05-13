@@ -28,17 +28,53 @@ public enum ErrorEnum {
     PARAM_ILLEGAL(2001, "参数非法"),
     TELEPHONE_ILLEGAL(2002, "电话号码非法"),
     SERVER_ERROR(2222, "服务器未知错误"),
+    PARAM_ERROR(2003, "参数错误"),
+    FILE_HANDLE_ERROR(2004, "文件处理异常"),
+    FILE_IS_NULL(2005, "文件不存在"),
+    FILE_STREAM_CREATE_ERROR(2006, "文件流创建错误"),
+    UNKNOWN_ERROR(2007, "未知错误"),
 
     /**
      * 3XXX 用户相关错误
      */
     NO_USER(3000, "用户不存在或未登录"),
     PASSWORD_IS_ERROR(3001, "密码不正确"),
+    INSERT_USER_ERROR(3002, "新增用户失败"),
+    UPDATE_USER_ERROR(3003, "更新用户信息失败"),
+    INSERT_USER_TAG_ERROR(3004, "新增用户标签失败"),
+    UPDATE_USER_TAG_ERROR(3005, "更新用户标签失败"),
+
 
     /**
      * 4XXX session相关
      */
     SESSION_DATA_IS_NULL(4000, "Session数据为空"),
+
+
+    /**
+     * 5XXX 消息相关
+     */
+    CHAT_INSERT_ERROR(5000, "消息写入数据库失败"),
+
+
+    /**
+     * 6XXX 商品相关
+     */
+    COMMENT_INSERT_ERROR(6000, "添加评论失败"),
+    FAILED_TO_INSERT_SHOPPING_CART(6001, "添加购物车失败"),
+    NO_GOODS(6002, "商品不存在"),
+
+
+    /**
+     * 7XXX 用户行为相关
+     */
+    ERROR_TO_INSERT_USER_BEHAVIOR(7000, "新增用户行为失败"),
+    BEHAVIOR_DATA_NOT_EXISTS(7001, "用户行为数据不存在"),
+
+    /**
+     * 8XXX 用户偏好相关
+     */
+    USER_PREFERENCE_NOT_EXISTS(8000, "用户偏好信息不存在"),
 
 
     ;

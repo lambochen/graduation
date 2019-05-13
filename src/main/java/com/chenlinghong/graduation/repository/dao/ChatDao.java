@@ -1,5 +1,6 @@
 package com.chenlinghong.graduation.repository.dao;
 
+import com.chenlinghong.graduation.api.vo.ChatListVo;
 import com.chenlinghong.graduation.repository.domain.Chat;
 import org.apache.ibatis.annotations.Param;
 
@@ -10,23 +11,7 @@ import java.util.List;
  * @Author chenlinghong
  * @Date 2019/4/2 17:48
  **/
-public interface ChatDao {
-
-    /**
-     * 新增聊天消息
-     *
-     * @param chat
-     * @return
-     */
-    int insert(Chat chat);
-
-    /**
-     * 根据ID删除
-     *
-     * @param id
-     * @return
-     */
-    int deleteById(long id);
+public interface ChatDao extends IBaseDao<Chat> {
 
     /**
      * 批量删除自己发送消息
@@ -36,13 +21,6 @@ public interface ChatDao {
      */
     int deleteBySender(long sender);
 
-    /**
-     * 根据ID获取
-     *
-     * @param id
-     * @return
-     */
-    Chat getById(long id);
 
     /**
      * 根据会话ID分页获取
@@ -61,5 +39,25 @@ public interface ChatDao {
      * @param chatId
      * @return
      */
-    int countByChat(String chatId);
+    long countByChat(String chatId);
+
+
+    /**
+     * 分页获取聊天列表
+     *
+     * @param userId
+     * @param offset
+     * @param rows
+     * @return
+     */
+    List<ChatListVo> listChat(@Param("userId") long userId,
+                              @Param("offset") long offset, @Param("rows") long rows);
+    long countListChat(long userId);
+
+    /**
+     * 更新消息是否已读
+     * @param chatId
+     * @return
+     */
+    int updateRead(@Param("chatId") String chatId);
 }

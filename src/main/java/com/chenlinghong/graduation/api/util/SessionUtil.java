@@ -1,13 +1,16 @@
 package com.chenlinghong.graduation.api.util;
 
 import com.chenlinghong.graduation.api.vo.UserVo;
+import com.chenlinghong.graduation.constant.AsyncNameConstant;
 import com.chenlinghong.graduation.constant.SessionConstant;
 import com.chenlinghong.graduation.enums.ErrorEnum;
 import com.chenlinghong.graduation.exception.BusinessException;
 import com.chenlinghong.graduation.repository.domain.User;
+import com.chenlinghong.graduation.service.UserService;
 import com.chenlinghong.graduation.util.MyRedisUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
@@ -25,13 +28,17 @@ public class SessionUtil {
     @Autowired
     private MyRedisUtil redisUtil;
 
+    @Autowired
+    private UserService userService;
+
     /**
-     * 将电话号码写入session
+     * 将电话号码写入session,异步写入
      *
      * @param telephone
      * @param request
      */
-    public static void putTelephone(String telephone, HttpServletRequest request) {
+    @Async(value = AsyncNameConstant.SESSION)
+    public void putTelephone(String telephone, HttpServletRequest request) {
         HttpSession session = request.getSession();
         session.setAttribute(SessionConstant.TELEPHONE, telephone);
     }
@@ -44,8 +51,7 @@ public class SessionUtil {
      */
     public static String getTelephone(HttpServletRequest request) {
         HttpSession session = getNotNewSession(request);
-        String telephone = (String) session.getAttribute(SessionConstant.TELEPHONE);
-        return telephone;
+        return (String) session.getAttribute(SessionConstant.TELEPHONE);
     }
 
     /**
@@ -101,7 +107,11 @@ public class SessionUtil {
      */
     public UserVo getUserVo(HttpServletRequest request) {
         String telephone = getTelephone(request);
-        return redisUtil.getUserVo(telephone);
+        UserVo result = redisUtil.getUserVo(telephone);
+        if (result == null) {
+            result = userService.getUserVoByTelephone(telephone);
+        }
+        return result;
     }
 
     /**
@@ -112,7 +122,12 @@ public class SessionUtil {
      */
     public User getUser(HttpServletRequest request) {
         String telephone = getTelephone(request);
-        return redisUtil.getUserByTelephone(telephone);
+        User result = redisUtil.getUserByTelephone(telephone);
+        if (result == null) {
+            // redis中不存在数据，从DB中获取
+            result = userService.getUserByTelephone(telephone);
+        }
+        return result;
     }
 
     /**
@@ -124,8 +139,68 @@ public class SessionUtil {
     public long getUserId(HttpServletRequest request) {
         User user = getUser(request);
         if (user == null) {
+            log.error("SessionUtil#getUserId: user is not exists. request={}. ", request);
             throw new BusinessException(ErrorEnum.NO_USER);
         }
         return user.getId();
     }
+
+
+    /**
+     * 以下部分为不进行校验用户登录
+     */
+
+
+    /**
+     * 获取用户ID
+     *
+     * @param request
+     * @return
+     */
+    public long getUserIdNoCheck(HttpServletRequest request) {
+        User user = getUserNoCheck(request);
+        return user == null ? -1 : user.getId();
+    }
+
+    /**
+     * 获取电话号码
+     *
+     * @param request
+     * @return
+     */
+    public String getTelephoneNoCheck(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        if (session.isNew() == false) {
+            return (String) session.getAttribute(SessionConstant.TELEPHONE);
+        }
+        return null;
+    }
+
+    /**
+     * 获取UserVO对象
+     *
+     * @param request
+     * @return
+     */
+    public UserVo getUserVoNoCheck(HttpServletRequest request) {
+        String telephone = getTelephoneNoCheck(request);
+        UserVo result = redisUtil.getUserVo(telephone);
+        if (result == null) {
+            // 从DB获取数据
+            result = userService.getUserVoByTelephoneNotPushCache(telephone);
+        }
+        return result;
+    }
+
+    /**
+     * 获取user对象
+     *
+     * @param request
+     * @return
+     */
+    public User getUserNoCheck(HttpServletRequest request) {
+        UserVo userVo = getUserVoNoCheck(request);
+        return userVo == null ? null : userVo.getUserInfo();
+    }
+
 }

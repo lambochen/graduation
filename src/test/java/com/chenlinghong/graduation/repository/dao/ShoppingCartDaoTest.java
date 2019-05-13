@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import javax.annotation.Resource;
+import java.util.LinkedList;
 import java.util.List;
 
 @RunWith(SpringRunner.class)
@@ -21,7 +21,7 @@ public class ShoppingCartDaoTest {
 
     @Test
     public void insert() {
-        ShoppingCart shoppingCart = new ShoppingCart(1L, 2L);
+        ShoppingCart shoppingCart = new ShoppingCart(2L, null, 2L, 1);
         int result = shoppingCartDao.insert(shoppingCart);
         Assert.assertEquals(1, result);
     }
@@ -30,6 +30,21 @@ public class ShoppingCartDaoTest {
     public void listByUser() {
         List<ShoppingCart> shoppingCartList = shoppingCartDao.listByUser(2L, 0L, 10L);
         System.out.println(shoppingCartList);
+    }
+
+    @Test
+    public void deleteByIdList() {
+        List<Long> idList = new LinkedList<>();
+        idList.add(1L);
+        idList.add(2L);
+
+        int count = shoppingCartDao.deleteByIdList(idList , 1);
+        Assert.assertEquals(2, count);
+    }
+
+    @Test
+    public void updateCount(){
+        shoppingCartDao.updateCount(1,3);
     }
 
 }

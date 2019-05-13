@@ -1,13 +1,15 @@
 server:
   port: 8080
-  servlet:
-    context-path: /graduation
+#  servlet:
+#    context-path: /graduation
 
 jdbc:
   driver: com.mysql.cj.jdbc.Driver
-  url: jdbc:mysql://127.0.0.1:3306/graduation?useUnicode=true&charactorEncoding=utf8&useSSL=false&zeroDateTimeBehavior=convertToNull&serverTimezone=GMT%2B8
+  url: jdbc:mysql://127.0.0.1:3306/graduation?useUnicode=true&charactorEncoding=utf8&useSSL=false&zeroDateTimeBehavior=convertToNull&serverTimezone=GMT%2B8&autoReconnect=true
+  database-name: graduation
   username: root
-  password: 19960412Clh
+  password: graduation-mysql
+#  password: 123456
 
 
 #  mybatis
@@ -23,7 +25,6 @@ spring:
     database: 0
     # Redis服务器地址
     host: 39.108.250.164
-    # host: redis.xhunccd.top   # 域名备案成功后host修改为此项,需配置nginx
     # Redis服务器连接端口
     port: 6379
     # Redis服务器连接密码（默认为空）
@@ -39,11 +40,16 @@ spring:
       min-idle: 0
     # 连接超时时间（毫秒）
     timeout: 20000
+  aop:
+    auto: true
 
 # 线程池配置
 executor:
-  core_pool_size: 5
-  max_pool_size: 10
+  core_pool_size: 10
+  max_pool_size: 100
   queue_capacity: 1000
   thread_name_prefix: async-service-
+  thread_name_prefix_microscope: microscope-async-service-
+  thread_name_prefix_scheduler: scheduler-async-service-
   keep_alive_seconds: 5
+
