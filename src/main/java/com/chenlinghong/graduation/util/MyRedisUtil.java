@@ -127,7 +127,7 @@ public class MyRedisUtil extends RedisUtil {
         /**
          * 批量写入redis
          */
-        long putResult = redisUtil.zAdd(key, goodsSet);
+        long putResult = zAdd(key, goodsSet);
         /**
          * TODO 校验返回结果
          */
@@ -146,7 +146,7 @@ public class MyRedisUtil extends RedisUtil {
         if (StringUtils.isBlank(key) || StringUtils.isBlank(value)) {
             return null;
         }
-        boolean putResult = redisUtil.zAdd(key, value, score);
+        boolean putResult = zAdd(key, value, score);
         /**
          * TODO 处理结果
          */
@@ -194,7 +194,7 @@ public class MyRedisUtil extends RedisUtil {
         if (StringUtils.isBlank(key)) {
             return 0;
         }
-        return redisUtil.zRemove(key, values);
+        return zRemove(key, values);
     }
 
     /**
@@ -222,8 +222,8 @@ public class MyRedisUtil extends RedisUtil {
     public double incrementScoreToRankginGoods(long goodsId, double score) {
         String key = redisKeyUtil.generateKeyForRecommendRankingGoods();
         String value = String.valueOf(goodsId);
-        double result = redisUtil.zIncrementScore(key, value, score);
-        redisUtil.expire(key, RedisConstant.RANKING_GOODS_TTL, TimeUnit.MILLISECONDS);
+        double result = zIncrementScore(key, value, score);
+        expire(key, RedisConstant.RANKING_GOODS_TTL, TimeUnit.MILLISECONDS);
         return result;
     }
 
@@ -246,7 +246,7 @@ public class MyRedisUtil extends RedisUtil {
      * @return
      */
     public List<RecommendRankingGoods> rangeWithScoresToRankingGoods(String key, int start, int end) {
-        Set<ZSetOperations.TypedTuple<String>> redisData = redisUtil.zRangeByScoreWithScores(key, start, end);
+        Set<ZSetOperations.TypedTuple<String>> redisData = zRangeByScoreWithScores(key, start, end);
         List<RecommendRankingGoods> result = Lists.newArrayList();
         for (ZSetOperations.TypedTuple<String> item : redisData) {
             RecommendRankingGoods tmp = new RecommendRankingGoods();
@@ -287,7 +287,7 @@ public class MyRedisUtil extends RedisUtil {
      */
     public Long rankToRankingGoods(long goodsId) {
         String key = redisKeyUtil.generateKeyForRecommendRankingGoods();
-        return redisUtil.zRank(key, String.valueOf(goodsId));
+        return zRank(key, String.valueOf(goodsId));
     }
 
     /**
