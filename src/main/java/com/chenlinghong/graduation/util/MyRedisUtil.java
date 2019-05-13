@@ -32,10 +32,7 @@ import java.util.concurrent.TimeUnit;
  */
 @Slf4j
 @Service
-public class MyRedisUtil {
-
-    @Autowired
-    private RedisUtil redisUtil;
+public class MyRedisUtil extends RedisUtil {
 
     @Autowired
     private RedisKeyUtil redisKeyUtil;
@@ -72,9 +69,9 @@ public class MyRedisUtil {
          * TODO 其它属性
          */
         // 写入redis
-        redisUtil.hPutAll(redisKey, hashData);
+        hPutAll(redisKey, hashData);
         // 设置ttl
-        redisUtil.expire(redisKey, RedisConstant.DATA_TTL, TimeUnit.MILLISECONDS);
+        expire(redisKey, RedisConstant.DATA_TTL, TimeUnit.MILLISECONDS);
         log.info("MyRedisUtil#put(UserVo): ended. userVo={}", userVo);
         return redisKey;
     }
@@ -93,9 +90,9 @@ public class MyRedisUtil {
         // 生成redis key
         String redisKey = redisKeyUtil.generateKeyForSms(telephone);
         // 写入redis
-        redisUtil.set(redisKey, smsCode);
+        set(redisKey, smsCode);
         // 设置key 存活时间   10 * 60s
-        redisUtil.expire(redisKey, RedisConstant.SMS_TTL, TimeUnit.MILLISECONDS);
+        expire(redisKey, RedisConstant.SMS_TTL, TimeUnit.MILLISECONDS);
         log.info("MyRedisUtil#putSmsCode: ended. telephone={}, smsCode={}", telephone, smsCode);
         return redisKey;
     }
@@ -320,7 +317,7 @@ public class MyRedisUtil {
      * @return
      */
     public User getUser(String key) {
-        String jsonUser = (String) redisUtil.hGet(key, RedisConstant.USER);
+        String jsonUser = (String) hGet(key, RedisConstant.USER);
         return JSON.parseObject(jsonUser, User.class);
     }
 
@@ -343,7 +340,7 @@ public class MyRedisUtil {
      */
     public boolean isAliveUser(String telephone) {
         String redisKey = redisKeyUtil.generateKeyForUserVo(telephone);
-        return redisUtil.hasKey(redisKey);
+        return hasKey(redisKey);
     }
 
     /**
@@ -356,7 +353,7 @@ public class MyRedisUtil {
         // 生成redis key
         String redisKey = redisKeyUtil.generateKeyForSms(telephone);
         // 获取短信验证码
-        return redisUtil.get(redisKey);
+        return get(redisKey);
     }
 
 }
