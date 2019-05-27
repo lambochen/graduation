@@ -27,4 +27,7 @@ public class NumericConstant {
 
     public static final int ONE_MILLION = 1000000;
 
+    public static final int MAX_VALUE = 9999999;
+
+
 }

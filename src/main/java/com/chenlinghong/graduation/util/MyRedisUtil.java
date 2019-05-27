@@ -251,7 +251,10 @@ public class MyRedisUtil extends RedisUtil {
         for (ZSetOperations.TypedTuple<String> item : redisData) {
             RecommendRankingGoods tmp = new RecommendRankingGoods();
             tmp.setGoodsId(Long.parseLong(item.getValue()));
-            tmp.setRanking(item.getScore().intValue());
+            // tmp.setRanking(item.getScore().intValue());
+            int tmpRank = zRank(key,
+                    item.getValue()) == null ? NumericConstant.MAX_VALUE : zRank(key, item.getValue()).intValue();
+            tmp.setRanking(tmpRank);
             result.add(tmp);
         }
         return result;
