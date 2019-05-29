@@ -1,6 +1,6 @@
 package com.chenlinghong.graduation.scheduler.recommender.user;
 
-import com.chenlinghong.graduation.scheduler.recommender.MahoutRecommenderScheduler;
+import com.chenlinghong.graduation.scheduler.recommender.RecommenderScheduler;
 
 /**
  * @Description 基于用户标签推荐 执行器
@@ -8,5 +8,5 @@ import com.chenlinghong.graduation.scheduler.recommender.MahoutRecommenderSchedu
  * @Date 2019/5/3 22:55
  * @Version V1.0
  */
-public interface UserTagBasedRecommenderScheduler extends MahoutRecommenderScheduler {
+public interface UserTagBasedRecommenderScheduler extends RecommenderScheduler {
 }

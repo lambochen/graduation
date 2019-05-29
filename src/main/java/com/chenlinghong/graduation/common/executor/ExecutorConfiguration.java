@@ -117,6 +117,12 @@ public class ExecutorConfiguration {
         return getDefaultExecutor();
     }
 
+    @Bean
+    public Executor asyncEvalutorExecutor(){
+        log.info("ExecutorConfiguration#asyncEvalutorExecutor start...");
+        return getDefaultExecutor();
+    }
+
 
     /**
      * 线程池--拒绝策略RejectedExecutionHandler

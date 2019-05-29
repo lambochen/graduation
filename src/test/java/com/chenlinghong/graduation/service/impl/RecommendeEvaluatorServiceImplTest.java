@@ -1,0 +1,26 @@
+package com.chenlinghong.graduation.service.impl;
+
+import com.chenlinghong.graduation.enums.RecommendTypeEnum;
+import com.chenlinghong.graduation.service.RecommendeEvaluatorService;
+import org.apache.mahout.cf.taste.common.TasteException;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
+
+import static org.junit.Assert.*;
+
+@RunWith(SpringRunner.class)
+@SpringBootTest
+public class RecommendeEvaluatorServiceImplTest {
+
+    @Autowired
+    private RecommendeEvaluatorService recommendeEvaluatorService;
+
+    @Test
+    public void evaluateScoreByRecommender() throws TasteException {
+        double score = recommendeEvaluatorService.evaluateScoreByRecommender(RecommendTypeEnum.USER_BASED_RECOMMEND);
+        System.out.println(score);
+    }
+}
