@@ -71,8 +71,7 @@ public class UserBasedRecommenderBuilder implements RecommenderBuilder {
 
     @Override
     public Recommender buildRecommender(DataModel dataModel) throws TasteException {
-        Recommender cachingRecommender = new CachingRecommender(
+        return new CachingRecommender(
                 new GenericUserBasedRecommender(dataModel, userNeighborhood, userSimilarity));
-        return cachingRecommender;
     }
 }
