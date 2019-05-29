@@ -4,6 +4,7 @@ import com.chenlinghong.graduation.common.ResultUtil;
 import com.chenlinghong.graduation.common.ResultVo;
 import com.chenlinghong.graduation.enums.RecommendTypeEnum;
 import com.chenlinghong.graduation.service.RecommendeEvaluatorService;
+import org.apache.mahout.cf.taste.common.TasteException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -31,7 +32,7 @@ public class RecommendeEvaluatorController {
      */
     @GetMapping(value = "/evalutor")
     public ResultVo listAll(@RequestParam(value = "pageNo", required = false, defaultValue = "1") Long pageNo,
-                            @RequestParam(value = "pageSize", required = false, defaultValue = "10") Long pageSize) {
+                            @RequestParam(value = "pageSize", required = false, defaultValue = "10") Long pageSize) throws TasteException {
         return ResultUtil.success(recommendeEvaluatorService.listAll(pageNo, pageSize));
     }
 
@@ -46,7 +47,7 @@ public class RecommendeEvaluatorController {
     public ResultVo listByType(
             @PathVariable(value = "typeId") Integer typeId,
             @RequestParam(value = "pageNo", required = false, defaultValue = "1") Long pageNo,
-            @RequestParam(value = "pageSize", required = false, defaultValue = "10") Long pageSize) {
+            @RequestParam(value = "pageSize", required = false, defaultValue = "10") Long pageSize) throws TasteException {
         RecommendTypeEnum typeEnum = RecommendController.getByCode(typeId);
         return ResultUtil.success(recommendeEvaluatorService.listByType(typeEnum, pageNo, pageSize));
     }
