@@ -259,13 +259,13 @@ create table if not exists `recommend_queue_goods` (
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 DEFAULT CHARSET = utf8mb4 COMMENT = '用户-物品推荐队列表';
 
 -- 推荐评估结果表
-create table if not exists `evalutor` (
+create table if not exists `recommender_evalutor` (
     `id` bigint not null auto_increment comment 'ID',
     `gmt_create`   timestamp NULL     DEFAULT CURRENT_TIMESTAMP  COMMENT '创建时间戳',
     `gmt_modified` timestamp NULL     DEFAULT CURRENT_TIMESTAMP  COMMENT '最近修改时间戳',
     `deleted`      varchar(1)         default '0'  COMMENT '是否删除：0未删除，1已删除',
     `score` decimal(10,4) null comment '评分',
-    `precision` decimal(10,4) null comment '查全率',
+    `precision` decimal(10,4) null comment '查准率',
     `recall` decimal(10,4) null comment '召回率',
     primary key (`id`)
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 DEFAULT CHARSET = utf8mb4 COMMENT = '推荐评估结果表';
