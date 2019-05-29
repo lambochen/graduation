@@ -85,7 +85,7 @@ public class GoodsCommentController {
      * @return
      */
     @DeleteMapping(value = "/comment/{id}")
-    public ResultVo deleteById(@PathVariable(value = "id") long id, HttpServletRequest request) {
+    public ResultVo deleteById(@PathVariable(value = "id") Long id, HttpServletRequest request) {
         long userId = sessionUtil.getUserId(request);
         int result = commentService.deleteById(id, userId);
         /**
@@ -104,8 +104,8 @@ public class GoodsCommentController {
      * @return
      */
     @GetMapping(value = "/comment/user/list")
-    public ResultVo listByUser(@RequestParam(value = "pageNo", required = false, defaultValue = "1") int pageNo,
-                               @RequestParam(value = "pageSize", required = false, defaultValue = "10") int pageSize,
+    public ResultVo listByUser(@RequestParam(value = "pageNo", required = false, defaultValue = "1") Long pageNo,
+                               @RequestParam(value = "pageSize", required = false, defaultValue = "10") Long pageSize,
                                HttpServletRequest request) {
         long userId = sessionUtil.getUserId(request);
         return ResultUtil.success(commentService.listByUser(userId, pageNo, pageSize));
@@ -120,9 +120,9 @@ public class GoodsCommentController {
      * @return
      */
     @GetMapping(value = "/comment/goods/{goodsId}")
-    public ResultVo listByGoods(@PathVariable(value = "goodsId") long goodsId,
-                                @RequestParam(value = "pageNo", required = false, defaultValue = "1") int pageNo,
-                                @RequestParam(value = "pageSize", required = false, defaultValue = "10") int pageSize) {
+    public ResultVo listByGoods(@PathVariable(value = "goodsId") Long goodsId,
+                                @RequestParam(value = "pageNo", required = false, defaultValue = "1") Long pageNo,
+                                @RequestParam(value = "pageSize", required = false, defaultValue = "10") Long pageSize) {
         return ResultUtil.success(commentService.listByGoods(goodsId, pageNo, pageSize));
     }
 }

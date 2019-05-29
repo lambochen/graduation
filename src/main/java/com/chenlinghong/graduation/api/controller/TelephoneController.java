@@ -8,6 +8,7 @@ import com.chenlinghong.graduation.util.TelephoneUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
@@ -28,7 +29,7 @@ public class TelephoneController {
     private SessionUtil sessionUtil;
 
     @GetMapping(value = "/sms")
-    public ResultVo sendSms(String telephone, HttpServletRequest request) {
+    public ResultVo sendSms(@RequestParam(value = "telephone") String telephone, HttpServletRequest request) {
         // 发送短信
         String smsCode = TelephoneUtil.sendSMSCode(telephone);
         // 写入session

@@ -30,8 +30,8 @@ public class TestController {
      * @return
      */
     @GetMapping("/all")
-    public ResultVo listAll(@RequestParam(value = "pageNo", required = false, defaultValue = "1") int pageNo,
-                            @RequestParam(value = "pageSize", required = false, defaultValue = "10") int pageSize){
+    public ResultVo listAll(@RequestParam(value = "pageNo", required = false, defaultValue = "1") Long pageNo,
+                            @RequestParam(value = "pageSize", required = false, defaultValue = "10") Long pageSize){
         return ResultUtil.success(testService.listAll(pageNo, pageSize));
     }
 

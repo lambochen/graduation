@@ -11,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
@@ -40,8 +41,8 @@ public class MicroscopeController {
      * @return
      */
     @PostMapping(value = "/click")
-    public ResultVo click(long goodsId, HttpServletRequest request) {
-        if (goodsId <= 0) {
+    public ResultVo click(@RequestParam(value = "goodsId") Long goodsId, HttpServletRequest request) {
+        if (goodsId == null || goodsId <= 0) {
             log.error("MicroscopeController#click: param is illegal. goodsId={}", goodsId);
             return ResultUtil.error(ErrorEnum.PARAM_ILLEGAL);
         }
@@ -59,8 +60,9 @@ public class MicroscopeController {
      * @return
      */
     @PostMapping(value = "/report")
-    public ResultVo report(long goodsId, int behavior, HttpServletRequest request) {
-        if (goodsId <= 0) {
+    public ResultVo report(@RequestParam(value = "goodsId") Long goodsId,
+                           @RequestParam(value = "behavior") Integer behavior, HttpServletRequest request) {
+        if (goodsId == null || goodsId <= 0) {
             log.error("MicroscopeController#click: param is illegal. goodsId={}", goodsId);
             return ResultUtil.error(ErrorEnum.PARAM_ILLEGAL);
         }
@@ -87,7 +89,7 @@ public class MicroscopeController {
      * @param behavior
      * @return
      */
-    private UserBehaviorEnum getBehaviorEnum(int behavior) {
+    private UserBehaviorEnum getBehaviorEnum(@RequestParam(value = "behavior") Integer behavior) {
         UserBehaviorEnum result = null;
         for (UserBehaviorEnum behaviorEnum : UserBehaviorEnum.values()) {
             if (behaviorEnum.getCode() == behavior) {

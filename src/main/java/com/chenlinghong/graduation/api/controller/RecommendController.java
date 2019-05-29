@@ -60,9 +60,9 @@ public class RecommendController {
      * @return
      */
     @GetMapping(value = "/recommend/{recommendType}")
-    public ResultVo listByType(@PathVariable(value = "recommendType") int recommendType,
-                               @RequestParam(value = "pageNo", required = false, defaultValue = "1") int pageNo,
-                               @RequestParam(value = "pageSize", required = false, defaultValue = "10") int pageSize,
+    public ResultVo listByType(@PathVariable(value = "recommendType") Integer recommendType,
+                               @RequestParam(value = "pageNo", required = false, defaultValue = "1") Long pageNo,
+                               @RequestParam(value = "pageSize", required = false, defaultValue = "10") Long pageSize,
                                HttpServletRequest request) throws TasteException {
         /**
          * 热门推荐、时令推荐需单独处理

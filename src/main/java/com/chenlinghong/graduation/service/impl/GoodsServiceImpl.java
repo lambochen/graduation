@@ -100,7 +100,7 @@ public class GoodsServiceImpl implements GoodsService {
     }
 
     @Override
-    public PageDto<Goods> listByCatalogTwoList(List<GoodsCatalogTwo> data, int pageNo, int pageSize) {
+    public PageDto<Goods> listByCatalogTwoList(List<GoodsCatalogTwo> data, long pageNo, long pageSize) {
         List<Goods> goodsList = goodsDao.listByCatalogTwoList(data, (pageNo - 1) * pageSize, pageSize);
         return new PageDto<>(goodsList);
     }

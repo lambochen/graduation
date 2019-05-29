@@ -67,7 +67,7 @@ public class FileController {
      */
     @PostMapping("/upload")
     public ResultVo upload(@RequestParam(value = "files") MultipartFile[] files,
-                           @RequestParam(value = "modular") int modular,
+                           @RequestParam(value = "modular") Integer modular,
                            HttpServletRequest request) {
         if (sessionUtil.isAliveUser(request) == false) {
             log.error("FileController#upload: user not logged in.");
