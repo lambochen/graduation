@@ -17,6 +17,6 @@ public interface TestService {
      * @param pageSize 每页条数
      * @return
      */
-    PageDto<TestBean> listAll(int pageNo, int pageSize);
+    PageDto<TestBean> listAll(long pageNo, long pageSize);
 
 }

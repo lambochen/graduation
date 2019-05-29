@@ -67,7 +67,7 @@
         </choose>
     </select>
 
-    <select id="count" resultType="int">
+    <select id="count" resultType="long">
         SELECT
         count(*)
         FROM
@@ -75,7 +75,7 @@
         where deleted = '0'
     </select>
 
-    <select id="countByGoods" resultType="int">
+    <select id="countByGoods" resultType="long">
         select count(distinct id)
         from recommend_ranking_goods
         where goods_id = #{goodsId} and deleted = '0'

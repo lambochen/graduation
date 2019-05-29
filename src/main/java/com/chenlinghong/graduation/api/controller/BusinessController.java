@@ -31,7 +31,7 @@ public class BusinessController {
      * @return
      */
     @GetMapping(value = "/business/{id}")
-    public ResultVo getById(@PathVariable(value = "id") long id) {
+    public ResultVo getById(@PathVariable(value = "id") Long id) {
         return ResultUtil.success(businessService.getById(id));
     }
 }

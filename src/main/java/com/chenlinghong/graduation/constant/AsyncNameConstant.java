@@ -32,4 +32,9 @@ public final class AsyncNameConstant {
      * 执行器 异步执行器
      */
     public static final String SCHEDULER = "asyncSchedulerExecutor";
+
+    /**
+     * 评估器 异步执行器
+     */
+    public static final String EVALUTOR = "asyncEvalutorExecutor";
 }

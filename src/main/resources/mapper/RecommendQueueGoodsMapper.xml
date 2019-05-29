@@ -93,7 +93,7 @@
         </choose>
     </select>
 
-    <select id="countByUserAndType" resultType="int">
+    <select id="countByUserAndType" resultType="long">
         SELECT
         count(distinct id)
         FROM
@@ -101,7 +101,7 @@
         where user_id = #{userId} and recommend_type = #{recommendType} and deleted = '0'
     </select>
 
-    <select id="count" resultType="int">
+    <select id="count" resultType="long">
         SELECT
         count(*)
         FROM

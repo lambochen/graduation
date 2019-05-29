@@ -55,7 +55,7 @@ public class RankingGoodsRecommender implements Recommender {
      * @param pageSize
      * @return
      */
-    public PageDto<RecommendRankingGoods> range(int pageNo, int pageSize) {
+    public PageDto<RecommendRankingGoods> range(long pageNo, long pageSize) {
         if (pageNo <= 0 || pageSize < 0) {
             log.error("RecommendRankingGoodsSniffer#range: param is illegal. pageNo={}, pageSize={}.",
                     pageNo, pageSize);
@@ -73,9 +73,9 @@ public class RankingGoodsRecommender implements Recommender {
      * @return
      */
     private PageDto<RecommendRankingGoods> fillGoods(List<RecommendRankingGoods> rankingGoodsList,
-                                                     int pageNo, int pageSize) {
+                                                     long pageNo, long pageSize) {
         List<RecommendRankingGoods> dbData = rankingGoodsService.listByGoodsList(rankingGoodsList);
-        int total = rankingGoodsService.count();
+        long total = rankingGoodsService.count();
         return new PageDto<>(dbData, pageNo, pageSize, total);
     }
 

@@ -52,8 +52,8 @@ public class ShoppingCartController {
      * @return
      */
     @PostMapping(value = "/goods/{goodsId}")
-    public ResultVo insert(@PathVariable(value = "goodsId") long goodsId, HttpServletRequest request) {
-        if (goodsId <= 0) {
+    public ResultVo insert(@PathVariable(value = "goodsId") Long goodsId, HttpServletRequest request) {
+        if (goodsId == null || goodsId <= 0) {
             log.error("ShoppingCartController#insert: param is null.");
             throw new BusinessException(ErrorEnum.PARAM_IS_NULL);
         }
@@ -87,8 +87,8 @@ public class ShoppingCartController {
      * @return
      */
     @GetMapping(value = "/goods/list")
-    public ResultVo listByUser(@RequestParam(value = "pageNo", required = false, defaultValue = "1") int pageNo,
-                               @RequestParam(value = "pageSize", required = false, defaultValue = "10") int pageSize,
+    public ResultVo listByUser(@RequestParam(value = "pageNo", required = false, defaultValue = "1") Long pageNo,
+                               @RequestParam(value = "pageSize", required = false, defaultValue = "10") Long pageSize,
                                HttpServletRequest request) {
         long userId = sessionUtil.getUserId(request);
         return ResultUtil.success(shoppingCartService.listByUser(userId, pageNo, pageSize));
@@ -102,7 +102,7 @@ public class ShoppingCartController {
      * @return
      */
     @DeleteMapping(value = "/goods/list")
-    public ResultVo deleteByIdList(String idList, HttpServletRequest request) {
+    public ResultVo deleteByIdList(@RequestParam(value = "idList") String idList, HttpServletRequest request) {
         long userId = sessionUtil.getUserId(request);
         String[] idArray = idList.split(",");
         List<Long> dataList = array2list(idArray);

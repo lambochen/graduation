@@ -51,9 +51,9 @@ public class UserBasedCFRecommenderSchedulerImpl
     @Override
     @Async(value = AsyncNameConstant.SCHEDULER)
     public Long refreshRecommendQueue(long userId) throws TasteException {
-        if (recommender == null){
-            synchronized (UserBasedCFRecommenderSchedulerImpl.class){
-                if (recommender == null){
+        if (recommender == null) {
+            synchronized (UserBasedCFRecommenderSchedulerImpl.class) {
+                if (recommender == null) {
                     recommender = new UserBasedCFRecommender(dataSource, neighborhoodNumber);
                 }
             }
@@ -101,36 +101,5 @@ public class UserBasedCFRecommenderSchedulerImpl
         }
         return result;
     }
-
-
-    // @Override
-    // public RecommendDto recommend(final long userId) throws TasteException {
-    //     /**
-    //      * 默认推荐10条数据
-    //      */
-    //     return recommend(userId, NumericConstant.TEN);
-    // }
-
-    // @Override
-    // public RecommendDto recommend(final long userId, final int recommendNum) throws TasteException {
-    //     if (userId <= 0 || recommendNum <= 0) {
-    //         log.error("UserBasedCFRecommenderScheduler#recommend: param is illegal. userId={}, " +
-    //                 "recommendNum={}.", userId, recommendNum);
-    //         return null;
-    //     }
-    //     RecommendDto<RecommendGoodsDto> result = new RecommendDto<>();
-    //     result.setUserId(userId);
-    //     /**
-    //      * 填充User
-    //      */
-    //     User user = getUser(userId);
-    //     result.setUser(user);
-    //     /**
-    //      * 获取推荐结果
-    //      */
-    //     PageDto<RecommendGoodsDto> data = recommendByCF(userId, recommendNum);
-    //     result.setData(data);
-    //     return result;
-    // }
 
 }

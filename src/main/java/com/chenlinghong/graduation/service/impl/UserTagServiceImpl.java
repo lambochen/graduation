@@ -80,7 +80,7 @@ public class UserTagServiceImpl implements UserTagService {
             throw new BusinessException(ErrorEnum.PARAM_ILLEGAL);
         }
         List<UserTag> userTagList = userTagDao.listAll((pageNo - 1) * pageSize, pageSize);
-        int total = userTagDao.count();
+        long total = userTagDao.count();
         return new PageDto<>(userTagList, pageNo, pageSize, total);
     }
 
