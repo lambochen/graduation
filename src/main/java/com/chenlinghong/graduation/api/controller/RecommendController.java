@@ -92,7 +92,7 @@ public class RecommendController {
      * @param recommendType
      * @return
      */
-    private RecommendTypeEnum getByCode(int recommendType) {
+    public static RecommendTypeEnum getByCode(int recommendType) {
         RecommendTypeEnum result = null;
         if (recommendType == RecommendTypeEnum.USER_BASED_RECOMMEND.getCode()) {
             result = RecommendTypeEnum.USER_BASED_RECOMMEND;

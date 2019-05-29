@@ -79,7 +79,7 @@ public class RecommendRankingGoodsServiceImpl implements RecommendRankingGoodsSe
         }
         List<RecommendRankingGoods> rankingGoodsList =
                 recommendRankingGoodsDao.listAll((pageNo - 1) * pageSize, pageSize);
-        int total = recommendRankingGoodsDao.count();
+        long total = recommendRankingGoodsDao.count();
         return new PageDto<>(rankingGoodsList, pageNo, pageSize, total);
     }
 
@@ -114,7 +114,7 @@ public class RecommendRankingGoodsServiceImpl implements RecommendRankingGoodsSe
     }
 
     @Override
-    public int count() {
+    public long count() {
         return recommendRankingGoodsDao.count();
     }
 }

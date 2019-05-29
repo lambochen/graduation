@@ -98,7 +98,7 @@ public class RecommendQueueGoodsServiceImpl implements RecommendQueueGoodsServic
             return new PageDto<>();
         }
         List<RecommendQueueGoods> goodsList = recommendQueueGoodsDao.listAll((pageNo - 1) * pageSize, pageSize);
-        int total = recommendQueueGoodsDao.count();
+        long total = recommendQueueGoodsDao.count();
         return new PageDto<>(goodsList, pageNo, pageSize, total);
     }
 
@@ -107,7 +107,7 @@ public class RecommendQueueGoodsServiceImpl implements RecommendQueueGoodsServic
                                                           int pageNo, int pageSize) throws TasteException {
         List<RecommendQueueGoods> data = recommendQueueGoodsDao.listByUserAndType(userId, typeEnum.getCode(),
                 (pageNo - 1) * pageSize, pageSize);
-        int total = recommendQueueGoodsDao.countByUserAndType(userId, typeEnum.getCode());
+        long total = recommendQueueGoodsDao.countByUserAndType(userId, typeEnum.getCode());
         recommendQueueScheduler.refreshRecommendQueue(userId, typeEnum);
         return new PageDto<>(data, pageNo, pageSize, total);
     }

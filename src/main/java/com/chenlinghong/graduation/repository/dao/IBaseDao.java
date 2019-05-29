@@ -51,7 +51,7 @@ public interface IBaseDao<T> {
      *
      * @return
      */
-    int count();
+    long count();
 
     /**
      * 修改基本信息

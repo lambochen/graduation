@@ -75,7 +75,7 @@ public class RankingGoodsRecommender implements Recommender {
     private PageDto<RecommendRankingGoods> fillGoods(List<RecommendRankingGoods> rankingGoodsList,
                                                      long pageNo, long pageSize) {
         List<RecommendRankingGoods> dbData = rankingGoodsService.listByGoodsList(rankingGoodsList);
-        int total = rankingGoodsService.count();
+        long total = rankingGoodsService.count();
         return new PageDto<>(dbData, pageNo, pageSize, total);
     }
 

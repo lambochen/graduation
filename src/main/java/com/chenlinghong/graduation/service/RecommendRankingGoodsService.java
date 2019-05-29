@@ -42,5 +42,5 @@ public interface RecommendRankingGoodsService extends IBaseService<RecommendRank
      *
      * @return
      */
-    int count();
+    long count();
 }

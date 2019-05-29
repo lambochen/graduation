@@ -1,5 +1,6 @@
 package com.chenlinghong.graduation.repository.dao;
 
+import com.chenlinghong.graduation.enums.RecommendTypeEnum;
 import com.chenlinghong.graduation.repository.domain.RecommenderEvalutor;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -22,6 +23,7 @@ public class RecommenderEvalutorDaoTest {
     public void insert() {
         RecommenderEvalutor evalutor = new RecommenderEvalutor();
         evalutor.setScore(0.8);
+        evalutor.setType(RecommendTypeEnum.USER_BASED_RECOMMEND.getCode());
         int result = evalutorDao.insert(evalutor);
         assertEquals(1, result);
     }

@@ -31,4 +31,9 @@ public class RecommenderEvalutor extends BaseDomain {
      * 召回率、查全率
      */
     private Double recall;
+
+    /**
+     * 推荐类型
+     */
+    private Integer type;
 }

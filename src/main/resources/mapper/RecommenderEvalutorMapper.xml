@@ -12,10 +12,11 @@
         <result column="score" property="score" jdbcType="DECIMAL" javaType="java.lang.Double"/>
         <result column="precision" property="precision" jdbcType="DECIMAL" javaType="java.lang.Double"/>
         <result column="recall" property="recall" jdbcType="DECIMAL" javaType="java.lang.Double"/>
+        <result column="type" property="type" jdbcType="INTEGER" javaType="java.lang.Integer"/>
     </resultMap>
 
     <sql id="Base_Column_List">
-        `score`, `precision`, `recall`
+        `score`, `precision`, `recall`, `type`
     </sql>
 
     <sql id="normal_column_list">
@@ -34,7 +35,7 @@
         </selectKey>
         INSERT into
         recommender_evalutor(<include refid="Base_Column_List"></include>)
-        values(#{score}, #{precision}, #{recall})
+        values(#{score}, #{precision}, #{recall}, #{type})
     </insert>
 
     <update id="deleteById" parameterType="long">
@@ -76,6 +77,32 @@
         recommender_evalutor
         where `deleted` = '0'
     </select>
+
+    <select id="listByType" resultMap="BaseResultMap">
+        SELECT
+        <include refid="column_list"/>
+        FROM
+        recommender_evalutor
+        where `deleted` = '0' and `type` = #{type}
+        order by id desc
+        <choose>
+            <when test="offset != null and rows != null">
+                limit #{offset},#{rows}
+            </when>
+            <otherwise>
+                limit 0,10
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="countByType" resultType="long">
+        SELECT
+        count(*)
+        FROM
+        recommender_evalutor
+        where `deleted` = '0' and `type` = #{type}
+    </select>
+
 
     <update id="update" parameterType="com.chenlinghong.graduation.repository.domain.RecommenderEvalutor">
         update recommender_evalutor

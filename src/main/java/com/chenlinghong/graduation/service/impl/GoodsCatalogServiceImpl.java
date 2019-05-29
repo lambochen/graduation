@@ -31,7 +31,7 @@ public class GoodsCatalogServiceImpl implements GoodsCatalogService {
     @Override
     public PageDto<GoodsCatalogOne> listAll(int pageNo, int pageSize) {
         List<GoodsCatalogOne> catalogOneList = catalogOneDao.listAll((pageNo - 1) * pageSize, pageSize);
-        int total = catalogOneDao.count();
+        long total = catalogOneDao.count();
         return new PageDto<>(catalogOneList, pageNo, pageSize, total);
     }
 

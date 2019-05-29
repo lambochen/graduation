@@ -1,6 +1,8 @@
 package com.chenlinghong.graduation.service;
 
+import com.chenlinghong.graduation.common.PageDto;
 import com.chenlinghong.graduation.enums.RecommendTypeEnum;
+import com.chenlinghong.graduation.repository.domain.RecommenderEvalutor;
 import org.apache.mahout.cf.taste.common.TasteException;
 import org.apache.mahout.cf.taste.eval.IRStatistics;
 
@@ -10,7 +12,6 @@ import org.apache.mahout.cf.taste.eval.IRStatistics;
  * @Date 2019/5/30 1:21
  * @Version V1.0
  */
-// @Async(value = AsyncNameConstant.EVALUTOR)
 public interface RecommendeEvaluatorService {
 
     /**
@@ -27,4 +28,22 @@ public interface RecommendeEvaluatorService {
      */
     IRStatistics evaluateIRStatistics(RecommendTypeEnum typeEnum) throws TasteException;
 
+    /**
+     * 分页获取
+     *
+     * @param pageNo
+     * @param pageSize
+     * @return
+     */
+    PageDto<RecommenderEvalutor> listAll(long pageNo, long pageSize);
+
+    /**
+     * 根据类型获取
+     *
+     * @param pageNo
+     * @param pageSize
+     * @param typeEnum
+     * @return
+     */
+    PageDto<RecommenderEvalutor> listByType(RecommendTypeEnum typeEnum,long pageNo, long pageSize);
 }

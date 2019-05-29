@@ -1,6 +1,9 @@
 package com.chenlinghong.graduation.service.impl;
 
+import com.chenlinghong.graduation.common.PageDto;
 import com.chenlinghong.graduation.enums.RecommendTypeEnum;
+import com.chenlinghong.graduation.repository.dao.RecommenderEvalutorDao;
+import com.chenlinghong.graduation.repository.domain.RecommenderEvalutor;
 import com.chenlinghong.graduation.scheduler.recommender.cf.ItemBasedCFRecommenderScheduler;
 import com.chenlinghong.graduation.scheduler.recommender.cf.SlopeOneCFRecommenderScheduler;
 import com.chenlinghong.graduation.scheduler.recommender.cf.UserBasedCFRecommenderScheduler;
@@ -10,6 +13,8 @@ import org.apache.mahout.cf.taste.common.TasteException;
 import org.apache.mahout.cf.taste.eval.IRStatistics;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * @Description 推荐评估器Service
@@ -39,7 +44,12 @@ public class RecommendeEvaluatorServiceImpl implements RecommendeEvaluatorServic
     @Autowired
     private SlopeOneCFRecommenderScheduler slopeOneCFRecommenderScheduler;
 
+    @Autowired
+    private RecommenderEvalutorDao recommenderEvalutorDao;
+
+
     @Override
+    // @Async(value = AsyncNameConstant.EVALUTOR)
     public double evaluateScore(RecommendTypeEnum typeEnum) throws TasteException {
         double result = -1;
         if (typeEnum == RecommendTypeEnum.USER_BASED_RECOMMEND) {
@@ -58,6 +68,7 @@ public class RecommendeEvaluatorServiceImpl implements RecommendeEvaluatorServic
     }
 
     @Override
+    // @Async(value = AsyncNameConstant.EVALUTOR)
     public IRStatistics evaluateIRStatistics(RecommendTypeEnum typeEnum) throws TasteException {
         IRStatistics result = null;
         if (typeEnum == RecommendTypeEnum.USER_BASED_RECOMMEND) {
@@ -73,5 +84,19 @@ public class RecommendeEvaluatorServiceImpl implements RecommendeEvaluatorServic
             // 数据有误
         }
         return result;
+    }
+
+    @Override
+    public PageDto<RecommenderEvalutor> listAll(long pageNo, long pageSize) {
+        List<RecommenderEvalutor> evaluatorList = recommenderEvalutorDao.listAll((pageNo - 1) * pageSize, pageSize);
+        long totalCount = recommenderEvalutorDao.count();
+        return new PageDto<>(evaluatorList, pageNo, pageSize, totalCount);
+    }
+
+    @Override
+    public PageDto<RecommenderEvalutor> listByType(RecommendTypeEnum typeEnum,long pageNo, long pageSize) {
+        List<RecommenderEvalutor> evaluatorList = recommenderEvalutorDao.listByType(typeEnum.getCode(), (pageNo - 1) * pageSize, pageSize);
+        long totalCount = recommenderEvalutorDao.countByType(typeEnum.getCode());
+        return new PageDto<>(evaluatorList, pageNo, pageSize, totalCount);
     }
 }

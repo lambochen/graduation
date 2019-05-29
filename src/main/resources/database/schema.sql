@@ -267,6 +267,7 @@ create table if not exists `recommender_evalutor` (
     `score` decimal(10,4) null comment '评分',
     `precision` decimal(10,4) null comment '查准率',
     `recall` decimal(10,4) null comment '召回率',
+    `type` int null comment '推荐类型',
     primary key (`id`)
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 DEFAULT CHARSET = utf8mb4 COMMENT = '推荐评估结果表';
 
