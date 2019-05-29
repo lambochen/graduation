@@ -93,7 +93,7 @@ public class UserPreferenceServiceImpl implements UserPreferenceService {
     @Override
     public PageDto<UserPreference> listAll(long pageNo, long pageSize) {
         List<UserPreference> preferenceList = preferenceDao.listAll((pageNo - 1) * pageSize, pageSize);
-        int total = preferenceDao.count();
+        long total = preferenceDao.count();
         return new PageDto<>(preferenceList, pageNo, pageSize, total);
     }
 

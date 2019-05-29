@@ -52,7 +52,7 @@ public class ChatController {
      * @return
      */
     @PostMapping("/user")
-    public ResultVo sendMessageForUser(long receiver, String content, HttpServletRequest request) {
+    public ResultVo sendMessageForUser(Long receiver, String content, HttpServletRequest request) {
         log.info("chatController#sendToUser: receiver={}, content={}, request={}", receiver, content, request);
         long sender = sessionUtil.getUserId(request);
         Chat chat = new Chat(sender, receiver, content);
@@ -83,9 +83,9 @@ public class ChatController {
      */
     @GetMapping(value = "/chat/{receiver}")
     public ResultVo listBySenderReceiver(
-            @PathVariable(value = "receiver") long receiver,
-            @RequestParam(value = "pageNo", required = false, defaultValue = "1") int pageNo,
-            @RequestParam(value = "pageSize", required = false, defaultValue = "10") int pageSize,
+            @PathVariable(value = "receiver") Long receiver,
+            @RequestParam(value = "pageNo", required = false, defaultValue = "1") Long pageNo,
+            @RequestParam(value = "pageSize", required = false, defaultValue = "10") Long pageSize,
             HttpServletRequest request) {
         long sender = sessionUtil.getUserId(request);
         return ResultUtil.success(chatService.listBySenderReceiver(sender, receiver, pageNo, pageSize));
@@ -99,8 +99,8 @@ public class ChatController {
      * @return
      */
     @GetMapping(value = "/chat/list")
-    public ResultVo listChat(@RequestParam(value = "pageNo", required = false, defaultValue = "1") int pageNo,
-                             @RequestParam(value = "pageSize", required = false, defaultValue = "10") int pageSize,
+    public ResultVo listChat(@RequestParam(value = "pageNo", required = false, defaultValue = "1") Long pageNo,
+                             @RequestParam(value = "pageSize", required = false, defaultValue = "10") Long pageSize,
                              HttpServletRequest request) {
         long userId = sessionUtil.getUserId(request);
         return ResultUtil.success(chatService.listChat(userId, pageNo, pageSize));

@@ -52,7 +52,8 @@ public class UserController {
      * @return
      */
     @PostMapping(value = "/login/pwd")
-    public ResultVo loginByPwd(String telephone, String password, HttpServletRequest request) {
+    public ResultVo loginByPwd(@RequestParam(value = "telephone") String telephone,
+                               @RequestParam(value = "password") String password, HttpServletRequest request) {
         log.info("UserController#loginByPwd: parameter info. telephone={}, password={}", telephone, password);
         if (StringUtils.isBlank(telephone) || StringUtils.isBlank(password)) {
             // 参数为空
@@ -72,7 +73,7 @@ public class UserController {
      * @return
      */
     @PostMapping(value = "/login/sms")
-    public ResultVo loginBySms(String smsCode, HttpServletRequest request) {
+    public ResultVo loginBySms(@RequestParam(value = "smsCode") String smsCode, HttpServletRequest request) {
         log.info("UserController#loginBySms: parameter info. smsCode={}, request={}. ", smsCode, request);
         if (StringUtils.isBlank(smsCode)) {
             // 参数为空
@@ -119,8 +120,8 @@ public class UserController {
      * @return
      */
     @GetMapping(value = "/history")
-    public ResultVo history(@RequestParam(value = "pageNo", required = false, defaultValue = "1") long pageNo,
-                            @RequestParam(value = "pageSize", required = false, defaultValue = "10") long pageSize,
+    public ResultVo history(@RequestParam(value = "pageNo", required = false, defaultValue = "1") Long pageNo,
+                            @RequestParam(value = "pageSize", required = false, defaultValue = "10") Long pageSize,
                             HttpServletRequest request) {
         long userId = sessionUtil.getUserId(request);
         return ResultUtil.success(userBehaviorService.listByUser(userId, pageNo, pageSize));
@@ -169,7 +170,8 @@ public class UserController {
      * @return
      */
     @PutMapping(value = "/password")
-    public ResultVo updatePassword(String smsCode, String password, HttpServletRequest request) {
+    public ResultVo updatePassword(@RequestParam(value = "smsCode") String smsCode,
+                                   @RequestParam(value = "password") String password, HttpServletRequest request) {
         if (StringUtils.isBlank(smsCode) || StringUtils.isBlank(password)) {
             log.error("UserController#updatePassword: param is null. smsCode={}, password={}, request={}"
                     , smsCode, password, request);
@@ -194,7 +196,7 @@ public class UserController {
      * @return
      */
     @PutMapping(value = "/avatar")
-    public ResultVo updateAvatarUrl(String avatarUrl, HttpServletRequest request) {
+    public ResultVo updateAvatarUrl(@RequestParam(value = "avatarUrl") String avatarUrl, HttpServletRequest request) {
         if (StringUtils.isBlank(avatarUrl)) {
             log.error("UserController#updateAvatarUrl: param is null. avatarUrl={}, request={}", avatarUrl, request);
             throw new BusinessException(ErrorEnum.PARAM_IS_NULL);

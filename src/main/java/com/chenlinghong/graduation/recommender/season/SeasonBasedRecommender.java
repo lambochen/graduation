@@ -50,7 +50,7 @@ public class SeasonBasedRecommender extends AbstractGraduationRecommender implem
      * @param pageSize
      * @return
      */
-    public RecommendDto<RecommendGoodsDto> recommend(int pageNo, int pageSize) {
+    public RecommendDto<RecommendGoodsDto> recommend(long pageNo, long pageSize) {
         /**
          * 获取时令
          */

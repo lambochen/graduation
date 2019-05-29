@@ -21,7 +21,7 @@ public interface RecommendService {
      * @param pageSize
      * @return
      */
-    PageDto<RecommendRankingGoods> popularRecommend(int pageNo, int pageSize);
+    PageDto<RecommendRankingGoods> popularRecommend(long pageNo, long pageSize);
 
     /**
      * 时令推荐
@@ -30,7 +30,7 @@ public interface RecommendService {
      * @param pageSize
      * @return
      */
-    PageDto<RecommendQueueGoods> seasonRecommend(int pageNo, int pageSize);
+    PageDto<RecommendQueueGoods> seasonRecommend(long pageNo, long pageSize);
 
     /**
      * 根据推荐类型获取,从推荐队列中获取

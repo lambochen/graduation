@@ -48,8 +48,8 @@ public class GoodsController {
      * @return
      */
     @GetMapping(value = {"/catalog", "/catalog/one"})
-    public ResultVo listCatalog(@RequestParam(value = "pageNo", required = false, defaultValue = "1") int pageNo,
-                                @RequestParam(value = "pageSize", required = false, defaultValue = "10") int pageSize) {
+    public ResultVo listCatalog(@RequestParam(value = "pageNo", required = false, defaultValue = "1") Integer pageNo,
+                                @RequestParam(value = "pageSize", required = false, defaultValue = "10") Integer pageSize) {
         if (pageNo < 0 || pageSize < 0) {
             // 参数错误
             log.error("GoodsController#listCatalog: param is illegal. pageNo={}, pageSize={}", pageNo, pageSize);
@@ -68,10 +68,10 @@ public class GoodsController {
      */
     @GetMapping(value = "/catalog/two")
     public ResultVo listCatalogTwoByCatalogOne(
-            @RequestParam(value = "catalogOneId") int catalogOneId,
-            @RequestParam(value = "pageNo", required = false, defaultValue = "1") int pageNo,
-            @RequestParam(value = "pageSize", required = false, defaultValue = "10") int pageSize) {
-        if (catalogOneId <= 0 || pageNo < 0 || pageSize < 0) {
+            @RequestParam(value = "catalogOneId") Integer catalogOneId,
+            @RequestParam(value = "pageNo", required = false, defaultValue = "1") Integer pageNo,
+            @RequestParam(value = "pageSize", required = false, defaultValue = "10") Integer pageSize) {
+        if (catalogOneId == null || catalogOneId <= 0 || pageNo < 0 || pageSize < 0) {
             // 参数错误
             log.error("GoodsController#listCatalogTwoByCatalogOne: param is illegal. " +
                     "catalogOneId={}, pageNo={}, pageSize={}", catalogOneId, pageNo, pageSize);
@@ -87,8 +87,8 @@ public class GoodsController {
      * @return
      */
     @GetMapping(value = "/goods/{id}")
-    public ResultVo getGoodsById(@PathVariable(value = "id") long id, HttpServletRequest request) {
-        if (id <= 0) {
+    public ResultVo getGoodsById(@PathVariable(value = "id") Long id, HttpServletRequest request) {
+        if (id == null || id <= 0) {
             // 参数错误
             log.error("GoodsController#getGoodsById: param is illegal. id={}", id);
             throw new BusinessException(ErrorEnum.PARAM_ILLEGAL);
@@ -111,10 +111,10 @@ public class GoodsController {
      */
     @GetMapping(value = "/goods/catalog/one/{catalogOneId}")
     public ResultVo listGoodsByCatalogOne(
-            @PathVariable(value = "catalogOneId") int catalogOneId,
-            @RequestParam(value = "pageNo", required = false, defaultValue = "1") int pageNo,
-            @RequestParam(value = "pageSize", required = false, defaultValue = "10") int pageSize) {
-        if (catalogOneId <= 0 || pageNo < 0 || pageSize < 0) {
+            @PathVariable(value = "catalogOneId") Integer catalogOneId,
+            @RequestParam(value = "pageNo", required = false, defaultValue = "1") Long pageNo,
+            @RequestParam(value = "pageSize", required = false, defaultValue = "10") Long pageSize) {
+        if (catalogOneId == null || catalogOneId <= 0 || pageNo < 0 || pageSize < 0) {
             // 参数错误
             log.error("GoodsController#listGoodsByCatalogOne: param is illegal. " +
                     "catalogOneId={}, pageNo={}, pageSize={}", catalogOneId, pageNo, pageSize);
@@ -134,10 +134,10 @@ public class GoodsController {
      */
     @GetMapping(value = "/goods/catalog/two/{catalogTwoId}")
     public ResultVo listGoodsByCatalogTwo(
-            @PathVariable(value = "catalogTwoId") int catalogTwoId,
-            @RequestParam(value = "pageNo", required = false, defaultValue = "1") int pageNo,
-            @RequestParam(value = "pageSize", required = false, defaultValue = "10") int pageSize) {
-        if (catalogTwoId <= 0 || pageNo < 0 || pageSize < 0) {
+            @PathVariable(value = "catalogTwoId") Integer catalogTwoId,
+            @RequestParam(value = "pageNo", required = false, defaultValue = "1") Long pageNo,
+            @RequestParam(value = "pageSize", required = false, defaultValue = "10") Long pageSize) {
+        if (catalogTwoId == null || catalogTwoId <= 0 || pageNo < 0 || pageSize < 0) {
             // 参数错误
             log.error("GoodsController#listGoodsByCatalogTwo: param is illegal. " +
                     "catalogTwoId={}, pageNo={}, pageSize={}", catalogTwoId, pageNo, pageSize);
@@ -150,6 +150,7 @@ public class GoodsController {
 
     /**
      * 通过商品名称获取
+     *
      * @param goodsName
      * @param pageNo
      * @param pageSize
@@ -158,10 +159,10 @@ public class GoodsController {
      */
     @GetMapping(value = "/goods/name")
     public ResultVo searchByName(@RequestParam(value = "goodsName") String goodsName,
-                                 @RequestParam(value = "pageNo", required = false, defaultValue = "1") int pageNo,
-                                 @RequestParam(value = "pageSize", required = false, defaultValue = "10") int pageSize,
+                                 @RequestParam(value = "pageNo", required = false, defaultValue = "1") Long pageNo,
+                                 @RequestParam(value = "pageSize", required = false, defaultValue = "10") Long pageSize,
                                  HttpServletRequest request) {
-        if (StringUtils.isBlank(goodsName)){
+        if (StringUtils.isBlank(goodsName)) {
             log.error("GoodsController#searchByName: param is null. goodsName={}, pageNo={}, pageSize={}. ", goodsName, pageNo, pageSize);
             throw new BusinessException(ErrorEnum.PARAM_IS_NULL);
         }

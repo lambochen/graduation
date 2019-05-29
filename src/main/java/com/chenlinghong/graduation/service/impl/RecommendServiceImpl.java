@@ -47,7 +47,7 @@ public class RecommendServiceImpl implements RecommendService {
     private RecommendQueueGoodsService recommendQueueGoodsService;
 
     @Override
-    public PageDto<RecommendRankingGoods> popularRecommend(int pageNo, int pageSize) {
+    public PageDto<RecommendRankingGoods> popularRecommend(long pageNo, long pageSize) {
         /**
          * 热门推荐
          */
@@ -55,7 +55,7 @@ public class RecommendServiceImpl implements RecommendService {
     }
 
     @Override
-    public PageDto<RecommendQueueGoods> seasonRecommend(int pageNo, int pageSize) {
+    public PageDto<RecommendQueueGoods> seasonRecommend(long pageNo, long pageSize) {
         /**
          * 时令推荐
          */

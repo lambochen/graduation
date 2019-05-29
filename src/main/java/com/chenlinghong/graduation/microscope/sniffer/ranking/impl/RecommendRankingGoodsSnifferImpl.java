@@ -63,7 +63,7 @@ public class RecommendRankingGoodsSnifferImpl implements RecommendRankingGoodsSn
      * 将DB中的数据写入redis
      */
     private void initRedis() {
-        int total = rankingGoodsService.count();
+        long total = rankingGoodsService.count();
         PageDto<RecommendRankingGoods> rankingGoodsList = rankingGoodsService.listAll(NumericConstant.ONE, total);
         redisUtil.putRecommendRankingGoods(rankingGoodsList.getData());
     }

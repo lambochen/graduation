@@ -86,7 +86,7 @@ public class GoodsOrderController {
      * @return
      */
     @GetMapping(value = "/order/{id}")
-    public ResultVo getById(@PathVariable(value = "id") long id) {
+    public ResultVo getById(@PathVariable(value = "id") Long id) {
         return ResultUtil.success(orderService.getById(id));
     }
 
@@ -99,8 +99,8 @@ public class GoodsOrderController {
      * @return
      */
     @GetMapping(value = "/order/user/list")
-    public ResultVo listByUser(@RequestParam(value = "pageNo", required = false, defaultValue = "1") long pageNo,
-                               @RequestParam(value = "pageSize", required = false, defaultValue = "10") long pageSize,
+    public ResultVo listByUser(@RequestParam(value = "pageNo", required = false, defaultValue = "1") Long pageNo,
+                               @RequestParam(value = "pageSize", required = false, defaultValue = "10") Long pageSize,
                                HttpServletRequest request) {
         long userId = sessionUtil.getUserId(request);
         return ResultUtil.success(orderService.listByUser(userId, pageNo, pageSize));
@@ -115,9 +115,9 @@ public class GoodsOrderController {
      * @return
      */
     @GetMapping(value = "/order/goods/{goodsId}")
-    public ResultVo listByGoods(@PathVariable(value = "goodsId") long goodsId,
-                                @RequestParam(value = "pageNo", required = false, defaultValue = "1") long pageNo,
-                                @RequestParam(value = "pageSize", required = false, defaultValue = "10") long pageSize
+    public ResultVo listByGoods(@PathVariable(value = "goodsId") Long goodsId,
+                                @RequestParam(value = "pageNo", required = false, defaultValue = "1") Long pageNo,
+                                @RequestParam(value = "pageSize", required = false, defaultValue = "10") Long pageSize
     ) {
         return ResultUtil.success(orderService.listByGoods(goodsId, pageNo, pageSize));
     }

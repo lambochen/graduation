@@ -80,7 +80,7 @@
         </choose>
     </select>
 
-    <select id="count" resultType="Integer">
+    <select id="count" resultType="long">
         SELECT count(*)
         FROM goods_catalog_one
         WHERE deleted = "0" and `deleted` = '0'

@@ -1,13 +1,11 @@
 package com.chenlinghong.graduation.recommender.cf;
 
 import com.chenlinghong.graduation.constant.NumericConstant;
+import com.chenlinghong.graduation.recommender.AbstractMahoutRecommender;
+import com.chenlinghong.graduation.recommender.builder.UserBasedRecommenderBuilder;
 import com.chenlinghong.graduation.recommender.data.GraduationRecommendItem;
 import com.chenlinghong.graduation.recommender.data.model.GraduationMysqlDataModel;
 import org.apache.mahout.cf.taste.common.TasteException;
-import org.apache.mahout.cf.taste.impl.neighborhood.NearestNUserNeighborhood;
-import org.apache.mahout.cf.taste.impl.recommender.CachingRecommender;
-import org.apache.mahout.cf.taste.impl.recommender.GenericUserBasedRecommender;
-import org.apache.mahout.cf.taste.impl.similarity.PearsonCorrelationSimilarity;
 import org.apache.mahout.cf.taste.recommender.RecommendedItem;
 
 import javax.sql.DataSource;
@@ -19,7 +17,7 @@ import java.util.List;
  * @Date 2019/4/27 21:14
  * @Version V1.0
  */
-public class UserBasedCFRecommender extends AbstractUserBasedRecommender {
+public class UserBasedCFRecommender extends AbstractMahoutRecommender {
 
     public UserBasedCFRecommender() {
 
@@ -74,18 +72,9 @@ public class UserBasedCFRecommender extends AbstractUserBasedRecommender {
      */
     private void defaultInit(final DataSource dataSource, final int neighborhoodNumber) throws TasteException {
         this.dataSource = dataSource;
-        // initDataSource();
         this.dataModel = new GraduationMysqlDataModel(this.dataSource);
-        // 邻居个数，默认20
-        this.neighborhoodNumber = neighborhoodNumber;
-        /**
-         * 相似度矩阵、邻居用户采用默认实现
-         */
-        this.userSimilarity = new PearsonCorrelationSimilarity(this.dataModel);
-        this.userNeighborhood =
-                new NearestNUserNeighborhood(neighborhoodNumber, this.userSimilarity, this.dataModel);
-        this.recommender = new CachingRecommender(
-                new GenericUserBasedRecommender(this.dataModel, this.userNeighborhood, this.userSimilarity));
+        recommenderBuilder = new UserBasedRecommenderBuilder(dataSource, neighborhoodNumber);
+        recommender = recommenderBuilder.buildRecommender(this.dataModel);
     }
 
 }

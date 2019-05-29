@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chenlinghong.graduation.repository.dao.RecommenderEvalutorDao">
+
+    <resultMap id="BaseResultMap" type="com.chenlinghong.graduation.repository.domain.RecommenderEvalutor">
+        <id column="id" property="id" jdbcType="BIGINT" javaType="java.lang.Long"/>
+        <result column="gmt_create" property="gmtCreate" jdbcType="TIMESTAMP" javaType="java.util.Date"/>
+        <result column="gmt_modified" property="gmtModified" jdbcType="TIMESTAMP" javaType="java.util.Date"/>
+        <result column="deleted" property="deleted" jdbcType="VARCHAR" javaType="java.lang.Integer"/>
+        <result column="score" property="score" jdbcType="DECIMAL" javaType="java.lang.Double"/>
+        <result column="precision" property="precision" jdbcType="DECIMAL" javaType="java.lang.Double"/>
+        <result column="recall" property="recall" jdbcType="DECIMAL" javaType="java.lang.Double"/>
+        <result column="type" property="type" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        `score`, `precision`, `recall`, `type`
+    </sql>
+
+    <sql id="normal_column_list">
+        `gmt_create`, `gmt_modified`, `deleted`,
+        <include refid="Base_Column_List"></include>
+    </sql>
+
+    <sql id="column_list">
+        `id`,
+        <include refid="normal_column_list"></include>
+    </sql>
+
+    <insert id="insert" parameterType="com.chenlinghong.graduation.repository.domain.RecommenderEvalutor">
+        <selectKey keyProperty="id" order="AFTER" resultType="Long">
+            SELECT last_insert_id()
+        </selectKey>
+        INSERT into
+        recommender_evalutor(<include refid="Base_Column_List"></include>)
+        values(#{score}, #{precision}, #{recall}, #{type})
+    </insert>
+
+    <update id="deleteById" parameterType="long">
+        update recommender_evalutor
+        set deleted = '1'
+        where id = #{id}
+    </update>
+
+    <select id="getById" parameterType="long" resultMap="BaseResultMap">
+        SELECT
+        <include refid="column_list"/>
+        FROM
+        recommender_evalutor
+        WHERE
+        id=#{id} and `deleted` = '0'
+    </select>
+
+    <select id="listAll" resultMap="BaseResultMap">
+        SELECT
+        <include refid="column_list"/>
+        FROM
+        recommender_evalutor
+        where `deleted` = '0'
+        order by id desc
+        <choose>
+            <when test="offset != null and rows != null">
+                limit #{offset},#{rows}
+            </when>
+            <otherwise>
+                limit 0,10
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="count" resultType="long">
+        SELECT
+        count(*)
+        FROM
+        recommender_evalutor
+        where `deleted` = '0'
+    </select>
+
+    <select id="listByType" resultMap="BaseResultMap">
+        SELECT
+        <include refid="column_list"/>
+        FROM
+        recommender_evalutor
+        where `deleted` = '0' and `type` = #{type}
+        order by id desc
+        <choose>
+            <when test="offset != null and rows != null">
+                limit #{offset},#{rows}
+            </when>
+            <otherwise>
+                limit 0,10
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="countByType" resultType="long">
+        SELECT
+        count(*)
+        FROM
+        recommender_evalutor
+        where `deleted` = '0' and `type` = #{type}
+    </select>
+
+
+    <update id="update" parameterType="com.chenlinghong.graduation.repository.domain.RecommenderEvalutor">
+        update recommender_evalutor
+        set `score`       = #{score},
+            `precision` = #{precision},
+            `recall` = #{recall},
+            `gmt_modified` = current_timestamp
+        where id = #{id} and `deleted` = '0'
+    </update>
+
+</mapper>

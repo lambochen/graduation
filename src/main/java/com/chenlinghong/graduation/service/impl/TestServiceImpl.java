@@ -21,10 +21,10 @@ public class TestServiceImpl implements TestService {
     private TestDao testDao;
 
     @Override
-    public PageDto<TestBean> listAll(int pageNo, int pageSize) {
-        int offset = (pageNo - 1) * pageSize;
-        int rows = pageSize;
-        List<TestBean> beanList = testDao.listAll(offset, rows);
+    public PageDto<TestBean> listAll(long pageNo, long pageSize) {
+        long offset = (pageNo - 1) * pageSize;
+        long rows = pageSize;
+        List<TestBean> beanList = testDao.listAll((int) offset, (int) rows);
         int totalCount = testDao.count();
         return new PageDto<>(beanList, pageNo, pageSize, totalCount);
     }

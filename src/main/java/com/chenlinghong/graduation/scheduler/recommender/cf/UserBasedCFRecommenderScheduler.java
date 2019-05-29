@@ -11,5 +11,4 @@ import com.chenlinghong.graduation.scheduler.recommender.MahoutRecommenderSchedu
 public interface UserBasedCFRecommenderScheduler extends MahoutRecommenderScheduler {
 
 
-
 }

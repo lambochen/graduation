@@ -77,6 +77,11 @@ public enum ErrorEnum {
      */
     USER_PREFERENCE_NOT_EXISTS(8000, "用户偏好信息不存在"),
 
+    /**
+     * 9XXX 评估
+     */
+    EVALUTOR_FAILED_INSERT(9000, "评估数据写入失败"),
+
 
     ;
 
