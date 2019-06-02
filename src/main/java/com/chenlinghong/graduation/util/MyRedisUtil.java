@@ -246,7 +246,7 @@ public class MyRedisUtil extends RedisUtil {
      * @return
      */
     public List<RecommendRankingGoods> rangeWithScoresToRankingGoods(String key, long start, long end) {
-        Set<ZSetOperations.TypedTuple<String>> redisData = zRangeByScoreWithScores(key, start, end);
+        Set<ZSetOperations.TypedTuple<String>> redisData = zRangeWithScores(key, start, end);
         List<RecommendRankingGoods> result = Lists.newArrayList();
         for (ZSetOperations.TypedTuple<String> item : redisData) {
             RecommendRankingGoods tmp = new RecommendRankingGoods();

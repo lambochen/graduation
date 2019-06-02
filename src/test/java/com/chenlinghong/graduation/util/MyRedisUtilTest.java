@@ -1,13 +1,14 @@
 package com.chenlinghong.graduation.util;
 
 import com.chenlinghong.graduation.api.vo.UserVo;
+import com.chenlinghong.graduation.repository.domain.RecommendRankingGoods;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import static org.junit.Assert.*;
+import java.util.List;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -39,5 +40,12 @@ public class MyRedisUtilTest {
 
     @Test
     public void getSmsCode() {
+    }
+
+    @Test
+    public void rangeWithScoresToRankingGoods() {
+        List<RecommendRankingGoods> result = redisUtil.rangeWithScoresToRankingGoods(0, 3);
+        System.out.println(result);
+        System.out.println(result.size());
     }
 }
