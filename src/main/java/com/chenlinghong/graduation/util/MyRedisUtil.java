@@ -246,12 +246,15 @@ public class MyRedisUtil extends RedisUtil {
      * @return
      */
     public List<RecommendRankingGoods> rangeWithScoresToRankingGoods(String key, long start, long end) {
-        Set<ZSetOperations.TypedTuple<String>> redisData = zRangeByScoreWithScores(key, start, end);
+        Set<ZSetOperations.TypedTuple<String>> redisData = zRangeWithScores(key, start, end);
         List<RecommendRankingGoods> result = Lists.newArrayList();
         for (ZSetOperations.TypedTuple<String> item : redisData) {
             RecommendRankingGoods tmp = new RecommendRankingGoods();
             tmp.setGoodsId(Long.parseLong(item.getValue()));
-            tmp.setRanking(item.getScore().intValue());
+            // tmp.setRanking(item.getScore().intValue());
+            int tmpRank = zRank(key,
+                    item.getValue()) == null ? NumericConstant.MAX_VALUE : zRank(key, item.getValue()).intValue();
+            tmp.setRanking(tmpRank);
             result.add(tmp);
         }
         return result;

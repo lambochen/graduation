@@ -40,7 +40,7 @@ public class SeasonBasedRecommender extends AbstractGraduationRecommender implem
 
     @Override
     public RecommendDto<RecommendGoodsDto> recommend(int recommendNum) {
-        return recommend(NumericConstant.ONE, recommendNum);
+        return recommend(NumericConstant.ONE, (long) recommendNum);
     }
 
     /**
