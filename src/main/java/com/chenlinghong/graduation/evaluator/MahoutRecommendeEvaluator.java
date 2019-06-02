@@ -28,7 +28,7 @@ public class MahoutRecommendeEvaluator {
     /**
      * 评估百分比
      */
-    public static double DEFAULT_EVALUATION_PERCENTAGE = 0.3;
+    public static double DEFAULT_EVALUATION_PERCENTAGE = 1.0;
 
     /**
      * 默认at值
