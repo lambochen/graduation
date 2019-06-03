@@ -56,13 +56,13 @@ public class RankingGoodsRecommender implements Recommender {
      * @return
      */
     public PageDto<RecommendRankingGoods> range(long pageNo, long pageSize) {
-        if (pageNo <= 0 || pageSize < 0) {
+        if (pageNo <= 0 || pageSize <= 0) {
             log.error("RecommendRankingGoodsSniffer#range: param is illegal. pageNo={}, pageSize={}.",
                     pageNo, pageSize);
             return new PageDto<>();
         }
         List<RecommendRankingGoods> rankingGoodsList =
-                redisUtil.rangeWithScoresToRankingGoods((pageNo - 1) * pageSize, pageSize);
+                redisUtil.rangeWithScoresToRankingGoods((pageNo - 1) * pageSize, pageSize - 1);
         return fillGoods(rankingGoodsList, pageNo, pageSize);
     }
 
