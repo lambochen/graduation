@@ -60,38 +60,37 @@ public class RecommendQueueScheduler implements Scheduler {
      * @return 新写入数据数目
      */
     @Async(value = AsyncNameConstant.SCHEDULER)
-    public Long refreshRecommendQueue(long userId, RecommendTypeEnum typeEnum) throws TasteException {
-        long result = 0;
+    public void refreshRecommendQueue(long userId, RecommendTypeEnum typeEnum) throws TasteException {
         switch (typeEnum) {
             /**
              * 基于用户的协同过滤推荐
              */
             case USER_BASED_RECOMMEND:
-                result = userBasedCFRecommenderScheduler.refreshRecommendQueue(userId);
+                userBasedCFRecommenderScheduler.refreshRecommendQueue(userId);
                 break;
             /**
              * 基于物品推荐
              */
             case ITEM_BASED_RECOMMEND:
-                result = itemBasedCFRecommenderScheduler.refreshRecommendQueue(userId);
+                itemBasedCFRecommenderScheduler.refreshRecommendQueue(userId);
                 break;
             /**
              * SlopeOne推荐，基于评分推荐
              */
             case SLOPE_ONE_RECOMMEND:
-                result = slopeOneCFRecommenderScheduler.refreshRecommendQueue(userId);
+                slopeOneCFRecommenderScheduler.refreshRecommendQueue(userId);
                 break;
             /**
              * 时令推荐
              */
             case SEASON_RECOMMEND:
-                result = seasonBasedRecommenderScheduler.refreshRecommendQueue(userId);
+                seasonBasedRecommenderScheduler.refreshRecommendQueue(userId);
                 break;
             /**
              * 基于用户标签的推荐
              */
             case USER_TAG_BASED_RECOMMEND:
-                result = userTagBasedRecommenderScheduler.refreshRecommendQueue(userId);
+                userTagBasedRecommenderScheduler.refreshRecommendQueue(userId);
                 break;
             /**
              * 热门推荐
@@ -99,7 +98,6 @@ public class RecommendQueueScheduler implements Scheduler {
             case POPULAR_RECOMMEND:
                 break;
         }
-        return result;
     }
 
 
