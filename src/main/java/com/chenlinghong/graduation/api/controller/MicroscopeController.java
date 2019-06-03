@@ -62,6 +62,7 @@ public class MicroscopeController {
     @PostMapping(value = "/report")
     public ResultVo report(@RequestParam(value = "goodsId") Long goodsId,
                            @RequestParam(value = "behavior") Integer behavior, HttpServletRequest request) {
+        log.info("MicroscopeController#report: request log. goodsId=[{}], behavior=[{}]. ", goodsId, behavior);
         if (goodsId == null || goodsId <= 0) {
             log.error("MicroscopeController#click: param is illegal. goodsId={}", goodsId);
             return ResultUtil.error(ErrorEnum.PARAM_ILLEGAL);

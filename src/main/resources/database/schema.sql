@@ -293,3 +293,9 @@ create table if not exists `jdata_action` (
     primary key (`id`)
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 DEFAULT CHARSET = utf8mb4 COMMENT = 'JDATA行为表';
 
+-- mahout 数据集
+create table if not exists `data_mahout` (
+    `user_id` bigint comment '用户ID',
+    `item_id` bigint comment '商品编号',
+    `score` bigint comment '评分'
+) ENGINE = InnoDB AUTO_INCREMENT = 1 DEFAULT CHARSET = utf8mb4 COMMENT = 'mahout 数据表';
