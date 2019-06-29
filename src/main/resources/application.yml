@@ -28,7 +28,7 @@ spring:
     # Redis服务器连接端口
     port: 6379
     # Redis服务器连接密码（默认为空）
-    password: chenlinghong
+    password:
     pool:
       # 连接池最大连接数（使用负值表示没有限制）
       max-active: 10
