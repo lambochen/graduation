@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chenlinghong.graduation.repository.dao.GoodsDao">
+
+    <resultMap id="BaseResultMap" type="com.chenlinghong.graduation.repository.domain.Goods">
+        <id column="id" property="id" jdbcType="BIGINT" javaType="Long"/>
+        <result column="gmt_create" property="gmtCreate" jdbcType="TIMESTAMP" javaType="Date"/>
+        <result column="gmt_modified" property="gmtModified" jdbcType="TIMESTAMP" javaType="Date"/>
+        <result column="deleted" property="deleted" jdbcType="VARCHAR" javaType="Integer"/>
+        <result column="name" property="name" jdbcType="VARCHAR" javaType="java.lang.String"/>
+        <result column="description" property="description" jdbcType="VARCHAR" javaType="java.lang.String"/>
+        <result column="remarks" property="remarks" jdbcType="VARCHAR" javaType="java.lang.String"/>
+        <result column="catalog_one_id" property="catalogOneId" jdbcType="INTEGER" javaType="Integer"/>
+        <result column="catalog_two_id" property="catalogTwoId" jdbcType="INTEGER" javaType="Integer"/>
+        <result column="goods_info" property="goodsInfo" jdbcType="VARCHAR" javaType="String"/>
+        <result column="cover_img" property="coverImg" jdbcType="VARCHAR" javaType="String"/>
+        <result column="price" property="price" jdbcType="DECIMAL" javaType="Double"/>
+        <result column="business_id" property="businessInfoId" jdbcType="BIGINT" javaType="Long"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        gmt_create, gmt_modified, deleted, `name`, description, remarks, catalog_one_id, catalog_two_id
+        , goods_info, price, business_id, cover_img
+    </sql>
+
+    <sql id="column_list">
+        `id`,
+        <include refid="Base_Column_List"/>
+    </sql>
+
+    <insert id="insert" parameterType="com.chenlinghong.graduation.repository.domain.Goods">
+        <selectKey keyProperty="id" order="AFTER" resultType="Long">
+            SELECT last_insert_id()
+        </selectKey>
+        INSERT into
+        goods(
+        <include refid="Base_Column_List"/>
+        )
+        values(current_timestamp, current_timestamp, "0", #{name}, #{description}, #{remarks}, #{catalogOneId},
+        #{catalogTwoId}, #{goodsInfo}, #{price}, #{businessInfoId}, #{coverImg})
+    </insert>
+
+    <update id="deleteById">
+        update goods
+        set deleted = '1'
+        where id = #{id}
+    </update>
+
+    <select id="getById" resultMap="BaseResultMap">
+        SELECT
+        <include refid="column_list"/>
+        FROM
+        goods
+        WHERE
+        id=#{id} and `deleted` = '0'
+    </select>
+
+    <select id="listAll" resultMap="BaseResultMap">
+        SELECT
+        <include refid="column_list"/>
+        FROM
+        goods
+        where `deleted` = '0'
+        order by id desc
+        <choose>
+            <when test="offset != null and rows != null">
+                limit #{offset},#{rows}
+            </when>
+            <otherwise>
+                limit 0,10
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="count" resultType="long">
+        SELECT count(*)
+        FROM goods
+        where `deleted` = '0'
+    </select>
+
+    <select id="listByCatalogOne" resultMap="BaseResultMap">
+        SELECT
+        <include refid="column_list"/>
+        FROM
+        goods
+        where catalog_one_id = #{catalogOneId} and `deleted` = '0'
+        order by id desc
+        <choose>
+            <when test="offset != null and rows != null">
+                limit #{offset},#{rows}
+            </when>
+            <otherwise>
+                limit 0,10
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="countByCatalogOne" resultType="long">
+        SELECT count(*)
+        FROM goods
+        where catalog_one_id = #{catalogOneId} and `deleted` = '0'
+    </select>
+
+    <select id="listByCatalogTwo" resultMap="BaseResultMap">
+        SELECT
+        <include refid="column_list"/>
+        FROM
+        goods
+        where catalog_two_id = #{catalogTwoId} and `deleted` = '0'
+        order by id desc
+        <choose>
+            <when test="offset != null and rows != null">
+                limit #{offset},#{rows}
+            </when>
+            <otherwise>
+                limit 0,10
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="countByCatalogTwo" resultType="long">
+        SELECT count(*)
+        FROM goods
+        where catalog_two_id = #{catalogTwoId} and `deleted` = '0'
+    </select>
+
+    <select id="listByBusiness" resultMap="BaseResultMap">
+        SELECT
+        <include refid="column_list"/>
+        FROM
+        goods
+        where business_id = #{businessId} and `deleted` = '0'
+        order by id desc
+        <choose>
+            <when test="offset != null and rows != null">
+                limit #{offset},#{rows}
+            </when>
+            <otherwise>
+                limit 0,10
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="countByBusiness" resultType="long">
+        SELECT count(*)
+        FROM goods
+        where business_id = #{businessId} and `deleted` = '0'
+    </select>
+
+    <select id="listByName" resultMap="BaseResultMap">
+        select
+        <include refid="column_list"></include>
+        from goods
+        where deleted = '0' and name like '%${name}%'
+        order by id desc
+        <choose>
+            <when test="offset != null and rows != null">
+                limit #{offset},#{rows}
+            </when>
+            <otherwise>
+                limit 0,10
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="countByName" parameterType="string" resultType="long">
+        select count(id)
+        from goods
+        where deleted = '0' and name like '%${name}%'
+    </select>
+
+    <select id="countByGoodsId" resultType="int">
+        select count(distinct id)
+        from goods
+        where deleted = '0' and id = #{goodsId}
+    </select>
+
+    <select id="listByIdList" resultMap="BaseResultMap">
+        select <include refid="column_list"></include>
+        from goods
+        where deleted = '0'
+        <foreach collection="goodsIdList" item="goodsId" separator=" or " open=" and ( " close=" )">
+            id = #{goodsId}
+        </foreach>
+        order by id desc
+    </select>
+
+    <select id="listByCatalogTwoList" resultMap="BaseResultMap">
+        select <include refid="column_list"></include>
+        from goods
+        where deleted = '0'
+        <foreach collection="catalogTwoList" item="item" separator=" or " open=" and ( " close=" )">
+            catalog_two_id = #{item.id}
+        </foreach>
+        order by id desc
+        <choose>
+            <when test="offset != null and rows != null">
+                limit #{offset},#{rows}
+            </when>
+            <otherwise>
+                limit 0,10
+            </otherwise>
+        </choose>
+    </select>
+
+    <update id="update" parameterType="com.chenlinghong.graduation.repository.domain.Goods">
+        update goods
+        set `name`       = #{name},
+            `goods_info` = #{goodInfo},
+            `remarks`    = #{remarks},
+            `cover_img`    = #{coverImg},
+            gmt_modified = current_timestamp
+        where id = #{id}
+    </update>
+
+
+
+</mapper>

@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chenlinghong.graduation.repository.dao.UserBehaviorDao">
+
+    <resultMap id="BaseResultMap" type="com.chenlinghong.graduation.repository.domain.UserBehavior">
+        <id column="id" property="id" jdbcType="BIGINT" javaType="java.lang.Long"/>
+        <result column="gmt_create" property="gmtCreate" jdbcType="TIMESTAMP" javaType="java.util.Date"/>
+        <result column="gmt_modified" property="gmtModified" jdbcType="TIMESTAMP" javaType="java.util.Date"/>
+        <result column="deleted" property="deleted" jdbcType="VARCHAR" javaType="java.lang.Integer"/>
+        <result column="user_id" property="userId" jdbcType="BIGINT" javaType="java.lang.Long"/>
+        <result column="goods_id" property="goodsId" jdbcType="BIGINT" javaType="java.lang.Long"/>
+        <result column="behavior" property="behavior" jdbcType="BIGINT" javaType="java.lang.Integer"/>
+    </resultMap>
+
+    <resultMap id="user_behavior_vo" type="com.chenlinghong.graduation.repository.domain.UserBehavior">
+        <id column="id" property="id" jdbcType="BIGINT" javaType="java.lang.Long"/>
+        <result column="gmt_create" property="gmtCreate" jdbcType="TIMESTAMP" javaType="java.util.Date"/>
+        <result column="gmt_modified" property="gmtModified" jdbcType="TIMESTAMP" javaType="java.util.Date"/>
+        <result column="deleted" property="deleted" jdbcType="VARCHAR" javaType="java.lang.Integer"/>
+        <result column="user_id" property="userId" jdbcType="BIGINT" javaType="java.lang.Long"/>
+        <result column="goods_id" property="goodsId" jdbcType="BIGINT" javaType="java.lang.Long"/>
+        <result column="behavior" property="behavior" jdbcType="BIGINT" javaType="java.lang.Integer"/>
+        <association property="goods" column="goods_id"
+                     javaType="com.chenlinghong.graduation.repository.domain.Goods"
+                     select="com.chenlinghong.graduation.repository.dao.GoodsDao.getById">
+        </association>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        `user_id`, `goods_id`, `behavior`
+    </sql>
+
+    <sql id="normal_column_list">
+        `gmt_create`, `gmt_modified`, `deleted`,
+        <include refid="Base_Column_List"></include>
+    </sql>
+
+    <sql id="column_list">
+        `id`,
+        <include refid="normal_column_list"></include>
+    </sql>
+
+    <insert id="insert" parameterType="com.chenlinghong.graduation.repository.domain.UserBehavior">
+        <selectKey keyProperty="id" order="AFTER" resultType="Long">
+            SELECT last_insert_id()
+        </selectKey>
+        INSERT into
+        user_behavior(<include refid="Base_Column_List"></include>)
+        values(#{userId}, #{goodsId}, #{behavior})
+    </insert>
+
+    <insert id="batchInsert">
+        <selectKey keyProperty="id" order="AFTER" resultType="Long">
+            SELECT last_insert_id()
+        </selectKey>
+        INSERT into
+        user_behavior(<include refid="Base_Column_List"></include>)
+        values
+        <foreach collection="frequency" item="item" separator=",">
+            (#{userId}, #{goodsId}, #{behavior})
+        </foreach>
+    </insert>
+
+    <insert id="batchInsertByUserBehavior">
+        <selectKey keyProperty="id" order="AFTER" resultType="Long">
+            SELECT last_insert_id()
+        </selectKey>
+        INSERT into
+        user_behavior(<include refid="Base_Column_List"></include>)
+        values
+        <foreach collection="behaviorList" item="item" separator=",">
+            (#{item.userId}, #{item.goodsId}, #{item.behavior})
+        </foreach>
+    </insert>
+
+    <update id="deleteById" parameterType="long">
+        update user_behavior
+        set deleted = '1'
+        where id = #{id}
+    </update>
+
+    <select id="getById" parameterType="long" resultMap="BaseResultMap">
+        SELECT
+        <include refid="column_list"/>
+        FROM
+        user_behavior
+        WHERE
+        id=#{id} and `deleted` = '0'
+    </select>
+
+    <select id="listAll" resultMap="BaseResultMap">
+        SELECT
+        <include refid="column_list"/>
+        FROM
+        user_behavior
+        where `deleted` = '0'
+        order by id desc
+        <choose>
+            <when test="offset != null and rows != null">
+                limit #{offset},#{rows}
+            </when>
+            <otherwise>
+                limit 0,10
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="count" resultType="long">
+        SELECT
+        count(*)
+        FROM
+        user_behavior
+        where `deleted` = '0'
+    </select>
+
+    <select id="listByUserAndGoodsAndStartTime" resultMap="BaseResultMap">
+        SELECT
+        <include refid="column_list"/>
+        FROM
+        user_behavior
+        where `deleted` = '0'
+        and `user_id` = #{userId} and `goods_id` = #{goodsId} and gmt_modified > #{startTime}
+    </select>
+
+    <select id="listByUserAndStartTime" resultMap="BaseResultMap">
+        SELECT
+        <include refid="column_list"/>
+        FROM
+        user_behavior
+        where `deleted` = '0'
+        and `user_id` = #{userId} and gmt_modified > #{startTime}
+    </select>
+
+    <select id="listByUser" resultMap="user_behavior_vo">
+        select
+        <include refid="column_list"></include>
+        from user_behavior
+        where deleted='0' and user_id=#{userId}
+        order by id desc
+        <choose>
+            <when test="offset != null and rows != null">
+                limit #{offset},#{rows}
+            </when>
+            <otherwise>
+                limit 0,10
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="countByUser" resultType="long">
+        select
+        count(id)
+        from user_behavior
+        where deleted='0' and user_id=#{userId}
+    </select>
+
+
+    <update id="update" parameterType="com.chenlinghong.graduation.repository.domain.UserBehavior">
+        update user_behavior
+        set `user_id`       = #{caseNumber},
+            `goods_id` = #{goodsId},
+            `behavior` = #{behavior},
+            `gmt_modified` = current_timestamp
+        where id = #{id} and `deleted` = '0'
+    </update>
+
+
+</mapper>

@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chenlinghong.graduation.repository.dao.BusinessInfoDao">
+
+    <resultMap id="BaseResultMap" type="com.chenlinghong.graduation.repository.domain.BusinessInfo">
+        <id column="id" property="id" jdbcType="BIGINT" javaType="Long"/>
+        <result column="gmt_create" property="gmtCreate" jdbcType="TIMESTAMP" javaType="Date"/>
+        <result column="gmt_modified" property="gmtModified" jdbcType="TIMESTAMP" javaType="Date"/>
+        <result column="deleted" property="deleted" jdbcType="VARCHAR" javaType="Integer"/>
+        <result column="name" property="name" jdbcType="VARCHAR" javaType="java.lang.String"/>
+        <result column="description" property="description" jdbcType="VARCHAR" javaType="java.lang.String"/>
+        <result column="opening_time" property="openingTime" jdbcType="TIMESTAMP" javaType="Date"/>
+        <result column="country" property="country" jdbcType="VARCHAR" javaType="String"/>
+        <result column="province" property="province" jdbcType="VARCHAR" javaType="String"/>
+        <result column="city" property="city" jdbcType="VARCHAR" javaType="String"/>
+        <result column="position" property="position" jdbcType="VARCHAR" javaType="String"/>
+        <result column="latitude" property="latitude" jdbcType="VARCHAR" javaType="String"/>
+        <result column="longitude" property="longitude" jdbcType="VARCHAR" javaType="String"/>
+        <result column="user_id" property="userId" jdbcType="BIGINT" javaType="Long"/>
+        <result column="avatar_url" property="avatarUrl" jdbcType="VARCHAR" javaType="String"/>
+        <result column="telephone" property="telephone" jdbcType="VARCHAR" javaType="String"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        gmt_create, gmt_modified, deleted, `name`, description, opening_time, `country`, `province`, `city`,
+        `position`, `latitude`, `longitude`, `avatar_url`, user_id, telephone
+    </sql>
+
+    <sql id="column_list">
+        `id`,
+        <include refid="Base_Column_List"/>
+    </sql>
+
+    <insert id="insert" parameterType="com.chenlinghong.graduation.repository.domain.BusinessInfo">
+        <selectKey keyProperty="id" order="AFTER" resultType="Long">
+            SELECT last_insert_id()
+        </selectKey>
+        INSERT into
+        business_info(
+        <include refid="Base_Column_List"/>
+        )
+        values(current_timestamp, current_timestamp, "0", #{name}, #{description}, current_timestamp, #{country}, #{province}
+        , #{city}, #{position}, #{latitude}, #{longitude}, #{avatarUrl}, #{userId}, #{telephone})
+    </insert>
+
+    <update id="deleteById">
+        update business_info
+        set deleted = '1'
+        where id = #{id}
+    </update>
+
+    <select id="getById" resultMap="BaseResultMap">
+        SELECT
+        <include refid="column_list"/>
+        FROM
+        business_info
+        WHERE
+        id=#{id} and `deleted` = '0'
+    </select>
+
+    <select id="listAll" resultMap="BaseResultMap">
+        SELECT
+        <include refid="column_list"/>
+        FROM
+        business_info
+        where `deleted` = '0'
+        order by id desc
+        <choose>
+            <when test="offset != null and rows != null">
+                limit #{offset},#{rows}
+            </when>
+            <otherwise>
+                limit 0,10
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="count" resultType="long">
+        SELECT count(*)
+        FROM business_info
+        where `deleted` = '0'
+    </select>
+
+    <select id="listByUser" resultMap="BaseResultMap">
+        SELECT
+        <include refid="column_list"/>
+        FROM
+        business_info
+        where user_id = #{userId} and `deleted` = '0'
+        order by id desc
+        <choose>
+            <when test="offset != null and rows != null">
+                limit #{offset},#{rows}
+            </when>
+            <otherwise>
+                limit 0,10
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="countByUser" resultType="long">
+        SELECT count(*)
+        FROM business_info
+        where user_id = #{userId} and `deleted` = '0'
+    </select>
+
+    <!--<update id="update" parameterType="GoodsOrder">-->
+        <!--update goods_order-->
+        <!--set `name`       = #{name},-->
+            <!--`remarks`    = #{remarks},-->
+            <!--gmt_modified = current_timestamp-->
+        <!--where id = #{id}-->
+    <!--</update>-->
+
+</mapper>

@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chenlinghong.graduation.repository.dao.ChatDao">
+
+    <resultMap id="BaseResultMap" type="com.chenlinghong.graduation.repository.domain.Chat">
+        <id column="id" property="id" jdbcType="BIGINT" javaType="Long"/>
+        <result column="gmt_create" property="gmtCreate" jdbcType="TIMESTAMP" javaType="Date"/>
+        <result column="gmt_modified" property="gmtModified" jdbcType="TIMESTAMP" javaType="Date"/>
+        <result column="deleted" property="deleted" jdbcType="VARCHAR" javaType="Integer"/>
+        <result column="chat_id" property="chatId" jdbcType="VARCHAR" javaType="java.lang.String"/>
+        <result column="content" property="content" jdbcType="VARCHAR" javaType="java.lang.String"/>
+        <result column="sender" property="sender" jdbcType="BIGINT" javaType="Long"/>
+        <result column="receiver" property="receiver" jdbcType="BIGINT" javaType="Long"/>
+        <result column="read" property="read" jdbcType="INTEGER" javaType="Integer"/>
+    </resultMap>
+
+    <resultMap id="chat_list" type="com.chenlinghong.graduation.api.vo.ChatListVo">
+        <id column="id" property="id" jdbcType="INTEGER" javaType="Long"/>
+        <result column="gmt_create" property="gmtCreate" jdbcType="TIMESTAMP" javaType="Date"/>
+        <result column="sender" property="sender" jdbcType="INTEGER" javaType="Long"/>
+        <result column="receiver" property="receiver" jdbcType="INTEGER" javaType="Long"/>
+        <result column="read" property="read" jdbcType="INTEGER" javaType="Integer"/>
+        <result column="read_count" property="readCount" jdbcType="INTEGER" javaType="Integer"/>
+        <result column="content" property="content" jdbcType="VARCHAR" javaType="String"/>
+        <result column="chat_id" property="chatId" jdbcType="VARCHAR" javaType="String"/>
+        <association property="senderUser" column="sender"
+                     javaType="com.chenlinghong.graduation.repository.domain.User"
+                     select="com.chenlinghong.graduation.repository.dao.UserDao.getById">
+        </association>
+        <association property="receiverUser" column="receiver"
+                     javaType="com.chenlinghong.graduation.repository.domain.User"
+                     select="com.chenlinghong.graduation.repository.dao.UserDao.getById">
+        </association>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        gmt_create, gmt_modified, deleted, `chat_id`, content, sender, receiver
+    </sql>
+
+    <sql id="column_list">
+        `id`,
+        <include refid="Base_Column_List"/>
+    </sql>
+
+    <insert id="insert" parameterType="com.chenlinghong.graduation.repository.domain.Chat">
+        <selectKey keyProperty="id" order="AFTER" resultType="Long">
+            SELECT last_insert_id()
+        </selectKey>
+        INSERT into
+        chat(
+        <include refid="Base_Column_List"/>
+        )
+        values(current_timestamp, current_timestamp, "0", #{chatId}, #{content}, #{sender}, #{receiver})
+    </insert>
+
+    <update id="deleteById">
+        update chat
+        set deleted = '1'
+        where id = #{id}
+    </update>
+
+    <update id="deleteBySender">
+        update chat
+        set deleted = '1'
+        where sender = #{sender}
+    </update>
+
+    <select id="getById" resultMap="BaseResultMap">
+        SELECT
+        <include refid="column_list"/>
+        FROM
+        chat
+        WHERE
+        id=#{id} and `deleted` = '0'
+    </select>
+
+    <select id="listByChat" resultMap="BaseResultMap">
+        SELECT
+        <include refid="column_list"/>
+        FROM
+        chat
+        where chat_id = #{chatId} and `deleted` = '0'
+        order by id desc
+        <choose>
+            <when test="offset != null and rows != null">
+                limit #{offset},#{rows}
+            </when>
+            <otherwise>
+                limit 0,10
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="countByChat" resultType="long">
+        SELECT count(*)
+        FROM chat
+        where chat_id = #{chatId} and `deleted` = '0'
+    </select>
+
+    <select id="listChat" resultMap="chat_list">
+        select t.id,t.gmt_create,t.sender,t.receiver,t.`content`,t.chat_id,t.`read`,t1.read_count
+        from (
+        select * from chat a
+        where (select count(1) from chat b where b.chat_id=a.chat_id and b.gmt_create>=a.gmt_create) &lt;= 1) t
+        left join (select chat_id,sum(`read`) read_count from chat group by chat_id) t1 on t1.chat_id=t.chat_id
+        where t.sender=#{userId} or t.receiver=#{userId}
+        order by gmt_create desc
+        <choose>
+            <when test="offset != null and rows != null">
+                limit #{offset},#{rows}
+            </when>
+            <otherwise>
+                limit 0,10
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="countListChat" resultType="long">
+        select count(*)
+        from (
+        select * from chat a
+        where (select count(1) from chat b where b.chat_id=a.chat_id and b.gmt_create>=a.gmt_create) &lt;= 1) t
+        left join (select chat_id,sum(`read`) read_count from chat group by chat_id) t1 on t1.chat_id=t.chat_id
+        where t.sender=#{userId} or t.receiver=#{userId}
+    </select>
+
+    <update id="updateRead" parameterType="Integer">
+        update chat
+        set `read` = "0"
+        where chat_id = #{chatId}
+    </update>
+</mapper>

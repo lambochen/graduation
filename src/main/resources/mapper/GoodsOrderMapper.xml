@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chenlinghong.graduation.repository.dao.GoodsOrderDao">
+
+    <resultMap id="BaseResultMap" type="com.chenlinghong.graduation.repository.domain.GoodsOrder">
+        <id column="id" property="id" jdbcType="BIGINT" javaType="Long"/>
+        <result column="gmt_create" property="gmtCreate" jdbcType="TIMESTAMP" javaType="Date"/>
+        <result column="gmt_modified" property="gmtModified" jdbcType="TIMESTAMP" javaType="Date"/>
+        <result column="deleted" property="deleted" jdbcType="VARCHAR" javaType="Integer"/>
+        <result column="name" property="name" jdbcType="VARCHAR" javaType="java.lang.String"/>
+        <result column="description" property="description" jdbcType="VARCHAR" javaType="java.lang.String"/>
+        <result column="goods_id" property="goodsId" jdbcType="BIGINT" javaType="Long"/>
+        <result column="user_id" property="userId" jdbcType="BIGINT" javaType="Long"/>
+        <result column="price" property="price" jdbcType="DECIMAL" javaType="Double"/>
+        <result column="remarks" property="remarks" jdbcType="VARCHAR" javaType="String"/>
+        <result column="post_country" property="postCountry" jdbcType="VARCHAR" javaType="String"/>
+        <result column="post_province" property="postProvince" jdbcType="VARCHAR" javaType="String"/>
+        <result column="post_city" property="postCity" jdbcType="VARCHAR" javaType="String"/>
+        <result column="post_position" property="postPosition" jdbcType="VARCHAR" javaType="String"/>
+        <result column="number" property="number" jdbcType="INTEGER" javaType="Integer"/>
+        <association property="goods" column="goods_id"
+                     select="com.chenlinghong.graduation.repository.dao.GoodsDao.getById"
+                     javaType="com.chenlinghong.graduation.repository.domain.Goods">
+        </association>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        gmt_create, gmt_modified, deleted, `name`, description, goods_id, user_id, price, remarks, post_country
+        , post_province, post_city, post_position, `number`
+    </sql>
+
+    <sql id="column_list">
+        `id`,
+        <include refid="Base_Column_List"/>
+    </sql>
+
+    <insert id="insert" parameterType="com.chenlinghong.graduation.repository.domain.GoodsOrder">
+        <selectKey keyProperty="id" order="AFTER" resultType="Long">
+            SELECT last_insert_id()
+        </selectKey>
+        INSERT into
+        goods_order(
+        <include refid="Base_Column_List"/>
+        )
+        values(current_timestamp, current_timestamp, "0", #{name}, #{description}, #{goodsId}, #{userId},
+        #{price}, #{remarks}, #{postCountry}, #{postProvince}, #{postCity}, #{postPosition}, #{number})
+    </insert>
+
+    <update id="deleteById">
+        update goods_order
+        set deleted = '1'
+        where id = #{id}
+    </update>
+
+    <select id="getById" resultMap="BaseResultMap">
+        SELECT
+        <include refid="column_list"/>
+        FROM
+        goods_order
+        WHERE
+        id=#{id} and `deleted` = '0'
+    </select>
+
+    <select id="listAll" resultMap="BaseResultMap">
+        SELECT
+        <include refid="column_list"/>
+        FROM
+        goods_order
+        where `deleted` = '0'
+        order by id desc
+        <choose>
+            <when test="offset != null and rows != null">
+                limit #{offset},#{rows}
+            </when>
+            <otherwise>
+                limit 0,10
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="count" resultType="long">
+        SELECT count(*)
+        FROM goods_order
+        where `deleted` = '0'
+    </select>
+
+    <select id="listByGoods" resultMap="BaseResultMap">
+        SELECT
+        <include refid="column_list"/>
+        FROM
+        goods_order
+        where goods_id = #{goodsId} and `deleted` = '0'
+        order by id desc
+        <choose>
+            <when test="offset != null and rows != null">
+                limit #{offset},#{rows}
+            </when>
+            <otherwise>
+                limit 0,10
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="countByGoods" resultType="long">
+        SELECT count(*)
+        FROM goods_order
+        where goods_id = #{goodsId} and `deleted` = '0'
+    </select>
+
+    <select id="listByUser" resultMap="BaseResultMap">
+        SELECT
+        <include refid="column_list"/>
+        FROM
+        goods_order
+        where user_id = #{userId} and `deleted` = '0'
+        order by id desc
+        <choose>
+            <when test="offset != null and rows != null">
+                limit #{offset},#{rows}
+            </when>
+            <otherwise>
+                limit 0,10
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="countByUser" resultType="long">
+        SELECT count(*)
+        FROM goods_order
+        where user_id = #{userId} and `deleted` = '0'
+    </select>
+
+    <update id="update" parameterType="com.chenlinghong.graduation.repository.domain.GoodsOrder">
+        update goods_order
+        set `name`       = #{name},
+            `remarks`    = #{remarks},
+            gmt_modified = current_timestamp
+        where id = #{id}
+    </update>
+
+</mapper>

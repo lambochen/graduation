@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chenlinghong.graduation.repository.dao.ShoppingCartDao">
+
+    <resultMap id="BaseResultMap" type="com.chenlinghong.graduation.repository.domain.ShoppingCart">
+        <id column="id" property="id" jdbcType="BIGINT" javaType="Long"/>
+        <result column="gmt_create" property="gmtCreate" jdbcType="TIMESTAMP" javaType="Date"/>
+        <result column="gmt_modified" property="gmtModified" jdbcType="TIMESTAMP" javaType="Date"/>
+        <result column="deleted" property="deleted" jdbcType="VARCHAR" javaType="Integer"/>
+        <result column="goods_id" property="goodsId" jdbcType="BIGINT" javaType="Long"/>
+        <result column="user_id" property="userId" jdbcType="BIGINT" javaType="Long"/>
+        <result column="count" property="count" jdbcType="INTEGER" javaType="Integer"/>
+        <association property="goods"
+                     column="goods_id"
+                     javaType="com.chenlinghong.graduation.repository.domain.Goods"
+                     select="com.chenlinghong.graduation.repository.dao.GoodsDao.getById">
+        </association>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        gmt_create, gmt_modified, deleted, goods_id, user_id, `count`
+    </sql>
+
+    <sql id="column_list">
+        `id`,
+        <include refid="Base_Column_List"/>
+    </sql>
+
+    <insert id="insert" parameterType="com.chenlinghong.graduation.repository.domain.ShoppingCart">
+        <selectKey keyProperty="id" order="AFTER" resultType="Long">
+            SELECT last_insert_id()
+        </selectKey>
+        INSERT into
+        shopping_cart(
+        <include refid="Base_Column_List"/>
+        )
+        values(current_timestamp, current_timestamp, "0", #{goodsId}, #{userId}, 1 )
+    </insert>
+
+    <update id="deleteById">
+        update shopping_cart
+        set deleted = '1'
+        where id = #{id}
+    </update>
+
+    <update id="deleteByIdList">
+        update shopping_cart
+        set deleted = '1'
+        where (1=0
+        <foreach collection="idList" item="id">
+            or id = #{id}
+        </foreach>
+        ) and user_id = #{userId}
+    </update>
+
+    <select id="getById" resultMap="BaseResultMap">
+        SELECT
+        <include refid="column_list"/>
+        FROM
+        shopping_cart
+        WHERE
+        id=#{id} and `deleted` = '0'
+    </select>
+
+    <select id="listByUser" resultMap="BaseResultMap">
+        SELECT
+        <include refid="column_list"/>
+        FROM
+        shopping_cart
+        where user_id = #{userId} and `deleted` = '0'
+        order by id desc
+        <choose>
+            <when test="offset != null and rows != null">
+                limit #{offset},#{rows}
+            </when>
+            <otherwise>
+                limit 0,10
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="countByUser" resultType="long">
+        SELECT count(*)
+        FROM shopping_cart
+        where user_id = #{userId} and `deleted` = '0'
+    </select>
+
+    <select id="getByUserGoods" resultMap="BaseResultMap">
+        SELECT
+        <include refid="column_list"/>
+        FROM
+        shopping_cart
+        where user_id = #{userId} and goods_id = #{goodsId}
+    </select>
+
+    <update id="updateCount">
+        update shopping_cart
+        set `count` = #{count}
+        where id = #{id}
+    </update>
+
+
+
+</mapper>

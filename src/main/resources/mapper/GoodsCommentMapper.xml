@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chenlinghong.graduation.repository.dao.GoodsCommentDao">
+
+    <resultMap id="BaseResultMap" type="com.chenlinghong.graduation.repository.domain.GoodsComment">
+        <id column="id" property="id" jdbcType="BIGINT" javaType="Long"/>
+        <result column="gmt_create" property="gmtCreate" jdbcType="TIMESTAMP" javaType="Date"/>
+        <result column="gmt_modified" property="gmtModified" jdbcType="TIMESTAMP" javaType="Date"/>
+        <result column="deleted" property="deleted" jdbcType="VARCHAR" javaType="Integer"/>
+        <result column="content" property="content" jdbcType="VARCHAR" javaType="String"/>
+        <result column="img_one" property="imgOne" jdbcType="VARCHAR" javaType="String"/>
+        <result column="img_two" property="imgTwo" jdbcType="VARCHAR" javaType="String"/>
+        <result column="img_three" property="imgThree" jdbcType="VARCHAR" javaType="String"/>
+        <result column="goods_id" property="goodsId" jdbcType="BIGINT" javaType="Long"/>
+        <result column="user_id" property="userId" jdbcType="BIGINT" javaType="Long"/>
+        <result column="score" property="score" jdbcType="INTEGER" javaType="Integer"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        gmt_create, gmt_modified, deleted, `content`, goods_id, user_id, img_one, img_two, img_three, score
+    </sql>
+
+    <sql id="column_list">
+        `id`,
+        <include refid="Base_Column_List"/>
+    </sql>
+
+    <insert id="insert" parameterType="com.chenlinghong.graduation.repository.domain.GoodsComment">
+        <selectKey keyColumn="id" keyProperty="id" order="AFTER" resultType="long">
+            SELECT last_insert_id()
+        </selectKey>
+        INSERT into
+        goods_comment(
+        <include refid="Base_Column_List"/>
+        )
+        values(current_timestamp, current_timestamp, "0", #{content}, #{goodsId}, #{userId},
+        #{imgOne}, #{imgTwo}, #{imgThree}, #{score})
+    </insert>
+
+    <update id="deleteById" parameterType="long">
+        update goods_comment
+        set deleted = '1'
+        where id = #{id}
+    </update>
+
+    <update id="deleteByUser" parameterType="long">
+        update goods_comment
+        set deleted = '1'
+        where user_id = #{userId}
+    </update>
+
+    <update id="deleteByGoods" parameterType="long">
+        update goods_comment
+        set deleted = '1'
+        where goods_id = #{goodsId}
+    </update>
+
+    <select id="getById" parameterType="long" resultMap="BaseResultMap">
+        SELECT
+        <include refid="column_list"/>
+        FROM
+        goods_comment
+        WHERE
+        id=#{id} and `deleted` = '0'
+    </select>
+
+    <select id="listByUser" resultMap="BaseResultMap">
+        SELECT
+        <include refid="column_list"/>
+        FROM
+        goods_comment
+        where user_id = #{userId} and `deleted` = '0'
+        order by id desc
+        <choose>
+            <when test="offset != null and rows != null">
+                limit #{offset},#{rows}
+            </when>
+            <otherwise>
+                limit 0,10
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="countByUser" resultType="long">
+        SELECT count(*)
+        FROM goods_comment
+        where user_id = #{userId} and `deleted` = '0'
+    </select>
+
+
+    <select id="listByGoods" resultMap="BaseResultMap">
+        SELECT
+        <include refid="column_list"/>
+        FROM
+        goods_comment
+        where goods_id = #{goodsId} and `deleted` = '0'
+        order by id desc
+        <choose>
+            <when test="offset != null and rows != null">
+                limit #{offset},#{rows}
+            </when>
+            <otherwise>
+                limit 0,10
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="countByGoods" resultType="long">
+        SELECT count(*)
+        FROM goods_comment
+        where goods_id = #{goodsId} and `deleted` = '0'
+    </select>
+
+    <update id="update" parameterType="com.chenlinghong.graduation.repository.domain.GoodsComment">
+        update goods_comment
+        set `content`    = #{content},
+            `img_one`    = #{imgOne},
+            `img_two`    = #{imgTwo},
+            `img_three`  = #{imgThree},
+            `score`      = #{score},
+            gmt_modified = current_timestamp
+        where id = #{id}
+    </update>
+
+</mapper>

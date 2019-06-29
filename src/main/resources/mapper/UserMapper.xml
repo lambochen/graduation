@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chenlinghong.graduation.repository.dao.UserDao">
+
+    <resultMap id="BaseResultMap" type="com.chenlinghong.graduation.repository.domain.User">
+        <id column="id" property="id" jdbcType="INTEGER" javaType="Long"/>
+        <result column="gmt_create" property="gmtCreate" jdbcType="TIMESTAMP" javaType="Date"/>
+        <result column="gmt_modified" property="gmtModified" jdbcType="TIMESTAMP" javaType="Date"/>
+        <result column="deleted" property="deleted" jdbcType="VARCHAR" javaType="Integer"/>
+        <result column="nick_name" property="nickName" jdbcType="VARCHAR" javaType="String"/>
+        <result column="real_name" property="realName" jdbcType="VARCHAR" javaType="String"/>
+        <result column="telephone" property="telephone" jdbcType="VARCHAR" javaType="String"/>
+        <result column="password" property="password" jdbcType="VARCHAR" javaType="String"/>
+        <result column="gender" property="gender" jdbcType="VARCHAR" javaType="Integer"/>
+        <result column="birthday" property="birthday" jdbcType="DATE" javaType="Date"/>
+        <result column="country" property="country" jdbcType="VARCHAR" javaType="String"/>
+        <result column="province" property="province" jdbcType="VARCHAR" javaType="String"/>
+        <result column="city" property="city" jdbcType="VARCHAR" javaType="String"/>
+        <result column="position" property="position" jdbcType="VARCHAR" javaType="String"/>
+        <result column="latitude" property="latitude" jdbcType="VARCHAR" javaType="String"/>
+        <result column="longitude" property="longitude" jdbcType="VARCHAR" javaType="String"/>
+        <result column="avatar_url" property="avatarUrl" jdbcType="VARCHAR" javaType="String"/>
+        <result column="type" property="type" jdbcType="VARCHAR" javaType="Integer"/>
+        <result column="description" property="description" jdbcType="VARCHAR" javaType="String"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        gmt_create, gmt_modified, deleted, `nick_name`, `real_name`, `telephone`, `password`, `gender`
+        , `birthday`, `country`, `province`, `city`, `position`, `latitude`, `longitude`, `avatar_url`
+        , `type`, `description`
+    </sql>
+
+    <sql id="column_list">
+        `id`,
+        <include refid="Base_Column_List"/>
+    </sql>
+
+    <sql id="value_list">
+        current_timestamp, current_timestamp, '0'
+    </sql>
+
+    <insert id="insert" parameterType="com.chenlinghong.graduation.repository.domain.User">
+        <selectKey keyProperty="id" order="AFTER" resultType="Long">
+            SELECT last_insert_id()
+        </selectKey>
+        INSERT into
+        user(
+        <include refid="Base_Column_List"/>
+        )
+        values(
+        <include refid="value_list"/>
+        ,#{nickName},#{realName},#{telephone},#{password},#{gender},#{birthday},#{country},#{province}
+        ,#{city},#{position},#{latitude},#{longitude},#{avatarUrl},'0',#{description}
+        )
+    </insert>
+
+    <insert id="insertByTelephone" parameterType="string">
+        insert into user(telephone) values (#{telephone})
+    </insert>
+
+    <insert id="insertByTelephoneAndUsername">
+        insert into user(telephone, nick_name, avatar_url) values (#{telephone} ,#{username} ,#{avatarUrl} )
+    </insert>
+
+    <update id="deleteById" parameterType="long">
+        update user
+        set deleted      = '1',
+            gmt_modified = current_timestamp
+        where id = #{id}
+    </update>
+
+    <select id="getById" parameterType="long" resultMap="BaseResultMap">
+        SELECT
+        <include refid="column_list"/>
+        FROM
+        user
+        WHERE
+        id=#{id} and `deleted` = '0'
+    </select>
+
+    <select id="getByTelephone" parameterType="String" resultMap="BaseResultMap">
+        SELECT
+        <include refid="column_list"/>
+        FROM
+        user
+        WHERE
+        telephone=#{telephone} and `deleted` = '0'
+    </select>
+
+    <select id="countByTelephone" parameterType="String" resultType="int">
+        SELECT count(distinct id)
+        FROM user
+        WHERE telephone = #{telephone} and `deleted` = '0'
+    </select>
+
+    <select id="countByTelephoneAndPassword" resultType="int">
+        SELECT count(distinct id)
+        FROM user
+        WHERE telephone = #{telephone}
+          and password = #{password} and `deleted` = '0'
+    </select>
+
+    <update id="update" parameterType="com.chenlinghong.graduation.repository.domain.User">
+        update user
+        set `nick_name`   = #{nickName},
+            `real_name`   = #{realName},
+            `gender`      = #{gender},
+            `birthday`    = #{birthday},
+            `country`     = #{country},
+            `province`    = #{province},
+            `city`        = #{city},
+            `position`    = #{position},
+            `latitude`    = #{latitude},
+            `longitude`   = #{longitude},
+            `description` = #{description},
+            gmt_modified  = current_timestamp
+        where id = #{id}
+    </update>
+
+    <update id="updatePassword">
+        update user
+        set `password`   = #{password},
+            gmt_modified = current_timestamp
+        where id = #{id}
+    </update>
+
+    <update id="updateAvatarUrl">
+        update user
+        set `avatar_url` = #{avatarUrl},
+            gmt_modified = current_timestamp
+        where id = #{id}
+    </update>
+
+</mapper>
